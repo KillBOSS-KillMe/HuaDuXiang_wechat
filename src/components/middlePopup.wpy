@@ -1,0 +1,130 @@
+<style lang="less">
+page {
+  min-height: 100%;
+}
+.shade-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9996;
+  color: #979797;
+  background: rgba(18, 17, 16, 0.3);
+  .shop-box {
+    position: relative;
+    height: 100%;
+    .item {
+      position: absolute;
+      width: 105%;
+      height: 480rpx;
+      left: 0;
+      bottom: 0;
+      // transform: translate(-50%,-50%);
+      // padding: 30rpx 40rpx;
+      background: #fff;
+      border-radius: 20rpx;
+      .shade-hd .img-box {
+        width: 50rpx;
+        height: 50rpx;
+        opacity: 0.6;
+      }
+    }
+  }
+  .shade-ft {
+    position: relative;
+    padding: 30rpx 0 40rpx 0;
+    .img-box {
+      width: 120rpx;
+      height: 120rpx;
+      margin: 30rpx auto;
+    }
+  }
+  .shade-ft:after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    width: 1px;
+    height: 140rpx;
+    border-radius: 20rpx;
+    background-color: #e5e5e5;
+  }
+}
+</style>
+
+<template>
+  <view class="shade-box" hidden="{{show}}">
+    <view class="shop-box">
+      <view class="item backg-white">
+        <!-- <view class='shade-hd'>
+                <view class='weui-cell'>
+                    <view class='weui-cell-bd text-center'><label class="font-md font-wg">分享至微信</label></view>
+                    <view class='weui-cell-ft ' @tap='hideShare'>
+                        <view class='img-box'>
+                            <image src='../assets/image/close.png' class='img img-xs' mode='widthFix'></image>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class='shade-ft'>
+                <view class='weui-cell text-center font-sm'>
+                    <view class='weui-cell-bd'>
+                        <poster id="poster" config="{{posterConfig}}"  bind:success="onPosterSuccess" bind:fail="onPosterFail">
+                            <view class='img-box'>
+                                <image src='../assets/image/close.png' class='img img-xs' mode='widthFix'></image>
+                            </view>
+                            <view>朋友圈</view>
+                        </poster>
+                    </view>
+                    <view class='weui-cell-bd form-btn'>
+                        <button class='btn' open-type='share'>zhuanfa</button>
+                        <view class='img-box'>
+                            <image src='../assets/image/close.png' class='img img-xs' mode='widthFix'></image>
+                        </view>
+                        <view>微信好友</view>
+                    </view>
+                </view>
+        </view>-->
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy';
+export default class Share extends wepy.page {
+  config = {};
+  data = {
+    show: true
+  };
+
+  props = {
+    proupData: {
+      //父组件传过来的数据
+      type: Object,
+      default: []
+    }
+  };
+  onLoad() {
+      console.log('this.proupData',this.proupData)
+    this.$emit('getProupData', this.proupData);
+  }
+
+  methods = {
+    // 页面跳转
+    navigateUrl: function(e) {
+      var url = e.currentTarget.dataset.url;
+      url &&
+        wx.navigateTo({
+          url: url
+        });
+    },
+    // 关闭弹窗
+    hideShare: function(e) {
+      this.show = false;
+    }
+  };
+}
+</script>

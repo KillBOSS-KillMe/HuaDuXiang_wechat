@@ -1,0 +1,1138 @@
+<style lang="less">
+@hundred: 100%;
+// 选项卡
+page {
+  background: #f9f9f9;
+  height: 100%;
+}
+// 弹窗1
+.shade-box {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  color: #979797;
+  background: rgba(18, 17, 16, 0.3);
+  .shop-box {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+    .item {
+      position: absolute;
+      width: 100%;
+      height: 400rpx;
+      left: 0;
+      bottom: 0;
+      background: #fff;
+      border-top-left-radius: 40rpx;
+      border-top-right-radius: 40rpx;
+      //   选择地址
+      .address {
+        height: 120rpx;
+        color: #333;
+        font-size: 32rpx;
+        line-height: 100rpx;
+        text-align: center;
+        font-weight: bold;
+      }
+      // 用户地址
+      .userAddress {
+        display: flex;
+        flex-wrap: wrap;
+        text {
+          width: 100%;
+          // height: 40rpx;
+          // line-height: 40rpx;
+          font-size: 28rpx;
+          color: #333;
+          padding: 5rpx 50rpx;
+          font-weight: 600;
+        }
+        image {
+          position: absolute;
+          bottom: 50%;
+          right: 4%;
+          width: 50rpx;
+          height: 50rpx;
+        }
+      }
+      // 新增用户地址
+      .newAddress {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 40rpx;
+        text {
+          width: 100%;
+          font-weight: 600;
+          font-size: 28rpx;
+          color: #333;
+          padding: 0rpx 50rpx 80rpx;
+        }
+        image {
+          position: absolute;
+          bottom: 26%;
+          right: 4%;
+          width: 50rpx;
+          height: 50rpx;
+        }
+      }
+    }
+  }
+}
+#btnwx {
+  position: absolute;
+  width: 110rpx;
+  height: 110rpx;
+  left: 25%;
+  bottom: 25%;
+  opacity: 0;
+  // background: pink;
+  border-radius: 50%;
+  z-index: 99;
+}
+// 弹窗2 分享
+.share-box {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  color: #979797;
+  background: rgba(18, 17, 16, 0.3);
+  .good-box {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+    .item {
+      position: absolute;
+      width: 66%;
+      height: 62%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      image {
+        width: 100%;
+        height: 117%;
+        position: relative;
+        top: -17%;
+        left: 0%;
+      }
+      .sharetitle {
+        color: #333;
+        position: absolute;
+        bottom: 54%;
+        left: 26%;
+        color: #ff2228;
+        font-size: 30rpx;
+        font-weight: bold;
+        text {
+          font-size: 40rpx;
+        }
+      }
+      .sharetag {
+        color: #333;
+        position: absolute;
+        bottom: 44%;
+        left: 13%;
+        color: #ff2228;
+        font-size: 30rpx;
+      }
+      .wximg {
+        position: absolute;
+        width: 110rpx;
+        height: 110rpx;
+        left: 25%;
+        bottom: 25%;
+        background: #f3f3f3;
+        border-radius: 50%;
+        image {
+          width: 50%;
+          height: 50%;
+          //   position: absolute;
+          //   left: 0%;
+          //   bottom: 0%;
+          margin: 50rpx 0 0 28rpx;
+        }
+      }
+      .QQimg {
+        position: absolute;
+        width: 110rpx;
+        height: 110rpx;
+        right: 25%;
+        bottom: 25%;
+        background: #f3f3f3;
+        border-radius: 50%;
+        text-align: center;
+        image {
+          width: 50%;
+          height: 50%;
+          //   position: absolute;
+          //   right: 24%;
+          //   bottom: 22%;
+          margin: 50rpx 0 0 0rpx;
+        }
+      }
+      .wxclass {
+        position: absolute;
+        left: 31%;
+        bottom: 17%;
+        font-size: 30rpx;
+        color: #333;
+        font-weight: bold;
+      }
+      .QQclass {
+        position: absolute;
+        right: 29%;
+        bottom: 17%;
+        font-size: 30rpx;
+        color: #333;
+        font-weight: bold;
+      }
+    }
+  }
+}
+// 弹窗3 拼团
+.spell-box {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  color: #979797;
+  background: rgba(18, 17, 16, 0.3);
+  .good-box {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+    .item {
+      position: absolute;
+      width: 85%;
+      height: 50%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      border-radius: 3%;
+      image {
+        position: absolute;
+        right: 4%;
+        top: 4%;
+        width: 50rpx;
+        height: 50rpx;
+      }
+      //拼团
+      .assemblePeo {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        overflow-y: scroll;
+        .spelling {
+          height: 120rpx;
+          font-size: 30rpx;
+          color: #333;
+          font-weight: bold;
+          line-height: 120rpx;
+          text-align: center;
+        }
+        .peoClass {
+          width: 100%;
+          height: 200rpx;
+          position: relative;
+          border-bottom: solid 1px #f9f9f9;
+          .peoimg {
+            position: absolute;
+            top: 25%;
+            left: 6%;
+            width: 80rpx;
+            height: 80rpx;
+            border-radius: 50%;
+            background: red;
+          }
+          .peoname {
+            position: absolute;
+            top: 27%;
+            left: 24%;
+            font-size: 28rpx;
+            color: #333;
+            font-weight: bold;
+          }
+          .peonum {
+            position: absolute;
+            top: 14%;
+            right: 44%;
+            font-size: 24rpx;
+            color: #999;
+            text {
+              color: red;
+            }
+          }
+          .peotime {
+            position: absolute;
+            top: 50%;
+            left: 24%;
+            font-size: 24rpx;
+            color: #999;
+          }
+          button {
+            width: 130rpx;
+            height: 60rpx;
+            color: white;
+            font-size: 24rpx;
+            line-height: 60rpx;
+            border-radius: 10rpx;
+            background: red;
+            position: absolute;
+            top: 30%;
+            right: 6%;
+          }
+        }
+      }
+    }
+  }
+}
+// 弹窗4 参加
+.gopuzzle-box {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  color: #979797;
+  background: rgba(18, 17, 16, 0.3);
+  .good-box {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+    .item {
+      position: absolute;
+      width: 85%;
+      height: 40%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      border-radius: 3%;
+      image {
+        position: absolute;
+        right: 5%;
+        top: 6%;
+        width: 50rpx;
+        height: 50rpx;
+      }
+      // 参加
+      .puzzlePeo {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        .puzzle {
+          height: 120rpx;
+          font-size: 32rpx;
+          color: #333;
+          font-weight: bold;
+          line-height: 120rpx;
+          text-align: center;
+        }
+        .peoClass {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            border-bottom: solid 1px #f9f9f9;
+            .peonum {
+                position: absolute;
+                top: 7%;
+                left: 22%;
+                font-size: 24rpx;
+                color: #999;
+                text {
+                color: red;
+                }
+            }
+            .peoimg {
+                position: absolute;
+                top: 22%;
+                left: 32%;
+                width: 92rpx;
+                height: 92rpx;
+                border-radius: 50%;
+            }
+            .peodoubtimg {
+                position: absolute;
+                top: 22%;
+                right: 32%;
+                width: 92rpx;
+                height: 92rpx;
+                border-radius: 50%;
+            }
+            button {
+                width: 75%;
+                height: 80rpx;
+                color: white;
+                font-size: 30rpx;
+                line-height: 80rpx;
+                border-radius: 10rpx;
+                background: red;
+                position: absolute;
+                top: 50%;
+                left: 12%;
+            }
+        }
+      }
+    }
+  }
+}
+// 砍价
+.bargain-box {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  background: #fff;
+    .topwrap{
+        width: 100%;
+        height: 75%;
+        background: pink;
+        position: relative;
+        image{
+            width: 100%;
+            height: 100%;
+        }
+        .topview{
+            width: 90%;
+            height: 90%;
+            background: #fff;
+            border-radius: 10rpx;
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            // 砍价商品
+            .barginGoods{
+                width: 90%;
+                height: 220rpx;
+                background: #F6F6F6;
+                margin: 40rpx auto;
+                border-radius: 5rpx;
+                position: relative;
+                image{
+                    width: 190rpx;
+                    height: 190rpx;
+                    margin: 15rpx; 
+                }
+                .goodstitle{
+                    position: absolute;
+                    top: 5%;
+                    left: 38%;
+                    color: #333;
+                    font-size: 32rpx;
+                    font-weight: bold;
+
+                }
+                .goodsprice{
+                    position: absolute;
+                    bottom: 5%;
+                    left: 38%;
+                    color: #333;
+                    font-size: 26rpx;
+                }
+                // 剩余进度条
+
+                .prolist{
+                    width: 60%;
+                    height: 65rpx;
+                    position: absolute;
+                    top: 35%;
+                    left: 38%;
+                    .progessTittle {
+                        font-size: 26rpx;
+                        color: #333;
+                        padding-left: 200rpx;
+                        padding-top: 20rpx;
+                        font-weight: bold;
+                        text{
+                            color: red;
+                        }
+                    }
+                    .countwrap{
+                        width: 65%;
+                        background: #FFDADB;
+                        height: 25rpx;
+                        position: relative;
+                        top: 0;
+                        left: 2%;
+                        margin-top: 30rpx;
+                        border-radius: 40rpx;
+                        .row{
+                            height: 100%;
+                            background: #FF2228;
+                            border-radius: 40rpx;
+                        }
+                        .surplus{
+                            position: absolute;
+                            left: 3%;
+                            top: -9%;
+                            color: #fff;
+                            font-size: 20rpx;
+                        }
+                    }       
+                    .siglenum{
+                        position: absolute;
+                        right: 3%;
+                        top: 40%;
+                        color: #333;
+                        font-size: 20rpx;
+                        font-weight: bold;
+                    }
+                }
+            }
+            // 砍价进度
+            .barginProgess{
+                width: 100%;
+                height: 150rpx;
+ 
+                .progessTittle {
+                    font-size: 26rpx;
+                    color: #333;
+                    padding-left: 200rpx;
+                    padding-top: 20rpx;
+                    font-weight: bold;
+                    text{
+                        color: red;
+                    }
+                }
+                .countwrap{
+                    width: 80%;
+                    background: #FFDADB;
+                    height: 25rpx;
+                    position: relative;
+                    top: 0;
+                    left: 10%;
+                    margin-top: 30rpx;
+                    border-radius: 40rpx;
+                    .row{
+                        height: 100%;
+                        background: #FF2228;
+                        border-radius: 40rpx;
+                    }
+                }
+            }
+            // 分享按钮
+            .sharbtn{
+                width: 90%;
+                height: 90rpx;
+                background: #FF2228;
+                color: #fff;
+                font-size: 28rpx;
+                font-weight: bold;
+                border-radius: 10rpx;
+                line-height: 90rpx;
+                text-align: center;
+                margin: 0rpx 35rpx; 
+            }
+            // 过期时间
+            .goodsTime{
+                width: 60%;
+                font-size: 24rpx;
+                color: #333;
+                margin: 15rpx auto;
+                text-align: center;
+            }
+            // 砍价记录
+            .record{
+                width: 100%;
+                height: 200rpx;
+                position: relative;
+                overflow: hidden;
+                .recordtext{
+                    color: #333333;
+                    font-size: 30rpx;
+                    text-align: center;
+                    font-weight: bold;
+                    height: 80rpx;
+                    line-height: 80rpx;
+                    width: 100%;
+                }
+                .swiper-box{
+                    width: 100%;
+                    height: 100%;
+                    .swiper_item{
+                        image{
+                            width: 70rpx;
+                            height: 70rpx;
+                            border-radius: 50%;
+                            margin: 25rpx 40rpx;
+                        }
+                        .item-name{
+                            position: absolute;
+                            top: 10%;
+                            left: 20%;
+                            color: #333;
+                            font-weight: bold;
+                            font-size: 28rpx;
+                        }
+                        .item-num{
+                            position: absolute;
+                            top: 30%;
+                            left: 20%;
+                            color: #333;
+                            font-size: 24rpx;
+                        }
+                        .item-price{
+                            position: absolute;
+                            top: 22%;
+                            right: 7%;
+                            color: #333;
+                            font-weight: bold;
+                            font-size: 28rpx;
+                            text{
+                                color: red;
+                            }
+                        }
+                        .barimg{
+                            height: 40rpx;
+                            width: 40rpx;
+                            position: absolute;
+                            top: 10%;
+                            right: 31%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // 商品
+.saleShopWrap {
+  width: 100%;
+  height: 100%;
+  background: #f9f9f9;
+  .saleShop {
+    width: 92%;
+    height: 100%;
+    margin: 20rpx auto;
+    margin-bottom: 2%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    // item商品
+    .shopview {
+        background: #fff;
+        width: 335rpx;
+        height: 488rpx;
+        display: inline-block;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        padding: 20rpx 0rpx;
+        margin-bottom: 19rpx;
+        border-radius: 20rpx;
+        image {
+        width: 327rpx;
+        height: 327rpx;
+        }
+        .saleTag {
+        font-size: 30rpx;
+        font-weight: bold;
+        color: #333;
+        padding: 30rpx;
+        }
+        .salep {
+        font-size: 28rpx;
+        color: red;
+        font-weight: bold;
+        padding-left: 30rpx;
+        }
+        .salesmple {
+        font-size: 24rpx;
+        color: red;
+        font-weight: normal;
+        }
+        .saleprice {
+        font-weight: bolder;
+        color: red;
+        font-size: 42rpx;
+        // position: relative;
+        // top: 3%;
+        // left: 40%;
+        }
+        .saleexprice {
+        color: #666;
+        font-size: 24rpx;
+        font-weight: normal;
+        padding-left: 25rpx;
+        text-decoration: line-through;
+        }
+        .saletag {
+        width: 60rpx;
+        // height: 20rpx;
+        background: red;
+        text-align: center;
+        line-height: 20rpx;
+        font-size: 10px;
+        padding: 8rpx;
+        color: white;
+        border-radius: 10rpx;
+        margin-left: 3%;
+        margin-top: -2%;
+        }
+    }
+      }
+    }
+    .shopview :nth-last-child(1){
+      margin-bottom: 160rpx;
+    }
+}
+</style>
+<template>
+  <view>
+    <button @tap="getProup">选择地址</button>
+    <button @tap="getShareProup">分享</button>
+    <button @tap="getLookSpellList">查看拼单</button>
+    <button @tap="getBargain">砍价</button>
+    <!-- 弹窗 -->
+    <!-- 选择地址 -->
+    <view class="shade-box" hidden="{{!showPopup}}">
+      <view class="shop-box" @tap="hideProup">
+        <view class="item">
+          <view class="address">选择收货地址</view>
+          <view class="userAddress">
+            <text>啦啦啦 12015230214</text>
+            <text>山西省近海尽可能看到你的小区</text>
+            <image src="../assets/images/right.png" />
+          </view>
+          <view class="newAddress">
+            <text>新增地址</text>
+            <image src="../assets/images/right.png" />
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 分享 -->
+    <view class="share-box" hidden="{{!sharePopup}}">
+      <view class="good-box" @tap="hiddShare">
+        <view class="item">
+          <image mode="aspectFill" src="../assets/images/shareBG.png" />
+          <text class="sharetitle">
+            您已经砍了
+            <text>200</text>元
+          </text>
+          <text class="sharetag">分享给好友, 可以多砍一刀哦!</text>
+          <button id="btnwx" open-type="share"></button>
+          <view class="wximg">
+            <image src="../assets/images/wx.png" />
+            <!-- <image src="../assets/images/wx.png" /> -->
+          </view>
+          <text class="wxclass">微 信</text>
+          <view class="QQimg">
+            <image src="../assets/images/qq.png" />
+          </view>
+          <text class="QQclass">Q Q</text>
+        </view>
+      </view>
+    </view>
+    <!-- 查看拼单 -->
+    <view class="spell-box" hidden="{{!spellList}}">
+      <view class="good-box" @tap="hiddShare">
+        <view class="item">
+          <view class="assemblePeo">
+            <image src="../assets/images/close.png" @tap="hideSpell" />
+            <view class="spelling">正在拼单</view>
+            <repeat for="{{assembleData}}">
+              <view class="peoClass">
+                <image class="peoimg" src="{{item.img}}" />
+                <text class="peoname">{{item.name}}</text>
+                <text class="peonum">
+                  还差<text>{{item.peo}}</text>人成团
+                </text>
+                <text class="peotime">剩余{{item.time}}</text>
+                <button @tap="goToPuzzle('{{item}}')">去拼团</button>
+              </view>
+            </repeat>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 参加拼单 -->
+    <view class="gopuzzle-box" hidden="{{!puzzleIng}}">
+        <view class="good-box">
+            <view class="item">
+                <view class="puzzlePeo">
+                    <image  @tap="hiddSpell" src="../assets/images/close.png"/>
+                    <repeat for="{{goSpellData}}">
+                        <view class="puzzle">参与{{item.name}}的拼单</view>
+                        <view class="peoClass">
+                            <text class="peonum">仅剩<text>{{item.peo}}</text>个名额, {{item.time}}后结束</text>
+                            <image class="peoimg" src="{{item.img}}"/>
+                            <image class="peodoubtimg" src="../assets/images/doubt.png"/>
+                            <button @tap="goToPinDan">去拼单</button>
+                        </view>
+                    </repeat>
+                </view>
+            </view>
+        </view>
+    </view>
+    <!-- -------------------砍价-------------------- -->
+    <view class="bargain-box" hidden="{{!bargainShow}}">
+        <view class="topwrap">
+            <image src="../assets/images/bargin-top.png"/>
+            <view class="topview">
+                <!-- 砍价商品 -->
+                <repeat for='{{assembleData}}'> 
+                    <view class="barginGoods">
+                            <image src="{{item.img}}"/>
+                            <text class="goodstitle">{{item.title}}</text>
+                            <!-- 剩余进度条 -->
+                            <view class="prolist">
+                                <!-- <view class='progessTittle'>已砍<text>{{BargainingRecord}}</text>元, 还差<text>{{BargainingSpreads}}</text></view> -->
+                                <view class='countwrap'>
+                                    <view class='row' style='width:{{row2}}rpx'></view>   
+                                    <text class="surplus">{{surplus}}</text>
+                                </view>
+                                    <text class="siglenum">已砍{{siglenum}}/{{countall}}件</text>
+                            </view>
+                            <text class="goodsprice">砍到0元拿</text>
+                    </view>
+                    
+                    <!-- 砍价进度条 -->
+                    <view class="barginProgess">
+                        <view class='progessTittle'>已砍<text>{{BargainingRecord}}</text>元, 还差<text>{{BargainingSpreads}}</text></view>
+                        <view class='countwrap'>
+                            <view class='row' style='width:{{row1}}rpx'></view>   
+                        </view>
+                    </view>
+                    <!-- 分享按钮 -->
+                    <view class="sharbtn">分享给朋友, 多砍一刀</view>
+                    <!-- 过期时间 -->
+                    <view class="goodsTime">还剩{{item.time}}过期, 快来坎价吧~</view>
+                    <!-- 砍价记录 -->
+                    <view class="record">
+                        <view class="recordtext">砍价记录</view>   
+
+                        <swiper class='swiper-box' autoplay="true" interval="2000" duration="2000" vertical="true">
+                            <repeat for="{{bargindata}}">
+                                <swiper-item bindtap='{{item.swiperBind}}'>
+                                    <view class="swiper_item">
+                                        <image src="{{item.img}}"/>
+                                        <text class="item-name">{{item.name}}</text>
+                                        <text class="item-num">来一起砍价{{item.tag}}元拿</text>
+                                        <image class="barimg" src="../assets/images/bargin.png">
+                                        <text class="item-price">砍掉<text>{{item.barginprice}}</text>元</text>
+                                    </view>
+                                </swiper-item>
+                            </repeat>
+                        </swiper>    
+                    </view>
+                </repeat>
+            </view>
+        </view>
+              <!-- 商品 -->
+        <view class="saleShopWrap">
+            <view class="saleShop">
+            <repeat for="{{flowData}}" item="item">
+                <view class="shopview" @tap="jumpTimeDetails('{{item.id}}')">
+                <image src="{{item.img}}" />
+                <view class="saleTag">
+                    <text>{{item.title}}</text>
+                </view>
+                <view>
+                    <view>
+                    <text class="salep">秒杀价</text>
+                    <text class="salesmple">￥</text>
+                    <text class="saleprice">{{item.price}}</text>
+                    <text class="saleexprice">原价￥ {{item.exprice}}</text>
+                    </view>
+                </view>
+                </view>
+            </repeat>
+            </view>
+        </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '弹窗',
+    navigationBarBackgroundColor: 'white'
+  };
+  components = {
+    // middlePopup
+    // cartCount
+  };
+
+  mixins = [];
+
+  data = {
+    showPopup: false, // 选择地址弹窗
+    sharePopup: false, // 分享弹窗
+    spellList: false, //查看拼团
+    puzzleIng: false, //参加拼单
+    bargainShow: true, // 砍价
+    inpNum: 1,
+    shareWXshow: true, //微信
+    // 商品
+    shopData: {
+      id: 1,
+      img: '../assets/images/indexlunbo.png',
+      title: '儿童滑行车两轮平衡车小孩踏步车',
+      color: '白色',
+      color2: '粉色',
+      age: '5-6岁',
+      size: 'S',
+      order: '11977240',
+      num: 1,
+      price: 100,
+      exprice: 180,
+      selected: false,
+      type: 1,
+      store: '好好好'
+    },
+    // 商品规格 颜色
+    shopNorms: [{ color: '粉色' }, { color: '白色' }, { color: '粉 + 白' }],
+    //拼团
+    assembleData: [
+      {
+        img: '../assets/images/indexlunbo.png',
+        name: '丽丽',
+        title: '哈哈哈哈哈',
+        time: '2018-01-01',
+        peo: '1'
+      }
+    ],
+    // 砍价记录
+    bargindata:[
+        {
+            img: '../assets/images/indexlunbo.png',
+            name: '李白1',
+            tag: '0',
+            barginprice: '2550.00',
+        },
+        {
+            img: '../assets/images/indexlunbo.png',
+            name: '李白1',
+            tag: '0',
+            barginprice: '2550.00',
+        },
+    ],
+    goSpellData: {},
+    // 差价进度条
+    BargainingCount: 600, //总共
+    BargainingRecord: 200, //已砍
+    BargainingSpreads: 400, //差价
+    row1: "",
+    // 数量进度条
+    countall: 5, //总共
+    siglenum: 1, // 单个
+    surplus: 0, // 剩余%
+    row2: '',
+    //商品
+    flowData: [
+      {
+        id: '1',
+        title: '萌分订书机',
+        price: '5',
+        exprice: '25',
+        img: '../assets/images/indeximg.png'
+      },
+      {
+        id: '2',
+        title: '萌分订书机',
+        price: '5',
+        exprice: '25',
+        img: '../assets/images/indeximg.png'
+      },
+      {
+        id: '3',
+        title: '萌分订书机',
+        price: '5',
+        exprice: '25',
+        img: '../assets/images/indeximg.png'
+      },
+      {
+        id: '4',
+        title: '萌分订书机',
+        price: '5',
+        exprice: '25',
+        img: '../assets/images/indeximg.png'
+      },
+      {
+        id: '5',
+        title: '萌分订书机',
+        price: '5',
+        exprice: '25',
+        img: '../assets/images/indeximg.png'
+      },
+      {
+        id: '6',
+        title: '萌分订书机',
+        price: '5',
+        exprice: '25',
+        img: '../assets/images/indeximg.png'
+      }
+    ]
+  };
+
+  computed = {};
+  onLoad(options) {
+    this.shareWXshow = false;
+    console.log('this.goSpellData',this.goSpellData);
+    // 差价进度条ttttttttttttttttttt
+    var barginlist = [this.BargainingRecord, this.BargainingSpreads,this.BargainingCount];
+    var max = Math.max.apply(null, barginlist );  // 找出最大值
+    console.log('max',max)
+    var unit = 650/max;
+    console.log(unit)
+    this.row1 = barginlist[0] * unit
+    // 数量进度条
+    let num =  this.siglenum 
+    let total = this.countall 
+    if (isNaN(num) || isNaN(total)) {
+        return "-";
+    }
+    this.row2 = (Math.round(num / total * 10000) / 100.00) * 1
+    this.surplus = (Math.round(num / total * 10000) / 100.00)+"%";
+    // var unit = 380/max;
+    // 
+    // this.row2 = barginlist[0] * unit
+
+
+    // this.GetPercent(this.countall,this.siglenum)
+    // console.log(this.GetPercent(this.countall,this.siglenum))
+  }
+  onShow(){
+  }
+  methods = {
+      GetPercent(num, total) {
+        /// <summary>
+        /// 求百分比
+        /// </summary>
+        /// <param name="num">当前数</param>
+        /// <param name="total">总数</param>
+        num = parseFloat(num);
+        total = parseFloat(total);
+        if (isNaN(num) || isNaN(total)) {
+            return "-";
+        }
+        return total <= 0 ? "0%" : (Math.round(num / total * 10000) / 100.00)+"%";
+    },
+    // 弹框数量 ++
+    getAdd() {
+      this.inpNum++;
+    },
+    // 弹框数量 --
+    getCutDdown() {
+      if (this.inpNum === 1) {
+        return false;
+      }
+      this.inpNum--;
+    },
+    /**
+     * *****************
+     */
+    // 地址 弹窗
+    getProup(item) {
+      this.showPopup = true;
+    },
+    // 关闭弹窗
+    hideProup(e) {
+      this.showPopup = false;
+    },
+    /********************* */
+    // 分享 弹窗
+    getShareProup(item) {
+      this.sharePopup = true;
+    },
+    hiddShare(e) {
+      //   this.sharePopup = false;
+    },
+        // 分享
+    onShareAppMessage(ops) {
+      if (ops.from === 'button') {
+        // 来自页面内转发按钮
+        // console.log(ops.target)
+      }
+      return {
+        title: '', // 转发后 所显示的title
+        path: '', // 相对的路径
+        success: res => {
+          // 成功后要做的事情
+          this.sharePopup = false;
+          console.log(res);
+          console.log(res.shareTickets[0]);
+          wx.getShareInfo({
+            // shareTicket: res.shareTickets[0],
+            success: res => {
+              console.log(res);
+            },
+            fail: function(res) {
+              console.log(res);
+            },
+            complete: function(res) {
+              console.log(res);
+            }
+          });
+        },
+        fail: function(res) {
+          // 分享失败
+          console.log(res);
+        }
+      };
+    },
+    /********************* */
+    //查看拼团
+    getLookSpellList() {
+      this.spellList = true;
+    },
+    //关闭拼团
+    hideSpell() {
+      this.spellList = false;
+    },
+    // 参加拼团
+    goToPuzzle(item) {
+        let peoItem = item;
+        let spellobj = {};
+        spellobj = {
+            name: peoItem.name,
+            img: peoItem.img,
+            peonum: peoItem.peo
+        };
+        this.goSpellData = spellobj;
+        console.log(this.goSpellData);
+        this.puzzleIng = true; //个人拼单出现
+        //   this.spellList = false; // 关闭
+    },
+    /********************************** */
+    //关闭拼单
+    hiddSpell() {
+      this.puzzleIng = false;
+    },
+    goToPinDan() {
+      console.log(123);
+      
+    },
+    /**
+     * *****************
+     */
+
+  };
+
+  events = {};
+}
+</script>

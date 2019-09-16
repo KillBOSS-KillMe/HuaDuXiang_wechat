@@ -1,0 +1,66 @@
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/index', // 底部 首页
+      'pages/class', // 分类
+      'pages/settled', // 入驻
+      'pages/shopCar', // 购物车
+      'pages/user', // 我的
+      'pages/membersCenter', // 会员中心
+      'pages/userDeliveryAddress', // --我的收货地址
+      'pages/newdeliveryAddress', // --我的新增地址
+      'pages/discount', // 首页模块跳转 折扣
+      'pages/pre', // 首页模块跳转 预购
+      'pages/sale', // 首页模块跳转 促销
+      'pages/assemble', // 首页模块跳转 拼团
+      'pages/bargain', // 首页模块跳转 砍价
+      'pages/seckill', // 首页模块跳转 秒杀
+      'pages/settlement', // 提交订单
+      'pages/matchingGoods', // 组合销售 搭配商品页面
+      'pages/button', // 所有弹窗 --test
+      'pages/shopDetails', // 商品详情
+      'pages/barginInfo' // 砍价 -- 砍价信息 --test
+    ],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#fff',
+      navigationBarTitleText: 'WeChat',
+      navigationBarTextStyle: 'black'
+    }
+  }
+  globalData = {
+    userInfo: {},
+    requestImgUrl: 'http://wanma.beaconway.cn/uploads/images/'
+  }
+  onLaunch() {
+  }
+  getUserInfo(cb) {
+    const that = this
+    if (this.globalData.userInfo) {
+      return this.globalData.userInfo
+    }
+    wepy.getUserInfo({
+      success (res) {
+        that.globalData.userInfo = res.userInfo
+        cb && cb(res.userInfo)
+      }
+    })
+  }
+}
+</script>
+
+<style lang="less">
+@import  (less) url('assets/icon.wxss');
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+</style>

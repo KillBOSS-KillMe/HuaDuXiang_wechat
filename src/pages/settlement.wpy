@@ -1,0 +1,457 @@
+<style lang="less">
+page {
+    height: 100%;
+    background: #f9f9f9;
+}
+// 用户地址 信息
+.useraddress {
+  width: 100%;
+  height: 140rpx;
+  background: #fff;
+  margin: 20rpx 0;
+  position: relative;
+  .imgadd {
+    width: 44rpx;
+    height: 44rpx;
+    margin: 50rpx 30rpx;
+  }
+  .userinfo {
+    font-size: 32rpx;
+    color: #333;
+    font-weight: bold;
+    position: absolute;
+    top: 20%;
+    left: 13%;
+  }
+  .useradd {
+    font-size: 26rpx;
+    color: #999;
+    position: absolute;
+    top: 58%;
+    left: 13%;
+  }
+  .imgright {
+    width: 55rpx;
+    height: 55rpx;
+    position: absolute;
+    top: 34%;
+    right: 3%;
+  }
+}
+// 提交商品
+.usergoods {
+  width: 100%;
+  height: 216rpx;
+  background: #fff;
+  position: relative;
+  border-bottom: solid 1px #f9f9f9;
+  .goodsimg {
+    width: 156rpx;
+    height: 156rpx;
+    margin: 30rpx;
+  }
+  .goodsname {
+    font-size: 32rpx;
+    color: #333;
+    font-weight: bold;
+    position: absolute;
+    top: 16%;
+    left: 29%;
+  }
+  .goodstag {
+    font-size: 20rpx;
+    color: #999;
+    position: absolute;
+    top: 42%;
+    left: 29%;
+    background: #fbfbfb;
+    padding: 10rpx;
+    border-radius: 10rpx;
+  }
+  .goodnum {
+    font-size: 28rpx;
+    color: #999;
+    position: absolute;
+    top: 42%;
+    right: 3%;
+  }
+  .goodprice {
+    font-size: 28rpx;
+    color: #666;
+    position: absolute;
+    bottom: 15%;
+    right: 3%;
+    .price {
+      color: red;
+      font-size: 36rpx;
+      font-weight: bold;
+    }
+  }
+}
+// 
+.preidclass{
+    height: 100%;
+    position: relative;
+    margin-bottom: 20rpx;
+    // 定金已付
+    .frontmoneyClass{
+        width: 100%;
+        background: #fff;
+       margin-top: -12px;
+        .frontClass{
+            display: flex;
+            justify-content: space-between;
+            width: 91%;
+            background: #fff;
+            margin: 20rpx auto;
+            color: red;
+            font-size: 28rpx;
+            font-weight: bold;
+            padding: 10rpx 20rpx 20rpx 20rpx;
+            position: relative;
+            .radius{
+                position: absolute;
+                width: 20rpx;
+                height: 20rpx;
+                border-radius: 50%;
+                bottom: 1%;
+                left: 5%;
+                background: red;
+            }
+            .lineclass{
+                position: absolute;
+                width:20rpx;
+                height:20rpx;
+                bottom:-20.9%;
+                left:3.3%;
+                border-right: solid 2px red;
+            }
+        }
+        .tailClass{
+            display: flex;
+            justify-content: space-between;
+            width: 91%;
+            background: #fff;
+            position: relative;
+            margin: 20rpx auto;
+            color: #999;
+            font-size: 28rpx;
+            padding: 30rpx 0 0 0;
+            .radius{
+                position: absolute;
+                width: 20rpx;
+                height: 20rpx;
+                border-radius: 50%;
+                top: 16%;
+                left: 2.4%;
+                background: #999;
+            }
+            .lineclass{
+                position: absolute;
+                width:20rpx;
+                height:19rpx;
+                top:-8%;
+                left:0.7%;
+                border-right: solid 2px #999;
+            }
+        }
+    }
+    // 尾款已付
+    .UNfrontmoneyClass{
+        width: 100%;
+        background: #fff;
+       margin-top: -12px;
+        .frontClass{
+            display: flex;
+            justify-content: space-between;
+            width: 91%;
+            background: #fff;
+            margin: 20rpx auto;
+            color: #999;
+            font-size: 28rpx;
+            font-weight: bold;
+            padding: 10rpx 20rpx 20rpx 20rpx;
+            position: relative;
+            .radius{
+                position: absolute;
+                width: 20rpx;
+                height: 20rpx;
+                border-radius: 50%;
+                bottom: 1%;
+                left: 5%;
+                background: #999;
+            }
+            .lineclass{
+                position: absolute;
+                width:20rpx;
+                height:20rpx;
+                bottom:-20.9%;
+                left:3.3%;
+                border-right: solid 2px #999;
+            }
+        }
+        .tailClass{
+            display: flex;
+            justify-content: space-between;
+            width: 91%;
+            background: #fff;
+            position: relative;
+            margin: 20rpx auto;
+            color: red;
+            font-size: 28rpx;
+            padding: 30rpx 0 0 0;
+            .radius{
+                position: absolute;
+                width: 20rpx;
+                height: 20rpx;
+                border-radius: 50%;
+                top: 16%;
+                left: 2.4%;
+                background: red;
+            }
+            .lineclass{
+                position: absolute;
+                width:20rpx;
+                height:19rpx;
+                top:-8%;
+                left:0.7%;
+                border-right: solid 2px red;
+            }
+        }
+    }
+    // 
+    .datapay{
+        width: 100%;
+        display: block;
+        background: #fff;
+        color: #999;
+        font-size: 28rpx;
+        padding-left:35rpx; 
+        // position: relative;
+        // top: -5%;
+        // left: 0%;
+    }
+    .goodprice{
+        display: block;
+        margin-left: 75%;
+        width: 30%;
+        color: #999;
+        padding-bottom: 20rpx;
+        .price{
+            color: red;
+            font-weight: bold;
+            font-size: 36rpx;
+        }
+    }
+}
+.preidclass:nth-last-child(1){
+    display: block;
+    margin-bottom: 100px;
+}
+
+// 底部 提交订单
+.bottom {
+  width: 100%;
+  height: 110rpx;
+  background: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  .num {
+    font-size: 30rpx;
+    color: #282828;
+    position: absolute;
+    top: 34%;
+    left: 5%;
+  }
+  .priceall {
+    font-size: 32rpx;
+    color: #a3a3a3;
+    position: absolute;
+    top: -9%;
+    left: 26%;
+    .allprice {
+      color: red;
+      font-size: 38rpx;
+    }
+  }
+  button {
+    color: white;
+    background: #ff2228;
+    width: 226rpx;
+    height: 70rpx;
+    font-size: 30rpx;
+    line-height: 70rpx;
+    border-radius: 15rpx;
+    position: absolute;
+    bottom: 17%;
+    right: 3%;
+  }
+}
+</style>
+
+<template>
+  <view>
+    <view class="useraddress">
+      <image class="imgadd" src="{{requestImgUrl}}adres.png" />
+      <text class="userinfo">收货人: {{userinfo.username}} {{userinfo.phone}}</text>
+      <text class="useradd">{{userinfo.address}}</text>
+      <image class="imgright" src="{{requestImgUrl}}right.png" />
+    </view>
+    <!--   -->
+    <repeat for="{{goods}}" wx:if="{{preId != 2}}">
+      <view class="usergoods">
+        <image class="goodsimg" src="{{requestImgUrl + item.img}}" />
+        <text class="goodsname">{{item.name}}</text>
+        <text class="goodstag">{{item.tag}}</text>
+        <text class="goodnum">× {{item.num}}</text>
+        <text class="goodprice">
+          小计 ￥<text class="price">{{item.price}}</text>
+        </text>
+      </view>
+    </repeat>
+    <repeat for="{{goods}}" wx:if="{{preId == 2}}">
+        <view class="preidclass">
+            <view class="usergoods">
+                <image class="goodsimg" src="{{requestImgUrl + item.img}}" />
+                <text class="goodsname">{{item.name}}</text>
+                <text class="goodstag">{{item.tag}}</text>
+                <text class="goodnum">× {{item.num}}</text>
+            </view>
+            <!-- 已付定金 -->
+            <view class="frontmoneyClass " wx:if="{{item.type == 1}}">
+                <view class="frontClass">
+                    <text>定金</text>
+                    <text>￥ {{item.frontmoney}}</text>
+                    <text class="radius"></text>
+                    <text class="lineclass"></text>
+                </view>
+                <view class="tailClass">
+                    <text>尾款</text>
+                    <text>￥ {{item.tailmoney}}</text>
+                    <text class="radius"></text>
+                    <text class="lineclass"></text>
+                </view>
+                <text class="datapay">2018年01月01日12:00:00开始支付尾款</text>
+                <text class="goodprice">
+                小计 ￥<text class="price">{{item.frontmoney}}</text>
+                </text>
+            </view>
+            <!-- 尾款已付 -->
+            <view class="UNfrontmoneyClass " wx:if="{{item.type != 1 }}">
+                <view class="frontClass">
+                    <text>定金</text>
+                    <text>￥ {{item.frontmoney}}</text>
+                    <text class="radius"></text>
+                    <text class="lineclass"></text>
+                </view>
+                <view class="tailClass">
+                    <text>尾款</text>
+                    <text>￥ {{item.tailmoney}}</text>
+                    <text class="radius"></text>
+                    <text class="lineclass"></text>
+                </view>
+                <text class="datapay" wx:if="{{item.type == 1 }}">2018年01月01日12:00:00开始支付尾款</text>
+                <text class="goodprice">
+                小计 ￥<text class="price">{{item.tailmoney}}</text>
+                </text>
+            </view>
+        </view>
+    </repeat>
+    <!-- 底部 订单提交 -->
+    <view class="bottom">
+      <text class="num">共 {{goodsAllNum}} 件</text>
+      <text class="priceall">
+        共计 ￥<text class="allprice">{{goodsAllPrice}} </text>元
+      </text>
+      <button @tap="getWXPayment">提交订单</button>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class ShopCart extends wepy.page {
+  config = {
+    navigationBarTitleText: '提交订单'
+  };
+
+  components = {};
+
+  mixins = [];
+
+  data = {
+    requestImgUrl: '',
+    preId: '2', //预购id
+    allSelected: false,
+    goodsAllNum: 0, //总共件数
+    goodsAllPrice: 0, // 总共价格
+    userinfo: {
+      username: '李白',
+      phone: '18002101520',
+      address: '山西省很多机会你结束的时刻'
+    },
+    goods: [
+      {
+        id: 1,
+        type: 2,
+        username: '李白',
+        phone: '18002101520',
+        address: '山西省很多机会你结束的时刻',
+        name: '新款冬季棉拖鞋',
+        price: 5,
+        num: 1,
+        tag: '肤色/M',
+        imgurl: '',
+        frontmoney:'200',
+        tailmoney:'1200',
+        img: 'indeximg.png'
+      }
+    ]
+  };
+
+  computed = {};
+
+  methods = {};
+
+  events = {};
+  onLoad(options) {
+      this.preId = options.preId
+      console.log(options);
+      
+    this.orderList(this.goods);
+  }
+  onShow() {
+      // this.userInfo = this.$parent.globalData.userInfo
+    this.requestImgUrl = this.$parent.globalData.requestImgUrl
+  }
+  /**
+   * 订单列表
+   */
+  orderList(data) {
+    let i = 0
+    let allNum = 0
+    let allPrice = 0
+    for(i in data){
+        allNum += data[i].num
+        if(this.data.preId == 2 && data[i].type ==1 ){
+            console.log(123);
+            allPrice +=  parseInt(data[i].num)  * parseInt(data[i].frontmoney) 
+        }else if(this.data.preId == 2 && data[i].type == 2){
+            allPrice +=  parseInt(data[i].num)  * parseInt(data[i].tailmoney) 
+        }else {
+            allPrice +=  parseInt(data[i].num)  * parseInt(data[i].num) 
+        }
+    }
+    this.goodsAllNum = allNum
+    this.goodsAllPrice = allPrice
+  }
+  /**
+   * 提交订单
+   */
+  getWXPayment(){
+      
+  }
+}
+</script>

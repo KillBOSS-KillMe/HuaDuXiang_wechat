@@ -1,0 +1,224 @@
+<style lang="less">
+@hundred: 100%;
+/* 主盒子 */
+.container {
+  width: @hundred;
+  height: @hundred;
+  background-color: #fff;
+  /*左盒子*/
+  .nav_left {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 30%;
+    background: #F9F9F9;
+    text-align: center;
+    .nav_left_items {
+      height: 88rpx;
+      text-align: center;
+      line-height: 88rpx;
+      font-size: 28rpx;
+      color: #333333;
+
+    }
+    .active {
+    background: #fff;
+    }
+  }
+  /* 4.右盒子 */
+
+  .nav_right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 70%;
+    height: @hundred;
+    box-sizing: border-box;
+    background: #fff;
+    .right_top{
+        width: @hundred;
+        height: 88rpx;
+        background: #ccc;
+        display: flex;
+        .top_item{
+            color: #999999;
+            font-size: 34rpx;
+            width: 50%;
+            background: #fff;
+            line-height: 88rpx;
+            text-align: center;
+        }
+        .activeClass{
+            color: #333333;
+            font-weight: bold;
+            border-bottom: solid 1px red;
+        }
+    }
+    .top_image{
+        width: 90%;
+        height: 170rpx;
+        padding: 27rpx;
+        border-radius: 105rpx;
+    }
+    .nav_right_box{
+        width: @hundred;
+        display: flex;
+		flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start ;
+        width: @hundred;
+            .nav_right_items {
+            margin: 20rpx 20rpx 20rpx 40rpx;
+            width: 112rpx;
+            height: 160rpx;
+            image {
+                width: 80rpx;
+                height: 80rpx;
+                display:block;
+                margin-left:12%;
+            }
+            text{
+                font-size: 26rpx;
+                color: #333333;
+                text-align: center;
+                line-height: 76rpx;
+                display: block;
+            }
+            
+        }
+    }
+
+  }
+  .nav{
+      background: red;
+  }
+}
+</style>
+<template>
+  <view class="container">
+    <!-- 左侧栏 -->
+    <view class="nav_left">
+      <view
+        class="nav_left_items {{curNav == 1 ? 'active' : ''}}" @tap="switchLeftTab" data-id="1">皮箱包具</view>
+      <view class="nav_left_items {{curNav == 2 ? 'active' : ''}}" @tap="switchLeftTab" data-id="2">男女内衣</view>
+    </view>
+    <!-- 右侧栏 -->
+    <view class="nav_right">
+        <view class="right_top">
+            <view class="top_item {{curNavClass == 1 ? 'activeClass' : ''}}" @tap="switchClassTab" data-id="1">分类</view>
+            <view class="top_item {{curNavClass == 2 ? 'activeClass' : ''}}" @tap="switchClassTab" data-id="2">品牌</view>
+        </view>
+        <image class="top_image" src="{{requestImgUrl}}indexlunbo.png"></image>
+      <view wx:if="{{curNav==1}}" class="nav_right_box">
+        <repeat for="{{classData.one}}">
+            <view class="nav_right_items">
+                <image src="{{requestImgUrl + item.img }}"></image>
+                <text>{{item.title}}</text>
+            </view>
+        </repeat>
+      </view>
+      <view wx:if="{{curNav==2}}" class="nav_right_box">
+        <repeat  for="{{classData.two}}">
+            <view class="nav_right_items">
+                <image src="{{requestImgUrl + item.img }}"></image>
+                <text>{{item.title}}</text>
+            </view>
+        </repeat>
+      </view>
+    </view>
+  </view>
+  <view> <nav class="nav" @childFn.user="goPage"/></view>
+   
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import nav from '../components/nav' // 底部导航
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '分类',
+      navigationBarBackgroundColor:'white'
+    }
+    components = {
+      nav: nav
+    }
+
+    mixins = []
+
+    data = {
+        requestImgUrl: '',
+        curNav:1,
+        curNavClass:1,
+        // 品牌
+        brandData:{
+            "one":[
+                {"id":'1',"img":'classhop.png',"title":'达利园'},
+                {"id":'2',"img":'classhop.png',"title":'好吃点'},
+                {"id":'2',"img":'classhop.png',"title":'豆本豆'},
+                {"id":'2',"img":'classhop.png',"title":'豆本豆'}
+            ],
+            "two":[
+                {"id":'1',"img":'classhop.png',"title":'达利园2'},
+                {"id":'2',"img":'classhop.png',"title":'好吃点2'},
+                {"id":'2',"img":'classhop.png',"title":'豆本豆2'},
+                {"id":'2',"img":'classhop.png',"title":'豆本豆2'}
+            ],
+        },
+        //分类
+        classData:{
+            "one":[
+                {"id":'1',"img":'class1.png',"title":'分类',"type":'1'},
+                {"id":'2',"img":'class2.png',"title":'分类 ',"type":'1'},
+                {"id":'2',"img":'class1.png',"title":'分类',"type":'1'},
+                {"id":'2',"img":'class1.png',"title":'分类',"type":'1'}
+            ],
+            "two":[
+                {"id":'1',"img":'class2.png',"title":'分类2',"type":'2'},
+                {"id":'2',"img":'class1.png',"title":'分类2',"type":'2'},
+                {"id":'2',"img":'class2.png',"title":'分类2',"type":'2'},
+                {"id":'2',"img":'class2.png',"title":'分类2',"type":'2'}
+            ],
+        },
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+        switchLeftTab:function(e){
+            let id = e.currentTarget.dataset.id
+            console.log(id);
+            this.curNav = id
+        },
+        switchClassTab:function(e){
+            let id = e.currentTarget.dataset.id
+            this.curNavClass = id
+            // if(id == 2){
+            //     this.classData.one = this.brandData.one
+            // }else {
+            //     this.classData.two = this.brandData.two
+            // }
+        },
+       /**
+       * 底部导航跳转
+       */
+      goPage (url, evt) {
+        // 销毁当前页{跳转}
+        this.$redirect(url)
+      },
+    }
+
+    events = {
+
+    }
+
+    onLoad() {
+        
+    }
+    onShow(){
+        this.requestImgUrl = this.$parent.globalData.requestImgUrl
+    }
+  }
+</script>

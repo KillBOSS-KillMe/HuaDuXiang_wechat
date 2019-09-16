@@ -1,0 +1,169 @@
+<style lang="less">
+.wrap {
+    width: 100%;
+    height: 100%;
+    background: #F9F9F9;
+    .topCard {
+        width: 93%;
+        height: 260rpx;
+        background: #fff;
+        margin: 20rpx auto;
+        image{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    // 商品
+    .saleShopWrap{
+        width: 100%;
+        height: 100%;
+        background: #F9F9F9;
+        .saleShop{
+            width: 93%;
+            height: 100%;
+            margin: 20rpx auto;
+            background: #F9F9F9;
+            margin-bottom: 2%;
+            .shopview{
+                width: 100%;
+                height: 160rpx;
+                position:relative;
+                padding: 20rpx 0rpx;
+                margin-bottom: 19rpx;
+                border-radius: 20rpx;
+                image{
+                    width: 150rpx;
+                    height: 156rpx;
+                }
+                .preTitle{
+                    font-size: 30rpx;
+                    font-weight: bold;
+                    color: #333;
+                    position: absolute;
+                    top: 12%;
+                    left: 26%;
+                }
+                .preTag{
+                    position: absolute;
+                    top: 36%;
+                    left: 26%;
+                    font-size: 22rpx;
+                    color: #9E9E9E;
+                }
+                
+                .preprice{
+                    position: absolute;
+                    top: 63%;
+                    left: 26%;
+                    font-weight: bolder;
+                    color: red;
+                    font-size: 42rpx;
+                }
+                .preexprice{
+                    position: absolute;
+                    top: 73%;
+                    left: 34%;
+                    color: #999999;
+                    font-size: 24rpx;
+                    font-weight: normal;
+                    padding-left: 25rpx;
+                    text-decoration:line-through;
+                }
+                .yuanclass{
+                    color:red;
+                    font-size: 22rpx;
+                    font-weight: normal;
+                }
+                .preBtn{
+                    width: 180rpx;
+                    height: 60rpx;
+                    background: #FF2228;
+                    color: white;
+                    position: absolute;
+                    bottom: 12%;
+                    right: 1%;
+                    font-size: small;
+                    text-align: center;
+                    line-height: 60rpx;
+                }
+            }
+
+        }
+    }
+}
+</style>
+<template>
+    <view class="wrap">
+        <!-- 头部卡片 -->
+        <view class="topCard">
+            <image src="{{requestImgUrl}}card.png"></image>
+        </view>
+        <!-- 商品 -->
+        <view class="saleShopWrap">
+            <view class="saleShop">
+                <repeat for="{{flowData}}" item="item">
+                    <view class="shopview" @tap="jumpTimeDetails('{{item.id}}')">
+                        <image src="{{requestImgUrl + item.img}}"/>
+                        <view>
+                            <text class="preTitle">{{item.title}}</text>
+                            <text class="preTag">{{item.tag}}</text>
+                            <text class="preprice">{{item.price}}<text class="yuanclass">元</text></text>
+                            <text class="preexprice" >原价￥ {{item.exprice}}</text>
+                        </view>
+                        <button class="preBtn">立即拼团</button>
+                    </view>
+                </repeat>
+            </view>
+        </view>
+    </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '拼团',
+    navigationBarBackgroundColor: 'white'
+  };
+  components = {};
+
+  mixins = [];
+
+  data = {
+      requestImgUrl: '',
+      assembleId: '',
+      flowData:[
+        {id:'1',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
+        {id:'2',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
+        {id:'3',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
+        {id:'4',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
+        {id:'5',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
+        {id:'6',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'}
+      ],
+  };
+
+    computed = {};
+    onLoad(options) {
+        this.assembleId = options.id
+    }
+    onShow() {
+        // this.userInfo = this.$parent.globalData.userInfo
+        this.requestImgUrl = this.$parent.globalData.requestImgUrl
+    }
+  methods = {
+    /**
+    * 跳转商品详情
+    */
+    jumpTimeDetails(shopid){
+    //   console.log(shopid)
+    console.log('拼团',this.assembleId);
+    this.$navigate(`/pages/shopDetails?shopid=${shopid}&assembleId=${this.assembleId}`)
+    },
+  };
+
+  events = {};
+
+ 
+}
+</script>

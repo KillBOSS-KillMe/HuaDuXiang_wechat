@@ -1,0 +1,326 @@
+<style lang="less">
+.wrap {
+    width: 100%;
+    height: 100%;
+    background: #F9F9F9;
+    // 头部卡片
+    .topCard {
+        width: 93%;
+        height: 260rpx;
+        background: #fff;
+        margin: 20rpx auto;
+        image{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    //选项卡
+    .saleTab{
+        width: 100%;
+        background: #fff;
+        .tabtitle{
+            width: 100%;
+            height: 88rpx;
+            .tabclass{
+                display: flex;
+                flex-direction: row;  //方向
+                flex-wrap: nowrap; //不换行 
+                justify-content: space-between; //对齐方式
+                // width: 20%;
+                // height: 100%;
+                background: #fff;
+                padding: 26rpx 30rpx;
+                font-size: 28rpx;
+                color: #999;
+            }
+            .tabactiveclass{
+                color: #333;
+                font-weight: bold;
+
+            }
+        }
+        // 时间选项
+        .timesale{
+            width: 100%;
+            height: 88rpx;
+            display: flex;
+            flex-direction: row;  //方向
+            flex-wrap: nowrap; //不换行 
+            justify-content: space-between; //对齐方式
+            .timetab{
+                width: 212rpx;
+                height: 88rpx;
+                background: #FFE0E1;
+                color: #F7A7E;
+                font-size: 28rpx;
+                text-align: center;
+                line-height: 88rpx;
+                color: #FF7B7F;
+            }
+            .tabactiveclassTwo{
+                background: #FF2228;
+                color: #fff;
+            }
+        }
+        // 数量选项
+        .numsale{
+            width: 100%;
+            height: 88rpx;
+            display: flex;
+            flex-direction: row;  //方向
+            flex-wrap: nowrap; //不换行 
+            justify-content: space-between; //对齐方式
+            border-top: solid 1px #999;
+            .numtab{
+                padding: 20rpx 30rpx;
+                font-size: 28rpx;
+                color: #999;
+            }
+            .tabactiveclassThree{
+                color: #333;
+                font-weight: bold;
+            }
+        }
+    }
+    // 商品
+    .saleShopWrap{
+        width: 100%;
+        height: 100%;
+        background: #F9F9F9;
+        .saleShop{
+            width: 93%;
+            height: 100%;
+            margin: 20rpx auto;
+            background: #F9F9F9;
+            column-count: 2;    
+            margin-bottom: 2%;
+            // item商品
+            .shopview{
+                background: #fff;
+                width: 335rpx;
+                height: 488rpx;
+                display: inline-block; 
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                padding: 20rpx 0rpx;
+                margin-bottom: 19rpx;
+                border-radius: 20rpx;
+                image{
+                    width: 327rpx;
+                    height: 327rpx;
+                }
+                .saleTag{
+                    font-size: 30rpx;
+                    font-weight: bold;
+                    color: #333;
+                    padding: 30rpx;
+                }
+                .salep{
+                    font-size: 28rpx;
+                    color: red;
+                    font-weight: bold;
+                    padding-left: 30rpx;
+                }
+                .salesmple{
+                    font-size: 24rpx;
+                    color: red;
+                    font-weight: normal;
+                }
+                .saleprice{
+                    font-weight: bolder;
+                    color: red;
+                    font-size: 42rpx;
+                }
+                .saleexprice{
+                    color: #666;
+                    font-size: 24rpx;
+                    font-weight: normal;
+                    padding-left: 25rpx;
+                    text-decoration:line-through;
+                }
+                .saletag{
+                    width: 60rpx;
+                    // height: 20rpx;
+                    background: red;
+                    text-align: center;
+                    line-height: 20rpx;
+                    font-size: 10px;
+                    padding: 8rpx;
+                    color: white;
+                    border-radius: 10rpx;
+                    margin-left: 3%;
+                    margin-top: -2%;
+                }
+            }
+
+        }
+    }
+}
+</style>
+<template>
+    <view class="wrap">
+        <!-- 头部卡片 -->
+        <view class="topCard">
+            <image src="{{requestImgUrl}}card.png"/>
+        </view>
+        <!-- 促销选项卡 -->
+        <view class="saleTab">
+        <!--Tab布局-->
+            <view class="tabtitle">
+                <view class="tabclass">
+                    <view class="{{currentData == 0 ? 'tabactiveclass' : '' }}" data-current="0" @tap='checkCurrent'>时段促销</view>
+                    <view class="{{currentData == 1 ? 'tabactiveclass' : '' }}" data-current="1" @tap='checkCurrent'>数量促销</view>
+                    <view class="{{currentData == 2 ? 'tabactiveclass' : '' }}" data-current="2" @tap='checkCurrent'>组合促销</view>
+                    <view class="{{currentData == 3 ? 'tabactiveclass' : '' }}" data-current="3" @tap='checkCurrent'>满减促销</view>
+                </view>
+            </view>
+            <swiper current="{{currentData}}" style="height:  {{ heightShow ? '47px' :  '0px' }}">
+                <swiper-item>
+                    <scroll-view scroll-x="true">
+                        <view class="timesale">
+                            <view class="timetab {{currentDataTwo == 0 ? 'tabactiveclassTwo' : '' }}" data-current="0" @tap='checkCurrentTwo'>08:00-10:00</view>
+                            <view class="timetab {{currentDataTwo == 1 ? 'tabactiveclassTwo' : '' }}" data-current="1" @tap='checkCurrentTwo'>10:00-12:00</view>
+                            <view class="timetab {{currentDataTwo == 2 ? 'tabactiveclassTwo' : '' }}" data-current="2" @tap='checkCurrentTwo'>12:00-14:00</view>
+                            <view class="timetab {{currentDataTwo == 3 ? 'tabactiveclassTwo' : '' }}" data-current="3" @tap='checkCurrentTwo'>14:00-16:00</view>
+                        </view>
+                    </scroll-view>
+                </swiper-item>
+                <swiper-item>
+                    <view class="numsale">
+                        <view class="numtab {{currentDataThree == 0 ? 'tabactiveclassThree' : '' }}"  data-current="0" @tap='checkCurrentThree'>全部商品</view>
+                        <view class="numtab {{currentDataThree == 1 ? 'tabactiveclassThree' : '' }}"  data-current="1" @tap='checkCurrentThree'>超量促销</view>
+                        <view class="numtab {{currentDataThree == 2 ? 'tabactiveclassThree' : '' }}"  data-current="2" @tap='checkCurrentThree'>第N件促销</view>
+                        <view class="numtab {{currentDataThree == 3 ? 'tabactiveclassThree' : '' }}"  data-current="3"  @tap='checkCurrentThree'>逢倍数促销</view>
+                        <!-- <view class="timetab">16:00-18:00</view> -->
+                        
+                    </view>
+                </swiper-item>
+            </swiper>
+        </view>
+        <!-- 商品 -->
+        <view class="saleShopWrap">
+            <view class="saleShop">
+                <repeat for="{{flowData}}" item="item">
+                    <view class="shopview" @tap="jumpTimeDetails('{{item.id}}')">
+                        <image src="{{requestImgUrl + item.img}}"/>
+                        <view class="saleTag">
+                            <text>{{item.title}}</text>
+                        </view>
+                        <view>
+                            <text class="salep" wx:if="{{ tagOne }}"> 促销价</text>
+                            <text class="salep" wx:if="{{ tagTwo }}"> 第二件</text>
+                            <text class="saleprice"><text class="salesmple">￥</text>{{item.price}}</text>
+                            <text class="saleexprice" wx:if="{{ tagthree }}" >原价￥ {{item.exprice}}</text>
+                            <text class="saletag" wx:if="{{ tagFour }}">{{item.tag}}</text>
+                        </view>
+                        
+                    </view>
+                </repeat>
+            </view>
+        </view>
+    </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '促销',
+    navigationBarBackgroundColor: 'white'
+  };
+  components = {};
+
+  mixins = [];
+
+  data = {
+      requestImgUrl: '',
+
+      currentData: 0,
+      currentDataTwo: 0,
+      currentDataThree: 0,
+      heightShow:true,
+
+      tagOne:true,
+      tagTwo:false,
+      tagthree:true,
+      tagFour: false,
+
+      flowData:[
+        {id:'1',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+        {id:'2',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+        {id:'3',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+        {id:'4',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+        {id:'5',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+        {id:'6',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'}
+      ],
+  };
+
+  computed = {};
+    onShow() {
+        // this.userInfo = this.$parent.globalData.userInfo
+      this.requestImgUrl = this.$parent.globalData.requestImgUrl
+    }
+  methods = {
+    /**
+    * 跳转商品详情
+    */
+
+    jumpTimeDetails(shopid){
+    //   console.log(shopid)
+        this.$navigate(`/pages/shopDetails?shopid=${shopid}&combination=${this.currentData}`)
+    },
+    /**
+    * 选项卡
+    */
+    // 获取当前滑块的index
+    checkCurrent(e) {
+        this.currentData = e.currentTarget.dataset.current
+        console.log('e.currentTarget.dataset.current',this.currentData)
+        if (this.currentData == 2 || this.currentData == 3) {
+            this.heightShow = false
+        } else {
+            this.heightShow = true
+        }
+
+        if(this.currentData == 0){
+            this.tagOne = true
+            this.tagTwo = false
+            this.tagthree = true
+            this.tagFour = false
+            //    this.tagthree = false
+        }else if(this.currentData == 1){
+            this.tagOne = false
+            this.tagTwo = true
+            //    this.tagthree = false
+        }else if(this.currentData == 2){
+                this.tagOne = false
+                this.tagTwo = false
+                this.tagFour = false
+                this.tagthree = false
+        }else if(this.currentData == 3){
+                this.tagOne = false
+            this.tagTwo = false
+            this.tagthree = false
+            this.tagFour = true
+        }
+    },
+    // 获取当前滑块的index
+    checkCurrentTwo(e) {
+        this.currentDataTwo = e.currentTarget.dataset.current
+        console.log('e.currentTarget.dataset.current',e.currentTarget.dataset.current)
+    },
+    // 获取当前滑块的index
+    checkCurrentThree(e) {
+        this.currentDataThree = e.currentTarget.dataset.current
+        console.log(e.currentTarget.dataset.current)
+    },
+   
+  };
+
+  events = {};
+
+  onLoad() {}
+}
+</script>

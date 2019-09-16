@@ -1,0 +1,277 @@
+<style lang="less">
+.wrap {
+    width: 100%;
+    height: 100%;
+    background: #F9F9F9;
+    // 头部卡片
+    .topCard {
+        width: 93%;
+        height: 260rpx;
+        background: #fff;
+        margin: 20rpx auto;
+        image{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    //选项卡
+    .saleTab{
+        width: 100%;
+        background: #fff;
+        // 时间选项
+        .timesale{
+            width: 100%;
+            height: 88rpx;
+            display: flex;
+            flex-direction: row;  //方向
+            flex-wrap: nowrap; //不换行 
+            justify-content: space-between; //对齐方式
+            position: relative;
+            .timetab{
+                width: 212rpx;
+                height: 88rpx;
+                background: #FFE0E1;
+                color: #F7A7E;
+                font-size: 28rpx;
+                text-align: center;
+                line-height: 88rpx;
+                color: #FF7B7F;
+                
+                .triangle-down{
+                display: block;
+                position: absolute;
+                bottom: -20%;
+                left: 10%;
+                width: 0;
+                height: 0;
+                border-left: solid 20rpx transparent;
+                border-right: solid 20rpx transparent;
+                border-top: solid 20rpx #FFE0E1;
+            }
+            }
+            .tabactiveclass{
+                background: #FF2228;
+                color: #fff;
+                .triangle-down{
+                display: block;
+                position: absolute;
+                bottom: -20%;
+                left: 10%;
+                width: 0;
+                height: 0;
+                border-left: solid 20rpx transparent;
+                border-right: solid 20rpx transparent;
+                border-top: solid 20rpx #FF2228;
+            }
+            }
+            
+        }
+        //剩余时间
+        .lastTime{
+            width: 100%;
+            height: 90rpx;
+            background: #F9F9F9;
+            line-height: 100rpx;
+            text-align: center;
+            font-size: 28rpx;
+            color: #333;
+        }
+    }
+    // 商品
+    .saleShopWrap{
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        .saleShop{
+            width: 93%;
+            height: 100%;
+            margin: 20rpx auto;
+            background: #fff;
+            margin-bottom: 2%;
+            
+            .shopview{
+                width: 100%;
+                height: 160rpx;
+                position:relative;
+                padding: 20rpx 0rpx;
+                margin-bottom: 30rpx;
+                border-radius: 20rpx;
+                border-bottom: solid 1px #F9F9F9;
+                image{
+                    width: 150rpx;
+                    height: 156rpx;
+                }
+                .preTitle{
+                    font-size: 30rpx;
+                    font-weight: bold;
+                    color: #333;
+                    position: absolute;
+                    top: 12%;
+                    left: 26%;
+                }
+                .preTag{
+                    position: absolute;
+                    top: 36%;
+                    left: 26%;
+                    font-size: 22rpx;
+                    color: #9E9E9E;
+                }
+                
+                .preprice{
+                    position: absolute;
+                    top: 38%;
+                    left: 23%;
+                    font-weight: bolder;
+                    color: red;
+                    font-size: 42rpx;
+                }
+                .skillPricr{
+                   
+                    color: #999999;
+                    font-size: 24rpx;
+                    font-weight: normal;
+                    padding-left: 25rpx;
+                }
+                .preexprice{
+                    position: absolute;
+                    top: 46%;
+                    left: 48%;
+                    color: #999999;
+                    font-size: 24rpx;
+                    font-weight: normal;
+                    padding-left: 25rpx;
+                    text-decoration:line-through;
+                }
+  
+                .barginProgess{
+                    position: absolute;
+                    top: 77%;
+                    left: 26%;
+                    font-size: 22rpx;
+                    color: #9E9E9E;
+                    width: 24%;
+                }
+                .preBtn{
+                    width: 180rpx;
+                    height: 60rpx;
+                    background: #FF2228;
+                    color: white;
+                    position: absolute;
+                    bottom: 12%;
+                    right: 1%;
+                    font-size: small;
+                    text-align: center;
+                    line-height: 60rpx;
+                }
+            }
+
+        }
+    }
+}
+</style>
+<template>
+    <view class="wrap">
+        <!-- 头部卡片 -->
+        <view class="topCard">
+            <image src="{{requestImgUrl}}card.png"></image>
+        </view>
+        <!-- 促销选项卡 -->
+        <view class="saleTab">
+        <!--Tab布局-->
+            <view class="tabtitle">
+                <view class="timesale">
+                    <view class="timetab {{currentData == 0 ? 'tabactiveclass' : '' }}" data-current="0" @tap='checkCurrent'>
+                        08:00-10:00
+                    </view>
+                    <view class="timetab {{currentData == 1 ? 'tabactiveclass' : '' }}" data-current="1" @tap='checkCurrent'>10:00-12:00</view>
+                    <view class="timetab {{currentData == 2 ? 'tabactiveclass' : '' }}" data-current="2" @tap='checkCurrent'>12:00-14:00</view>
+                    <view class="timetab {{currentData == 3 ? 'tabactiveclass' : '' }}" data-current="3" @tap='checkCurrent'>14:00-16:00</view>
+                </view>
+            </view>
+            <view class="lastTime">
+                本场结束剩余
+            </view>
+        </view>
+        <!-- 商品 -->
+        <view class="saleShopWrap">
+            <view class="saleShop">
+                <repeat for="{{flowData}}" item="item">
+                    <view class="shopview" @tap="jumpTimeDetails('{{item.id}}')">
+                        <image src="{{requestImgUrl + item.img}}"/>
+                        <view>
+                            <text class="preTitle">{{item.title}}</text>
+                            <text class="preprice"><text class="skillPricr">秒杀价 </text>{{item.price}}</text>
+                            <text class="preexprice" >原价￥ {{item.exprice}}</text>
+                             <progress class="barginProgess" percent="{{item.num}}" font-size="14" backgroundColor="#FFE0E1" activeColor="#FF2228" stroke-width="9" border-radius="10"/>
+                        </view>
+                        <button class="preBtn" @tap="goPreDetails('{{item.id}}')">马上抢</button>
+                    </view>
+                </repeat>
+            </view>
+        </view>
+    </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '秒杀',
+    navigationBarBackgroundColor: 'white'
+  };
+  components = {};
+
+  mixins = [];
+
+  data = {
+        requestImgUrl: '',
+        currentData: 0,
+        downShow: false,
+        seckillId: '',
+        timeData:[
+            {id:'1',time:'08:00'},
+            {id:'2',time:'09:00'},
+            {id:'3',time:'10:00'}
+        ],
+        flowData:[
+            {id:'1',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+            {id:'2',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+            {id:'3',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+            {id:'4',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+            {id:'5',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+            {id:'6',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'}
+        ],
+  };
+
+    computed = {};
+    onLoad(options) {
+        this.seckillId = options.id
+        console.log(options.id);
+        
+    }
+    onShow() {
+        // this.userInfo = this.$parent.globalData.userInfo
+        this.requestImgUrl = this.$parent.globalData.requestImgUrl
+    }
+  methods = {
+    // 获取当前滑块的index
+    checkCurrent(e) {
+        this.currentData = e.currentTarget.dataset.current
+        console.log(e.currentTarget.dataset.current)
+        console.log(this.downShow)
+    },
+    /**
+    * 跳转商品详情
+    */
+    jumpTimeDetails(shopid){
+    //   console.log(shopid)
+    this.$navigate(`/pages/shopDetails?shopid=${shopid}&seckillId=${this.seckillId}`)
+    },
+  };
+
+  events = {};
+
+
+}
+</script>

@@ -1,0 +1,394 @@
+<style lang="less">
+
+/* pages/myHome/myHome.wxss */
+
+page {
+  background: #F3F3F3;
+  height: 100%;
+}
+
+.top {
+  position: relative;
+  width: 100%;
+  height: 404rpx;
+  margin-bottom: 10rpx;
+
+  /* 背景图设置 */
+  .top_imgbg {
+    width: 100%;
+    height: 100%;
+    // height: 260rpx;
+  }
+  .top_user {
+    width: 100%;
+    height: 250rpx;
+    /* 头像样式设置 */
+    .imgSrc {
+      width: 100rpx;
+      height: 100rpx;
+      position: absolute;
+      top: 18%;
+      left: 5%;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    /* 用户名称设置 */
+
+    .username {
+      position: absolute;
+      left: 22%;
+      top: 26%;
+      color: #333333;
+      font-size: 32rpx;
+    }
+  }
+  .topVip {
+    width: 90%;
+    height: 96rpx;
+    background: linear-gradient(to right, #f9bf8b 0, #ffddbf 100%);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    position: absolute;
+    left: 5%;
+    top: 79%;
+    z-index: 99;
+    color: #7b5533;
+    font-size: 28rpx;
+    line-height: 96rpx;
+    border-radius: 10rpx;
+    image {
+      width: 44rpx;
+      height: 44rpx;
+      margin: 30rpx;
+    //   background: red;
+    }
+    button {
+      width: 146rpx;
+      height: 55rpx;
+      background: #ffebda;
+      line-height: 63rpx;
+      font-size: 24rpx;
+      color: #7b5533;
+      border-radius: 1rpx;
+      position: absolute;
+      right: 2%;
+      top: 23%;
+    }
+  }
+}
+
+/* 我的订单 */
+
+.my_order {
+  width: 100%;
+  height: 240rpx;
+  background: #F9F9F9;
+  position: relative;
+  .my_all {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    position: absolute;
+    top: 18%;
+    left: 5%;
+    font-weight: bold;
+    color: #333;
+    font-size: 30rpx;
+  }
+  /* 查看全部订单 */
+  .my_text {
+    font-size: 24rpx;
+    color: #a3a3a3;
+    font-weight: normal;
+  }
+  /*  功能入口区 */
+  .icon_entry {
+    width: 90%;
+    height: 100rpx;
+    position: relative;
+    top: 50%;
+    left:5%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    line-height: 106rpx;
+    .iconFun{
+      width: 25%;
+      display: flex;
+      justify-content:center;
+      position: relative;
+      .icon_num{
+        position: absolute;
+        top: -15%;
+        left: 45%;
+      }
+      .icon_text {
+        width: 170rpx;
+        position: absolute;
+        top: 28%;
+        left: 27%;
+
+        font-size: 26rpx;
+        color: #333;
+      }
+      
+
+
+    }
+  }
+  .iconFun:nth-last-child(1){
+    .icon_text:nth-last-child(1){
+        position: absolute;
+        top: 28%;
+        left: 10%;
+    }
+  }
+
+}
+/* 我的服务 */
+.personal_data {
+  width: 100%;
+  height: 383rpx;
+  background: #F9F9F9;
+  position: relative;
+  margin-top: 20rpx;
+  .mainorder {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 8%;
+    left: 5%;
+    font-weight: bold;
+    color: #333;
+    font-size: 30rpx;
+  }
+  .order {
+    width: 90%;
+    position: absolute;
+    top: 20%;
+    left: 5%;
+    .orderitem {
+      line-height: 100rpx;
+      height: 100rpx;
+      width: 100%;
+      color: #333333;
+      font-size: 28rpx;
+      border-bottom: solid 1rpx #F1F1F1;
+      position: relative;
+      .img{
+           width: 44rpx;
+           height: 44rpx;
+           position: relative;
+            top: 12%;
+            left: 0%;
+      }
+      .imgright{
+           width: 44rpx;
+           height: 44rpx;
+           position: absolute;
+            top: 13%;
+            right: 0%;
+      }
+    }
+  }
+}
+/* 客服服务 */
+.custorm_data {
+  width: 100%;
+  height: 330rpx;
+  background: #F9F9F9;
+  position: relative;
+  margin-top: 20rpx;
+  .mainorder {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 8%;
+    left: 5%;
+    font-weight: bold;
+    color: #333;
+    font-size: 30rpx;
+  }
+  .order {
+    width: 90%;
+    height: 100%;
+    position: absolute;
+    top: 20%;
+    left: 5%;
+    .orderitem {
+      line-height: 100rpx;
+      height: 100rpx;
+      width: 100%;
+      color: #333333;
+      font-size: 28rpx;
+      border-bottom: solid 1rpx F1F1F1;
+      .img{
+           width: 44rpx;
+           height: 44rpx;
+           position: relative;
+            top: 12%;
+            left: 0%;
+      }
+      .imgright{
+           width: 44rpx;
+           height: 44rpx;
+           position: relative;
+            top: 13%;
+            left: 69%;
+      }
+    }
+  }
+}
+
+
+</style>
+
+<template>
+  <view>
+    <!-- 顶部获取个人信息 -->
+    <view class="top" @tap="getMyRank">
+      <image class='top_imgbg' src='{{requestImgUrl}}userbg.png'></image>
+      <view class="top_user">
+        <image class="imgSrc" data-id src="{{userInfo.avatarUrl}}" />
+        <view class="username">{{userInfo.nickName || ''}}</view>
+      </view>
+      <view class="topVip">
+        <image src="{{requestImgUrl}}copy.png"/>
+        <text>成为合伙人, 福利享不停</text>
+        <button @tap="">立即开通</button>
+      </view>
+    </view>
+
+    <!-- 我的订单 -->
+    <view class="my_order">
+      <view class="my_all">
+        <text>我的订单</text>
+        <text class="my_text" bindtap="allOrder">查看全部订单 ></text>
+      </view>
+      <!-- 功能区 -->
+      <view class="icon_entry">
+        <repeat for="{{funList}}" item="item">
+          <view class="iconFun">
+             <text class="icon_num">{{ item.num }}</text>
+              <text class="icon_text">{{ item.funtext }}</text>
+          </view>
+          
+        </repeat>
+      </view>
+    </view>
+    <!-- 我的服务 -->
+    <view class="personal_data">
+      <text class="mainorder">我的服务</text>
+      <view class="order">
+        <view class="orderitem" @tap="getUserAddress">
+            <image class="img" src="{{requestImgUrl}}address.png"/>
+            收货地址
+            <image class="imgright" src="{{requestImgUrl}}right.png"/>
+        </view>
+        <view class="orderitem">
+            <image class="img" src="{{requestImgUrl}}shar.png"/>
+            分享赚钱
+            <image class="imgright" src="{{requestImgUrl}}right.png"/>
+        </view>
+        <view class="orderitem">
+            <image class="img" src="{{requestImgUrl}}stop.png"/>
+            停车场
+            <image class="imgright" src="{{requestImgUrl}}right.png"/>
+        </view>
+      </view>
+    </view>
+    <!-- 客服服务 -->
+    <view class="custorm_data">
+      <view class="order">
+            
+        <view class="orderitem">
+            <image class="img" src="{{requestImgUrl}}custorm.png"/>
+            客服服务
+            <image class="imgright" src="{{requestImgUrl}}right.png"/>
+        </view>
+      </view>
+    </view>
+
+    <nav class="nav" @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import nav from '../components/nav'; // 底部导航
+
+export default class ShopCart extends wepy.page {
+  config = {
+    navigationBarTitleText: '会员'
+  };
+
+  components = {
+    nav
+  };
+
+  mixins = [];
+
+  data = {
+    requestImgUrl: '',
+    funList: [
+      { funtext: '待付款', state: 1 , num: 0},
+      { funtext: '待发货', state: 2 , num: 0},
+      { funtext: '待收货', state: 3 , num: 0},
+      { funtext: '退款 / 售后', state: 4 , num: 0 }
+    ], // 功能入口
+    rightImg: '../../images/img/right.png',
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    userInfo: {},
+    index: '2'
+  };
+
+  computed = {};
+
+  methods = {
+    /**
+     * 收货地址
+     */
+    getUserAddress(){
+      this.$navigate({ url: `userDeliveryAddress` });
+    },
+    /**
+     * 查看我的会员等级
+     */
+    getMyRank(){
+      this.$navigate({ url: `membersCenter` });
+    },
+    /**
+     * 底部导航跳转
+     */
+    goPage(url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url);
+    }
+  };
+
+  events = {};
+
+  onLoad() {
+    this.userInfo = this.$parent.globalData.userInfo;
+    console.log(this.userInfo);
+  }
+  onShow() {
+        // this.userInfo = this.$parent.globalData.userInfo
+      this.requestImgUrl = this.$parent.globalData.requestImgUrl
+  }
+  /**
+   * 状态跳转
+   */
+  //   goStatusList: function(e) {
+  //     let state = e.currentTarget.dataset.state
+  //     // console.log(state)
+  //     wx.navigateTo({
+  //       url: "/pages/myOrder/myOrder?state=" + state
+  //     })
+  //   },
+}
+</script>

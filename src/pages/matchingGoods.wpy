@@ -1,0 +1,283 @@
+<style lang="less">
+page{
+    background: #F9F9F9
+}
+.good-list {
+  height: 240rpx;
+  .swiper-item-wrapper {
+    .swiper-content {
+      border-bottom: 1rpx solid #F9F9F9;
+      background: #fff;
+      position: relative;
+      margin-bottom: 20rpx;
+      .goods-info {
+        display: flex;
+        height: 150rpx;
+        box-sizing: border-box;
+        position: relative;
+        .icon_check {
+          position: absolute;
+          top: 62%;
+          left: 3%;
+          z-index: 999;
+        }
+        .goodstap{
+            position: relative;
+            width: 100%;
+            display: flex;
+            box-sizing: border-box;
+            .img-box {
+              background-color: #F9F9F9;
+              width: 188rpx;
+              height: 188rpx;
+              position: absolute;
+              top: 13%;
+              left: 13%;
+              .img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+            .text-box {
+              .goods-title {
+                width: 60%;
+                font-size: 30rpx;
+                font-weight: bold;
+                position: absolute;
+                top: 16%;
+                left: 42%;
+                color: #333;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                
+              }
+              .goods-tag {
+                // background: #FBFBFB;
+                font-size: 24rpx;
+                // padding: 6rpx 10rpx;
+                color: #9E9E9E;
+                position: absolute;
+                top: 70%;
+                left: 42%;
+                border-radius: 18rpx;
+                text-align: center;
+                line-height: auto;
+                .tag-price{
+                    font-size: 28rpx;
+                    color: red;
+                    font-weight: bold;
+                }
+              }
+               .price {
+                    position: absolute;
+                    top: 110%;
+                    left: 42%;
+                    font-size: 24rpx;
+                    color: #9E9E9E;
+                    // color: red;
+                    .exprice{
+                        text-decoration: line-through;
+                    }
+                }
+    
+            }
+        }
+        .shop-count {
+            position: absolute;
+            top: 98%;
+            right: 0%;
+            width: 190rpx;
+            height: 48rpx;
+            line-height: 48rpx;
+        }
+      }
+    }
+  }
+}
+.check-box {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  left: 0;
+  bottom: 8%;
+  width: 95%;
+  height: 88rpx;
+  line-height: 88rpx;
+  padding-left: 18rpx;
+  z-index: 999;
+  .pay-btn {
+    width: 100%;
+    height: 100%;
+    border-radius: 10rpx;
+    line-height: auto;
+    text-align: center;
+    background: #FF2228;
+    color: #fff;
+    font-size: 30rpx;
+    font-weight: bold;
+    margin: auto 7%;
+  }
+}
+</style>
+
+<template>
+  <view class="shop-cart">
+    <view class="good-list">
+      <repeat for="{{goods}}" key="item">
+        <swiperDel>
+          <view class="goods-info">
+              <icon class="icon_check" type="success" size="20" @tap.stop="selectList" data-index="{{index}}" wx:if="{{item.selected}}"></icon>
+              <icon class="icon_check" type="circle" size="20" @tap.stop="selectList" data-index="{{index}}" wx:else></icon>
+              
+              <view class="goodstap">
+                <view class="img-box">
+                    <image src="{{item.imgurl}}" class="img"/>
+                </view>
+
+                <view class="text-box">
+                    <view class="goods-title">{{item.name}}</view>
+                    <view class="goods-tag">
+                        组合价 ￥<text class="tag-price">{{item.price}}</text>
+                    </view>          
+                    <view class="price">原价<text class="exprice"> ￥{{item.exprice}}</text></view>
+                </view>
+              </view>
+
+                <view class="shop-count">
+                    <cartCount :good.sync="item" @getGood.user="getGood"></cartCount>
+                </view>
+
+          </view>
+        </swiperDel>
+       </repeat>
+    </view>
+    <view class="check-box">
+       <!-- <view class="left-price">
+        <view class="all-select-box" @tap.stop="selectAll">
+          <icon type="success" size="20" wx:if="{{judgeAllSelect}}"></icon>
+          <icon type="circle" size="20" wx:else></icon>
+          <text>全选</text>
+        </view>
+        <view class="total">
+          共计 ￥ <text style="color:#FF2228;font-size:38rpx;font-weight:bold">{{totalPrice}}</text>
+        </view>
+      </view> -->
+      <view class="pay-btn" @tap="selectGoodsSure">确 定</view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import swiperDel from '../components/swiper_delete' 
+import cartCount from '../components/cart_count'
+
+export default class ShopCart extends wepy.page {
+  config = {
+    navigationBarTitleText: '搭配商品'
+  };
+
+  components = {
+    swiperDel,
+    cartCount
+  };
+
+  mixins = [];
+
+  data = {
+    selectInformation:'', //单选选中数据
+    allSelected: false,
+    goods: [
+      {
+        id:1,
+        name: '新款冬季棉拖鞋',
+        price: 100,
+        exprice: 20,
+        num: 1,
+        tag:'肤色/M',
+        imgurl: ''
+      },
+      {
+        id:2,
+        name: '萌粉订书机 小型',
+        price: 100,
+        exprice: 20,
+        num: 1,
+        tag:'肤色/M',
+        imgurl: ''
+      },
+      {
+        id:3,
+        name: '创意家居卫生间用品卫生间用品卫生间用品卫生间用品',
+        price: 100,
+        exprice: 20,
+        num: 5,
+        tag:'肤色/M',
+        imgurl: ''
+      }
+    ]
+  };
+
+  computed = {
+    totalPrice() { // 总价格
+      let totalPrice = 0
+      for (let good of this.goods) {
+        if (good.selected) {
+          totalPrice += good.num * good.price
+        }
+      }
+      return totalPrice
+    },
+    judgeAllSelect() { //判断全选
+      let isAllSelected = this.goods.every((item) => { // 只要有一个没选就为false
+        return item.selected
+      })
+      isAllSelected ? (this.allSelected = true) : (this.allSelected = false)
+      return isAllSelected
+    }
+  }
+
+  methods = {
+    selectList(e) { // 当前勾选选中
+      let curIndex = e.target.dataset.index // 获取当前索
+      let curItem = this.goods[curIndex]
+      curItem.selected = !curItem.selected // 取反
+      this.selectInformation = curItem // 单选数据 存储
+    },
+    selectAll(e) { // 全选
+      this.allSelected = !this.allSelected 
+      for (let good of this.goods) { // 商品每项选中的值和全选的状态值一致
+        good.selected = this.allSelected
+      }
+    },
+    getGood (item) { // 自定义事件
+      // console.log(this.goods)
+    },
+    getDel(item){
+        this.goods.splice(item,1)
+    },
+    selectGoodsSure(){
+        if(!this.selectInformation){
+            console.log(11)
+            wx.showToast({
+                icon: 'none',
+                title: '请选择商品'
+            });
+        }else{
+            wx.navigateBack({
+                delta: 1
+            })
+            console.log('this.selectInformation',this.selectInformation)
+        }
+    }
+  };
+
+  events = {};
+  onLoad() {
+    this.goods.forEach((good) => { // 刚开始默认都是未选中状态
+      good.selected = false
+    })
+  }
+}
+</script>

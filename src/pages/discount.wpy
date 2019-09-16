@@ -1,0 +1,309 @@
+<style lang="less">
+swiper-item{
+    height: 100%;
+    overflow-y: hidden;
+    overflow: scroll;
+}
+scroll-view{
+    height: 100%;
+}
+.wrap {
+    width: 100%;
+    height: 100%;
+    background: #F9F9F9;
+    // 头部卡片
+    .topCard {
+        width: 93%;
+        height: 260rpx;
+        background: #fff;
+        margin: 20rpx auto;
+        image{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    //选项卡
+    .preTab{
+        width: 100%;
+        // background: pink;
+        .tabtitle{
+            height: 88rpx;
+            width: 93%;
+            margin: 20rpx auto 50rpx;
+            .tabViewclass{
+                display: flex;
+                flex-direction: row;  //方向
+                flex-wrap: nowrap; //不换行 
+                justify-content: space-between; //对齐方式
+                background: #fff;
+                padding: 26rpx 30rpx;
+                font-size: 32rpx;
+                color: #999;
+            }
+            .tabclass{
+                width: 47%;
+                text-align: center;
+                color: #999999;
+                
+                text{
+                    display: block;
+                    position:relative;
+                    bottom: 45%;
+                    left: 73%;
+                    width: 0;
+                    height: 0;
+                    border-left: 10rpx solid transparent;
+                    border-right: 10rpx solid transparent;
+                    border-top: 20rpx solid #999999;
+                }
+            }
+            .tabactiveclass{
+                color: #333;
+                font-weight: bold;
+                text{
+                    display: block;
+                    position:relative;
+                    bottom: 45%;
+                    left: 73%;
+                    width: 0;
+                    height: 0;
+                    border-left: 10rpx solid transparent;
+                    border-right: 10rpx solid transparent;
+                    border-top: 20rpx solid #333;
+                }
+
+            }
+
+        }
+        .swiperWrap{
+            height: auto;
+            width: 93%;
+            margin: auto;
+            background: #fff;
+            display: flex;
+            justify-content: space-between; //对齐方式
+            flex-direction: row;
+            flex-wrap: wrap;
+            padding-bottom: 30rpx;
+            box-shadow: 0 0 12px #999999;
+            .swiperT{
+                height: 100;
+            }
+            .swiperitrm{
+                padding: 20rpx;
+                background: #F2F2F2; //#F2F2F2
+                margin: 30rpx 20rpx 0 20rpx;
+                border-radius: 6rpx;
+                color: #333333;
+                font-size: 26rpx;
+            }
+        }
+    }
+    // 商品
+    .preShopWrap{
+        width: 100%;
+        height: 100%;
+        background: #F9F9F9;
+        // position: absolute;
+        // top: 5%;
+        .preShop{
+            width: 93%;
+            height: 100%;
+            margin: 20rpx auto;
+            background: #F9F9F9;
+            column-count: 2;    
+            margin-bottom: 2%;
+            // item商品
+            .shopview{
+                background: #fff;
+                width: 335rpx;
+                height: 488rpx;
+                display: inline-block; 
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                padding: 20rpx 0rpx;
+                margin-bottom: 19rpx;
+                border-radius: 20rpx;
+                image{
+                    width: 327rpx;
+                    height: 327rpx;
+                }
+                .preTag{
+                    font-size: 30rpx;
+                    font-weight: bold;
+                    color: #333;
+                    padding: 30rpx;
+                }
+                .prep{
+                    font-size: 28rpx;
+                    color: red;
+                    font-weight: bold;
+                    padding-left: 30rpx;
+                }
+                .presmple{
+                    font-size: 24rpx;
+                    color: red;
+                    font-weight: normal;
+                }
+                .preprice{
+                    font-weight: bolder;
+                    color: red;
+                    font-size: 42rpx;
+                }
+                .preexprice{
+                    color: #666;
+                    font-size: 24rpx;
+                    font-weight: normal;
+                    padding-left: 25rpx;
+                    text-decoration:line-through;
+                }
+            }
+
+        }
+    }
+}
+
+</style>
+<template>
+    <view class="wrap">
+        <!-- 头部卡片 -->
+        <view class="topCard">
+            <image src="{{requestImgUrl}}card.png"></image>
+        </view>
+        <!-- 促销选项卡 -->
+            <view class="preTab">
+            <!--Tab布局-->
+                <view class="tabtitle">
+                    <view class="tabViewclass">
+                        <view class="tabclass {{currentData == 0 ? 'tabactiveclass' : '' }}" data-current="0" @tap='checkCurrent'>类别折扣<text></text></view>
+                        <view class="tabclass {{currentData == 1 ? 'tabactiveclass' : '' }}" data-current="1" @tap='checkCurrent'>品牌折扣<text></text></view>
+                    </view>
+                </view>
+                <swiper current="{{currentData}}">
+                    <swiper-item>
+                        <scroll-view scroll-y="true">
+                            <view  class="swiperWrap">
+                                <repeat for="{{ conuntData }}">
+                                    <view class="swiperitrm" @tap="chooseCategory('{{item.id}}')">{{ item.tag}}</view>
+                                </repeat>
+                            </view>
+                        </scroll-view>
+                    </swiper-item>
+                    <swiper-item>
+                        <scroll-view scroll-y="true">
+                            <view  class="swiperWrap">
+                                <repeat for="{{ conuntData }}">
+                                    <view class="swiperitrm" @tap="chooseBrand('{{item.id}}')">{{ item.tag}}</view>
+                                </repeat>
+                            </view>
+                        </scroll-view>
+                    </swiper-item>
+                </swiper>
+            </view>
+
+        <!-- 商品 -->
+        <view class="preShopWrap">
+            <view class="preShop">
+                <repeat for="{{flowData}}" item="item">
+                    <view class="shopview"  @tap="jumpTimeDetails('{{item.id}}')">
+                
+                        <image src="{{requestImgUrl + item.img}}"/>
+                        <view class="preTag">
+                            <text>{{item.title}}</text>
+                        </view>
+                        <view>
+                            <text class="prep" > 折扣价</text>
+                            <text class="preprice"><text class="presmple">￥</text>{{item.price}}</text>
+                            <text class="preexprice" >原价￥ {{item.exprice}}</text>
+                        </view>
+                        
+                    </view>
+                </repeat>
+            </view>
+        </view>
+        </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '折扣',
+    navigationBarBackgroundColor: 'white'
+  };
+  components = {};
+
+  mixins = [];
+
+  data = {
+        requestImgUrl: '',
+        currentData: 0,
+        discountId:'', //首页传递当前分类id值
+        conuntData:[
+            {id:'1',tag:'品牌1'},
+            {id:'2',tag:'品牌2'},
+            {id:'3',tag:'品牌3'},
+            {id:'4',tag:'品牌4'},
+            {id:'5',tag:'品牌5'},
+            {id:'6',tag:'品牌6'},
+            {id:'7',tag:'品牌7'},
+            {id:'8',tag:'品牌8'},
+            {id:'9',tag:'品牌9'},
+            {id:'10',tag:'品牌10'},
+            {id:'11',tag:'品牌11'},
+            {id:'12',tag:'品牌12'},
+            {id:'13',tag:'品牌13'}
+        ],
+        flowData:[
+            {id:'1',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+            {id:'2',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+            {id:'3',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+            {id:'4',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+            {id:'5',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+            {id:'6',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'}
+        ],
+  };
+
+  computed = {};
+    onLoad(options) {
+        this.discountId = options.id
+        console.log('discount',options);
+        
+    }
+    onShow() {
+        this.requestImgUrl = this.$parent.globalData.requestImgUrl
+    }
+  methods = {
+    // 获取当前滑块的index
+    checkCurrent(e) {
+        this.currentData = e.currentTarget.dataset.current
+        console.log(e.currentTarget.dataset.current)
+    },
+    /**
+    * 选择类别
+    */
+    chooseCategory(id){
+        console.log('类别' + id)
+    },
+    /**
+    * 选择品牌
+    */
+    chooseBrand(id){
+        console.log('品牌' + id)
+    },
+    /**
+     * 跳转商品详情
+     */
+    jumpTimeDetails(shopid){
+      //   console.log(shopid)
+        this.$navigate(`/pages/shopDetails?shopid=${shopid}&discountId=${this.discountId}`)
+    },
+  };
+
+  events = {};
+
+
+}
+</script>

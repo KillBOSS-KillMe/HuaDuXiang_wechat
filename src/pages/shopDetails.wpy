@@ -1,0 +1,1476 @@
+<style lang="less">
+@hundred: 100%;
+// 选项卡
+page{
+  background: #F9F9F9;
+}
+.swiper-tab {
+  width: 100%;
+  text-align: center;
+  line-height: 80rpx;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background: #fff;
+  .swiper-tab-list {
+    font-size: 28rpx;
+    color: #999999;
+    padding: 0 40rpx;
+    position: relative;
+  }
+  .active {
+    font-weight: bold;
+    color: #ff2228;
+    border-bottom: 5rpx solid #ff2228;
+  }
+  .tab-content {
+    text-align: center;
+    padding: 100rpx 50rpx;
+    height: 100%;
+  }
+}
+// 轮播
+.mainWheel {
+  width: @hundred;
+  height: 380rpx;
+  .slide-image {
+    width: 100%;
+    height: 100%;
+  }
+  swiper {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.shopView{
+    width: 100%;
+    height: 100%;
+    border-bottom: solid 1px #F5F5F5;
+    //商品介绍
+    .shopIntroduce{
+       height: 187rpx;
+       width: 100%;
+       position: relative;
+       background: #fff;
+    }
+    .shopIntroducePre{
+       height: 300rpx;
+       width: 100%;
+       position: relative;
+       background: #fff;
+    }
+    .shoptitle{
+        width: 60%;
+        overflow: hidden; /*超出部分隐藏*/
+        text-overflow: ellipsis; /* 超出部分显示省略号 */
+        white-space: nowrap; /*规定段落中的文本不进行换行 */
+        position: absolute;
+        top: 11%;
+        left: 4%;
+        color: #282828;
+        font-size: 34rpx;
+        font-weight: bold;
+    }
+    .sharimg{
+        width: 48rpx;
+        height: 48rpx;
+        position: absolute;
+        top: 11%;
+        right: 4%;
+    }
+    .shoptsubtitle{
+        color: #8E8E8E;
+        font-size: 28rpx;
+        position: absolute;
+        top: 41%;
+        left: 4%;
+    }
+
+    // 时段促销
+    .pricetagtime{
+        color: #8E8E8E;
+        font-size: 26rpx;
+        position: absolute;
+        top: 64%;
+        left: 4%;
+        .pricered{
+            color: #F2292D;
+            font-size: 38rpx;
+            font-weight: bold;
+        }
+        .priceEX{
+            text-decoration:line-through;
+            margin: 0 10rpx;
+        }
+        .priceBtn{
+            background: #FF2228;
+            padding: 10rpx;
+            height: 70rpx;
+            font-size: 20rpx;
+            color: #fff;
+            text-align: center;
+            line-height: 70rpx;
+            border-radius: 10rpx;
+            margin: 0 0 0 30rpx;
+        }
+        .linethorungh{
+          text-decoration: line-through;
+        }
+        
+    }
+    // 数量促销
+    .pricetagNum{
+        color: #8E8E8E;
+        font-size: 26rpx;
+        position: absolute;
+        top: 64%;
+        left: 4%;
+        .pricered{
+            color: #F2292D;
+            font-size: 38rpx;
+            font-weight: bold;
+        }
+        .priceEX{
+            text-decoration:line-through;
+            margin: 0 10rpx;
+        }
+        .priceBtn{
+            background: #FF2228;
+            padding: 10rpx;
+            height: 70rpx;
+            font-size: 20rpx;
+            color: #fff;
+            text-align: center;
+            line-height: 70rpx;
+            border-radius: 10rpx;
+            margin: 0 0 0 30rpx;
+        }
+        .linethorungh{
+          text-decoration: line-through;
+        }
+        
+    }
+    // 满减促销
+    .pricetagJian{
+        color: #8E8E8E;
+        font-size: 26rpx;
+        position: absolute;
+        top: 64%;
+        left: 4%;
+        .pricered{
+            color: #F2292D;
+            font-size: 38rpx;
+            font-weight: bold;
+        }
+        .priceEX{
+            text-decoration:line-through;
+            margin: 0 10rpx;
+        }
+        .priceBtn{
+            background: #FF2228;
+            padding: 10rpx;
+            height: 70rpx;
+            font-size: 20rpx;
+            color: #fff;
+            text-align: center;
+            line-height: 70rpx;
+            border-radius: 10rpx;
+            margin: 0 0 0 30rpx;
+        }
+        .linethorungh{
+          text-decoration: line-through;
+        }
+        
+    }
+    // 组合促销
+    .pricetagcomp{
+        color: #8E8E8E;
+        font-size: 26rpx;
+        position: absolute;
+        top: 64%;
+        left: 4%;
+        width: 96%;
+        .pricered{
+            color: #F2292D;
+            font-size: 38rpx;
+            font-weight: bold;
+        }
+        .linethorungh{
+          text-decoration: line-through;
+        }
+         .shopLook{
+          position: absolute;
+          right: 10%;
+          top: 22%;
+          color: #999;
+        }
+        .serviceImg{
+          width: 40rpx;
+          height: 38rpx;
+          position: absolute;
+          right: 4%;
+          top: 27%;
+        }
+        .shopYipIn{
+          position: absolute;
+          right: 6%;
+          top: 22%;
+          color: #999;
+        }
+    }
+    // 预购
+    .shoptsubtitlePre{
+        color: #8E8E8E;
+        font-size: 28rpx;
+        position: absolute;
+        top: 29%;
+        left: 4%;
+    }
+    .pricetagPre{
+        color: #8E8E8E;
+        font-size: 26rpx;
+        position: absolute;
+        top: 44%;
+        left: 4%;
+        width: 96%;
+        .pricered{
+            color: #F2292D;
+            font-size: 38rpx;
+            font-weight: bold;
+            
+        }
+        .preBtn{
+           background: #FFF2F2;
+            padding: 10rpx;
+            height: 70rpx;
+            font-size: 20rpx;
+            color: red;
+            text-align: center;
+            line-height: 70rpx;
+            border-radius: 10rpx;
+            margin: 0  10rpx;
+        }
+        .red{
+           color: #F2292D;
+            font-size: 28rpx;
+            font-weight: bold;
+            margin-left: 40rpx;
+        }
+    }
+    // 折扣
+    .pricetagDis{
+        color: #8E8E8E;
+        font-size: 26rpx;
+        position: absolute;
+        top: 64%;
+        left: 4%;
+        .pricered{
+            color: #F2292D;
+            font-size: 38rpx;
+            font-weight: bold;
+        }
+        .priceEX{
+            text-decoration:line-through;
+            margin: 0 10rpx;
+        }
+        .priceBtn{
+            background: #FF2228;
+            padding: 10rpx;
+            height: 70rpx;
+            font-size: 20rpx;
+            color: #fff;
+            text-align: center;
+            line-height: 70rpx;
+            border-radius: 10rpx;
+            margin: 0 0 0 30rpx;
+        }
+        .linethorungh{
+          text-decoration: line-through;
+        }
+    }
+    // 拼团
+    .pricetagPin{
+        color: #8E8E8E;
+        font-size: 26rpx;
+        position: absolute;
+        top: 64%;
+        left: 4%;
+        .pricered{
+            color: #F2292D;
+            font-size: 38rpx;
+            font-weight: bold;
+        }
+        .priceEX{
+            text-decoration:line-through;
+            margin: 0 10rpx;
+        }
+        .priceBtn{
+            background: #FF2228;
+            padding: 10rpx;
+            height: 70rpx;
+            font-size: 20rpx;
+            color: #fff;
+            text-align: center;
+            line-height: 70rpx;
+            border-radius: 10rpx;
+            margin: 0 0 0 30rpx;
+        }
+        .shopYipIn{
+          position: absolute;
+          right: 6%;
+          top: 22%;
+          color: #999;
+        }
+        .linethorungh{
+          text-decoration: line-through;
+        }
+    }
+    // 秒杀
+    .pricetagskill{
+        color: #8E8E8E;
+        font-size: 26rpx;
+        position: absolute;
+        top: 64%;
+        left: 4%;
+        width: 100%;
+        .pricered{
+            color: #F2292D;
+            font-size: 38rpx;
+            font-weight: bold;
+        }
+        .priceEX{
+            text-decoration:line-through;
+            margin: 0 10rpx;
+        }
+        .priceBtn{
+            background: #FF2228;
+            padding: 10rpx;
+            height: 70rpx;
+            font-size: 20rpx;
+            color: #fff;
+            text-align: center;
+            line-height: 70rpx;
+            border-radius: 10rpx;
+            margin: 0 0 0 30rpx;
+        }
+        .linethorungh{
+          text-decoration: line-through;
+        }
+        // 剩余时间
+        .rushBuy{
+          width: 100%;
+          height: 50px;
+          background: red;
+          position: absolute;
+          left: -4%;
+          top: 135%;
+          .rushing{
+            font-size: 28rpx;
+            font-weight: bold;
+            color: #fff;
+            line-height: auto;
+            position: absolute;
+            top: 27%;
+            left: 5%;
+          }
+          .rushless{
+            font-size: 24rpx;
+            font-weight: bold;
+            color: #fff;
+            line-height: auto;
+            position: absolute;
+            top: 27%;
+            right: 30%;
+          }
+        }
+    }
+    // 商品服务
+    .shopService{
+      width: 100%;
+      height: 264rpx;
+      display: flex;
+      // flex-direction: row;
+      flex-wrap: wrap;
+      flex-direction: column;
+      background: #fff;
+      // justify-content: center;
+      view{
+        // height: 40rpx;
+        position: relative;
+        padding: 20rpx 30rpx;
+        line-height: 48rpx;
+        font-size: 24rpx;
+         color: #333;
+        .shopLook{
+          position: absolute;
+          right: 10%;
+          top: 22%;
+          color: #999;
+        }
+        .serviceImg{
+          width: 40rpx;
+          height: 38rpx;
+          position: absolute;
+          right: 4%;
+          top: 27%;
+        }
+      }
+    }
+    // 秒杀margintop
+    .shopServiceMaginTop{
+      width: 100%;
+      height: 264rpx;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      background: #fff;
+      margin-top: 100rpx;
+      view{
+        // height: 40rpx;
+        position: relative;
+        padding: 20rpx 30rpx;
+        line-height: 48rpx;
+        font-size: 24rpx;
+         color: #333;
+        .shopLook{
+          position: absolute;
+          right: 10%;
+          top: 22%;
+          color: #999;
+        }
+        .serviceImg{
+          width: 40rpx;
+          height: 38rpx;
+          position: absolute;
+          right: 4%;
+          top: 27%;
+        }
+      }
+    }
+    // 拼团服务
+    .assembleService{
+      width: 100%;
+      height: 382rpx;
+      display: flex;
+      // flex-direction: row;
+      flex-wrap: wrap;
+      flex-direction: column;
+      background: #fff;
+      // justify-content: center;
+      .proNum{
+        position: relative;
+        padding: 20rpx 30rpx;
+        line-height: 48rpx;
+        font-size: 24rpx;
+         color: #333;
+         font-weight: bold;
+        .shopLook{
+          position: absolute;
+          right: 10%;
+          top: 22%;
+          color: #999;
+        }
+        .serviceImg{
+          width: 40rpx;
+          height: 38rpx;
+          position: absolute;
+          right: 4%;
+          top: 27%;
+        }
+      }
+      .assemblePeo{
+        width: 100%;
+        height: 150rpx;
+        // background: pink;
+        .peoClass{
+          width: 100%;
+          height:100%;
+          position: relative;
+          image{
+            position: absolute;
+            top: 25%;
+            left: 4%;
+            width: 80rpx;
+            height: 80rpx;
+            border-radius: 50%;
+            background: red;
+          }
+          .peoname{
+            position: absolute;
+            top: 37%;
+            left: 18%;
+            font-size: 28rpx;
+            color: #333;
+          }
+          .peonum{
+            position: absolute;
+            top: 23%;
+            right: 32%;
+            font-size: 24rpx;
+            color: #333;
+          }
+          .peotime{
+            position: absolute;
+            top: 51%;
+            right: 27%;
+            font-size: 24rpx;
+            color: #333;
+          }
+          button{
+            width: 133rpx;
+            height: 65rpx;
+            color: white;
+            font-size: 28rpx;
+            line-height: 65rpx;
+            border-radius: 20rpx;
+            background: red;
+            position: absolute;
+            top: 26%;
+            right: 5%;
+          }
+        }
+      }
+    }
+    // 商品详情
+    .shopIMG{
+      width: 100%;
+      background: #fff;
+      margin-top: 30rpx;
+      // position: relative;
+      // top: 115%;
+      // left: 0;
+      .imgTitle{
+        font-size: 32rpx;
+        color:#333;
+        font-weight: bold;
+        // background: pink;
+        height: 90rpx;
+        text-align: center;
+        line-height: 80rpx;
+      }
+      image{
+        width: 100%;
+      }
+    }
+    //商品评价
+    .shopEvaluate{
+      width: 100%;
+      background: #fff;
+      margin-top: 30rpx;
+      .valuateTitle{
+        width: 100%;
+        height: 80rpx;
+        position: relative;
+        .title{
+          font-size: 32rpx;
+          color:#333;
+          font-weight: bold;
+          position: absolute;
+          top:18%;
+          left: 42%;
+        }
+        .shopLook{
+          position: absolute;
+          right: 10%;
+          top: 22%;
+          color: #999;
+        }
+        .serviceImg{
+          width: 40rpx;
+          height: 38rpx;
+          position: absolute;
+          right: 4%;
+          top: 27%;
+
+        }
+      }
+      // 商品评价 图
+      .goosshow{
+         width: 100%;
+        padding-bottom: 30rpx;
+        margin-bottom: 30rpx;
+        .goodsimg{
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
+          image{
+            width: 200rpx;
+            height: 200rpx;
+            margin: 20rpx 15rpx;
+            border-radius: 10rpx;
+          }
+          .numgoods{
+            color: red;
+            font-size: 20rpx;
+            padding-left: 20rpx;
+          }
+        }
+      }
+    }
+    // 店铺
+    .store{
+      position: relative;
+      // 店铺
+      .shop{
+        width: 100%;
+        height: 500rpx;
+        background: #fff;
+        .shopStore{
+          width: 100%;
+          height: 200rpx;
+          background: #fff;
+          position: relative;
+          font-size: 32rpx;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          image{
+            width: 120rpx;
+            height: 120rpx;
+            border-radius: 10rpx;
+            padding: 40rpx 30rpx;
+          }
+          .shopname{
+            padding: 80rpx 20rpx 0;
+          }
+          .gostore{
+            width: 120rpx;
+            height: 56rpx;
+            text-align: center;
+            line-height: 56rpx;
+            border: solid 1px #F92832;
+            border-radius: 10rpx;
+            position: absolute;
+            right: 4%;
+            top: 35%;
+            font-size: 32rpx;
+            color: #F92832;
+            font-weight: bold;
+          }
+        }
+      }
+      // goods item
+      .saleShopWrap {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 36%;
+        .saleShop {
+          width: 92%;
+          height: 100%;
+          margin: 20rpx auto;
+          margin-bottom: 2%;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          // item商品
+          .shopview {
+            background: #fff;
+            width: 335rpx;
+            height: 488rpx;
+            display: inline-block;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            padding: 20rpx 0rpx;
+            margin-bottom: 19rpx;
+            border-radius: 20rpx;
+            image {
+              width: 327rpx;
+              height: 327rpx;
+            }
+            .saleTag {
+              font-size: 30rpx;
+              font-weight: bold;
+              color: #333;
+              padding: 30rpx;
+            }
+            .salep {
+              font-size: 28rpx;
+              color: red;
+              font-weight: bold;
+              padding-left: 30rpx;
+            }
+            .salesmple {
+              font-size: 24rpx;
+              color: red;
+              font-weight: normal;
+            }
+            .saleprice {
+              font-weight: bolder;
+              color: red;
+              font-size: 42rpx;
+            }
+            .saleexprice {
+              color: #666;
+              font-size: 24rpx;
+              font-weight: normal;
+              padding-left: 25rpx;
+              text-decoration: line-through;
+            }
+            .saletag {
+              width: 60rpx;
+              background: red;
+              text-align: center;
+              line-height: 20rpx;
+              font-size: 10px;
+              padding: 8rpx;
+              color: white;
+              border-radius: 10rpx;
+              margin-left: 3%;
+              margin-top: -2%;
+            }
+          }
+        }
+      }
+    }
+}
+.shopview :nth-last-child(1){
+  margin-bottom: 160rpx;
+}
+// 底部 加入购物车
+.shopcar{
+  width: 100%;
+  height: 100rpx;
+  background: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  .carview{
+    width: 120rpx;
+    // background: pink;
+    // display: flex;
+    // justify-content:center;
+    // align-items:center;
+    position: relative;
+    image{
+      width: 48rpx;
+      height: 48rpx;
+      position: absolute;
+      top: 12%;
+      left: 30%;
+    }
+    .icontext{
+      line-height: 150rpx;
+      text-align: center;
+      color: #A8A8A8;
+      font-size: 20rpx;
+    }
+  }
+  .iconview{
+    // width: 
+    display: flex;
+    .gocar{
+      width: 258rpx;
+      height: 250rpx;
+      background: #FF6F73;
+      text-align: center;
+      line-height: 70rpx;
+      position: relative;
+      font-size: 28rpx;
+      font-weight: bold;
+      color: #fff;
+      text{
+        position: absolute;
+        top: 14%;
+        left: 28%;
+      }
+    }
+    .gobuy{
+      width: 258rpx;
+      height: 250rpx;
+      background: #FF2228;
+      text-align: center;
+      line-height: 70rpx;
+      position: relative;
+      font-size: 28rpx;
+      font-weight: bold;
+      color: #fff;
+      text{
+        position: absolute;
+        top: 14%;
+        left: 28%;
+      }
+    }
+  }
+}
+// 弹窗
+.shade-box {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9996;
+  color: #979797;
+  background: rgba(18, 17, 16, 0.3);
+  .shop-box {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    .item {
+      position: absolute;
+      width: 100%;
+      height: 800rpx;
+      left: 0;
+      bottom: 0;
+      background: #fff;
+      border-radius: 20rpx;
+      .itemImg{
+        width: 100%;
+        height: 180rpx;
+        // background: pink;
+        // display: flex;
+        position: relative;
+        image{
+          width: 140rpx;
+          height: 140rpx;
+          padding: 20rpx;
+
+        }
+        .itemTitle{
+          position: absolute;
+          top: 22%;
+          left: 25%;
+          font-size: 30rpx;
+          color: #333;
+          font-weight: bold;
+            // padding: 40rpx 20rpx;
+        }
+        .itemcolor{
+          position: absolute;
+          top: 35%;
+          left: 25%;
+          color: #999999;
+          font-size: 26rpx;
+        }
+        // 数量
+        .itemnum{
+          position: absolute;
+          top: 35%;
+          right: 4%;
+          color: #999999;
+          font-size: 26rpx;
+
+        }
+      }
+        .itemSpecs{
+          width: 100%;
+          height: 130rpx;
+          // background: paleturquoise;
+          font-size: 30rpx;
+          color: #333;
+          font-weight: bold;
+          padding: 20rpx 30rpx;
+  
+        .specsView{
+          display: flex;
+          font-size: 28rpx;
+          font-weight: normal;
+          .specs{
+            width: 120rpx;
+            height: 68rpx;
+            background: #F6F6F6;
+            color: #333333;
+            text-align: center;
+            line-height: 68rpx;
+            border-radius: 10rpx;
+            margin: 20rpx 30rpx 0 0;
+          }
+          .itemSpecsViewShow{
+            width: 120rpx;
+            height: 68rpx;
+            background: #FF2228;
+            color: #fff;
+            text-align: center;
+            line-height: 68rpx;
+            border-radius: 10rpx;
+          }
+        }
+      }
+      // 数量
+        .itemNum{
+          width: 100%;
+          height: 200rpx;
+          font-size: 30rpx;
+          color: #333;
+          font-weight: bold;
+          padding: 20rpx 30rpx;
+                    // 数量
+          .cart-count {
+            display: flex;
+            width: 100%;
+            font-size: 38rpx;
+            padding: 20rpx 0 10rpx;
+            .decrease {
+              width: 48rpx;
+              height: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border:1rpx solid #ccc;
+              border-bottom-left-radius: 6rpx;
+              border-top-left-radius: 6px;
+            }
+            .add {
+              width: 48rpx;
+              height: 100%;
+              border: 1px solid #ccc;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-top-right-radius: 6rpx;
+              border-bottom-right-radius: 6rpx;
+            }
+            input {
+              width: 68rpx;
+              height: 48rpx;
+              line-height: 48rpx;
+              min-height: 48rpx;
+              text-align: center;
+              font-size: 24rpx;
+              border: 1px solid #cccccc;
+              // color: 
+            }
+          }
+
+      }
+      // 按钮
+      .sure{
+        width: 380rpx;
+        height: 70rpx;
+        font-size: small;
+        color: #fff;
+        position: absolute;
+        bottom: 4%;
+        left: 27%;
+        border-radius: 50rpx;
+        background: linear-gradient(to right, #FF6F73 0, #FF2228 100%)
+      }
+    }
+
+  }
+  // .shade-ft {
+  //   position: relative;
+  //   padding: 30rpx 0 40rpx 0;
+  //   .img-box {
+  //     width: 120rpx;
+  //     height: 120rpx;
+  //     margin: 30rpx auto;
+  //   }
+  // }
+  // .shade-ft:after {
+  //   content: '';
+  //   position: absolute;
+  //   left: 50%;
+  //   top: 50%;
+  //   transform: translate(-50%, -50%);
+  //   display: block;
+  //   width: 1px;
+  //   height: 140rpx;
+  //   border-radius: 20rpx;
+  //   background-color: #e5e5e5;
+  // }
+}
+</style>
+<template>
+  <view>
+    <!-- 选项卡导航 -->
+    <view class="swiper-tab">
+      <repeat for="{{tabList}}" wx:key="index">
+        <view
+          class="swiper-tab-list {{currentTab==index ? 'active' : ''}}"
+          @tap="switchNav('{{index}}')"
+        >{{item.name}}</view>
+      </repeat>
+    </view>
+    <!-- 切换的内容 -->
+    <view class="tab-content" wx:if="{{currentTab===0}}">
+        <!-- 轮播 -->
+        <view class="mainWheel">
+            <swiper indicator-dots="true" autoplay="true" interval="2000" duration="500" circular="true">
+                <repeat for="{{imgUrls}}" item="item">
+                <swiper-item>
+                    <image src="{{requestImgUrl + item.img}}" class="slide-image" />
+                </swiper-item>
+                </repeat>
+            </swiper>
+        </view>
+        <!-- 商品介绍 -->
+        <view class="shopView">
+          <view class="{{ preId ?'shopIntroducePre':'shopIntroduce'}}">
+            
+          <!-- <view class="shopIntroduce"> -->
+           <view class="shoptitle">{{shopData.title}}</view>
+           <image class="sharimg" src="{{requestImgUrl}}shar.png"/>
+           <view class="{{preId?'shoptsubtitlePre':'shoptsubtitle'}}">{{shopData.color}}</view>
+           <!-- 判断类型 -->
+
+           <view class="pricetagtime" wx:if="{{!deailsTileType && !preId && !discountId && !assembleId && !seckillId}}">
+             <!-- 123 -->
+               <text style="color:#282828">￥ </text>
+               <text class="pricered">{{shopData.price}} </text>
+               <text class="priceEX">￥{{shopData.exprice}}</text> 
+           </view>
+            <!-- 组合 -->
+           <view class="pricetagtime" wx:elif="{{ deailsTileType == 0  && !preId && !discountId && !assembleId && !seckillId }}">
+               <text style="color:#282828">￥ </text>
+               <text class="pricered">{{shopData.price}} </text>
+               <text class="priceEX">￥{{shopData.exprice}}</text> 
+               <text>{{shopData.num}}折</text>
+               <text class="priceBtn">直降{{shopData.num}}</text>
+               <text>{{shopData.num}}后恢复{{shopData.exprice}}元</text>
+           </view>
+           <view class="pricetagNum" wx:elif="{{ deailsTileType == 1 }}">
+               <text style="color:red">第二件</text>
+               <text style="color:#282828">￥ <text class="pricered">{{shopData.price}} </text></text>
+               <text class="linethorungh">原价 ￥{{shopData.exprice}}元</text>
+           </view>
+           <view class="pricetagcomp" wx:elif="{{ deailsTileType == 2 }}">
+               <text>组合价</text>
+               <text style="color:#282828">￥ <text class="pricered">{{shopData.price}} </text></text>
+               <text class="linethorungh">原价 ￥{{shopData.exprice}}元</text>
+               <view @tap="getMatchingGoods">
+                <text class="shopLook">搭配商品</text>
+                  <image class="serviceImg" src="{{requestImgUrl}}right.png"/>
+              </view>
+           </view>
+           <view class="pricetagJian" wx:elif="{{ deailsTileType == 3 }}">
+               <text style="color:#282828">￥ <text class="pricered">{{shopData.price}} </text></text>
+               <text class="priceBtn">满三减一</text>
+           </view>
+            <!-- 预购 -->
+           <view class="pricetagPre" wx:if="{{ preId }}">
+               <text style="color:#282828">￥ <text class="pricered">{{shopData.price}} </text></text>
+               <text class="preBtn">预售价</text>
+               <text class="red">定金 ￥{{shopData.exprice}} </text>
+               <view>支付尾款时间2018年01月01日 到 20118年01月02日</view>
+               <view>支付尾款时间2018年01月01日 到 20118年01月02日</view>
+           </view>
+           <!-- 折扣 -->
+           <view class="pricetagDis" wx:if="{{ discountId }}">
+               <text style="color:#282828">￥ </text>
+               <text class="pricered">{{shopData.price}} </text>
+               <text class="priceEX">￥{{shopData.exprice}}</text> 
+               <text>{{shopData.num}}折</text>
+               <text class="priceBtn">直降{{shopData.num}}</text>
+           </view>
+            <!-- 拼团 -->
+            <view wx:if="{{ assembleId }}" class="pricetagPin" >
+               <text style="color:#282828">￥ <text class="pricered">{{shopData.price}} </text></text>
+               <text class="linethorungh">原价 ￥{{shopData.exprice}}元</text>
+               <text class="shopYipIn">已拼20件</text>
+            </view>
+            <!-- 秒杀 -->
+            <view class="pricetagskill" wx:if="{{ seckillId }}">
+               <text style="color:#282828">￥ <text class="pricered">{{shopData.price}} </text></text>
+               <text class="linethorungh">原价 ￥{{shopData.exprice}}元</text>
+               <view class="rushBuy">
+                 <text class="rushing">秒杀抢购中</text>
+                 <text class="rushless">本场剩余</text>
+               </view>
+           </view>
+           <!--  end-->
+           </view>
+           <!-- 商品服务 -->
+           <view class="{{ seckillId ? 'shopServiceMaginTop':'shopService'}}"  wx:if="{{ !assembleId }}">
+              <view>
+                服务说明
+                <image class="serviceImg" src="{{requestImgUrl}}right.png"/>
+              </view>
+              <view>
+                商品参数
+                <text class="shopLook">查看</text>
+                 <image class="serviceImg" src="{{requestImgUrl}}right.png"/>
+              </view>
+              <view>
+                选择规格 
+                <text class="shopLook">{{shopData.color}}</text>
+                <image class="serviceImg" src="{{requestImgUrl}}right.png"/>
+              </view>
+           </view>
+           <!-- 拼团详情  -->
+           <view class="assembleService"  wx:if="{{ assembleId }}">
+              <view class="proNum">
+                {{item.num}}人正在拼团,可直接参与
+                <text class="shopLook">查看更多</text>
+                <image class="serviceImg" src="{{requestImgUrl}}right.png"/>
+              </view>
+              
+              <view class="assemblePeo">
+                <repeat for="{{assembleData}}">
+                  <view class="peoClass">
+                    <image src="{{requestImgUrl + item.img}}"/>
+                    <text class="peoname">{{item.name}}</text>
+                    <text class="peonum">还差{{item.num}}人成团</text>
+                    <text class="peotime">剩余{{item.time}}</text>
+                    <button class="perbtn">去拼团</button>
+                  </view>
+                </repeat>
+              </view>
+           </view>
+           <!--  -->
+           <!-- 图文详情 -->
+           <view class="shopIMG" @tap="getProup">
+           <!-- <view class="shopIMG" @getProupData.user="getProupData"> -->
+             <view class="imgTitle">商品详情</view>
+             <repeat for="{{shopIMG}}">
+               <image src="{{requestImgUrl + item.img}}"></image>
+             </repeat>
+              <!-- <middlePopup hidden="{{!show}}"></middlePopup> -->
+           </view>
+           <!-- 商品评价 -->
+           <view class="shopEvaluate">
+              <view class="valuateTitle">
+                <view class="title">商品评价 </view>
+                <text class="shopLook">查看</text>
+                <image class="serviceImg" src="{{requestImgUrl}}right.png"/>
+              </view>
+               <!-- 商品评价 图 -->
+              <view class="goosshow">
+                <view class="goodsimg">
+                  <repeat for="{{ealuateIMG}}">
+                    <image src="{{requestImgUrl + item.img}}"></image>
+                  </repeat>
+                  <view class="numgoods">共有100条评价</view>
+                </view>
+             </view>
+             
+           </view>
+            <!-- 店铺 -->
+            <view class="store">
+              <view class="shop">
+                <view class="shopStore">
+                  <image src="{{requestImgUrl}}indexlunbo.png"/>
+                  <text class="shopname">{{shopData.store}}</text>
+                  <text class="gostore">进店</text>
+                </view>
+              </view>
+              <!-- goods item -->
+              <view class="saleShopWrap">
+                <view class="saleShop">
+                  <repeat for="{{flowData}}" item="item">
+                    <view class="shopview">
+                      <image src="{{requestImgUrl + item.img}}" />
+                      <view class="saleTag">
+                        <text>{{item.title}}</text>
+                      </view>
+                      <view>
+                        <view>
+                          <text class="salep">促销价</text>
+                          <text class="salesmple">￥</text>
+                          <text class="saleprice">{{item.price}}</text>
+                          <text class="saleexprice">原价￥ {{item.exprice}}</text>
+                        </view>
+                      </view>
+                    </view>
+                  </repeat>
+                </view>
+              </view>
+              <!--  -->
+            </view>
+        </view>
+
+    </view>
+    <view class="tab-content" wx:if="{{currentTab===1}}">暂无内容</view>
+    <view class="tab-content" wx:if="{{currentTab===2}}">暂无内容</view>
+    <!-- 底部 加入购物车 -->
+    <view class="shopcar">
+      <view class="carview">
+        <image src="{{requestImgUrl}}custorm.png" />
+        <view class="icontext">服务</view>
+      </view>
+      <view class="carview" >
+        <image src="{{requestImgUrl}}custorm.png" />
+        <view class="icontext">购物车</view>
+      </view>
+      <view class="iconview" >
+        <view class="gocar" @tap="goShopCar">
+          加入购物车
+          <text>{{shopData.price}}结束</text>
+        </view>
+        <view class="gobuy" @tap="getOrderSettlement">
+          立即购买
+          <text>{{shopData.price}}结束</text>
+        </view>
+      </view>
+    </view>
+    <!-- 弹窗 -->
+    <view class="shade-box" hidden="{{!showPopup}}">
+      <view class="shop-box">
+        <view class="item">
+          <!-- <image class="" src="../assets/images/close.png"/> -->
+          <view class="itemImg">
+            <image src="{{requestImgUrl + shopData.img}}"/>
+            <text class="itemTitle">{{shopData.title}}</text>
+            <text class="itemcolor">
+              {{shopData.color}}
+            </text>
+            <text class="itemnum">
+              × {{shopData.num}}
+            </text>
+          </view>
+          <!-- 规格 -->
+          <view class="itemSpecs">
+            <view>规格</view>
+            <view class="specsView">
+              <repeat for="{{shopNorms}}">
+                <view class="specs {{ item.choose == '' ? 'itemSpecsViewShow':''}}" data-current='1' data-index="{{index}}" @tap="selectNorms">{{item.color}}</view>
+              </repeat>
+              
+              <!-- <view class="specs {{itemSpecsView=='2'?'itemSpecsViewShow':''}}">{{shopData.color2}}</view> -->
+            </view>
+          </view>
+          <!-- 尺码 -->
+          <view class="itemSpecs">
+            <view>尺码</view>
+            <view class="specsView">
+                <view class="specs" data-current='0' data-index="{{index}}" @tap="selectNorms">S</view>
+                <view class="specs" data-current='0' data-index="{{index}}" @tap="selectNorms">M</view>
+                <view class="specs" data-current='0' data-index="{{index}}" @tap="selectNorms">L</view>
+            </view>
+          </view>
+          <!-- 数量 -->
+          <view class="itemNum">
+            <view>数量</view>
+                <view class="cart-count">
+                  <view class="decrease" @tap.stop="getCutDdown">-</view>
+                  <input type="number" value="{{inpNum}}" disabled/>
+                  <view class="add" @tap.stop="getAdd">+</view>
+              </view>
+          </view>
+          <!-- 按钮  -->
+          <button class="sure" @tap="hideProup">确定</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+// import cartCount from '../components/cart_count'
+// import middlePopup from '../components/middlePopup'; // 底部导航
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '商品详情',
+    navigationBarBackgroundColor: 'white'
+  };
+  components = {
+    // middlePopup
+    // cartCount
+  };
+
+  mixins = [];
+
+  data = {
+    requestImgUrl: '',
+    deailsTileType:'', //不同类型,商品副标题显示不同
+    preId: '', //预购id
+    discountId: '', //折扣id
+    assembleId: '', //拼团id
+    seckillId: '', //秒杀id
+    showPopup: false, // 商品详情弹窗
+    itemSpecsView: 1, // 规格
+    currentTab: 0, // 选项卡初始
+    inpNum: 1,
+    // 顶部选项卡
+    tabList: [
+      { name: '商品介绍', dotNum: 2 },
+      { name: '图文详情', dotNum: 3 },
+      { name: '商品详情', dotNum: 10 }
+    ],
+    // 商品
+    shopData: 
+      {
+        id: 1,
+        img: 'indexlunbo.png' ,
+        title: "儿童滑行车两轮平衡车小孩踏步车",
+        color: '白色',
+        color2: '粉色',
+        age: '5-6岁',
+        size: 'S',
+        order: '11977240',
+        num: 1,
+        price: 100,
+        exprice: 180,
+        selected: false,
+        type: 1,
+        store: '好好好'
+      },
+      // 商品规格 颜色
+    shopNorms:[
+      {color:'粉色'},
+      {color:'白色'},
+      {color:'粉 + 白'},
+    ],
+    // 轮播图
+    imgUrls: [
+      { id: '1', img: 'indexlunbo.png' },
+      { id: '2', img: 'indexlunbo.png' },
+      { id: '3', img: 'indexlunbo.png' },
+      { id: '4', img: 'indexlunbo.png' }
+    ],
+    // 商品详情
+    shopIMG: [
+      { id: '1', img: 'indexlunbo.png' }
+    ],
+    // 商品评价
+    ealuateIMG: [
+      { id: '1', img: 'indexlunbo.png' },
+      { id: '2', img: 'indexlunbo.png' },
+      { id: '3', img: 'indexlunbo.png' }
+    ],
+    // 店铺
+    flowData: [
+      {
+        id: '1',
+        title: '萌分订书机',
+        price: '5',
+        exprice: '25',
+        img: 'indeximg.png'
+      },
+      {
+        id: '2',
+        title: '萌分订书机',
+        price: '5',
+        exprice: '25',
+        img: 'indeximg.png'
+      },
+      {
+        id: '3',
+        title: '萌分订书机',
+        price: '5',
+        exprice: '25',
+        img: 'indeximg.png'
+      },
+      {
+        id: '3',
+        title: '萌分订书机',
+        price: '5',
+        exprice: '25',
+        img: 'indeximg.png'
+      }
+    ],
+    // 拼团data
+    assembleData:[
+      {
+        img: 'indexlunbo.png' ,
+        name: '丽丽',
+        time:'2018-01-01',
+        peo: '1'
+      },
+      {
+        img: 'indexlunbo.png' ,
+        name: '丽丽',
+        time:'2018-01-01',
+        peo: '1'
+      }
+    ]
+  };
+
+  computed = {};
+    onShow() {
+          // this.userInfo = this.$parent.globalData.userInfo
+        this.requestImgUrl = this.$parent.globalData.requestImgUrl
+    }
+    onLoad(options) {
+      this.preId = options.preId; // 获取预购id
+      this.discountId = options.discountId; //获取组合类型id
+      this.assembleId = options.assembleId; //获取拼团id
+      this.seckillId = options.seckillId; //获取秒杀id
+      this.deailsTileType = options.combination; //获取组合类型id
+      console.log('deailsTileType',this.deailsTileType)
+      console.log('preId',this.preId)
+
+      let shopNorms = this.data.shopNorms
+      let i = 0
+      for (i in shopNorms) {
+        shopNorms[i]["choose"] = Number(i)+1
+        console.log( shopNorms[i]["choose"])
+      }
+      
+    }
+  methods = {
+    // 选项卡
+    switchNav(i, e) {
+      console.log(i);
+      console.log(e);
+      if (this.currentTab === i) {
+        return false;
+      } else {
+        this.currentTab = i;
+        this.$apply();
+      }
+    },
+    // 
+    // getGood (item) { // 自定义事件
+    //   // console.log(this.goods)
+    // },
+    // 弹框数量 ++
+    getAdd () {
+      this.inpNum++
+    },
+    // 弹框数量 --
+    getCutDdown () {
+      if (this.inpNum === 1){
+         return false
+      }
+      this.inpNum--
+    },
+    // 执行弹出
+    getProup(item) {
+      // console.log(123)
+      // console.log(item)
+      this.showPopup = true
+    },
+    // 关闭弹窗
+    hideProup(e) {
+       this.showPopup = false;
+    },
+    //跳转购物车
+    goShopCar(){
+      this.$navigate(`/pages/shopCar`)
+    },
+   
+    // 提交订单
+    getOrderSettlement(){
+      console.log('this.preId',this.preId);
+      
+      this.$navigate(`/pages/settlement?preId=${this.preId}`)
+      // this.$navigate(`/pages/?preId=${this.preId}`)
+    },
+    //跳转搭配商品页面
+    getMatchingGoods(){
+      this.$navigate(`/pages/matchingGoods`)
+    },
+    /**
+    弹框选择规格
+     */
+    selectNorms(e){
+      let shopNorms = this.data.shopNorms
+      e.currentTarget.dataset.current = shopNorms[e.currentTarget.dataset.index]['choose'] 
+      console.log( e.currentTarget.dataset.current = shopNorms[e.currentTarget.dataset.index]['choose'] )
+      // console.log( shopNorms[e.currentTarget.dataset.index]['choose'])
+
+     },
+
+      // 更新data 切换选中状态
+    // selectTab: function(e) {
+    //   let questionList = this.data.questionList
+    //   questionList[e.currentTarget.dataset.index]['answer'] = e.currentTarget.dataset.current
+    //   this.setData({
+    //     questionList: questionList
+    //   })
+    // },
+  };
+
+  events = {};
+}
+</script>

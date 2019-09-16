@@ -1,0 +1,161 @@
+<style lang="less">
+.wrap {
+    width: 100%;
+    height: 100%;
+    background: #F9F9F9;
+    .topCard {
+        width: 93%;
+        height: 260rpx;
+        background: #fff;
+        margin: 20rpx auto;
+        image{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    // 商品
+    .saleShopWrap{
+        width: 100%;
+        height: 100%;
+        background: #F9F9F9;
+        .saleShop{
+            width: 93%;
+            height: 100%;
+            margin: 20rpx auto;
+            background: #F9F9F9;
+            margin-bottom: 2%;
+            .shopview{
+                width: 100%;
+                height: 160rpx;
+                position:relative;
+                padding: 20rpx 0rpx;
+                margin-bottom: 19rpx;
+                border-radius: 20rpx;
+                image{
+                    width: 150rpx;
+                    height: 156rpx;
+                }
+                .preTitle{
+                    font-size: 30rpx;
+                    font-weight: bold;
+                    color: #333;
+                    position: absolute;
+                    top: 12%;
+                    left: 26%;
+                }
+                .preTag{
+                    position: absolute;
+                    top: 36%;
+                    left: 26%;
+                    font-size: 22rpx;
+                    color: #9E9E9E;
+                }
+                .priceTag{
+                    position: absolute;
+                    top: 68%;
+                    left: 26%;
+                    font-weight: bold;
+                    font-size: 28rpx;
+                    color: #333333;
+                }
+                .priceclass{
+                    color:red;
+                    font-size: 34rpx;
+                }
+                .yuanclass{
+                    color:red;
+                    font-size: 22rpx;
+                    font-weight: normal;
+                }
+                .preBtn{
+                    width: 180rpx;
+                    height: 60rpx;
+                    background: #FF2228;
+                    color: white;
+                    position: absolute;
+                    bottom: 12%;
+                    right: 1%;
+                    font-size: small;
+                    text-align: center;
+                    line-height: 60rpx;
+                }
+            }
+
+        }
+    }
+}
+</style>
+<template>
+    <view class="wrap">
+        <!-- 头部卡片 -->
+        <view class="topCard">
+            <image src="{{requestImgUrl}}card.png"></image>
+        </view>
+        <!-- 商品 -->
+        <view class="saleShopWrap">
+            <view class="saleShop">
+                <repeat for="{{flowData}}" item="item">
+                    <view class="shopview" @tap="goPreDetails('{{item.id}}')">
+                        <image src="{{requestImgUrl + item.img}}"/>
+                        <view>
+                            <text class="preTitle">{{item.title}}</text>
+                            <text class="preTag">{{item.tag}}</text>
+                            <text class="priceTag">预售价 <text class="priceclass">{{item.price}}</text><text class="yuanclass"> 元</text></text>
+                        </view>
+                        <button class="preBtn">立即预约</button>
+                    </view>
+                </repeat>
+            </view>
+        </view>
+    </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '预购',
+    navigationBarBackgroundColor: 'white'
+  };
+  components = {};
+
+  mixins = [];
+
+  data = {
+      requestImgUrl: '',
+      preId: '',
+      flowData:[
+        {id:'1',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+        {id:'2',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+        {id:'3',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+        {id:'4',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+        {id:'5',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
+        {id:'6',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'}
+      ],
+  };
+
+  computed = {};
+
+
+  events = {};
+
+    onLoad(options) {
+        this.preId = options.id
+        console.log('options',options.id)
+    }
+    onShow() {
+      // this.userInfo = this.$parent.globalData.userInfo
+        this.requestImgUrl = this.$parent.globalData.requestImgUrl
+    }
+    methods = {
+        /**
+         * 跳转商品详情
+         */
+        goPreDetails(shopid){
+            // console.log('preId',this.preId)
+            this.$navigate(`/pages/shopDetails?shopid=${shopid}&preId=${this.preId}`)
+        }
+    };
+}
+</script>

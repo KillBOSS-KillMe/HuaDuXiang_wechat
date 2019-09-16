@@ -1,0 +1,161 @@
+<style lang="less">
+.wrap {
+    width: 100%;
+    height: 100%;
+    background: #F9F9F9;
+    .topCard {
+        width: 93%;
+        height: 260rpx;
+        background: #fff;
+        margin: 20rpx auto;
+        image{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    // 商品
+    .saleShopWrap{
+        width: 100%;
+        height: 100%;
+        background: #F9F9F9;
+        .saleShop{
+            width: 93%;
+            height: 100%;
+            margin: 20rpx auto;
+            background: #F9F9F9;
+            margin-bottom: 2%;
+            .shopview{
+                width: 100%;
+                height: 160rpx;
+                position:relative;
+                padding: 20rpx 0rpx;
+                margin-bottom: 19rpx;
+                border-radius: 20rpx;
+                image{
+                    width: 150rpx;
+                    height: 156rpx;
+                }
+                .barginTitle{
+                    font-size: 30rpx;
+                    font-weight: bold;
+                    color: #333;
+                    position: absolute;
+                    top: 12%;
+                    left: 26%;
+                }
+                .barginProgess{
+                    position: absolute;
+                    top: 40%;
+                    left: 26%;
+                    font-size: 22rpx;
+                    color: #9E9E9E;
+                    width: 30%;
+                }
+                .barginSurplus{
+                    position: absolute;
+                    top: 35%;
+                    left: 59%;
+                    font-size: 26rpx;
+                    color: #FF2228;
+                }
+                .barginPriceNum{
+                    position: absolute;
+                    top: 68%;
+                    left: 26%;
+                    font-size: 28rpx;
+                    color: #FF2228;
+                }
+
+                .barginBtn{
+                    width: 180rpx;
+                    height: 60rpx;
+                    background: #FF2228;
+                    color: white;
+                    position: absolute;
+                    bottom: 8%;
+                    right: 1%;
+                    font-size: small;
+                    text-align: center;
+                    line-height: 60rpx;
+                }
+            }
+
+        }
+    }
+}
+
+</style>
+<template>
+    <view class="wrap">
+        <!-- 头部卡片 -->
+        <view class="topCard">
+            <image src="{{requestImgUrl}}card.png"></image>
+        </view>
+        <!-- 商品 -->
+        <view class="saleShopWrap">
+            <view class="saleShop">
+                <repeat for="{{barginData}}" item="item">
+                    <view class="shopview" @tap="jumpTimeDetails('{{item.id}}')">
+                        <image src="{{requestImgUrl + item.img}}"/>
+                        <view>
+                            <text class="barginTitle">{{item.title}}</text> 
+                            <progress class="barginProgess" percent="{{item.num}}" font-size="14" backgroundColor="#FFE0E1" activeColor="#FF2228" stroke-width="9" border-radius="10"/>
+                            <text class="barginSurplus">已抢{{item.num}}件</text>
+                            <text class="barginPriceNum">限量{{item.num}}件</text>
+                        </view>
+                        <button class="barginBtn" >点击免费拿</button>
+                    </view>
+                </repeat>
+            </view>
+        </view>
+        <text>显示进度数字/字号22</text>
+        <repeat for="{{barginData}}">
+            
+        </repeat>
+    </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '砍价',
+    navigationBarBackgroundColor: 'white'
+  };
+  components = {};
+
+  mixins = [];
+
+  data = {
+      requestImgUrl: '',
+      barginData:[
+        {id:'1',title:'萌分订书机',price:'5',exprice:'25',num:5,totalNum:20,img:'indeximg.png',tag:'满三减一'},
+        {id:'2',title:'萌分订书机',price:'5',exprice:'25',num:5,totalNum:20,img:'indeximg.png',tag:'满三减一'},
+        {id:'3',title:'萌分订书机',price:'5',exprice:'25',num:5,totalNum:20,img:'indeximg.png',tag:'满三减一'},
+        {id:'4',title:'萌分订书机',price:'5',exprice:'25',num:5,totalNum:20,img:'indeximg.png',tag:'满三减一'},
+        {id:'5',title:'萌分订书机',price:'5',exprice:'25',num:5,totalNum:20,img:'indeximg.png',tag:'满三减一'},
+        {id:'6',title:'萌分订书机',price:'5',exprice:'25',num:5,totalNum:20,img:'indeximg.png',tag:'满三减一'}
+      ],
+  };
+
+    computed = {};
+    onShow() {
+      // this.userInfo = this.$parent.globalData.userInfo
+        this.requestImgUrl = this.$parent.globalData.requestImgUrl
+    }
+    methods = {
+        /**
+        * 跳转商品详情
+        */
+        jumpTimeDetails(shopid){
+        //   console.log(shopid)
+            this.$navigate(`/pages/shopDetails?shopid=${shopid}`)
+        },
+    };
+
+    events = {};
+
+    onLoad() {}
+}
+</script>
