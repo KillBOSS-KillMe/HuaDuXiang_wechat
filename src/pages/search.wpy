@@ -1,0 +1,100 @@
+
+
+<template>
+  <view>
+    <view class="search-wrap">
+      <view class="search-content">
+        <image src="/assets/img/image10.png" />
+        <input placeholder="搜索" value="{{val}}" @input="inputVal" />
+      </view>
+      <view class="search-btn" @tap="submitHanld">搜索</view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+//通过继承自wepy.page的类创建页面逻辑
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '搜索',
+    navigationBarBackgroundColor: 'white'
+  };
+  //可用于页面模板绑定的数据
+  data = {
+    val: ''
+  };
+
+  //事件处理函数(集中保存在methods对象中)
+  methods = {
+    submitHanld() {
+      if (!this.val) {
+        wx.showToast({
+          title: '请输入商品名称',
+          icon: 'none'
+        });
+      } else {
+        wx.showLoading();
+        if (timer) return;
+        var timer = setTimeout(() => {
+          wx.showToast({
+            title: '暂无商品',
+            icon: 'loading'
+          });
+          clearTimeout(timer);
+        }, 1000);
+      }
+    },
+    inputVal(e) {
+      this.val = e.detail.value;
+    }
+  };
+
+  //页面的生命周期函数
+  onLoad() {
+    console.log('onLoad');
+  }
+}
+</script>
+
+<style lang="less">
+.search-wrap {
+  padding: 20rpx 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 750rpx;
+  box-sizing: border-box;
+  .search-content {
+    background: #f6f6f6;
+    flex: 1;
+    border-radius: 14rpx;
+    height: 80rpx;
+    display: flex;
+    align-items: center;
+    > image {
+      width: 32rpx;
+      height: 32rpx;
+      margin: 0 20rpx 0 30rpx;
+    }
+    > input {
+      flex: 1;
+      height: 80rpx;
+      font-size: 28rpx;
+      color: #000;
+    }
+  }
+  .search-btn {
+    border-radius: 14rpx;
+    margin-left: 14rpx;
+    background: #5eb320;
+    width: 117rpx;
+    height: 80rpx;
+    text-align: center;
+    color: #fff;
+    line-height: 80rpx;
+  }
+}
+</style>
+

@@ -23,7 +23,8 @@ export default class extends wepy.app {
       'pages/matchingGoods', // 组合销售 搭配商品页面
       'pages/button', // 所有弹窗 --test
       'pages/shopDetails', // 商品详情
-      'pages/barginInfo' // 砍价 -- 砍价信息 --test
+      'pages/barginInfo', // 砍价 -- 砍价信息 --test
+      'pages/search' // 搜索
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -62,5 +63,20 @@ export default class extends wepy.app {
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
+}
+.overflow-two {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+
+.overflow-one {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
