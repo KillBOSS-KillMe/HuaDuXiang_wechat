@@ -1,0 +1,62 @@
+
+<template>
+  <view class="list">
+    <view class="{{maskFlag ? 'block':''}} mask-wrap" @touchmove.stop="move">
+      <view class="mask" bindtap="hideMask"></view>132465
+      <slot></slot>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy';
+
+export default class Mask extends wepy.component {
+  props = {
+    maskFlag: {
+      twoWay: true,
+      default: false,
+      type: Boolean
+    }
+  };
+
+  data = {};
+
+  events = {};
+
+  methods = {
+    hideMask() {
+      this.maskFlag = false;
+      this.$apply();
+    },
+    move (e) {
+      return false
+    }
+  };
+
+  onLoad() {
+    console.log(this.maskFlag, 999)
+  }
+}
+</script>
+
+<style lang="less">
+.mask-wrap {
+  visibility: collapse;
+  transition: all 0.3s ease-in-out;
+  opacity: 0;
+  .mask {
+    background: #000;
+    opacity: 0.5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 999;
+  }
+}
+.block {
+  visibility: visible;
+  opacity: 1;
+}
+</style>

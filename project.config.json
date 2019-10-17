@@ -41,8 +41,30 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
-			"list": []
+			"current": 2,
+			"list": [
+				{
+					"id": -1,
+					"name": "pages/button",
+					"pathName": "pages/button",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/bargain",
+					"pathName": "pages/bargain",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "pages/barginInfo",
+					"pathName": "pages/barginInfo",
+					"query": "",
+					"scene": null
+				}
+			]
 		}
 	}
 }

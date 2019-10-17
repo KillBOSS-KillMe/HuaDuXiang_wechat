@@ -82,6 +82,216 @@
     }
   }
 }
+.attr-box {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  z-index: 999;
+  border-top-left-radius: 40rpx;
+  border-top-right-radius: 40rpx;
+  box-sizing: border-box;
+  padding: 30rpx 30rpx 76rpx 30rpx;
+  .goods-t {
+    display: flex;
+    .goods-img {
+      width: 140rpx;
+      height: 140rpx;
+      border-radius: 10rpx;
+    }
+    .goods-right {
+      padding-left: 20rpx;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      .title {
+        font-weight: bold;
+        font-size: 30rpx;
+        width: 500rpx;
+      }
+      .attr {
+        display: flex;
+        justify-content: space-between;
+        font-size: 26rpx;
+        color: #999;
+      }
+    }
+  }
+  .goods-h {
+    font-weight: bold;
+    font-size: 32rpx;
+    padding: 30rpx 0 0rpx 0rpx;
+  }
+  .prop {
+    display: flex;
+    .prop-i {
+      height: 60rpx;
+      border-radius: 10rpx;
+      line-height: 60rpx;
+      padding: 0 20rpx;
+      background: #f6f6f6;
+      margin: 30rpx 30rpx 0 0;
+    }
+    .prop-active {
+      background: #ff2228;
+      color: #fff;
+    }
+  }
+  .change-num {
+    padding-top: 24rpx;
+    display: flex;
+    align-items: center;
+    width: 138rpx;
+    text-align: center;
+    height: 44rpx;
+    justify-content: space-between;
+    .img {
+      width: 44rpx;
+      height: 44rpx;
+      display: block;
+    }
+    .num {
+      font-weight: bold;
+      line-height: 44rpx;
+      font-size: 32rpx;
+    }
+  }
+  .prop-btn {
+    color: #fff;
+    font-size: 28rpx;
+    border-radius: 10rpx;
+    height: 68rpx;
+    width: 150rpx;
+    text-align: center;
+    line-height: 68rpx;
+    background: #ff2228;
+    position: absolute;
+    bottom: 30rpx;
+    right: 30rpx;
+  }
+}
+.shop-box {
+  position: fixed;
+  bottom: 0;
+  height: 430rpx;
+  width: 100%;
+  background: #fff;
+  z-index: 999;
+  border-top-left-radius: 40rpx;
+  border-top-right-radius: 40rpx;
+  //   选择地址
+  .address {
+    height: 120rpx;
+    color: #333;
+    font-size: 32rpx;
+    line-height: 100rpx;
+    text-align: center;
+    font-weight: bold;
+  }
+  // 用户地址
+  .userAddress {
+    display: flex;
+    flex-wrap: wrap;
+    text {
+      width: 100%;
+      font-size: 28rpx;
+      color: #333;
+      padding: 5rpx 50rpx;
+      font-weight: 600;
+    }
+    image {
+      position: absolute;
+      bottom: 50%;
+      right: 4%;
+      width: 50rpx;
+      height: 50rpx;
+    }
+  }
+  // 新增用户地址
+  .newAddress {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 40rpx;
+    text {
+      width: 100%;
+      font-weight: 600;
+      font-size: 28rpx;
+      color: #333;
+      padding-left: 50rpx;
+    }
+    image {
+      position: absolute;
+      bottom: 26%;
+      right: 4%;
+      width: 50rpx;
+      height: 50rpx;
+    }
+  }
+  .address-btn {
+    color: #fff;
+    font-size: 28rpx;
+    border-radius: 10rpx;
+    height: 68rpx;
+    width: 590rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    line-height: 68rpx;
+    background: #ff2228;
+    position: absolute;
+    bottom: 12rpx;
+  }
+}
+
+.share-box {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 999;
+  width: 542rpx;
+  height: 804rpx;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  .bg-img {
+    height: 100%;
+    width: 100%;
+  }
+  .share-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    text-align: center;
+    .title {
+      padding-top: 360rpx;
+      color: #ff2228;
+      font-size: 32rpx;
+      font-weight: bold;
+      text {
+        font-size: 46rpx;
+      }
+    }
+    .p {
+      padding: 20rpx 0 80rpx;
+    }
+    .share-btn {
+      width: 114rpx;
+      margin: 0 auto;
+      text-align: center;
+      image {
+        width: 114rpx;
+        height: 114rpx;
+        display: block;
+      }
+      text {
+        font-weight: bold;
+        font-size: 32rpx;
+        padding-top: 18rpx;
+      }
+    }
+  }
+}
 </style>
 <template>
   <view class="wrap">
@@ -116,22 +326,101 @@
     </view>
     <text>显示进度数字/字号22</text>
     <repeat for="{{barginData}}"></repeat>
+    <!-- 选择商品属性 -->
+    <attrsmask :maskFlag.sync="attrFlag">
+      <view class="attr-box">
+        <view class="goods-t">
+          <image class="goods-img" src="{{requestImgUrl}}card.png" />
+          <view class="goods-right">
+            <view class="title overflow-one">萌粉订书机 小型萌粉订书机萌粉订书机萌粉订书机</view>
+            <view class="attr">
+              <view>粉+白</view>
+              <view>x1</view>
+            </view>
+          </view>
+        </view>
+        <view>
+          <view class="goods-h">规格</view>
+          <view class="prop">
+            <repeat for="{{propArr}}" item="item" index="index">
+              <view class="prop-i {{index == 0 ? 'prop-active' : ''}}">大小</view>
+            </repeat>
+          </view>
+        </view>
+        <view>
+          <view class="goods-h">数量</view>
+          <view class="change-num">
+            <view class="i" @tap="reduNum">
+              <image class="img" src="/assets/img/image19.png" wx:if="{{goodsNum == 1}}" />
+              <image class="img" src="/assets/img/image20.png" wx:else />
+            </view>
+            <view class="i num">{{goodsNum}}</view>
+            <view class="i" @tap="addNum">
+              <image class="img" src="/assets/img/image21.png" />
+            </view>
+          </view>
+        </view>
+        <view class="prop-btn" @tap="attrBtnSubmit">确定</view>
+      </view>
+    </attrsmask>
+    <!-- 选择地址 -->
+    <addressmask :maskFlag.sync="addressFlag">
+      <view class="shop-box">
+        <view class="address">选择收货地址</view>
+        <view class="userAddress">
+          <text>啦啦啦 12015230214</text>
+          <text>山西省近海尽可能看到你的小区</text>
+          <image src="{{requestImgUrl}}right.png" />
+        </view>
+        <view class="newAddress">
+          <text>新增地址</text>
+          <image src="{{requestImgUrl}}right.png" />
+        </view>
+        <view class="address-btn" @tap="addressBtnSubmit">确定</view>
+      </view>
+    </addressmask>
+    <!-- 分享 -->
+    <sharesmask :maskFlag.sync="shareFlag">
+      <view class="share-box">
+        <image class="bg-img" src="/assets/img/image22.png" />
+        <view class="share-content">
+          <view class="title">
+            您已砍了
+            <text>200</text>元
+          </view>
+          <view class="p">分享给好友，可以多砍一刀哦！</view>
+          <button open-type="share" class="share-btn">
+            <image class="bg-img" src="/assets/img/image23.png" />
+            <text>微信</text>
+          </button>
+        </view>
+      </view>
+    </sharesmask>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy';
-
+import mask from '../components/mask';
 export default class Index extends wepy.page {
   config = {
     navigationBarTitleText: '砍价',
     navigationBarBackgroundColor: 'white'
   };
-  components = {};
+  components = {
+    attrsmask: mask,
+    addressmask: mask,
+    sharesmask: mask
+  };
 
   mixins = [];
 
   data = {
+    goodsNum: 1,
+    propArr: [1, 2, 3],
+    attrFlag: false, //属性弹框
+    addressFlag: false, //地址弹框
+    shareFlag: false, //分享弹框
     requestImgUrl: '',
     barginData: [
       {
@@ -203,13 +492,30 @@ export default class Index extends wepy.page {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
   }
   methods = {
+    addressBtnSubmit() {
+      this.addressFlag = false;
+      this.shareFlag = true;
+    },
+    attrBtnSubmit() {
+      this.attrFlag = false;
+      this.addressFlag = true;
+    },
+    reduNum() {
+      if (this.goodsNum == 1) return;
+      this.goodsNum--;
+    },
+    addNum() {
+      this.goodsNum++;
+    },
     /**
      * 跳转商品详情
      */
     jumpTimeDetails(shopid) {
+      this.attrFlag = true;
       //   console.log(shopid)
-      this.$navigate(`/pages/shopDetails?shopid=${shopid}`);
-    }
+      // this.$navigate(`/pages/shopDetails?shopid=${shopid}`);
+    },
+    hideMask() {}
   };
 
   events = {};

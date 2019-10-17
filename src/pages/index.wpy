@@ -282,13 +282,6 @@
                   <text class="saleprice">{{item.price}}</text>
                   <text class="saleexprice">原价￥ {{item.exprice}}</text>
                 </view>
-                <!-- <text class="salep">秒杀价</text>
-                <text class="saleprice">
-                  <text class="salesmple">￥</text>
-                  {{item.price}}
-                </text>
-                <text class="saleexprice">原价￥ {{item.exprice}}</text>-->
-                <!-- <text class="saletag" wx:if="{{ tagFour }}">{{item.tag}}</text> -->
               </view>
             </view>
           </repeat>
@@ -400,9 +393,7 @@ export default class Index extends wepy.page {
     var wxTimer = new timer({
       beginTime: '0:0:10',
       name: 'firstTimer',
-      complete() {
-
-      }
+      complete() {}
     });
     wxTimer.start(this);
     // setTimeout(() => {
@@ -449,8 +440,8 @@ export default class Index extends wepy.page {
       // 销毁当前页{跳转}
       this.$redirect(url);
     },
-    navSearch(){
-      this.$navigate('/pages/search')
+    navSearch() {
+      this.$navigate('/pages/search');
     }
   };
 
