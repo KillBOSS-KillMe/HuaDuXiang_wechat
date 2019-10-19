@@ -37,8 +37,12 @@
             ￥
             <text>19</text>
           </view>
-          <!-- <view class="pre">预购价</view>
-          <view class="ear">定金￥200</view>-->
+          <view class="pre">预购价</view>
+          <view class="ear">定金￥200</view>
+        </view>
+        <view class="pay-time">
+          <text>支付尾款时间：2019.08.22 00:00~2019.08.23 00:00</text>
+          <text>付尾款后5天内发货</text>
         </view>
       </view>
 
@@ -111,8 +115,14 @@
         <image src="/assets/img/image29.png" />
         <text>购物车</text>
       </navigator>
-      <view class="add-cart" @tap="showAttrMask">加入购物车</view>
-      <view class="purchase" @tap="showAttrMask">立即购买</view>
+      <view class="earnest-money">
+        <text>08.22 23:30结束</text>
+        <text>付尾款后5天内发货</text>
+      </view>
+      <view class="pay-deposit"  @tap="showAttrMask">
+        <text>立即付定金</text>
+        <text>￥200</text>
+      </view>
     </view>
     <!-- 选择商品弹框 -->
     <attrsmask :maskFlag.sync="attrFlag">
@@ -148,11 +158,7 @@
             </view>
           </view>
         </view>
-        <!-- <view class="prop-btn" @tap="attrBtnSubmit">确定</view> -->
-        <view class="prop-fot">
-          <view class="add-cart">加入购物车</view>
-          <view class="purchase" @tap="attrBtnSubmit">立即购买</view>
-        </view>
+        <view class="prop-btn" @tap="attrBtnSubmit">确定</view>
       </view>
     </attrsmask>
   </view>
@@ -592,8 +598,9 @@ export default class Index extends wepy.page {
     color: #fff;
     font-size: 20rpx;
     font-weight: bold;
-    background: #ff6f73;
+    background: #FF6F73;
     height: 100%;
+
   }
   .pay-deposit {
     width: 250rpx;
@@ -604,26 +611,8 @@ export default class Index extends wepy.page {
     color: #fff;
     font-size: 30rpx;
     font-weight: bold;
-    background: #ff2228;
+    background: #FF2228;
     height: 100%;
-  }
-  .add-cart {
-    width: 250rpx;
-    text-align: center;
-    line-height: 100rpx;
-    font-weight: bold;
-    color: #fff;
-    font-size: 30rpx;
-    background: #ff6f73;
-  }
-  .purchase {
-    width: 250rpx;
-    text-align: center;
-    line-height: 100rpx;
-    font-weight: bold;
-    color: #fff;
-    font-size: 30rpx;
-    background: #ff2228;
   }
 }
 .attr-box {
@@ -635,7 +624,7 @@ export default class Index extends wepy.page {
   border-top-left-radius: 40rpx;
   border-top-right-radius: 40rpx;
   box-sizing: border-box;
-  padding: 30rpx 30rpx 20rpx 30rpx;
+  padding: 30rpx 30rpx 76rpx 30rpx;
   .goods-t {
     display: flex;
     .goods-img {
@@ -713,33 +702,6 @@ export default class Index extends wepy.page {
     position: absolute;
     bottom: 30rpx;
     right: 30rpx;
-  }
-  .prop-fot {
-    display: flex;
-    height: 80rpx;
-    margin-top: 50rpx;
-    justify-content: space-between;
-    padding: 0 30rpx;
-    .add-cart {
-      background: #ff6f73;
-      width: 300rpx;
-      border-radius: 100rpx;
-      text-align: center;
-      line-height: 80rpx;
-      color: #fff;
-      font-weight: bold;
-      font-size: 30rpx;
-    }
-    .purchase {
-      background: #ff2228;
-      width: 300rpx;
-      border-radius: 100rpx;
-      text-align: center;
-      line-height: 80rpx;
-      color: #fff;
-      font-weight: bold;
-      font-size: 30rpx;
-    }
   }
 }
 </style>

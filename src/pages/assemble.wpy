@@ -158,7 +158,7 @@ export default class Index extends wepy.page {
     jumpTimeDetails(shopid){
     //   console.log(shopid)
     console.log('拼团',this.assembleId);
-    this.$navigate(`/pages/shopDetails?shopid=${shopid}&assembleId=${this.assembleId}`)
+    this.$navigate(`/pages/assembleShopDetails?shopid=${shopid}&assembleId=${this.assembleId}`)
     },
   };
 

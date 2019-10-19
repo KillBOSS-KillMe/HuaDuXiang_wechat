@@ -23,6 +23,9 @@ export default class extends wepy.app {
       'pages/matchingGoods', // 组合销售 搭配商品页面
       'pages/button', // 所有弹窗 --test
       'pages/shopDetails', // 商品详情
+      'pages/seckillShopDetails', // 秒杀商品详情
+      'pages/preShopDetails', // 预购商品详情
+      'pages/assembleShopDetails', // 拼团商品详情
       'pages/barginInfo', // 砍价 -- 砍价信息 --test
       'pages/search' // 搜索
     ],

@@ -37,11 +37,26 @@
             ￥
             <text>19</text>
           </view>
-          <!-- <view class="pre">预购价</view>
-          <view class="ear">定金￥200</view>-->
+          <view class="orgin">￥29</view>
         </view>
       </view>
-
+      <view class="seckillCountdown-wrap">
+        <view class="h">秒杀抢购中</view>
+        <!-- 倒计时 -->
+        <view class="seckillCountdown" wx:if="{{wxTimerList.firstTimer.wxTimerSecond != 0}}">
+          <view class="title">本场结束剩余</view>
+          <view class="count-down-wrap">
+            <text>{{wxTimerList.firstTimer.h}}</text>
+            <view>:</view>
+            <text>{{wxTimerList.firstTimer.m}}</text>
+            <view>:</view>
+            <text>{{wxTimerList.firstTimer.s}}</text>
+          </view>
+        </view>
+        <view class="seckillCountdown" wx:if="{{wxTimerList.firstTimer.wxTimerSecond == 0}}">
+          <view class="title">本场已结束，请等待下场活动</view>
+        </view>
+      </view>
       <view class="option-wrap">
         <view class="option-item">
           <view class="com-title">服务说明</view>
@@ -53,7 +68,7 @@
           </view>
           <image src="/assets/img/image25.png" />
         </view>
-        <view class="option-item" @tap="showAttrMask">
+        <view class="option-item"  @tap="showAttrMask">
           <view class="com-title">选择规格</view>
           <image src="/assets/img/image25.png" />
         </view>
@@ -111,8 +126,7 @@
         <image src="/assets/img/image29.png" />
         <text>购物车</text>
       </navigator>
-      <view class="add-cart" @tap="showAttrMask">加入购物车</view>
-      <view class="purchase" @tap="showAttrMask">立即购买</view>
+      <view class="buy" @tap="showAttrMask">立即抢购</view>
     </view>
     <!-- 选择商品弹框 -->
     <attrsmask :maskFlag.sync="attrFlag">
@@ -148,11 +162,7 @@
             </view>
           </view>
         </view>
-        <!-- <view class="prop-btn" @tap="attrBtnSubmit">确定</view> -->
-        <view class="prop-fot">
-          <view class="add-cart">加入购物车</view>
-          <view class="purchase" @tap="attrBtnSubmit">立即购买</view>
-        </view>
+        <view class="prop-btn" @tap="attrBtnSubmit">确定</view>
       </view>
     </attrsmask>
   </view>
@@ -161,6 +171,7 @@
 <script>
 import wepy from 'wepy';
 import mask from '../components/mask';
+var timer = require('../utils/wxTimer.js'); // 倒计时
 
 export default class Index extends wepy.page {
   config = {
@@ -177,6 +188,7 @@ export default class Index extends wepy.page {
     attrFlag: false,
     tabList: [{ name: '商品介绍', dotNum: 2 }, { name: '图文详情', dotNum: 3 }], // 顶部选项卡
     currentTab: 0, // 顶部选项卡索引
+    wxTimerList: {}, // 倒计时
     // 店铺
     flowData: [
       {
@@ -218,17 +230,29 @@ export default class Index extends wepy.page {
       this.currentTab = idx;
     },
     // 显示选择商品框
-    showAttrMask() {
-      this.attrFlag = true;
+    showAttrMask () {
+      this.attrFlag = true
     },
-    attrBtnSubmit() {
-      this.$navigate({ url: '/pages/settlement' });
+    attrBtnSubmit(){
+      this.$navigate({url: '/pages/settlement'})
     }
   };
 
   events = {};
 
-  onLoad() {}
+  onLoad() {
+    // 倒计时s
+    var wxTimer = new timer({
+      beginTime: '0:0:10',
+      name: 'firstTimer',
+      complete() {}
+    });
+    wxTimer.start(this);
+    // setTimeout(() => {
+    //   wxTimer.stop();
+    // }, 5000);
+    // 倒计时e
+  }
 }
 </script>
 
@@ -317,30 +341,6 @@ export default class Index extends wepy.page {
       margin-left: 20rpx;
       text-decoration: line-through;
       color: #8e8e8e;
-    }
-    .pre {
-      width: 76rpx;
-      height: 36rpx;
-      line-height: 36rpx;
-      border-radius: 6rpx;
-      text-align: center;
-      background: #fff2f2;
-      color: #f2292d;
-      font-size: 20rpx;
-      margin: 0 20rpx;
-    }
-    .ear {
-      color: #f2292d;
-      font-size: 28rpx;
-      font-weight: bold;
-    }
-  }
-  .pay-time {
-    padding-bottom: 20rpx;
-    text {
-      color: #8e8e8e;
-      line-height: 1.5;
-      display: block;
     }
   }
 }
@@ -474,7 +474,7 @@ export default class Index extends wepy.page {
   .saleShopWrap {
     height: 100%;
     padding: 0 30rpx;
-    background: #f9f9f9;
+    background: #F9F9F9;
     .saleShop {
       height: 100%;
       display: flex;
@@ -500,7 +500,7 @@ export default class Index extends wepy.page {
           font-size: 30rpx;
           font-weight: bold;
           color: #333;
-          padding: 20rpx 30rpx 20rpx 30rpx;
+          padding:20rpx 30rpx 20rpx 30rpx;
           text {
             width: 260rpx;
             display: block;
@@ -583,48 +583,6 @@ export default class Index extends wepy.page {
     text-align: center;
     color: #fff;
   }
-  .earnest-money {
-    width: 250rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    color: #fff;
-    font-size: 20rpx;
-    font-weight: bold;
-    background: #ff6f73;
-    height: 100%;
-  }
-  .pay-deposit {
-    width: 250rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    color: #fff;
-    font-size: 30rpx;
-    font-weight: bold;
-    background: #ff2228;
-    height: 100%;
-  }
-  .add-cart {
-    width: 250rpx;
-    text-align: center;
-    line-height: 100rpx;
-    font-weight: bold;
-    color: #fff;
-    font-size: 30rpx;
-    background: #ff6f73;
-  }
-  .purchase {
-    width: 250rpx;
-    text-align: center;
-    line-height: 100rpx;
-    font-weight: bold;
-    color: #fff;
-    font-size: 30rpx;
-    background: #ff2228;
-  }
 }
 .attr-box {
   position: fixed;
@@ -635,7 +593,7 @@ export default class Index extends wepy.page {
   border-top-left-radius: 40rpx;
   border-top-right-radius: 40rpx;
   box-sizing: border-box;
-  padding: 30rpx 30rpx 20rpx 30rpx;
+  padding: 30rpx 30rpx 76rpx 30rpx;
   .goods-t {
     display: flex;
     .goods-img {
@@ -713,33 +671,6 @@ export default class Index extends wepy.page {
     position: absolute;
     bottom: 30rpx;
     right: 30rpx;
-  }
-  .prop-fot {
-    display: flex;
-    height: 80rpx;
-    margin-top: 50rpx;
-    justify-content: space-between;
-    padding: 0 30rpx;
-    .add-cart {
-      background: #ff6f73;
-      width: 300rpx;
-      border-radius: 100rpx;
-      text-align: center;
-      line-height: 80rpx;
-      color: #fff;
-      font-weight: bold;
-      font-size: 30rpx;
-    }
-    .purchase {
-      background: #ff2228;
-      width: 300rpx;
-      border-radius: 100rpx;
-      text-align: center;
-      line-height: 80rpx;
-      color: #fff;
-      font-weight: bold;
-      font-size: 30rpx;
-    }
   }
 }
 </style>

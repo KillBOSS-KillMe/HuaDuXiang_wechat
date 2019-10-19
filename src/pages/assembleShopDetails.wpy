@@ -58,6 +58,32 @@
           <image src="/assets/img/image25.png" />
         </view>
       </view>
+
+      <view class="assemble-block">
+        <view class="head">
+          <view class="title">2人在拼团，可直接参与</view>
+          <view class="more">
+            <text>查看更多</text>
+            <image src="/assets/img/image25.png" />
+          </view>
+        </view>
+        <div class="list">
+          <repeat for="{{3}}" wx:key="index">
+            <view class="item">
+              <image src="/assets/img/image.png" />
+              <view class="name">丽丽</view>
+              <view class="last">
+                <view class="other">
+                  <view>还差1人拼成</view>
+                  <view>剩余23:41:24</view>
+                </view>
+                <view class="btn">去拼单</view>
+              </view>
+            </view>
+          </repeat>
+        </div>
+      </view>
+
       <view class="textdetails">
         <view class="textdetails-h">图文详情</view>
         <view>（微晶一周鲜）功能，大家有没有这种苦恼，买来的新鲜肉放在冷藏容易坏，放在冷冻冻成了石头！要拿来吃的时候又得解冻了才能切，而且解冻的过程又容易滋生细菌并且营养流失影响口感，微晶这个功能就很好解决了，区别于传统的感知冰箱内温度，微晶是感知食材本身的温度，使食材始终处于微晶状态，随时拿出来随时切并且保留了食材的营养不流失～并且可以保存七天左右哦！</view>
@@ -111,8 +137,14 @@
         <image src="/assets/img/image29.png" />
         <text>购物车</text>
       </navigator>
-      <view class="add-cart" @tap="showAttrMask">加入购物车</view>
-      <view class="purchase" @tap="showAttrMask">立即购买</view>
+      <view class="earnest-money">
+        <text>单独购买</text>
+        <text>￥29</text>
+      </view>
+      <view class="pay-deposit" @tap="showAttrMask">
+        <text>发起拼单</text>
+        <text>￥19</text>
+      </view>
     </view>
     <!-- 选择商品弹框 -->
     <attrsmask :maskFlag.sync="attrFlag">
@@ -150,8 +182,7 @@
         </view>
         <!-- <view class="prop-btn" @tap="attrBtnSubmit">确定</view> -->
         <view class="prop-fot">
-          <view class="add-cart">加入购物车</view>
-          <view class="purchase" @tap="attrBtnSubmit">立即购买</view>
+          <view class="purchase" @tap="attrBtnSubmit">确认</view>
         </view>
       </view>
     </attrsmask>
@@ -590,7 +621,7 @@ export default class Index extends wepy.page {
     justify-content: center;
     flex-direction: column;
     color: #fff;
-    font-size: 20rpx;
+    font-size: 30rpx;
     font-weight: bold;
     background: #ff6f73;
     height: 100%;
@@ -732,13 +763,35 @@ export default class Index extends wepy.page {
     }
     .purchase {
       background: #ff2228;
-      width: 300rpx;
-      border-radius: 100rpx;
+      width: 690rpx;
+      border-radius: 10rpx;
       text-align: center;
       line-height: 80rpx;
       color: #fff;
       font-weight: bold;
       font-size: 30rpx;
+    }
+  }
+}
+.assemble-block {
+  .head {
+    height: 90rpx;
+    display: flex;
+    align-items: center;
+    padding: 0 30rpx;
+    justify-content: space-between;
+    .title {
+      color: #000000;
+    }
+    .more {
+      color: #999999;
+      display: flex;
+      align-items: center;
+      image {
+        margin: 0 0;
+        width: 48rpx;
+        height: 48rpx;
+      }
     }
   }
 }

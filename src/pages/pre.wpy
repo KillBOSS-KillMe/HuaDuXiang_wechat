@@ -154,7 +154,7 @@ export default class Index extends wepy.page {
          */
         goPreDetails(shopid){
             // console.log('preId',this.preId)
-            this.$navigate(`/pages/shopDetails?shopid=${shopid}&preId=${this.preId}`)
+            this.$navigate(`/pages/preShopDetails?shopid=${shopid}&preId=${this.preId}`)
         }
     };
 }

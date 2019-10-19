@@ -890,7 +890,7 @@ export default class Index extends wepy.page {
     // 商品
     shopData: {
       id: 1,
-      img: '../assets/images/indexlunbo.png',
+      img: '',
       title: '儿童滑行车两轮平衡车小孩踏步车',
       color: '白色',
       color2: '粉色',
@@ -909,7 +909,7 @@ export default class Index extends wepy.page {
     //拼团
     assembleData: [
       {
-        img: '../assets/images/indexlunbo.png',
+        img: '',
         name: '丽丽',
         title: '哈哈哈哈哈',
         time: '2018-01-01',
@@ -919,13 +919,13 @@ export default class Index extends wepy.page {
     // 砍价记录
     bargindata:[
         {
-            img: '../assets/images/indexlunbo.png',
+            img: '',
             name: '李白1',
             tag: '0',
             barginprice: '2550.00',
         },
         {
-            img: '../assets/images/indexlunbo.png',
+            img: '',
             name: '李白1',
             tag: '0',
             barginprice: '2550.00',

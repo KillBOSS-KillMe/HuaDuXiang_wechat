@@ -41,27 +41,47 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 5,
 			"list": [
 				{
-					"id": -1,
-					"name": "pages/button",
-					"pathName": "pages/button",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/bargain",
-					"pathName": "pages/bargain",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 2,
-					"name": "pages/barginInfo",
+					"id": 0,
+					"name": "砍价分享进入小程序",
 					"pathName": "pages/barginInfo",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "秒杀商品详情",
+					"pathName": "pages/seckillShopDetails",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "提交订单",
+					"pathName": "pages/settlement",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "预购商品详情",
+					"pathName": "pages/preShopDetails",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "普通商品详情",
+					"pathName": "pages/shopDetails",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "拼团商品详情",
+					"pathName": "pages/assembleShopDetails",
 					"scene": null
 				}
 			]

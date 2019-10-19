@@ -232,7 +232,7 @@
       <swiper indicator-dots="true" autoplay="true" interval="2000" duration="500" circular="true">
         <repeat for="{{imgUrls}}" item="item">
           <swiper-item>
-            <image src="{{requestImgUrl + item.img}}" class="slide-image" />
+            <image src="http://img011.hc360.cn/g2/M06/45/BF/wKhQuFLfLl-EakIIAAAAAGqrml0128.jpg" class="slide-image" />
           </swiper-item>
         </repeat>
       </swiper>
@@ -271,7 +271,7 @@
         <view class="saleShop">
           <repeat for="{{flowData}}" item="item">
             <view class="shopview" @tap="jumpTimeDetails('{{item.id}}')">
-              <image src="{{requestImgUrl + item.img}}" />
+              <image src="http://img011.hc360.cn/g2/M06/45/BF/wKhQuFLfLl-EakIIAAAAAGqrml0128.jpg" />
               <view class="saleTag">
                 <text class="overflow-one">{{item.title}}</text>
               </view>
@@ -391,7 +391,7 @@ export default class Index extends wepy.page {
     this.onGetUserInfo();
     // 倒计时s
     var wxTimer = new timer({
-      beginTime: '0:0:10',
+      beginTime: '6',
       name: 'firstTimer',
       complete() {}
     });
