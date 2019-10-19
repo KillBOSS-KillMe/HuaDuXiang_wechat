@@ -28,14 +28,12 @@ export default class Mask extends wepy.component {
       this.maskFlag = false;
       this.$apply();
     },
-    move (e) {
-      return false
+    move(e) {
+      return false;
     }
   };
 
-  onLoad() {
-    console.log(this.maskFlag, 999)
-  }
+  onLoad() {}
 }
 </script>
 

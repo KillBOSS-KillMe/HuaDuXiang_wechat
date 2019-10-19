@@ -1,0 +1,67 @@
+<template>
+  <view class="merchant-wrap">
+    <view class="merchant-list">
+      <repeat for="{{10}}" item="item">
+        <view class="merchant-item" @tap="navigate">
+          <image class="search-img" src="/assets/img/image.png" />
+        </view>
+      </repeat>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class ShopCart extends wepy.page {
+  config = {
+    navigationBarTitleText: '特约商户'
+  };
+
+  components = {};
+
+  mixins = [];
+
+  data = {};
+
+  computed = {};
+
+  methods = {
+    navigate() {
+      var id = 1
+      this.$navigate({ url: `merchantIndex?id=${1}` });
+    }
+  };
+
+  events = {};
+  onShow() {}
+
+  onLoad() {}
+}
+</script>
+
+<style lang="less">
+.merchant-wrap {
+  min-height: 100vh;
+  background: #f9f9f9;
+  .merchant-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 30rpx;
+    .merchant-item {
+      width: 120rpx;
+      height: 120rpx;
+      margin: 30rpx 70rpx 0 0;
+      &:nth-of-type(4n) {
+        margin-right: 0;
+      }
+      > image {
+        width: 100%;
+        height: 100%;
+        border-radius: 10rpx;
+      }
+    }
+  }
+}
+</style>
+

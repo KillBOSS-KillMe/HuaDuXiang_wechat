@@ -27,7 +27,16 @@ export default class extends wepy.app {
       'pages/preShopDetails', // 预购商品详情
       'pages/assembleShopDetails', // 拼团商品详情
       'pages/barginInfo', // 砍价 -- 砍价信息 --test
-      'pages/search' // 搜索
+      'pages/search', // 搜索
+      'pages/merchant', // 特约商户
+      'pages/merchantIndex', // 商户首页
+      'pages/applyPartner', // 申请合伙人
+      'pages/partnerInput' // 申请合伙人填写
+
+      
+
+      
+      
     ],
     window: {
       backgroundTextStyle: 'light',

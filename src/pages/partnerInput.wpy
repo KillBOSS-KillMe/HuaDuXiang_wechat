@@ -1,0 +1,98 @@
+<template>
+  <view class="partner">
+    <view class="input-wrap">
+      <view class="com-list">
+        <view class="item">
+          <view class="title">姓名</view>
+          <input type="text" placeholder="请输入姓名" />
+          <image class="search-img" src="/assets/img/image25.png" />
+        </view>
+        <view class="item">
+          <view class="title">电话</view>
+          <input type="number" placeholder="请输入手机号码" />
+        </view>
+        <view class="item">
+          <view class="title">地址</view>
+          <input type="text" placeholder="请选择收货地址" disabled />
+          <image class="search-img" src="/assets/img/image25.png" />
+        </view>
+      </view>
+    </view>
+    <button class="btn">提交</button>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class ShopCart extends wepy.page {
+  config = {
+    navigationBarTitleText: '申请合伙人'
+  };
+
+  components = {};
+
+  mixins = [];
+
+  data = {};
+
+  computed = {};
+
+  methods = {};
+
+  events = {};
+  onShow() {}
+
+  onLoad() {}
+}
+</script>
+
+<style lang="less">
+.partner {
+  min-height: 100vh;
+  background: #f9f9f9;
+  position: relative;
+  .input-wrap {
+    background: #fff;
+    padding: 0 30rpx 100rpx 30rpx;
+    .com-list {
+      .item {
+        height: 100rpx;
+        border-bottom: 1px solid #f1f1f1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .title {
+          font-weight: bold;
+          font-size: 30rpx;
+          margin-right: 70rpx;
+        }
+        > input {
+          flex: 1;
+          color: #333;
+        }
+        > image {
+          width: 48rpx;
+          height: 48rpx;
+        }
+      }
+    }
+  }
+  .btn {
+    position: absolute;
+    bottom: 60rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 690rpx;
+    height: 88rpx;
+    line-height: 88rpx;
+    text-align: center;
+    border-radius: 10rpx;
+    font-weight: bold;
+    font-size: 30rpx;
+    background: #ff2228;
+    color: #fff;
+  }
+}
+</style>
+

@@ -39,7 +39,7 @@ wxTimer.prototype = {
 			var wxTimerList = self.wxTimerList || {};
 			//更新计时器数组
 			wxTimerList[that.name] = {
-				// wxTimer: tmpTimeStr,
+				wxTimer: `${h}:${m}:${s}`,
 				wxTimerSecond: wxTimerSecond,
 				h,
 				m,

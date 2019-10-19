@@ -1,0 +1,64 @@
+<template>
+  <view class="shop-wrap">
+    <!-- <repeat for="{{10}}" item="item"> -->
+    <image class="cont-img" src="/assets/img/0.jpg" mode='widthFix' />
+    <navigator url="/pages/partnerInput" class="btn">立即申请</navigator>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class ShopCart extends wepy.page {
+  config = {
+    navigationBarTitleText: '申请合伙人',
+    navigationStyle: 'custom'
+  };
+
+  components = {};
+
+  mixins = [];
+
+  data = {
+   
+  };
+
+  computed = {};
+
+  methods = {
+   
+  };
+
+  events = {};
+  onShow() {}
+
+  onLoad() {}
+}
+</script>
+
+<style lang="less">
+.shop-wrap {
+  position: relative;
+  .cont-img {
+    width: 750rpx;
+    min-height: 100vh;
+    display: block;
+  }
+  .btn {
+    position: absolute;
+    bottom: 70rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 30rpx;
+    width: 626rpx;
+    height: 84rpx;
+    text-align: center;
+    line-height: 84rpx;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 10rpx;
+    background: #FFB921;
+  }
+}
+</style>
+

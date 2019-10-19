@@ -411,17 +411,20 @@ export default class Index extends wepy.page {
      */
     tapName(id) {
       if (id == 1) {
-        this.$navigate({ url: `sale?id=${id}` });
+        // this.$navigate({ url: `sale?id=${id}` }); // 促销
+        this.$navigate({ url: `applyPartner` }); // 申请合伙人
       } else if (id == 2) {
-        this.$navigate({ url: `pre?id=${id}` });
+        this.$navigate({ url: `pre?id=${id}` }); 
       } else if (id == 3) {
         this.$navigate({ url: `discount?id=${id}` });
       } else if (id == 4) {
-        this.$navigate({ url: `sale?id=${id}` });
+        // this.$navigate({ url: `sale?id=${id}` }); // 促销
+        this.$navigate({ url: `assemble?id=${id}` }); // 拼团
       } else if (id == 5) {
         this.$navigate({ url: `bargain?id=${id}` });
       } else if (id == 6) {
-        this.$navigate({ url: `assemble?id=${id}` });
+        // this.$navigate({ url: `assemble?id=${id}` }); // 拼团
+        this.$navigate({ url: `merchant?id=${id}` }); // 特约商户
       } else if (id == 7) {
         this.$navigate({ url: `seckill?id=${id}` });
       }

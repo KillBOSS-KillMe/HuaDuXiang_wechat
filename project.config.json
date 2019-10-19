@@ -41,7 +41,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 5,
+			"current": 7,
 			"list": [
 				{
 					"id": 0,
@@ -82,6 +82,21 @@
 					"id": -1,
 					"name": "拼团商品详情",
 					"pathName": "pages/assembleShopDetails",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "申请合伙人",
+					"pathName": "pages/applyPartner",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "填写合伙人信息",
+					"pathName": "pages/partnerInput",
+					"query": "",
 					"scene": null
 				}
 			]
