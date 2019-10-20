@@ -150,8 +150,7 @@ import nav from '../components/nav'; // 底部导航
 
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '分类',
-    navigationBarBackgroundColor: 'white'
+    navigationBarTitleText: '分类'
   };
   components = {
     nav: nav
@@ -188,6 +187,31 @@ export default class Index extends wepy.page {
       ],
       two: [
         { id: '1', img: 'class2.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class1.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class2.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class2.png', title: '分类2', type: '2' },
+         { id: '1', img: 'class2.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class1.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class2.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class2.png', title: '分类2', type: '2' }, { id: '1', img: 'class2.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class1.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class2.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class2.png', title: '分类2', type: '2' }, { id: '1', img: 'class2.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class1.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class2.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class2.png', title: '分类2', type: '2' }, { id: '1', img: 'class2.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class1.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class2.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class2.png', title: '分类2', type: '2' }, { id: '1', img: 'class2.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class1.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class2.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class2.png', title: '分类2', type: '2' }, { id: '1', img: 'class2.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class1.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class2.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class2.png', title: '分类2', type: '2' }, { id: '1', img: 'class2.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class1.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class2.png', title: '分类2', type: '2' },
+        { id: '2', img: 'class2.png', title: '分类2', type: '2' }, { id: '1', img: 'class2.png', title: '分类2', type: '2' },
         { id: '2', img: 'class1.png', title: '分类2', type: '2' },
         { id: '2', img: 'class2.png', title: '分类2', type: '2' },
         { id: '2', img: 'class2.png', title: '分类2', type: '2' }
