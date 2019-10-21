@@ -232,7 +232,10 @@
       <swiper indicator-dots="true" autoplay="true" interval="2000" duration="500" circular="true">
         <repeat for="{{imgUrls}}" item="item">
           <swiper-item>
-            <image src="http://img011.hc360.cn/g2/M06/45/BF/wKhQuFLfLl-EakIIAAAAAGqrml0128.jpg" class="slide-image" />
+            <image
+              src="http://img011.hc360.cn/g2/M06/45/BF/wKhQuFLfLl-EakIIAAAAAGqrml0128.jpg"
+              class="slide-image"
+            />
           </swiper-item>
         </repeat>
       </swiper>
@@ -414,7 +417,7 @@ export default class Index extends wepy.page {
         // this.$navigate({ url: `sale?id=${id}` }); // 促销
         this.$navigate({ url: `applyPartner` }); // 申请合伙人
       } else if (id == 2) {
-        this.$navigate({ url: `pre?id=${id}` }); 
+        this.$navigate({ url: `pre?id=${id}` });
       } else if (id == 3) {
         this.$navigate({ url: `discount?id=${id}` });
       } else if (id == 4) {
@@ -427,6 +430,8 @@ export default class Index extends wepy.page {
         this.$navigate({ url: `merchant?id=${id}` }); // 特约商户
       } else if (id == 7) {
         this.$navigate({ url: `seckill?id=${id}` });
+      } else if (id == 8) {
+        this.$navigate({ url: `moreChannels?id=${id}` });
       }
     },
     /**
