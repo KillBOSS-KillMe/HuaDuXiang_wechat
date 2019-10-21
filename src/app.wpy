@@ -32,7 +32,9 @@ export default class extends wepy.app {
       'pages/merchantIndex', // 商户首页
       'pages/applyPartner', // 申请合伙人
       'pages/partnerInput', // 申请合伙人填写
-      'pages/moreChannels' // 更多频道
+      'pages/moreChannels', // 更多频道
+      'pages/orderlist', // 订单列表
+      'pages/vip' // 会员
       
       
     ],

@@ -41,7 +41,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 6,
+			"current": 8,
 			"list": [
 				{
 					"id": 0,
@@ -87,8 +87,22 @@
 				},
 				{
 					"id": -1,
-					"name": "pages/moreChannels",
-					"pathName": "pages/moreChannels",
+					"name": "我的",
+					"pathName": "pages/user",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "会员等级",
+					"pathName": "pages/membersCenter",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "vip",
+					"pathName": "pages/vip",
 					"query": "",
 					"scene": null
 				}

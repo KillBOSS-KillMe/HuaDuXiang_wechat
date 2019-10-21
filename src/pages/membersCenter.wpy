@@ -1,232 +1,3 @@
-<style lang="less">
-
-/* pages/myHome/myHome.wxss */
-
-page {
-  background: #F7F7F7;
-  height: 100%;
-}
-.top {
-  
-  width: 100%;
-  height: 450rpx;
-  background: #fff;
-  position: relative;
-  .topview{
-    width: 100%;
-    height: 200rpx;
-    background: #2E2E30;
-    border-bottom-left-radius: 18%;
-    border-bottom-right-radius: 18%;
-  }
-  .cardclass{
-    width: 90%;
-    height: 380rpx;
-    position: absolute;
-    top: 12%;
-    left: 5%;
-    // 会员卡片图
-    .top_imgbg {
-      width: 100%;
-      height: 100%;
-    }
-    //会员信息
-      /* 头像样式设置 */
-      .imgSrc {
-        width: 100rpx;
-        height: 100rpx;
-        position: absolute;
-        top: 10%;
-        left: 5%;
-        border-radius: 50%;
-        overflow: hidden;
-        background: #fff;
-      }
-      .username {
-         position: absolute;
-        left: 24%;
-        top: 11%;
-        color: #fff;
-        font-size: 30rpx;
-      }
-      .userintegral {
-         position: absolute;
-        left: 24.4%;
-        top: 24%;
-        color: #fff;
-        font-size: 24rpx;
-      }
-      .userclass {
-        position: absolute;
-        right: 0%;
-        top: 0%;
-        color: #fff;
-        font-size: 24rpx;
-        background: #727272;
-        width: 130rpx;
-        height: 62rpx;
-        line-height: 62rpx;
-        text-align: center;
-        border-bottom-left-radius: 20rpx;
-      }
-      .userclassThree {
-        background: #BE8D53;
-      }
-      .balance {
-        position: absolute;
-        left: 70%;
-        bottom: 35%;
-        color: #fff;
-        font-size: 24rpx;
-        text{
-          font-weight: bold;
-        }
-      }
-      .info {
-        position: absolute;
-        left: 7%;
-        bottom: 12%;
-        color: #fff;
-        font-size: 26rpx;
-      }
-      .infobtn {
-        position: absolute;
-        right: 6%;
-        bottom: 12%;
-        color: #fff;
-        font-size: 26rpx;
-        width: 200rpx;
-        height: 64rpx;
-        line-height: 64rpx;
-        text-align: center;
-        border-radius: 40rpx;
-        background:linear-gradient(to right,#CD9B5E 0, #BD8C52 100%) ;
-      }
-  }
-}
-// 会员等级
-.menberClass{
-  width: 100%;
-  height: 200rpx;
-  background: #fff;
-  .classinfo{
-    font-size: 36rpx;
-    font-weight: bold;
-    padding: 26rpx 40rpx;
-    color: #333;
-  }
-  .classPro{
-      width: 100%;
-      height: 100rpx;
-      background: #fff;
-      padding: 30rpx 0;
-    .calssinfomation{
-      width: 90%;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      font-size: 24rpx;
-      color: #BA8747;
-      margin: 0 40rpx;
-    }
-    // 等级
-    .prowrap{
-      width: 93%;
-      height: 6rpx;
-      background: #E3E3E3;
-      border-radius: 40rpx;
-      margin: 40rpx 30rpx 0;
-      position: relative;
-
-      .proiten{
-        width: 30rpx;
-        height: 30rpx;
-        position: absolute;
-        top: -200%;
-        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAhCAYAAABX5MJvAAAEEUlEQVRYR8VYS29bRRT+zn05jh2bxCHNg5g+SHhValykECGxALGBDeUvIKCLCsIfoAv+QapuKPAbYAPZINgg1BRRU1QExE2pnCa23Lghfvu+BuZSu/cx7rWJFWZlzcw55/OZ77wuYYClF35eJrA3ACwT8DQDUgCSAA4IKDPgDwDXGOhrbWbpWr+qKewi2/4haijRt4lhFYSFsPudcwJu2aA11Wx8TvMvNR8l90gQZjH7ps1wiYB0v8b99xiQlxhWldnMl710CEGwXC5ijdUuMYb3/qtxvxwRrsjV+Ae0sNAOnAWQl68mTD3CUb8yLAAuPd8pWvscpVYqbt0eT7CbNzUzpa8D9GovALbZhlnbg9WqwDIaYJYJIgLJGiQlAnkkASU+6fwWL/atUtZep9OndRd/Hl41i9lPej0BN67v52HUygBYqJPU+CS08bQQDH8aZTpzPgDC3M2eY4QvRNrNxj5a93JgthVq3ONmSUYkdRIcUIAHDG91yOo8x4Mw/F0UBXqlgHb5zkDG/ZcjE8ehJWc82zxqVLP5DA9fB4ReyF4g4LJf2KyX0SxtHgpARzg6tQglxnPbw8VA72szS5cdEMZudtOfiDgHGjs3hE9gWSYO9nZRr+7DaLccrWokilhiHMnUDGRZCbpfkjE6d8bLEYacOptZJL1440Vi9lW/FOeAUdsLKKtXyijtbMG2xPyQJBlTT5xCLOH911yREptEdMqbdBlJK2QUrn8E0Mdua9wL9e3rQgDFfH/PM51eFAKJzZ/1RQy7SEYh+xUAXpS6Sz/YQft+3gPCMg3kN7Ow+4wQ7pH0Ygayonr0RCbS0JJz7r11MgvZ2ww44d5tFn+D2fzLI3y/tI390t2BSDr++BwmjnnLjhJ9DNHpZ7t6CPiTe+IAQMKtvZb/CczqJjTnaPvWL9Bb9YFAaCOjmH/qjEeGZ9Z4+gX3XpWDCKS/6p0NgNke4du/boD59sIQ8XR+8vkV7zUijB337gk9MSwQnBcnnlsOA1EVcuIon6PDiUB0HCUxAawL88TRhii7KMyYR5msnIzZq3Y0SzmY9WDarlXKuHd3q2fSGihtd2oHByGqov0XsKbTWalaFKNj40hO9l/APFW0Vz/BPcE9MozFCxcvYJ0V6Cf4Qa/OajhNzZPQkrPezOnvrDqnZjF7hTG86//nw27viPCpMp3pjhOibvsbgF72A+Ec4ZVVRFbRc3HX84op6Lq/V2rx19zzR2D4YSFzh6fl1xtgtuFgIEmFrI0+aPlTkJQREbbwuaNLmv97AnPD52S1CWuHn0XpQ2V2SThOOF4MCz8nfNWRdyRGqww4FXa/c07Alk1sTTVanx1qKvcbFHyf4IHPG6IKAXv/fp+gHxlZ6+qxsxtEFD6q/WPkb9mOJFKqPPObAAAAAElFTkSuQmCC');
-        background-repeat:no-repeat; 
-        background-size:100% 100%;
-        -moz-background-size:100% 100%;
-        z-index: 99;
-      }
-      .proline{
-        height: 7rpx;
-        background: #CB9A5D;
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-    }
-    // 图标
-    .iconcenter{
-        position: relative;
-        top: 0%;
-        left: 0%;
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        width: 85%;
-        height: 10rpx;
-        margin: -5rpx 60rpx 0;
-        image{
-          width: 30rpx;
-          height: 30rpx;
-          margin-top: -10rpx;
-        }
-      }
-    .iconcenterchoose{
-        position: relative;
-        top: 0%;
-        left: 0%;
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        width: 85%;
-        height: 10rpx;
-        margin: -8rpx 60rpx 0; 
-        image{
-          width: 30rpx;
-          height: 30rpx;
-          margin-top: -10rpx;
-        }
-      }
-  }
-}
-// 会员说明
-.menberExplain{
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  margin-top: 70rpx;
-  .classinfo{
-    font-size: 36rpx;
-    font-weight: bold;
-    padding: 26rpx 40rpx 10rpx;
-    color: #333;
-  }
-  .explain{
-    width: 100%;
-    // background: #fff;
-    padding-bottom: 40rpx;
-    .textbold{
-      padding: 26rpx 40rpx 15rpx;
-      color: #333333;
-      font-size: 28rpx;
-    }
-    .textbold:nth-child(1){
-      padding: 0rpx;
-    }
-    .textsmall{
-      padding: 0rpx 40rpx 10rpx;
-      color: #A0A0A0;
-      font-size: 24rpx;
-    }
-  }
-}
-
-
-
-</style>
 
 <template>
   <view>
@@ -234,18 +5,21 @@ page {
     <view class="top">
       <view class="topview"></view>
       <view class="cardclass">
-        <image class="top_imgbg" src='{{requestImgUrl + menberImg}}'/>
+        <image class="top_imgbg" src="{{requestImgUrl + menberImg}}" />
         <!-- 信息内容 -->
-          <image class="imgSrc" data-id src="{{userInfo.avatarUrl}}" />
-          <view class="username">{{userInfo.nickName || '111111'}}</view>
-          <view class="userintegral">积分: {{userMember.integral || ''}}</view>
-          <view class="userclass" style="background:{{goldenclass}}" >{{userMember.class || ''}}</view>
-          <view class="info">{{tagText}}</view>
-          <view class="balance" wx:if="{{balanceshow}}">余额: <text>{{balancetext}}</text></view>
-          <view class="infobtn" wx:if="{{btnshow}}">{{btnText}}</view>
+        <image class="imgSrc" data-id src="{{userInfo.avatarUrl}}" />
+        <view class="username">{{userInfo.nickName || '111111'}}</view>
+        <view class="userintegral">积分: {{userMember.integral || ''}}</view>
+        <view class="userclass" style="background:{{goldenclass}}">{{userMember.class || ''}}</view>
+        <view class="info">{{tagText}}</view>
+        <view class="balance" wx:if="{{balanceshow}}">
+          余额:
+          <text>{{balancetext}}</text>
+        </view>
+        <view class="infobtn" wx:if="{{btnshow}}">{{btnText}}</view>
       </view>
     </view>
-     <!-- 会员信息 end -->
+    <!-- 会员信息 end -->
     <!-- 会员进度 -->
     <view class="menberClass">
       <view class="classinfo">会员等级</view>
@@ -258,13 +32,13 @@ page {
           <text>钻石会员</text>
         </view>
         <view class="prowrap">
-          <view class="proiten" style="left:{{itemleft}}%"> </view>  
-          <view class="proline" style="width:{{itemline}}%"> </view>  
-        </view>  
+          <view class="proiten" style="left:{{itemleft}}%"></view>
+          <view class="proline" style="width:{{itemline}}%"></view>
+        </view>
         <view class="iconcenter">
-            <repeat for="{{noCenter}}">
-              <image src="{{requestImgUrl + item.iamgs}}"/>
-            </repeat>
+          <repeat for="{{noCenter}}">
+            <image src="{{requestImgUrl + item.iamgs}}" />
+          </repeat>
         </view>
       </view>
     </view>
@@ -276,7 +50,6 @@ page {
         <repeat for="{{menberExplain}}">
           <view class="textbold">{{item.membername}}</view>
           <view class="textsmall">{{item.menberintroduce}}</view>
-
         </repeat>
       </view>
     </view>
@@ -291,8 +64,7 @@ export default class ShopCart extends wepy.page {
     navigationBarTitleText: '会员中心'
   };
 
-  components = {
-  };
+  components = {};
 
   mixins = [];
 
@@ -310,98 +82,339 @@ export default class ShopCart extends wepy.page {
     goldenclass: '',
     menberImg: 'menber.png', // 会员背景图片
     //
-    userMember:{
+    userMember: {
       name: '',
       integral: '200',
-      class: 0
+      class: 1
     },
-    menberExplain:[
-      {class: 0},
-      {class: 1,membername:'普通会员',menberintroduce:'只参与积分和充值, 只要关注公众号即可成为普通会员'},
-      {class: 2,membername:'银卡会员',menberintroduce:'普通会员累计消费满1000元或者一次性充值满500元即可成为银卡会员,全场商品享受98折优惠'},
-      {class: 3,membername:'金卡会员',menberintroduce:'普通会员累计消费满500元或者一次性充值满3000元; \n 银卡会员一次性充值2500元挥着累计充值5000元即可成为金卡会员,全场商品享受9,5折优惠'},
-      {class: 4,membername:'钻石会员',menberintroduce:'普通会员累计消费20000元或者一次性充值满10000元; \n 金卡会员补充7500元, 普通会员累计充值20000元即可成为钻石会员, 全场商品享受9折优惠; \n 同时不定期推出针对钻石会员的劲爆活动.'},
+    menberExplain: [
+      { class: 0 },
+      {
+        class: 1,
+        membername: '普通会员',
+        menberintroduce: '只参与积分和充值, 只要关注公众号即可成为普通会员'
+      },
+      {
+        class: 2,
+        membername: '银卡会员',
+        menberintroduce:
+          '普通会员累计消费满1000元或者一次性充值满500元即可成为银卡会员,全场商品享受98折优惠'
+      },
+      {
+        class: 3,
+        membername: '金卡会员',
+        menberintroduce:
+          '普通会员累计消费满500元或者一次性充值满3000元; \n 银卡会员一次性充值2500元挥着累计充值5000元即可成为金卡会员,全场商品享受9,5折优惠'
+      },
+      {
+        class: 4,
+        membername: '钻石会员',
+        menberintroduce:
+          '普通会员累计消费20000元或者一次性充值满10000元; \n 金卡会员补充7500元, 普通会员累计充值20000元即可成为钻石会员, 全场商品享受9折优惠; \n 同时不定期推出针对钻石会员的劲爆活动.'
+      }
     ],
-    noCenter:[
-      {iamgs:'nocenter.png'},
-      {iamgs:'nocenter.png'},
-      {iamgs:'nocenter.png'},
-      {iamgs:'nocenter.png'},
-      {iamgs:'nocenter.png'},
+    noCenter: [
+      { iamgs: 'nocenter.png' },
+      { iamgs: 'nocenter.png' },
+      { iamgs: 'nocenter.png' },
+      { iamgs: 'nocenter.png' },
+      { iamgs: 'nocenter.png' }
     ]
   };
 
   computed = {};
 
-  methods = {
-
-  };
+  methods = {};
 
   events = {};
   onShow() {
-        // this.userInfo = this.$parent.globalData.userInfo
-      this.requestImgUrl = this.$parent.globalData.requestImgUrl
+    // this.userInfo = this.$parent.globalData.userInfo
+    this.requestImgUrl = this.$parent.globalData.requestImgUrl;
   }
-  
+
   onLoad() {
     this.userInfo = this.$parent.globalData.userInfo;
     console.log(this.noCenter[0].iamgs);
     switch (this.userMember.class) {
       case 0:
-        this.userMember.class = '非会员'
-        this.itemleft = 4.5
-        this.itemline = 5
-        this.balanceshow = false
-        this.btnText = '立即关注'
-        this.tagText = '关注公众号即可成为普通会员'
+        this.userMember.class = '非会员';
+        this.itemleft = 4.5;
+        this.itemline = 5;
+        this.balanceshow = false;
+        this.btnText = '立即关注';
+        this.tagText = '关注公众号即可成为普通会员';
         break;
       case 1:
-        this.userMember.class = '普通会员'
-        this.itemleft = 26
-        this.itemline = 26
-        this.btnText = '立即充值'
-        this.tagText = '充值1000元即可成为银卡会员'
-        this.noCenter[0].iamgs = 'center.png'
+        this.userMember.class = '普通会员';
+        this.itemleft = 26;
+        this.itemline = 26;
+        this.btnText = '立即充值';
+        this.tagText = '充值1000元即可成为银卡会员';
+        this.noCenter[0].iamgs = 'center.png';
         break;
       case 2:
-        this.userMember.class = '银卡会员'
-        this.itemleft = 48
-        this.itemline = 48
-        this.btnText = '立即充值'
-        this.tagText = '充值2500元即可成为h金卡会员'
-        this.noCenter[0].iamgs = 'center.png'
-        this.noCenter[1].iamgs = 'center.png'
+        this.userMember.class = '银卡会员';
+        this.itemleft = 48;
+        this.itemline = 48;
+        this.btnText = '立即充值';
+        this.tagText = '充值2500元即可成为h金卡会员';
+        this.noCenter[0].iamgs = 'center.png';
+        this.noCenter[1].iamgs = 'center.png';
         break;
       case 3:
-        this.userMember.class = '金卡会员'
-        this.itemleft = 69.5
-        this.itemline = 70
-        this.btnText = '立即充值'
-        this.tagText = '充值7000元即可成为钻石会员'
-        this.menberImg = 'golden.png'
-        this.goldenclass = '#BE8D53'
+        this.userMember.class = '金卡会员';
+        this.itemleft = 69.5;
+        this.itemline = 70;
+        this.btnText = '立即充值';
+        this.tagText = '充值7000元即可成为钻石会员';
+        this.menberImg = 'golden.png';
+        this.goldenclass = '#BE8D53';
 
-        this.noCenter[0].iamgs = 'center.png'
-        this.noCenter[1].iamgs = 'center.png'
-        this.noCenter[2].iamgs = 'center.png'
+        this.noCenter[0].iamgs = 'center.png';
+        this.noCenter[1].iamgs = 'center.png';
+        this.noCenter[2].iamgs = 'center.png';
         break;
       case 4:
-        this.userMember.class = '钻石会员'
-        this.itemleft = 91.5
-        this.itemline = 100
-        this.menberImg = 'black.png'
-        this.goldenclass = '#BE8D53'
-        this.btnshow = false
-        this.noCenter[0].iamgs = 'center.png'
-        this.noCenter[1].iamgs = 'center.png'
-        this.noCenter[2].iamgs = 'center.png'
-        this.noCenter[3].iamgs = 'center.png'
-        
+        this.userMember.class = '钻石会员';
+        this.itemleft = 91.5;
+        this.itemline = 100;
+        this.menberImg = 'black.png';
+        this.goldenclass = '#BE8D53';
+        this.btnshow = false;
+        this.noCenter[0].iamgs = 'center.png';
+        this.noCenter[1].iamgs = 'center.png';
+        this.noCenter[2].iamgs = 'center.png';
+        this.noCenter[3].iamgs = 'center.png';
+
         break;
-    
+
       default:
         break;
     }
   }
 }
 </script>
+
+<style lang="less">
+page {
+  background: #f7f7f7;
+  height: 100%;
+}
+.top {
+  width: 100%;
+  height: 450rpx;
+  background: #fff;
+  position: relative;
+  .topview {
+    width: 100%;
+    height: 200rpx;
+    background: #2e2e30;
+    border-bottom-left-radius: 18%;
+    border-bottom-right-radius: 18%;
+  }
+  .cardclass {
+    width: 90%;
+    height: 380rpx;
+    position: absolute;
+    top: 12%;
+    left: 5%;
+    // 会员卡片图
+    .top_imgbg {
+      width: 100%;
+      height: 100%;
+    }
+    //会员信息
+    /* 头像样式设置 */
+    .imgSrc {
+      width: 100rpx;
+      height: 100rpx;
+      position: absolute;
+      top: 10%;
+      left: 5%;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #fff;
+    }
+    .username {
+      position: absolute;
+      left: 24%;
+      top: 11%;
+      color: #fff;
+      font-size: 30rpx;
+    }
+    .userintegral {
+      position: absolute;
+      left: 24.4%;
+      top: 24%;
+      color: #fff;
+      font-size: 24rpx;
+    }
+    .userclass {
+      position: absolute;
+      right: 0%;
+      top: 0%;
+      color: #fff;
+      font-size: 24rpx;
+      background: #727272;
+      width: 130rpx;
+      height: 62rpx;
+      line-height: 62rpx;
+      text-align: center;
+      border-bottom-left-radius: 20rpx;
+    }
+    .userclassThree {
+      background: #be8d53;
+    }
+    .balance {
+      position: absolute;
+      left: 70%;
+      bottom: 35%;
+      color: #fff;
+      font-size: 24rpx;
+      text {
+        font-weight: bold;
+      }
+    }
+    .info {
+      position: absolute;
+      left: 7%;
+      bottom: 12%;
+      color: #fff;
+      font-size: 26rpx;
+    }
+    .infobtn {
+      position: absolute;
+      right: 6%;
+      bottom: 12%;
+      color: #fff;
+      font-size: 26rpx;
+      width: 200rpx;
+      height: 64rpx;
+      line-height: 64rpx;
+      text-align: center;
+      border-radius: 40rpx;
+      background: linear-gradient(to right, #cd9b5e 0, #bd8c52 100%);
+    }
+  }
+}
+// 会员等级
+.menberClass {
+  width: 100%;
+  height: 200rpx;
+  background: #fff;
+  .classinfo {
+    font-size: 36rpx;
+    font-weight: bold;
+    padding: 26rpx 40rpx;
+    color: #333;
+  }
+  .classPro {
+    width: 100%;
+    height: 100rpx;
+    background: #fff;
+    padding: 30rpx 0;
+    .calssinfomation {
+      width: 90%;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      font-size: 24rpx;
+      color: #ba8747;
+      margin: 0 40rpx;
+    }
+    // 等级
+    .prowrap {
+      width: 93%;
+      height: 6rpx;
+      background: #e3e3e3;
+      border-radius: 40rpx;
+      margin: 40rpx 30rpx 0;
+      position: relative;
+
+      .proiten {
+        width: 30rpx;
+        height: 30rpx;
+        position: absolute;
+        top: -200%;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAhCAYAAABX5MJvAAAEEUlEQVRYR8VYS29bRRT+zn05jh2bxCHNg5g+SHhValykECGxALGBDeUvIKCLCsIfoAv+QapuKPAbYAPZINgg1BRRU1QExE2pnCa23Lghfvu+BuZSu/cx7rWJFWZlzcw55/OZ77wuYYClF35eJrA3ACwT8DQDUgCSAA4IKDPgDwDXGOhrbWbpWr+qKewi2/4haijRt4lhFYSFsPudcwJu2aA11Wx8TvMvNR8l90gQZjH7ps1wiYB0v8b99xiQlxhWldnMl710CEGwXC5ijdUuMYb3/qtxvxwRrsjV+Ae0sNAOnAWQl68mTD3CUb8yLAAuPd8pWvscpVYqbt0eT7CbNzUzpa8D9GovALbZhlnbg9WqwDIaYJYJIgLJGiQlAnkkASU+6fwWL/atUtZep9OndRd/Hl41i9lPej0BN67v52HUygBYqJPU+CS08bQQDH8aZTpzPgDC3M2eY4QvRNrNxj5a93JgthVq3ONmSUYkdRIcUIAHDG91yOo8x4Mw/F0UBXqlgHb5zkDG/ZcjE8ehJWc82zxqVLP5DA9fB4ReyF4g4LJf2KyX0SxtHgpARzg6tQglxnPbw8VA72szS5cdEMZudtOfiDgHGjs3hE9gWSYO9nZRr+7DaLccrWokilhiHMnUDGRZCbpfkjE6d8bLEYacOptZJL1440Vi9lW/FOeAUdsLKKtXyijtbMG2xPyQJBlTT5xCLOH911yREptEdMqbdBlJK2QUrn8E0Mdua9wL9e3rQgDFfH/PM51eFAKJzZ/1RQy7SEYh+xUAXpS6Sz/YQft+3gPCMg3kN7Ow+4wQ7pH0Ygayonr0RCbS0JJz7r11MgvZ2ww44d5tFn+D2fzLI3y/tI390t2BSDr++BwmjnnLjhJ9DNHpZ7t6CPiTe+IAQMKtvZb/CczqJjTnaPvWL9Bb9YFAaCOjmH/qjEeGZ9Z4+gX3XpWDCKS/6p0NgNke4du/boD59sIQ8XR+8vkV7zUijB337gk9MSwQnBcnnlsOA1EVcuIon6PDiUB0HCUxAawL88TRhii7KMyYR5msnIzZq3Y0SzmY9WDarlXKuHd3q2fSGihtd2oHByGqov0XsKbTWalaFKNj40hO9l/APFW0Vz/BPcE9MozFCxcvYJ0V6Cf4Qa/OajhNzZPQkrPezOnvrDqnZjF7hTG86//nw27viPCpMp3pjhOibvsbgF72A+Ec4ZVVRFbRc3HX84op6Lq/V2rx19zzR2D4YSFzh6fl1xtgtuFgIEmFrI0+aPlTkJQREbbwuaNLmv97AnPD52S1CWuHn0XpQ2V2SThOOF4MCz8nfNWRdyRGqww4FXa/c07Alk1sTTVanx1qKvcbFHyf4IHPG6IKAXv/fp+gHxlZ6+qxsxtEFD6q/WPkb9mOJFKqPPObAAAAAElFTkSuQmCC');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        -moz-background-size: 100% 100%;
+        z-index: 99;
+      }
+      .proline {
+        height: 7rpx;
+        background: #cb9a5d;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+    // 图标
+    .iconcenter {
+      position: relative;
+      top: 0%;
+      left: 0%;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      width: 85%;
+      height: 10rpx;
+      margin: -5rpx 60rpx 0;
+      image {
+        width: 30rpx;
+        height: 30rpx;
+        margin-top: -10rpx;
+      }
+    }
+    .iconcenterchoose {
+      position: relative;
+      top: 0%;
+      left: 0%;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      width: 85%;
+      height: 10rpx;
+      margin: -8rpx 60rpx 0;
+      image {
+        width: 30rpx;
+        height: 30rpx;
+        margin-top: -10rpx;
+      }
+    }
+  }
+}
+// 会员说明
+.menberExplain {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  margin-top: 70rpx;
+  .classinfo {
+    font-size: 36rpx;
+    font-weight: bold;
+    padding: 26rpx 40rpx 10rpx;
+    color: #333;
+  }
+  .explain {
+    width: 100%;
+    // background: #fff;
+    padding-bottom: 40rpx;
+    .textbold {
+      padding: 26rpx 40rpx 15rpx;
+      color: #333333;
+      font-size: 28rpx;
+    }
+    .textbold:nth-child(1) {
+      padding: 0rpx;
+    }
+    .textsmall {
+      padding: 0rpx 40rpx 10rpx;
+      color: #a0a0a0;
+      font-size: 24rpx;
+    }
+  }
+}
+</style>
+

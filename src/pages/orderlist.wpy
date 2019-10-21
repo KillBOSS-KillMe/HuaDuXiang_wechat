@@ -1,0 +1,354 @@
+<template>
+  <view class="contract">
+    <view class="coupon-nav">
+      <repeat for="{{navArr}}" item="item">
+        <view
+          class="coupon-nav-item {{item.id == navIdx ? 'nav-active' : '' }}"
+          bindtap="changeNav"
+        >{{item.title}}</view>
+      </repeat>
+    </view>
+    <view class="goods-wrap">
+      <repeat for="{{10}}" item="item">
+        <view class="goods-item">
+          <view class="goods-head">
+            <view class="contract-title">
+              <text>订单编号：{{item.order_id}}132456789</text>
+              <text class="state" wx:if="{{index == 2}}">等待发货</text>
+              <text class="state" wx:elif="{{index == 3}}">已发货</text>
+              <text class="state" wx:elif="{{index == 4}}">交易完成</text>
+              <text class="state" wx:elif="{{index == 5}}">交易关闭</text>
+              <text class="state" wx:elif="{{index == 6}}">已删除</text>
+              <text class="state" wx:elif="{{index == 7}}">已取消</text>
+              <text class="state" wx:elif="{{index == 8}}">已收货</text>
+            </view>
+          </view>
+          <view class="goods-cont">
+            <navigator
+              class="goods-list"
+              hover-class="none"
+              url="/pages/order-info/order-info?order_id={{item.order_id}}"
+            >
+              <view class="goods-info">
+                <image src="/assets/img/image.png" />
+                <view class="info-r">
+                  <view class="name">
+                    <view>{{ele.goods_name}}名称</view>
+                    <text>×{{ele.number}}12</text>
+                  </view>
+                  <view class="spec">
+                    <view>红大</view>
+                  </view>
+                  <view class="price">
+                    <text></text>
+                    <text>￥</text>
+                    <text>{{ele.good_price}}12</text>
+                  </view>
+                </view>
+              </view>
+            </navigator>
+            <view class="goods-fot">
+              <view class="should-price">
+                应付金额
+                <view class="text">￥{{item.pay_price}}144</view>
+              </view>
+              <!-- 1 待付款 -->
+              <view class="goods-option" wx:if="{{index == 1}}">
+                <view class="goods-btn">
+                  <navigator
+                    url="/pages/order-info/order-info?order_id={{item.order_id}}"
+                    hover-class="none"
+                  >取消订单</navigator>
+                </view>
+                <view class="goods-btn color-y" data-order_id="{{item.order_id}}" bindtap="pay">立即付款</view>
+              </view>
+              <!-- 2 待发货   -->
+              <view class="goods-option" wx:elif="{{index == 2}}">
+                <view class="goods-btn color-y">
+                  <navigator
+                    url="/pages/order-track/order-track?order_id={{item.order_id}}"
+                    hover-class="none"
+                  >查看物流</navigator>
+                </view>
+              </view>
+              <!-- 3 已发货/待收货 -->
+              <view class="goods-option" wx:elif="{{index == 3}}">
+                <view class="goods-btn">
+                  <navigator
+                    url="/pages/order-track/order-track?order_id={{item.order_id}}"
+                    hover-class="none"
+                  >查看物流</navigator>
+                </view>
+                <view class="goods-btn" bindtap="myReceipt" data-order_id="{{item.order_id}}">确认收货</view>
+              </view>
+              <!-- 4 已完成/已评价 -->
+              <view class="goods-option" wx:elif="{{index == 4}}">
+                <view class="goods-btn" wx:if="{{item.is_comment == 1}}">
+                  <navigator
+                    url="/pages/eval-details/eval-details?id={{item.order_id}}"
+                    hover-class="none"
+                  >查看评价</navigator>
+                </view>
+                <view class="goods-btn">
+                  <navigator
+                    url="/pages/goods-info/goods-info?id={{item.goods[0].good_id}}"
+                    hover-class="none"
+                  >再次购买</navigator>
+                </view>
+                <view
+                  class="goods-btn"
+                  bindtap="myReceiptDelete"
+                  data-idx="{{index}}"
+                  data-order_id="{{item.order_id}}"
+                >删除订单</view>
+              </view>
+              <!-- 5 已关闭 -->
+              <view class="goods-option" wx:elif="{{index == 5}}">
+                <view
+                  class="goods-btn"
+                  bindtap="myReceiptDelete"
+                  data-idx="{{index}}"
+                  data-order_id="{{item.order_id}}"
+                >删除订单</view>
+                <view class="goods-btn">重新购买</view>
+              </view>
+              <!-- 6 待发货 -->
+              <view class="goods-option" wx:elif="{{index == 6}}">
+                <view class="goods-btn">
+                  <navigator
+                    url="/pages/order-track/order-track?order_id={{item.order_id}}"
+                    hover-class="none"
+                  >查看物流</navigator>
+                </view>
+                <view class="goods-btn" bindtap="myReceipt" data-order_id="{{item.order_id}}">确认收货</view>
+              </view>
+              <!-- 7 已取消 -->
+              <view class="goods-option" wx:elif="{{index == 7}}">
+                <view class="goods-btn">删除订单</view>
+              </view>
+              <!-- 8 已收货/待评价 -->
+              <view class="goods-option" wx:elif="{{index == 8}}">
+                <view class="goods-btn">
+                  <navigator url="/pages/goods-info/goods-info?id={{item.goods[0].good_id}}">再次购买</navigator>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </repeat>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class ShopCart extends wepy.page {
+  config = {
+    navigationBarTitleText: '订单列表'
+  };
+
+  components = {};
+
+  mixins = [];
+
+  data = {
+    navArr: [
+      { title: '全部', id: 0 },
+      { title: '待付款' },
+      { title: '待收货' },
+      { title: '已完成' },
+      { title: '已取消' }
+    ],
+    navIdx: 0
+  };
+
+  computed = {};
+
+  methods = {};
+  onLoad() {}
+  onShow() {}
+
+  events = {};
+}
+</script>
+<style lang="less">
+.contract {
+  background: #f9f9f9;
+  margin-top: 88rpx;
+}
+.coupon-nav {
+  display: flex;
+  height: 88rpx;
+  position: fixed;
+  width: 100%;
+  background: #fff;
+  top: 0;
+  z-index: 999;
+}
+.coupon-nav-item {
+  flex: 1;
+  text-align: center;
+  font-size: 28rpx;
+  color: #8e8e8e;
+  position: relative;
+  line-height: 88rpx;
+}
+.nav-active {
+  color: #282828;
+  font-weight: bold;
+}
+.nav-active::after {
+  content: '';
+  width: 50rpx;
+  height: 6rpx;
+  background: #FF2228;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.goods-item {
+  background: #fff;
+  margin-bottom: 10rpx;
+}
+.goods-head {
+  padding: 30rpx 30rpx 0rpx;
+  box-sizing: border-box;
+}
+.contract-title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24rpx;
+  color: #282828;
+  align-items: center;
+}
+.contract-title .state {
+  font-size: 28rpx;
+  color: #FF2228;
+}
+.contract-time {
+  font-size: 28rpx;
+  color: #000;
+  font-weight: bold;
+}
+
+.goods-cont {
+  padding: 0rpx 30rpx 0;
+}
+
+.goods-cont > text {
+  font-size: 28rpx;
+  color: #000;
+  font-weight: bold;
+}
+
+.goods-info {
+  display: flex;
+  padding: 25rpx 0;
+  border-bottom: 1px solid #f2f2f2;
+}
+.goods-info image {
+  width: 188rpx;
+  height: 188rpx;
+  border-radius: 10rpx;
+  margin-right: 26rpx;
+}
+.info-r {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.info-r .name {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.info-r .name > view {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #282828;
+  width: 400rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.info-r .name > text {
+  color: #8e8e8e;
+}
+.info-r .spec {
+  flex: 1;
+  padding-top: 16rpx;
+}
+.info-r .spec > view {
+  background: #fbfbfb;
+  border: 1px solid #f5f5f5;
+  border-radius: 6rpx;
+  padding: 8rpx 18rpx;
+  display: inline-block;
+  color: #9e9e9e;
+  font-size: 26rpx;
+}
+.info-r .price {
+  display: flex;
+  align-items: center;
+}
+.info-r .price > text:nth-of-type(1) {
+  font-size: 28rpx;
+  color: #282828;
+}
+.info-r .price > text:nth-of-type(2) {
+  font-size: 28rpx;
+  color: #f2292d;
+}
+.info-r .price > text:nth-of-type(3) {
+  font-size: 38rpx;
+  color: #f2292d;
+  font-weight: bold;
+}
+
+.goods-fot {
+  height: 106rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.goods-option > view {
+  width: 132rpx;
+  height: 60rpx;
+  text-align: center;
+  line-height: 60rpx;
+  font-size: 28rpx;
+  border: 1px solid #8e8e8e;
+  color: #8e8e8e;
+  border-radius: 10rpx;
+  margin-left: 16rpx;
+}
+.goods-option > view:nth-of-type(1) {
+  margin-left: 0;
+}
+.goods-option .color-y {
+  color: #FF2228;
+  border-color: #FF2228;
+}
+
+.goods-option {
+  height: 106rpx;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 1;
+}
+.should-price {
+  font-size: 28rpx;
+  color: #8e8e8e;
+  display: flex;
+  align-items: center;
+}
+.should-price .text {
+  color: #f2292d;
+  padding-left: 10rpx;
+}
+</style>

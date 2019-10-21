@@ -1,6 +1,39 @@
 
 <template>
   <view>
+    <view class="goods-wrap">
+      <scroll-view class="left-scroll" scroll-y bindscroll="bindscroll">
+        <view>
+          <repeat for="{{20}}" item="item">
+            <view
+              class="text {{leftNav == index ? 'active-text':''}}"
+              bindtap="changeLeftNav"
+            >{{item.name}}分类</view>
+          </repeat>
+        </view>
+      </scroll-view>
+      <view class="goods-right">
+        <scroll-view class="right-scroll" scroll-y>
+          <view class="advertisement" hover-class="none">
+            <image src="/assets/img/image.png" />
+          </view>
+          <repeat for="{{10}}" item="item">
+            <view class="two-type">
+              <view class="title">水果</view>
+              <view class="two-type-list">
+                <repeat for="{{10}}" item="item">
+                  <view class="item">
+                    <image src="/assets/img/image.png" />
+                    <text>葡萄</text>
+                  </view>
+                </repeat>
+              </view>
+            </view>
+          </repeat>
+        </scroll-view>
+      </view>
+    </view>
+
     <nav class="nav" @childFn.user="goPage"></nav>
   </view>
 </template>
@@ -19,7 +52,9 @@ export default class Index extends wepy.page {
 
   mixins = [];
 
-  data = {};
+  data = {
+    leftNav: 0
+  };
 
   computed = {};
 
@@ -39,3 +74,71 @@ export default class Index extends wepy.page {
   onShow() {}
 }
 </script>
+
+
+<style lang="less">
+.goods-wrap {
+  display: flex;
+  .left-scroll {
+    height: calc(100vh - 100rpx);
+    width: 200rpx;
+    background: #f9f9f9;
+    .text {
+      text-align: center;
+      height: 87rpx;
+      line-height: 87rpx;
+      font-size: 28rpx;
+      color: #282828;
+    }
+    .active-text {
+      background: #fff;
+      border-left: 4rpx solid #f2292d;
+      width: 200rpx;
+    }
+  }
+  .goods-right {
+    .right-scroll {
+      height: calc(100vh - 100rpx);
+      padding: 0 30rpx 0 20rpx;
+      .advertisement {
+        padding-top: 30rpx;
+        > image {
+          width: 500rpx;
+          height: 170rpx;
+          border-radius: 10rpx;
+        }
+      }
+      .two-type {
+        .title {
+          font-weight: bold;
+          font-size: 26rpx;
+          height: 80rpx;
+          line-height: 80rpx;
+        }
+        .two-type-list {
+          display: flex;
+          flex-wrap: wrap;
+          .item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 160rpx;
+            margin-bottom: 30rpx;
+            > image {
+              width: 80rpx;
+              height: 80rpx;
+              border-radius: 10rpx;
+              display: block;
+            }
+            text {
+              font-size: 26rpx;
+              padding-top: 10rpx;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</style>

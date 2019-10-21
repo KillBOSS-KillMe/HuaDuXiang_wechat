@@ -1,0 +1,298 @@
+
+<template>
+  <view>
+    <view class="vip-head">
+      <view class="bg-block"></view>
+      <view class="vip-head-cont">
+        <image class="bg-img" src="/assets/img/{{bgImg}}" />
+        <view class="cont">
+          <view class="info">
+            <image src="/assets/img/image.png" />
+            <view class="info-t">
+              <text class="name">李白白</text>
+              <text>积分：300</text>
+              <text>编号：1234567890</text>
+            </view>
+          </view>
+          <view class="price">
+            余额:
+            <text>3000</text>
+          </view>
+          <view class="recharge">
+            <text>充值7000元即可成为钻石会员</text>
+            <button class="btn">立即充值</button>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="vip-title">会员等级</view>
+    <view class="vip-grade">
+      <repeat for="{{gradeArr}}" item="item">
+        <view class="grade-item">
+          <text>{{item.title}}</text>
+          <view class="schedule {{active > index ? 'schedule-active' : '' }} {{active == index + 1? 'schedule-bg':''}}">
+            <image class="default" src="/assets/img/image41.png" />
+            <image class="active" src="/assets/img/image42.png" />
+          </view>
+        </view>
+      </repeat>
+    </view>
+    <view class="vip-explain">
+      <view class="vip-title">会员说明</view>
+      <view class="vip-explain-list">
+        <repeat for="{{menberExplain}}" item="item">
+          <view class="item">
+            <view class="title">{{item.membername}}</view>
+            <view class="p">{{item.menberintroduce}}</view>
+          </view>
+        </repeat>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '会员中心'
+  };
+  components = {};
+
+  mixins = [];
+
+  data = {
+    gradeArr: [
+      { title: '普通会员' },
+      { title: '银卡会员' },
+      { title: '金卡会员' },
+      { title: '钻石会员' }
+    ],
+    active: 3,
+    bgImg: 'image37.png',
+    menberExplain: [
+      {
+        membername: '普通会员',
+        menberintroduce: '只参与积分和充值, 只要关注公众号即可成为普通会员'
+      },
+      {
+        membername: '银卡会员',
+        menberintroduce:
+          '普通会员累计消费满1000元或者一次性充值满500元即可成为银卡会员,全场商品享受98折优惠'
+      },
+      {
+        membername: '金卡会员',
+        menberintroduce:
+          '普通会员累计消费满500元或者一次性充值满3000元; \n 银卡会员一次性充值2500元挥着累计充值5000元即可成为金卡会员,全场商品享受9,5折优惠'
+      },
+      {
+        membername: '钻石会员',
+        menberintroduce:
+          '普通会员累计消费20000元或者一次性充值满10000元; \n 金卡会员补充7500元, 普通会员累计充值20000元即可成为钻石会员, 全场商品享受9折优惠; \n 同时不定期推出针对钻石会员的劲爆活动.'
+      }
+    ]
+  };
+
+  computed = {};
+
+  events = {};
+
+  onLoad(options) {
+    switch (this.active) {
+      case 1:
+        this.bgImg = 'image37.png';
+        break;
+      case 2:
+        this.bgImg = 'image38.png';
+        break;
+      case 3:
+        this.bgImg = 'image39.png';
+        break;
+      case 4:
+        this.bgImg = 'image34.png';
+        break;
+    }
+  }
+
+  methods = {};
+}
+</script>
+
+<style lang="less">
+.vip-head {
+  position: relative;
+  .bg-block {
+    position: absolute;
+    width: 100%;
+    height: 310rpx;
+    border-radius: 0 0 20% 20%;
+    background: #2e2e30;
+    z-index: -1;
+  }
+  .vip-head-cont {
+    padding: 30rpx 20rpx;
+    .bg-img {
+      width: 710rpx;
+      height: 380rpx;
+      border-radius: 20rpx;
+    }
+    .cont {
+      position: absolute;
+      top: 30rpx;
+      width: 710rpx;
+      height: 380rpx;
+      box-sizing: border-box;
+      padding: 38rpx 42rpx 34rpx 34rpx;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .info {
+        display: flex;
+        color: #fff;
+        > image {
+          width: 92rpx;
+          height: 92rpx;
+          border-radius: 50%;
+          margin-right: 14rpx;
+        }
+        .info-t {
+          color: #fff;
+          text {
+            font-weight: bold;
+            display: block;
+            font-size: 24rpx;
+            padding-bottom: 20rpx;
+          }
+          .name {
+            font-size: 36rpx;
+          }
+        }
+      }
+      .price {
+        text-align: right;
+        color: #fff;
+        font-size: 24rpx;
+        font-weight: bold;
+        text {
+          font-size: 32rpx;
+        }
+      }
+    }
+    .recharge {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text {
+        color: #603909;
+        font-size: 26rpx;
+        font-weight: bold;
+        height: auto;
+      }
+      .btn {
+        background: linear-gradient(
+          90deg,
+          rgba(205, 155, 94, 1),
+          rgba(189, 140, 82, 1)
+        );
+        height: 64rpx;
+        line-height: 64rpx;
+        border-radius: 32rpx;
+        padding: 0 40rpx;
+        color: #fff;
+        font-weight: bold;
+      }
+    }
+  }
+}
+.vip-title {
+  font-weight: bold;
+  color: #2b2b2b;
+  font-size: 36rpx;
+  padding: 0 0 0 30rpx;
+}
+.vip-grade {
+  display: flex;
+  padding: 20rpx 0 40rpx 0;
+  .grade-item {
+    text-align: center;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text {
+      color: #ba8747;
+      font-size: 24rpx;
+      padding-bottom: 10rpx;
+    }
+    .schedule {
+      position: relative;
+      width: 100%;
+      .default {
+        width: 30rpx;
+        height: 30rpx;
+        position: relative;
+        z-index: 999;
+      }
+      .active {
+        width: 30rpx;
+        height: 30rpx;
+        position: relative;
+        z-index: 999;
+        display: none;
+      }
+      &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 6rpx;
+        background: #e3e3e3;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 50%;
+      }
+    }
+    &:nth-of-type(4) {
+      .schedule::after {
+        display: none;
+      }
+    }
+    .schedule-active {
+      .default {
+        display: none;
+      }
+      .active {
+        display: inline-block;
+      }
+      &::after {
+        background: #cb9a5d;
+      }
+    }
+    .schedule-bg::after {
+      background: #E3E3E3;
+    }
+  }
+}
+.vip-explain {
+  border-top: 12rpx solid #f7f7f7;
+  .vip-title {
+    padding: 30rpx 0 30rpx 30rpx;
+  }
+  .vip-explain-list {
+    padding: 0 30rpx;
+    .item {
+      padding-bottom: 60rpx;
+      .title {
+        font-weight: bold;
+        padding: 6rpx 0;
+      }
+      .p {
+        line-height: 1.5;
+        color: #666666;
+        font-size: 26rpx;
+      }
+    }
+  }
+}
+</style>
