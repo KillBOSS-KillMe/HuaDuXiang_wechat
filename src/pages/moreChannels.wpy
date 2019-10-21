@@ -10,12 +10,22 @@
       </repeat>
     </view>
     <!-- 品牌 -->
-    <view class="channels-cont" wx:if="{{navIdx == 1}}">
+    <view class="channels-cont" wx:if="{{navIdx == 0}}">
       <view class="brand-list">
         <repeat for="{{9}}" item="item">
           <view class="brand-item">
             <image class="img" src="/assets/img/image.png" />
             <text>兰蔻</text>
+          </view>
+        </repeat>
+      </view>
+    </view>
+    <!-- 推荐商户 -->
+    <view class="channels-cont" wx:if="{{navIdx == 1}}">
+      <view class="shops-list">
+        <repeat for="{{9}}" item="item">
+          <view class="shops-item">
+            <image class="img" src="/assets/img/image.png" />
           </view>
         </repeat>
       </view>
@@ -35,8 +45,8 @@ export default class Index extends wepy.page {
   mixins = [];
 
   data = {
-    navArr: ['分类', '品牌', '推荐商户'],
-    navIdx: 1
+    navArr: [ '品牌', '推荐商户'],
+    navIdx: 0
   };
 
   computed = {};
@@ -63,6 +73,7 @@ export default class Index extends wepy.page {
     display: flex;
     height: 84rpx;
     align-items: center;
+    background: #fff;
     .nav-item {
       text-align: center;
       flex: 1;
@@ -110,6 +121,23 @@ export default class Index extends wepy.page {
         text {
           font-weight: bold;
           padding-top: 10rpx;
+        }
+      }
+    }
+    .shops-list {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 30rpx 30rpx;
+      .shops-item {
+        margin: 0 6rpx 10rpx 0;
+        &:nth-of-type(4n) {
+          margin-right: 0;
+        }
+        .img {
+          display: block;
+          width: 168rpx;
+          height: 168rpx;
+          border-radius: 10rpx;
         }
       }
     }

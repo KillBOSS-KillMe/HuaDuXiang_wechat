@@ -252,7 +252,7 @@
     <!-- 秒杀专区 -->
     <view class="seckill">
       <view class="seckilltitle">
-        <view>秒杀专区</view>
+        <view>秒杀专区1</view>
         <view class="beginTime">下一场{{beginTime}}开始</view>
       </view>
       <!-- 倒计时 -->
