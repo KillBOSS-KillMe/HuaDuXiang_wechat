@@ -74,7 +74,6 @@ export default class ShopCart extends wepy.page {
   mixins = [];
 
   data = {
-'',
     funList: [
       { funtext: '待付款', state: 1, num: 0 },
       { funtext: '待发货', state: 2, num: 0 },
@@ -118,7 +117,7 @@ export default class ShopCart extends wepy.page {
   }
   onShow() {
     // this.userInfo = this.$parent.globalData.userInfo
-    thi this.$parent.globalDat  }
+  }
   /**
    * 状态跳转
    */

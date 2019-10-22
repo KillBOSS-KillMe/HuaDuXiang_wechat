@@ -1,0 +1,99 @@
+<template>
+  <view class="wrap">
+    <view class="settle-list">
+      <view class="com-item">
+        <view class="title">平台使用费</view>
+        <input type="text"  value="系统默认(收费标准1000元/年)" disabled />
+      </view>
+      <view class="com-item">
+        <view class="title">商家保证金</view>
+        <input type="text" value="1000元" disabled/>
+      </view>
+      <view class="com-item">
+        <view class="title">分成利率</view>
+        <input type="text" value="0.04%" disabled/>
+      </view>
+    </view>
+    <button class="settled-btn">入驻</button>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '商家入驻'
+  };
+  components = {};
+
+  mixins = [];
+
+  data = {};
+
+  computed = {};
+  onShow() {}
+  methods = {};
+
+  events = {};
+
+  onLoad() {}
+}
+</script>
+
+<style lang="less">
+.settle-list {
+  padding: 0 30rpx;
+  .com-item {
+    height: 100rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #f1f1f1;
+    .title {
+      font-weight: bold;
+      font-size: 30rpx;
+      width: 160rpx;
+    }
+    input {
+      height: 100rpx;
+      flex: 1;
+      color: #333;
+      font-size: 28rpx;
+    }
+    > text {
+      font-weight: bold;
+      font-size: 30rpx;
+    }
+  }
+  .remarks {
+    height: auto;
+    padding: 36rpx 0;
+    .title {
+      align-self: flex-start;
+    }
+    textarea {
+      height: 160rpx;
+      border-radius: 10rpx;
+      border: 1px solid #dfdfdf;
+      flex: 1;
+      box-sizing: border-box;
+      padding: 20rpx;
+    }
+  }
+}
+.settled-btn {
+  width: 690rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 10rpx;
+  color: #fff;
+  font-size: 30rpx;
+  text-align: center;
+  background: #ff2228;
+  position: absolute;
+  bottom: 60rpx;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+}
+</style>

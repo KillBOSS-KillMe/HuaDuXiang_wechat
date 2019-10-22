@@ -34,7 +34,11 @@ export default class extends wepy.app {
       'pages/partnerInput', // 申请合伙人填写
       'pages/moreChannels', // 更多频道
       'pages/orderlist', // 订单列表
-      'pages/vip' // 会员
+      'pages/vip', // 会员
+      'pages/settledIn', // 入驻
+      'pages/settledInPay' // 入驻付款
+
+      
       
       
     ],

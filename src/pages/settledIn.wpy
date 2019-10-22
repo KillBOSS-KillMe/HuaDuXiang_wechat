@@ -1,0 +1,123 @@
+<template>
+  <view class="wrap">
+    <form @submit="submit">
+      <view class="settle-list">
+        <view class="com-item">
+          <view class="title">商铺名称</view>
+          <input type="text" placeholder="请输入商铺名称" />
+        </view>
+        <view class="com-item">
+          <view class="title">商铺编码</view>
+          <input type="text" placeholder="请输入商铺编号" />
+        </view>
+        <view class="com-item">
+          <view class="title">联系人</view>
+          <input type="text" placeholder="请输入姓名" />
+        </view>
+        <view class="com-item">
+          <view class="title">联系电话</view>
+          <input type="text" placeholder="请输入联系电话" />
+        </view>
+        <view class="com-item">
+          <view class="title">商铺地址</view>
+          <input type="text" placeholder="请输入商铺地址" />
+        </view>
+        <view class="com-item remarks">
+          <view class="title">入驻商备注</view>
+          <textarea placeholder="请输入备注"></textarea>
+        </view>
+        <view class="com-item">
+          <view class="title">开店时间</view>
+          <input type="number" placeholder="请输入开店时间" />
+          <text>年</text>
+        </view>
+      </view>
+      <button class="settled-btn" form-type="submit">下一步</button>
+    </form>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '商家入驻'
+  };
+  components = {};
+
+  mixins = [];
+
+  data = {};
+
+  computed = {};
+  onShow() {}
+  methods = {
+    submit(e) {
+      console.log(e.detail)
+      this.$navigate({url: 'settledInPay'})
+    }
+  };
+
+  events = {};
+
+  onLoad() {}
+}
+</script>
+
+<style lang="less">
+.settle-list {
+  padding: 0 30rpx;
+  .com-item {
+    height: 100rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #f1f1f1;
+    .title {
+      font-weight: bold;
+      font-size: 30rpx;
+      width: 160rpx;
+    }
+    input {
+      height: 100rpx;
+      flex: 1;
+      color: #333;
+      font-size: 28rpx;
+    }
+    > text {
+      font-weight: bold;
+      font-size: 30rpx;
+    }
+  }
+  .remarks {
+    height: auto;
+    padding: 36rpx 0;
+    .title {
+      align-self: flex-start;
+    }
+    textarea {
+      height: 160rpx;
+      border-radius: 10rpx;
+      border: 1px solid #dfdfdf;
+      flex: 1;
+      box-sizing: border-box;
+      padding: 20rpx;
+    }
+  }
+}
+.settled-btn {
+  width: 690rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 10rpx;
+  color: #fff;
+  font-size: 30rpx;
+  text-align: center;
+  background: #ff2228;
+  position: absolute;
+  bottom: 60rpx;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+}
+</style>

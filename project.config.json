@@ -41,7 +41,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 8,
+			"current": -1,
 			"list": [
 				{
 					"id": 0,
@@ -87,22 +87,8 @@
 				},
 				{
 					"id": -1,
-					"name": "我的",
-					"pathName": "pages/user",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "会员等级",
-					"pathName": "pages/membersCenter",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "vip",
-					"pathName": "pages/vip",
+					"name": "商家入驻",
+					"pathName": "pages/settledIn",
 					"query": "",
 					"scene": null
 				}
