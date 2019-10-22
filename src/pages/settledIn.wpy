@@ -1,6 +1,6 @@
 <template>
   <view class="wrap">
-    <form @submit="submit">
+    <form @submit="submit" wx:if="{{status == 0}}">
       <view class="settle-list">
         <view class="com-item">
           <view class="title">商铺名称</view>
@@ -34,6 +34,42 @@
       </view>
       <button class="settled-btn" form-type="submit">下一步</button>
     </form>
+    <view class="examine" wx:if="{{status == 1}}">
+      <image class="examine-img" src="/assets/img/image43.png" />
+    </view>
+    <view wx:if="{{status == 2}}">
+      <view class="settle-list">
+        <view class="com-item">
+          <view class="title">商铺名称</view>
+          <input type="text" value="请输入商铺名称" disabled />
+        </view>
+        <view class="com-item">
+          <view class="title">商铺编码</view>
+          <input type="text" value="请输入商铺编号" disabled />
+        </view>
+        <view class="com-item">
+          <view class="title">联系人</view>
+          <input type="text" value="请输入姓名" disabled />
+        </view>
+        <view class="com-item">
+          <view class="title">联系电话</view>
+          <input type="text" value="请输入联系电话" disabled />
+        </view>
+        <view class="com-item">
+          <view class="title">商铺地址</view>
+          <input type="text" value="请输入商铺地址" disabled />
+        </view>
+        <view class="com-item remarks">
+          <view class="title">入驻商备注</view>
+          <textarea value="请输入备注" disabled></textarea>
+        </view>
+        <view class="com-item">
+          <view class="title">开店时间</view>
+          <input type="number" value="1" disabled />
+          <text>年</text>
+        </view>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -48,14 +84,16 @@ export default class Index extends wepy.page {
 
   mixins = [];
 
-  data = {};
+  data = {
+    status: 2 // 0 没入驻 1入驻审核中 2入驻成功
+  };
 
   computed = {};
   onShow() {}
   methods = {
     submit(e) {
-      console.log(e.detail)
-      this.$navigate({url: 'settledInPay'})
+      console.log(e.detail);
+      this.$navigate({ url: 'settledInPay' });
     }
   };
 
@@ -119,5 +157,17 @@ export default class Index extends wepy.page {
   bottom: 60rpx;
   left: 50%;
   transform: translate3d(-50%, 0, 0);
+}
+.examine {
+  position: relative;
+  height: 100vh;
+  .examine-img {
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translateX(-50%);
+    width: 330rpx;
+    height: 256rpx;
+  }
 }
 </style>

@@ -84,13 +84,6 @@
 					"pathName": "pages/assembleShopDetails",
 					"query": "",
 					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "商家入驻",
-					"pathName": "pages/settledIn",
-					"query": "",
-					"scene": null
 				}
 			]
 		}

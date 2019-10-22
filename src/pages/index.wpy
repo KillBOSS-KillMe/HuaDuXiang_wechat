@@ -294,12 +294,9 @@
     <button
       open-type="getUserInfo"
       id="getUserInfo"
-      wx:if="{{userInfoButtonShow}}"
-      lang="zh_CN"
-      bindgetuserinfo="onGetUserInfo"
+      wx:if="{{!hasUserInfo}}"
+      bindgetuserinfo="getUserInfo"
     ></button>
-    <!-- <button open-type="getUserInfo" id="getUserInfo" lang="zh_CN" @getuserinfo="onGetUserInfo"></button> -->
-
     <nav @childFn.user="goPage" />
   </view>
 </template>
@@ -321,7 +318,7 @@ export default class Index extends wepy.page {
 
   data = {
     chooesId: '',
-    userInfoButtonShow: true,
+    hasUserInfo: false,
     userInfo: {},
     requestImgUrl: '',
     beginTime: '18:00',
@@ -386,12 +383,12 @@ export default class Index extends wepy.page {
       { id: '3', img: 'indexlunbo.png' },
       { id: '4', img: 'indexlunbo.png' }
     ],
-    wxTimerList: {} // 倒计时
+    wxTimerList: {}, // 倒计时
+    a: ''
   };
 
   computed = {};
   onLoad() {
-    this.onGetUserInfo();
     // 倒计时s
     var wxTimer = new timer({
       beginTime: '6',
@@ -403,15 +400,13 @@ export default class Index extends wepy.page {
     //   wxTimer.stop();
     // }, 5000);
     // 倒计时e
+
+    this.getAppUserInfo();
   }
-  onShow() {
-    // this.userInfo = this.$parent.globalData.userInfo
+  async onShow() {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
   }
   methods = {
-    /**
-     * 中间选择
-     */
     tapName(id) {
       if (id == 1) {
         // this.$navigate({ url: `sale?id=${id}` }); // 促销
@@ -438,7 +433,6 @@ export default class Index extends wepy.page {
      * 跳转商品详情
      */
     jumpTimeDetails(shopid) {
-      console.log('shopid', shopid);
       this.$navigate(`/pages/shopDetails?shopid=${shopid}`);
     },
     /**
@@ -452,68 +446,39 @@ export default class Index extends wepy.page {
       this.$navigate('/pages/search');
     }
   };
-
   events = {};
-
-  /**
-   * 授权
-   */
-  onGetUserInfo(req) {
-    // 查看是否授权
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          this.userInfoButtonShow = false;
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-          wx.getUserInfo({
-            success: res => {
-              this.userInfo = res.userInfo;
-              this.$parent.globalData.userInfo = this.userInfo;
-              console.log(res);
-
-              // let avatarUrl = res.userInfo.avatarUrl
-              // //登录
-              // wx.login({
-              //   success: res => {
-
-              //     if (res.code) {
-              //       //发起网络请求
-              //       wx.request({
-              //         url: app.config.backUrl + 'apiLogin/login',
-              //         method: 'POST',
-              //         data: {
-              //           img: avatarUrl,
-              //           code: res.code
-              //         },
-              //         success: function(res) {
-              //           /**世豪信息 */
-              //           app.globalData.userInfo = res.data.data
-              //           // 存用户id
-              //           app.globalData.uid = res.data.data.id
-
-              //           // 存token
-              //           // console.log('token=' + res.data.data.token)
-              //         }
-              //       })
-              //     } else {
-              //       console.log('获取用户登录态失败！' + res.errMsg)
-              //     }
-              //   }
-              // })
-              // app.globalData.userInfo = userInfo
-              // if (this.data.userInfo) {
-              //   // 提交用户信息
-              //   // this.setUserInfo(this.userInfo)
-              //   app.globalData.userInfo = this.userInfo
-              //   this.$apply()
-              // }
-            }
-          });
-        } else {
-          // this.clickWeekBangs()
+  getAppUserInfo() {
+    var app = this.$parent;
+    if (app.globalData.userInfo) {
+      console.warn('globalData');
+      this.userInfo = app.globalData.userInfo;
+      this.hasUserInfo = true;
+    } else if (wx.canIUse('button.open-type.getUserInfo')) {
+      app.userInfoReadyCallback = res => {
+        console.warn('userInfoReadyCallback');
+        this.userInfo = app.globalData.userInfo;
+        this.hasUserInfo = true;
+      };
+    } else {
+      wx.getUserInfo({
+        success: res => {
+          console.warn('getUserInfo');
+          app.globalData.userInfo = res.userInfo;
+          this.userInfo = app.globalData.userInfo;
+          this.hasUserInfo = true;
         }
-      }
-    });
+      });
+    }
   }
+  getUserInfo(e) {
+    var app = this.$parent;
+    if(e.detail.errMsg == "getUserInfo:ok") {
+      app.globalData.userInfo = e.detail.userInfo;
+      this.userInfo = app.globalData.userInfo;
+      this.hasUserInfo = true;
+    }
+  }
+
+  onShareAppMessage() {}
 }
 </script>

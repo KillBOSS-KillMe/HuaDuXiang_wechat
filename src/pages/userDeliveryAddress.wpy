@@ -1,110 +1,106 @@
-<style lang="less">
-page{
-    background: #F9F9F9;
-}
-.fl_form{
-    width: 100%;
-    padding: 20rpx 40rpx;
-    position: relative;
-    background: #fff;
-    .name{
-        position: absolute;
-        top: 25%;
-        left: 7%;
-        font-size: 30rpx;
-        color: #333;
-        font-weight: bold;
-    }
-    .tel{
-        font-size: 28rpx;
-        color: #A3A3A3;
-        padding-left: 20%;
-    }
-    .address{
-        font-size: 30rpx;
-        color: #333;
-        font-weight: bold;
-        padding: 20rpx;
-    }
-}
-
-.formbtn{
-  width: 85%;
-  height: 88rpx;
-  border-radius: 15rpx;
-  background: #FF2228;
-  color: #fff;
-  font-size: 30rpx;
-  position: absolute;
-  bottom: 4%;
-  left: 50%;
-  transform: translate(-50%,-50%)
-}
-// 
-
-</style>
 <template>
-<view>
+  <view>
     <view class="fl_form">
-        <text class="name">{{userName}}</text>
-        <text class="tel">{{userPhone}}</text>
+      <text class="name">{{userName}}</text>
+      <text class="tel">{{userPhone}}</text>
     </view>
 
     <view class="fl_form">
-        <text class="address">{{detailedAddress}}</text>
+      <text class="address">{{detailedAddress}}</text>
     </view>
 
     <!-- 按钮 -->
-    <button class="formbtn" bindtap='orderMeeting'>新增地址</button>
-</view>
-
+    <button class="formbtn" bindtap="orderMeeting">新增地址</button>
+  </view>
 </template>
 
 <script>
 import wepy from 'wepy';
 
 export default class Index extends wepy.page {
-    config = {
-        navigationBarTitleText: '收货地址',
-        navigationBarBackgroundColor: 'white'
-    };
-    components = {};
+  config = {
+    navigationBarTitleText: '收货地址',
+    navigationBarBackgroundColor: 'white'
+  };
+  components = {};
 
-    mixins = [];
+  mixins = [];
 
-    data = {
-        userName: '哈哈',
-        userPhone: '14520325420',
-        detailedAddress: '北京市昌平区',
-    };
+  data = {
+    userName: '哈哈',
+    userPhone: '14520325420',
+    detailedAddress: '北京市昌平区'
+  };
 
-    computed = {};
+  computed = {};
 
+  events = {};
 
-    events = {};
+  onLoad(options) {}
 
-    onLoad(options) {
-        
+  methods = {
+    orderMeeting: function() {
+      //提交input信息到后台
+      var userName = this.userName;
+      var userPhone = this.userPhone;
+      var detailedAddress = this.detailedAddress;
+      // this.$navigate({ url: `newdeliveryAddress?id=${id}` });
+      this.$navigate({ url: `newdeliveryAddress` });
+      // if (userName == '' || userPhone == '' || userRegion == '' || detailedAddress == '') {
+      // app.showModal('请完善信息');
+      // return;
+      // }
+      // 检测手机号是否填写
+      // if (app.validate(userPhone, 'emoji')) {
+      // app.showModal('手机号不能包含特殊字符');
+      // return;
+      // }
     }
-
-    methods = {
-
-        orderMeeting: function () { //提交input信息到后台
-            var userName = this.userName;
-            var userPhone = this.userPhone;
-            var detailedAddress = this.detailedAddress;
-            // this.$navigate({ url: `newdeliveryAddress?id=${id}` });
-            this.$navigate({ url: `newdeliveryAddress` });
-            // if (userName == '' || userPhone == '' || userRegion == '' || detailedAddress == '') {
-            // app.showModal('请完善信息');
-            // return;
-            // }
-            // 检测手机号是否填写
-            // if (app.validate(userPhone, 'emoji')) {
-            // app.showModal('手机号不能包含特殊字符');
-            // return;
-            // }
-        },
-    };
+  };
 }
 </script>
+
+
+<style lang="less">
+page {
+  background: #f9f9f9;
+}
+.fl_form {
+  width: 100%;
+  padding: 20rpx 40rpx;
+  position: relative;
+  background: #fff;
+  .name {
+    position: absolute;
+    top: 25%;
+    left: 7%;
+    font-size: 30rpx;
+    color: #333;
+    font-weight: bold;
+  }
+  .tel {
+    font-size: 28rpx;
+    color: #a3a3a3;
+    padding-left: 20%;
+  }
+  .address {
+    font-size: 30rpx;
+    color: #333;
+    font-weight: bold;
+    padding: 20rpx;
+  }
+}
+
+.formbtn {
+  width: 85%;
+  height: 88rpx;
+  border-radius: 15rpx;
+  background: #ff2228;
+  color: #fff;
+  font-size: 30rpx;
+  position: absolute;
+  bottom: 4%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>

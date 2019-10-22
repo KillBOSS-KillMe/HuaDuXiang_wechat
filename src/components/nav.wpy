@@ -177,8 +177,9 @@ export default class Nav extends wepy.component {
     goSettled() {
       var route = this.$parent.$parent['__route__']
       if(route == 'pages/settledIn') return
-      this.$parent.$parent.globalData.navAction = ['noAction', 'noAction', 'action','noAction','noAction']
-      this.$emit('childFn', '/pages/settledIn')
+      this.$parent.$navigate({url:'settledIn'})
+      // this.$parent.$parent.globalData.navAction = ['noAction', 'noAction', 'action','noAction','noAction']
+      // this.$emit('childFn', '/pages/settledIn')
     },
     // 购物车
     goByCar() {

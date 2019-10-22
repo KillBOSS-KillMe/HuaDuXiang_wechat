@@ -1,0 +1,212 @@
+<template>
+  <view>
+    <repeat for="{{5}}" item="item" wx:if="{{emptyFlag}}">
+      <view class="address-wrap">
+        <view class="address-top">
+          <view>{{item.name}}名字</view>
+          <view>{{item.phone}}13324565655</view>
+          <view>默认</view>
+        </view>
+        <view
+          class="address-text overflow-two"
+        >{{item.province}}{{item.city}}{{item.area}}{{item.address}}陕西省西安市蓝田县</view>
+        <view class="address-fot">
+          <view class="flex-class" bindtap="setAddress" data-id="{{item.id}}">
+            <image
+              wx:if="{{true}}"
+              style="width: 48rpx;height: 48rpx;"
+              src="/assets/img/image47.png"
+            />
+            <image wx:else style="width: 48rpx;height: 48rpx;" src="/assets/img/image46.png" />
+            <text>设为默认</text>
+          </view>
+          <view class="flex-class">
+            <navigator
+              hover-class="none"
+              url="/pages/add-address/add-address?id={{item.id}}"
+              class="flex-class bianji"
+            >
+              <image style="width: 20rpx;height: 20rpx;" src="/assets/img/image45.png" />
+              <view>编辑</view>
+            </navigator>
+            <view class="flex-class" data-id="{{item.id}}" bindtap="deleAddress">
+              <image style="width: 20rpx;height: 20rpx;" src="/assets/img/image44.png" />
+              <view>删除</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </repeat>
+    <view class="no-content" wx:if="{{!emptyFlag}}">
+      <image src="/assets/img/image48.png" style="height: 296rpx; width: 296rpx;" />
+      <view>暂无地址</view>
+    </view>
+    <navigator hover-class="none" url="/pages/addAddress"  class="address-btn">添加收货地址</navigator>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '地址'
+  };
+  data = {
+    emptyFlag: true
+  };
+  components = {};
+  computed = {};
+  methods = {
+    // 删除地址
+    deleAddress(e) {
+      var that = this;
+      var id = e.currentTarget.dataset.id;
+      wx.showModal({
+        title: '提示',
+        content: '确定删除地址？',
+        success(res) {
+          if (res.confirm) {
+            app.ajax({
+              url: api.addressDel,
+              data: {
+                id
+              },
+              success(res) {
+                if (res.code == 200) {
+                  var list = that.data.list || [];
+                  that.setData({
+                    list: list.filter(item => item.id != id)
+                  });
+                  wx.showToast({
+                    title: '删除成功'
+                  });
+                } else {
+                  app.showToast1(res.msg);
+                }
+              }
+            });
+          }
+        }
+      });
+    },
+    // 设为默认地址
+    setAddress(e) {
+      var that = this;
+      wx.showModal({
+        title: '提示',
+        content: '确定设置为默认地址？',
+        success(res) {
+          if (res.confirm) {
+            app.ajax({
+              url: api.addressAddUpdate,
+              data: {
+                id: e.currentTarget.dataset.id
+              },
+              success(res) {
+                if (res.code == 200) {
+                  var list = that.data.list;
+                  that.onShow();
+                  wx.showToast({
+                    title: '设置成功'
+                  });
+                } else {
+                  app.showToast1(res.msg);
+                }
+              }
+            });
+          }
+        }
+      });
+    }
+  };
+  onLoad() {}
+}
+</script>
+
+<style lang='less'>
+page {
+  color: #282828;
+  font-size: 28rpx;
+  margin-bottom: 160rpx;
+}
+.address-btn {
+  width: 690rpx;
+  height: 88rpx;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  line-height: 88rpx;
+  font-size: 30rpx;
+  border-radius: 44rpx;
+  background: #f2292d;
+  position: fixed;
+  bottom: 60rpx;
+  left: 30rpx;
+}
+
+.address-wrap {
+  border-top: 10rpx solid #f9f9f9;
+  padding: 30rpx 30rpx 0rpx;
+  box-sizing: border-box;
+}
+.address-top {
+  display: flex;
+  align-items: center;
+  line-height: 1.5;
+}
+
+.address-top > view:nth-of-type(1) {
+  font-weight: blod;
+  font-size: 32rpx;
+}
+.address-top > view:nth-of-type(2) {
+  color: #8e8e8e;
+  margin-left: 20rpx;
+}
+.address-top > view:nth-of-type(3) {
+  font-size: 20rpx;
+  color: #ff7d27;
+  border: 1px solid #ff7d27;
+  border-radius: 4rpx;
+  text-align: center;
+  height: 32rpx;
+  width: 70rpx;
+  line-height: 32rpx;
+  margin-left: 20rpx;
+}
+.address-text {
+  line-height: 1.5;
+  padding: 10rpx 0 20rpx;
+}
+.address-fot {
+  display: flex;
+  align-items: center;
+  height: 80rpx;
+  border-top: 1px solid #f1f1f1;
+  justify-content: space-between;
+  font-size: 28rpx;
+  color: #8e8e8e;
+}
+.flex-class {
+  display: flex;
+  align-items: center;
+}
+.flex-class > image {
+  margin-right: 10rpx;
+}
+.flex-class text {
+  display: block;
+  height: auto;
+}
+.bianji {
+  margin-right: 29rpx;
+}
+
+.no-content {
+  text-align: center;
+  > image {
+    margin: 155rpx 0 0 0;
+  }
+}
+</style>
