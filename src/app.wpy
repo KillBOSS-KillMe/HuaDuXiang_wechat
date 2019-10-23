@@ -54,7 +54,7 @@ export default class extends wepy.app {
   };
   globalData = {
     userInfo: '',
-    requestImgUrl: 'http://wanma.beaconway.cn/uploads/images/'
+    requestImgUrl: 'http://www.shopdate.me'
   };
   onLaunch() {
     // 获取用户信息

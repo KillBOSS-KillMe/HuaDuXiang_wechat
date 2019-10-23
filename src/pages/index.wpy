@@ -305,10 +305,11 @@
 import wepy from 'wepy';
 import nav from '../components/nav'; // 底部导航
 var timer = require('../utils/wxTimer.js'); // 倒计时
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '首页',
-    navigationBarBackgroundColor: 'white'
+    navigationBarTitleText: '首页'
   };
   components = {
     nav: nav
@@ -384,7 +385,9 @@ export default class Index extends wepy.page {
       { id: '4', img: 'indexlunbo.png' }
     ],
     wxTimerList: {}, // 倒计时
-    a: ''
+    goods_list: [], // 商品列表
+    areaArr: [], // area区域
+    bannerArr: [], //轮播图
   };
 
   computed = {};
@@ -403,8 +406,28 @@ export default class Index extends wepy.page {
 
     this.getAppUserInfo();
   }
-  async onShow() {
+  onShow() {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
+    ajax({
+      url: api.indexGoodsList
+    }).then(res => {
+      if (res.code == 200) {
+        this.goods_list = res.datas.goods_list;
+        this.$apply();
+      }
+    });
+    ajax({
+      url: api.indexDefaultInfo
+    }).then(res => {
+      if (res.code == 200) {
+        console.log(res.datas)
+        this.areaArr = res.datas.area || []
+        this.bannerArr = res.datas.banner || []
+        this.$apply();
+      }
+    });
+
+    
   }
   methods = {
     tapName(id) {
@@ -472,7 +495,7 @@ export default class Index extends wepy.page {
   }
   getUserInfo(e) {
     var app = this.$parent;
-    if(e.detail.errMsg == "getUserInfo:ok") {
+    if (e.detail.errMsg == 'getUserInfo:ok') {
       app.globalData.userInfo = e.detail.userInfo;
       this.userInfo = app.globalData.userInfo;
       this.hasUserInfo = true;
