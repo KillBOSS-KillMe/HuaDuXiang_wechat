@@ -73,7 +73,6 @@
 }
 //秒杀区
 .seckill {
-  margin-top: 20rpx;
   // 标题
   .seckilltitle {
     display: flex;
@@ -128,17 +127,18 @@
     }
   }
 }
+.recommend {
+  margin-bottom: 160rpx;
+}
 // 商品
 .saleShopWrap {
   width: 100%;
   height: 100%;
   background: #f9f9f9;
-  padding-bottom: 160rpx;
   .saleShop {
-    width: 92%;
-    height: 100%;
-    margin: 20rpx auto;
-    margin-bottom: 2%;
+    width: 100%;
+    padding: 0 30rpx;
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -147,24 +147,26 @@
     // item商品
     .shopview {
       background: #fff;
-      width: 335rpx;
+      width: 334rpx;
       height: 488rpx;
       display: inline-block;
       justify-content: center;
       flex-direction: column;
       align-items: center;
-      padding: 20rpx 0rpx;
       margin-bottom: 19rpx;
       border-radius: 20rpx;
       image {
-        width: 327rpx;
-        height: 327rpx;
+        width: 334rpx;
+        height: 334rpx;
+        display: block;
       }
       .saleTag {
         font-size: 30rpx;
         font-weight: bold;
         color: #333;
-        padding: 30rpx;
+        padding: 20rpx;
+        box-sizing: border-box;
+        width: 100%;
         text {
           width: 290rpx;
           display: block;
@@ -174,7 +176,7 @@
         font-size: 28rpx;
         color: red;
         font-weight: bold;
-        padding-left: 30rpx;
+        padding-left: 20rpx;
       }
       .salesmple {
         font-size: 24rpx;
@@ -230,12 +232,9 @@
     <!-- 轮播 -->
     <view class="mainWheel">
       <swiper indicator-dots="true" autoplay="true" interval="2000" duration="500" circular="true">
-        <repeat for="{{imgUrls}}" item="item">
+        <repeat for="{{bannerArr}}" item="item">
           <swiper-item>
-            <image
-              src="http://img011.hc360.cn/g2/M06/45/BF/wKhQuFLfLl-EakIIAAAAAGqrml0128.jpg"
-              class="slide-image"
-            />
+            <image src="{{requestImgUrl + item.imgsrc}}" class="slide-image"/>
           </swiper-item>
         </repeat>
       </swiper>
@@ -252,11 +251,11 @@
     <!-- 秒杀专区 -->
     <view class="seckill">
       <view class="seckilltitle">
-        <view>秒杀专区1</view>
-        <view class="beginTime">下一场{{beginTime}}开始</view>
+        <view>秒杀专区</view>
+        <!-- <view class="beginTime">下一场{{beginTime}}开始</view> -->
       </view>
       <!-- 倒计时 -->
-      <view class="seckillCountdown" wx:if="{{wxTimerList.firstTimer.wxTimerSecond != 0}}">
+      <!-- <view class="seckillCountdown" wx:if="{{wxTimerList.firstTimer.wxTimerSecond != 0}}">
         <view class="title">本场结束剩余</view>
         <view class="count-down-wrap">
           <text>{{wxTimerList.firstTimer.h}}</text>
@@ -268,7 +267,7 @@
       </view>
       <view class="seckillCountdown" wx:if="{{wxTimerList.firstTimer.wxTimerSecond == 0}}">
         <view class="title">本场已结束，请等待下场活动</view>
-      </view>
+      </view>-->
       <!-- 商品 -->
       <view class="saleShopWrap">
         <view class="saleShop">
@@ -284,6 +283,31 @@
                   <text class="salesmple">￥</text>
                   <text class="saleprice">{{item.price}}</text>
                   <text class="saleexprice">原价￥ {{item.exprice}}</text>
+                </view>
+              </view>
+            </view>
+          </repeat>
+        </view>
+      </view>
+    </view>
+    <!-- 推荐产品 -->
+    <view class="seckill recommend">
+      <view class="seckilltitle">
+        <view>推荐产品</view>
+      </view>
+      <view class="saleShopWrap">
+        <view class="saleShop">
+          <repeat for="{{goods_list}}" item="item">
+            <view class="shopview" @tap="jumpTimeDetails('{{item.goods_id}}')">
+              <image src="{{item.goods_image_url}}" />
+              <view class="saleTag">
+                <text class="overflow-one">{{item.goods_name}}</text>
+              </view>
+              <view>
+                <view>
+                  <text class="salep">价格</text>
+                  <text class="salesmple">￥</text>
+                  <text class="saleprice">{{item.goods_price}}</text>
                 </view>
               </view>
             </view>
@@ -387,11 +411,12 @@ export default class Index extends wepy.page {
     wxTimerList: {}, // 倒计时
     goods_list: [], // 商品列表
     areaArr: [], // area区域
-    bannerArr: [], //轮播图
+    bannerArr: [] //轮播图
   };
 
   computed = {};
   onLoad() {
+    this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     // 倒计时s
     var wxTimer = new timer({
       beginTime: '6',
@@ -403,11 +428,9 @@ export default class Index extends wepy.page {
     //   wxTimer.stop();
     // }, 5000);
     // 倒计时e
-
     this.getAppUserInfo();
-  }
-  onShow() {
-    this.requestImgUrl = this.$parent.globalData.requestImgUrl;
+
+    // 首页—普通商品列表接口
     ajax({
       url: api.indexGoodsList
     }).then(res => {
@@ -416,19 +439,19 @@ export default class Index extends wepy.page {
         this.$apply();
       }
     });
+    // 首页-轮播图和areaArr菜单
     ajax({
       url: api.indexDefaultInfo
     }).then(res => {
       if (res.code == 200) {
-        console.log(res.datas)
-        this.areaArr = res.datas.area || []
-        this.bannerArr = res.datas.banner || []
+        this.areaArr = res.datas.area || [];
+        this.bannerArr = res.datas.banner || [];
         this.$apply();
+        console.log(res.datas);
       }
     });
-
-    
   }
+  onShow() {}
   methods = {
     tapName(id) {
       if (id == 1) {
@@ -455,8 +478,8 @@ export default class Index extends wepy.page {
     /**
      * 跳转商品详情
      */
-    jumpTimeDetails(shopid) {
-      this.$navigate(`/pages/shopDetails?shopid=${shopid}`);
+    jumpTimeDetails(goods_id) {
+      this.$navigate(`/pages/shopDetails?goods_id=${goods_id}`);
     },
     /**
      * 底部导航跳转

@@ -1,5 +1,6 @@
 <template>
   <view class="shop-details-wrap">
+        <import src="../utils/wxParse/wxParse.wxml" />
     <!-- 选项卡导航 -->
     <view class="swiper-tab">
       <repeat for="{{tabList}}" wx:key="index">
@@ -60,7 +61,7 @@
       </view>
       <view class="textdetails">
         <view class="textdetails-h">图文详情</view>
-        <view>（微晶一周鲜）功能，大家有没有这种苦恼，买来的新鲜肉放在冷藏容易坏，放在冷冻冻成了石头！要拿来吃的时候又得解冻了才能切，而且解冻的过程又容易滋生细菌并且营养流失影响口感，微晶这个功能就很好解决了，区别于传统的感知冰箱内温度，微晶是感知食材本身的温度，使食材始终处于微晶状态，随时拿出来随时切并且保留了食材的营养不流失～并且可以保存七天左右哦！</view>
+        <template is="wxParse" data="{{wxParseData:article.nodes}}" />
       </view>
       <!-- 店铺 -->
       <view class="store">
@@ -98,7 +99,7 @@
     <view class="tab-content" wx:if="{{currentTab == 1}}">
       <view class="textdetails">
         <!-- <view class="textdetails-h">图文详情</view> -->
-        <view>（微晶一周鲜）功能，大家有没有这种苦恼，买来的新鲜肉放在冷藏容易坏，放在冷冻冻成了石头！要拿来吃的时候又得解冻了才能切，而且解冻的过程又容易滋生细菌并且营养流失影响口感，微晶这个功能就很好解决了，区别于传统的感知冰箱内温度，微晶是感知食材本身的温度，使食材始终处于微晶状态，随时拿出来随时切并且保留了食材的营养不流失～并且可以保存七天左右哦！</view>
+       <template is="wxParse" data="{{wxParseData:article.nodes}}" />
       </view>
     </view>
     <!-- 底部商品导航 -->
@@ -161,7 +162,9 @@
 <script>
 import wepy from 'wepy';
 import mask from '../components/mask';
-
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
+var WxParse = require('../utils/wxParse/wxParse.js');
 export default class Index extends wepy.page {
   config = {
     navigationBarTitleText: '商品详情'
@@ -207,7 +210,9 @@ export default class Index extends wepy.page {
         exprice: '25',
         img: '/assets/img/image.png'
       }
-    ]
+    ],
+    goods_id: null, //商品goods_id
+    requestImgUrl: null //图片域名
   };
 
   computed = {};
@@ -228,7 +233,26 @@ export default class Index extends wepy.page {
 
   events = {};
 
-  onLoad() {}
+  onLoad(t) {
+    this.requestImgUrl = this.$parent.globalData.requestImgUrl;
+    this.goods_id = t.goods_id;
+    var that = this;
+
+    ajax({
+      url: api.ordinaryGoodsDtail,
+      type: 'get',
+      data: {
+        goods_id: this.goods_id
+      }
+    }).then(res => {
+      console.log(res);
+    });
+
+    var article =
+      '<p>（微晶一周鲜）功能，大家有没有这种苦恼，买来的新鲜肉放在冷藏容易坏，放在冷冻冻成了石头！要拿来吃的时候又得解冻了才能切，而且解冻的过程又容易滋生细菌并且营养流失影响口感，微晶这个功能就很好解决了，区别于传统的感知冰箱内温度，微晶是感知食材本身的温度，使食材始终处于微晶状态，随时拿出来随时切并且保留了食材的营养不流失～并且可以保存七天左右哦！</p>';
+    article = article.replace(/src="/g, `src="${that.requestImgUrl}`);
+    WxParse.wxParse('article', 'html', article, that, 5);
+  }
 }
 </script>
 
