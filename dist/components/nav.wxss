@@ -30,7 +30,7 @@
 }
 .footer .action .iconfont,
 .footer .action {
-  color: #FF3D4D !important;
+  color: #ff3d4d !important;
 }
 .footer,
 .footer .noAction .iconfont {

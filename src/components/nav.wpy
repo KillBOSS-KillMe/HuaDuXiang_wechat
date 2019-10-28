@@ -5,13 +5,12 @@
   bottom: 0;
   background: #fff;
   border-top: 1rpx solid #f3f1f1;
-  // padding-bottom: -120rpx;
   z-index: 30;
   height: 100rpx;
 
   display: flex;
-  flex-direction:row;
-  justify-content:space-between;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .footer .ft_item {
@@ -19,7 +18,6 @@
   height: 100%;
   text-align: center;
   float: left;
-  // padding: 18rpx 0;
 }
 .footer .ft_item text {
   font-size: 25rpx;
@@ -28,64 +26,6 @@
   bottom: 18rpx;
 }
 
-// .appointment {
-//   position: absolute;
-//   top: 200rpx;
-//   left: 12.5%;
-//   background: linear-gradient(to right, #f86e09, #f29200, #f86e09);
-//   color: #fff;
-//   border-radius: 40rpx;
-//   font-size: 24rpx;
-//   width: 75%;
-//   height: 700rpx;
-//   padding: 0 60rpx;
-//   box-sizing: border-box;
-//   z-index: 3;
-// }
-
-// .appointment_form {
-//   color: #fff;
-//   font-size: 24rpx;
-// }
-
-// .appointment_input {
-//   border: 4rpx #fff dashed;
-//   border-radius: 40rpx;
-//   height: 80rpx;
-//   box-sizing: border-box;
-//   padding: 0 40rpx;
-//   margin: 30rpx 0;
-//   color: #fff;
-// }
-
-// .appointment_img {
-//   position: relative;
-//   top: -80rpx;
-//   left: 120rpx;
-//   width: 230rpx;
-//   height: 124rpx;
-// }
-
-// .appointment_img1 {
-//   position: relative;
-//   top: -120rpx;
-//   left: 200rpx;
-//   width: 60rpx;
-//   height: 100rpx;
-// }
-
-// .mod_btn {
-//   margin: auto;
-//   border-radius: 50%;
-//   border: 6rpx solid #fff;
-//   background: rgba(0, 0, 0, 0);
-//   width: 130rpx;
-//   height: 130rpx;
-//   color: #fff;
-//   font-size: 30rpx;
-//   line-height: 120rpx;
-//   font-weight: bold;
-// }
 .show {
   display: block;
 }
@@ -94,11 +34,11 @@
 }
 
 .footer .action .iconfont,
-.footer .action{
-  color: #FF3D4D !important;
+.footer .action {
+  color: #ff3d4d !important;
 }
 .footer,
-.footer .noAction .iconfont{
+.footer .noAction .iconfont {
   color: #8e8e8e !important;
 }
 .iconfont {
@@ -106,100 +46,53 @@
 }
 </style>
 <template>
-<view>
-  <view class="footer">
-    <view class="ft_item {{navAction[0]}}">
-      <view @tap="goIndex">
-        <view class="iconfont iconshouye-copy"></view>
-        <text class="text">首页</text>
-      </view>
-    </view>
-    <view class="ft_item {{navAction[1]}}">
-      <view @tap="goClass">
-        <view class="iconfont iconfenlei"></view>
-        <text class="text">分类</text>
-      </view>
-    </view>
-    <view class="ft_item {{navAction[2]}}">
-      <view @tap="goSettled">
-        <view class="iconfont iconshezhi"></view>
-        <text class="text">入驻</text>
-      </view>
-    </view>
-    <view class="ft_item {{navAction[3]}}">
-      <view @tap="goByCar">
-        <view class="iconfont icongouwuche-copy"></view>
-        <text class="text">购物车</text>
-      </view>
-    </view>
-    <view class="ft_item {{navAction[4]}}">
-      <view @tap="goUser">
-        <view class="iconfont iconwode"></view>
-        <text class="text">我的</text>
-      </view>
+  <view>
+    <view class="footer">
+      <repeat for="{{navList}}" item="item">
+        <view class="ft_item {{item.active ? 'action':'noAction'}}">
+          <view @tap="navPage({{item.url}})">
+            <view class="iconfont {{item.icon}}"></view>
+            <text class="text">{{item.title}}</text>
+          </view>
+        </view>
+      </repeat>
     </view>
   </view>
-</view>
 </template>
 <script>
-import wepy from 'wepy'
-// 校验封装
-// import check from '../mixins/check'
+import wepy from 'wepy';
 export default class Nav extends wepy.component {
-  // mixins = [check]
   data = {
-    userInfo: {},
-    guangGaoNode: null,
-    name: '',
-    phone: '',
-    id: '',
-    navAction: ['action', 'noAction', 'noAction','noAction','noAction']
+    navList: [
+      { title: '首页', icon: 'iconshouye-copy', url: 'pages/index' },
+      { title: '分类', icon: 'iconfenlei', url: 'pages/class' },
+      { title: '入驻', icon: 'iconshezhi', url: 'pages/settledIn' },
+      { title: '购物车', icon: 'icongouwuche-copy', url: 'pages/shopCar' },
+      { title: '我的', icon: 'iconwode', url: 'pages/user' }
+    ]
   };
   props = {};
   methods = {
-    // 首页
-    goIndex() {
-      var route = this.$parent.$parent['__route__']
-      if(route == 'pages/index') return
-      this.$parent.$parent.globalData.navAction = ['action', 'noAction', 'noAction','noAction','noAction']
-      this.$emit('childFn', '/pages/index')
-    },
-    // 分类
-    goClass() {
-      var route = this.$parent.$parent['__route__']
-      if(route == 'pages/class') return
-      // 顶部导航状态初始化
-      this.$parent.$parent.globalData.navAction = ['noAction', 'action', 'noAction','noAction','noAction','noAction']
-      this.$emit('childFn', '/pages/class')
-    },
-
-    //入驻
-    goSettled() {
-      var route = this.$parent.$parent['__route__']
-      if(route == 'pages/settledIn') return
-      this.$parent.$navigate({url:'settledIn'})
-      // this.$parent.$parent.globalData.navAction = ['noAction', 'noAction', 'action','noAction','noAction']
-      // this.$emit('childFn', '/pages/settledIn')
-    },
-    // 购物车
-    goByCar() {
-        var route = this.$parent.$parent['__route__']
-      if(route == 'pages/shopCar') return
-      this.$parent.$parent.globalData.navAction = ['noAction', 'noAction', 'noAction','action','noAction']
-      this.$emit('childFn', '/pages/shopCar')
-    },
-        // 我的
-    goUser() {
-      var route = this.$parent.$parent['__route__']
-      if(route == 'pages/user') return
-      this.$parent.$parent.globalData.navAction = ['noAction', 'noAction','noAction','noAction','action']
-      this.$emit('childFn', '/pages/user')
-    },
+    navPage(url) {
+      var route = this.$parent.$parent['__route__'];
+      if (url != route) {
+        wx.redirectTo({
+          url: `/${url}`
+        });
+      }
+    }
   };
   onLoad() {
-    this.userInfo = this.$parent.$parent.globalData.userInfo
-    this.navAction = this.$parent.$parent.globalData.navAction
-    this.$apply()
-  };
+    var pages = getCurrentPages();
+    var route = pages[pages.length - 1].route;
+    this.navList.forEach(item => {
+      if (item.url == route) {
+        item.active = true;
+      } else {
+        item.active = false;
+      }
+    });
+    this.$apply();
+  }
 }
 </script>

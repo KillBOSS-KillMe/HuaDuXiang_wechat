@@ -18,10 +18,10 @@
     </view>
     <!-- 中间选项 -->
     <view class="mainChoose">
-      <block wx:for="{{ChooesData}}" wx:for-index="index" wx:for-item="item" wx:key="key">
-        <view class="chooseItem" bindtap="tapName" data-wpytapname-a="{{item.id}}">
-          <image class="chooseImg" src="{{item.img}}"/>
-          <text class="chooseText">{{item.title}}</text>
+      <block wx:for="{{areaArr}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+        <view class="chooseItem" bindtap="tapName" data-wpytapname-a="{{item.attrpage}}" data-wpytapname-b="{{item.id}}">
+          <image class="chooseImg" src="{{requestImgUrl + item.imgsrc}}"/>
+          <text class="chooseText">{{item.name}}</text>
         </view>
       </block>
     </view>
@@ -94,39 +94,17 @@
     </view>
     <button open-type="getUserInfo" id="getUserInfo"  wx:if="{{!hasUserInfo}}" bindgetuserinfo="getUserInfo"/>
     
-<view>
-  <view class="footer">
-    <view class="ft_item {{$nav$navAction[0]}}">
-      <view bindtap="$nav$goIndex">
-        <view class="iconfont iconshouye-copy"/>
-        <text class="text">首页</text>
-      </view>
-    </view>
-    <view class="ft_item {{$nav$navAction[1]}}">
-      <view bindtap="$nav$goClass">
-        <view class="iconfont iconfenlei"/>
-        <text class="text">分类</text>
-      </view>
-    </view>
-    <view class="ft_item {{$nav$navAction[2]}}">
-      <view bindtap="$nav$goSettled">
-        <view class="iconfont iconshezhi"/>
-        <text class="text">入驻</text>
-      </view>
-    </view>
-    <view class="ft_item {{$nav$navAction[3]}}">
-      <view bindtap="$nav$goByCar">
-        <view class="iconfont icongouwuche-copy"/>
-        <text class="text">购物车</text>
-      </view>
-    </view>
-    <view class="ft_item {{$nav$navAction[4]}}">
-      <view bindtap="$nav$goUser">
-        <view class="iconfont iconwode"/>
-        <text class="text">我的</text>
-      </view>
+  <view>
+    <view class="footer">
+      <block wx:for="{{$nav$navList}}" wx:for-index="$nav$index" wx:for-item="$nav$item" wx:key="$nav$key">
+        <view class="ft_item {{$nav$item.active ? 'action':'noAction'}}">
+          <view bindtap="$nav$navPage" data-wpynavpage-a="{{$nav$item.url}}">
+            <view class="iconfont {{$nav$item.icon}}"/>
+            <text class="text">{{$nav$item.title}}</text>
+          </view>
+        </view>
+      </block>
     </view>
   </view>
-</view>
 
   </view>

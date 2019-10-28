@@ -13,10 +13,10 @@
     <view class="tab-content" wx:if="{{currentTab==0}}">
       <view class="mainWheel">
         <swiper autoplay>
-          <repeat for="{{3}}" item="item">
+          <repeat for="{{goods_image_mobile}}" item="item">
             <swiper-item>
               <image
-                src="{{requestImgUrl + goods_common.goods_image}}"
+                src="{{requestImgUrl + item}}"
                 class="slide-image"
               />
             </swiper-item>
@@ -25,18 +25,18 @@
       </view>
       <view class="goods-head">
         <view class="title">
-          <text class="overflow-one">{{goods_common.goods_name}}</text>
+          <text class="overflow-one">{{goods_content.goods_name}}</text>
           <button open-type="share" class="share-btn" hover-class="none">
             <image src="/assets/img/image27.png" />
           </button>
         </view>
         <view
           class="desc overflow-two"
-        >{{goods_common.goods_jingle}}</view>
+        >{{goods_content.goods_jingle}}</view>
         <view class="price">
           <view class="present">
             ￥
-            <text>{{goods_common.goods_price}}</text>
+            <text>{{goods_content.goods_price}}</text>
           </view>
           <!-- <view class="pre">预购价</view>
           <view class="ear">定金￥200</view>-->
@@ -47,10 +47,10 @@
         <view class="option-item">
           <view class="com-title">服务说明</view>
           <view class="description">
-            <image src="/assets/img/image26.png" />
-            <text>无忧退货</text>
-            <image src="/assets/img/image26.png" />
-            <text>快速退款</text>
+            <repeat for="{{contractlist}}" item="val" index="key">
+              <image src="{{val.cti_icon_url}}" />
+              <text>{{val.cti_name}}</text>
+            </repeat>
           </view>
           <image src="/assets/img/image25.png" />
         </view>
@@ -65,13 +65,13 @@
       </view>
       <!-- 店铺 -->
       <view class="store">
-        <view class="shop">
+        <navigator url="/pages/merchantIndex?store_id={{store_info.store_id}}" hover-class="none" class="shop">
           <view class="shopStore">
             <image src="{{requestImgUrl + store_info.store_avatar}}" />
             <text class="shopname">{{store_info.store_name}}</text>
             <text class="gostore">进店</text>
           </view>
-        </view>
+        </navigator>
         <!-- goods item -->
         <view class="saleShopWrap">
           <view class="saleShop">
@@ -213,9 +213,11 @@ export default class Index extends wepy.page {
     ],
     goods_id: null, //商品goods_id
     requestImgUrl: null, //图片域名
-    goods_common: null, // 商品内容
+    goods_content: null, // 商品内容
     store_info: null, // 店铺信息
     hot_sales: [], //推荐商品列表
+    goods_image_mobile: [], // 商品轮播图
+    contractlist: {}, // 商品服务说明
   };
 
   computed = {};
@@ -240,7 +242,7 @@ export default class Index extends wepy.page {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     this.goods_id = t.goods_id;
     var that = this;
-
+    // 普通商品详情
     ajax({
       url: api.ordinaryGoodsDtail,
       type: 'get',
@@ -250,16 +252,18 @@ export default class Index extends wepy.page {
     }).then(res => {
       console.log(res);
       if(res.code == 200) {
-        this.goods_common = res.datas.goods_common
+        this.goods_content = res.datas.goods_content
+        this.contractlist = res.datas.goods_content.contractlist || {}
+        this.goods_image_mobile = res.datas.goods_image_mobile || []
         this.store_info = res.datas.store_info
         this.hot_sales = res.datas.hot_sales
+        this.$apply()
+        var article = res.datas.goods_content.goods_body
+        article = article.replace(/src="/g, `src="${that.requestImgUrl}`);
+        WxParse.wxParse('article', 'html', article, that, 5);
       }
     });
 
-    var article =
-      '<p>（微晶一周鲜）功能，大家有没有这种苦恼，买来的新鲜肉放在冷藏容易坏，放在冷冻冻成了石头！要拿来吃的时候又得解冻了才能切，而且解冻的过程又容易滋生细菌并且营养流失影响口感，微晶这个功能就很好解决了，区别于传统的感知冰箱内温度，微晶是感知食材本身的温度，使食材始终处于微晶状态，随时拿出来随时切并且保留了食材的营养不流失～并且可以保存七天左右哦！</p>';
-    article = article.replace(/src="/g, `src="${that.requestImgUrl}`);
-    WxParse.wxParse('article', 'html', article, that, 5);
   }
 }
 </script>
@@ -552,7 +556,7 @@ export default class Index extends wepy.page {
         .saleprice {
           font-weight: bolder;
           color: red;
-          font-size: 42rpx;
+          font-size: 30rpx;
         }
         .saleexprice {
           color: #666;

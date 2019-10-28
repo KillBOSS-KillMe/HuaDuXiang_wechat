@@ -241,10 +241,10 @@
     </view>
     <!-- 中间选项 -->
     <view class="mainChoose">
-      <repeat for="{{ChooesData}}" item="item">
-        <view class="chooseItem" @tap="tapName('{{item.id}}')">
-          <image class="chooseImg" src="{{item.img}}" />
-          <text class="chooseText">{{item.title}}</text>
+      <repeat for="{{areaArr}}" item="item">
+        <view class="chooseItem" @tap="tapName({{item.attrpage}},{{item.id}})">
+          <image class="chooseImg" src="{{requestImgUrl + item.imgsrc}}" />
+          <text class="chooseText">{{item.name}}</text>
         </view>
       </repeat>
     </view>
@@ -321,7 +321,7 @@
       wx:if="{{!hasUserInfo}}"
       bindgetuserinfo="getUserInfo"
     ></button>
-    <nav @childFn.user="goPage" />
+    <nav />
   </view>
 </template>
 
@@ -333,7 +333,9 @@ var api = require('../api.js');
 import { ajax } from '../ajax.js';
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '首页',
+    // enablePullDownRefresh: true,
+    backgroundTextStyle: 'light'
   };
   components = {
     nav: nav
@@ -411,64 +413,63 @@ export default class Index extends wepy.page {
     wxTimerList: {}, // 倒计时
     goods_list: [], // 商品列表
     areaArr: [], // area区域
-    bannerArr: [] //轮播图
+    bannerArr: [], //轮播图
+    hasmore: false, // 是否有下一页
+    curpage: 1, //当前页数
   };
 
   computed = {};
   onLoad() {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
-    // 倒计时s
-    var wxTimer = new timer({
-      beginTime: '6',
-      name: 'firstTimer',
-      complete() {}
-    });
-    wxTimer.start(this);
-    // setTimeout(() => {
-    //   wxTimer.stop();
-    // }, 5000);
-    // 倒计时e
     this.getAppUserInfo();
-
-    // 首页—普通商品列表接口
-    ajax({
-      url: api.indexGoodsList
-    }).then(res => {
-      if (res.code == 200) {
-        this.goods_list = res.datas.goods_list;
-        this.$apply();
-      }
-    });
     // 首页-轮播图和areaArr菜单
     ajax({
       url: api.indexDefaultInfo,
-      // type: 'get'
     }).then(res => {
-      console.log(res);
       if (res.code == 200) {
         this.areaArr = res.datas.area || [];
         this.bannerArr = res.datas.banner || [];
         this.$apply();
       }
     });
+
+    this.requestIndexGoodsList()
+  }
+  
+  // 首页—普通商品列表接口
+  requestIndexGoodsList() {
+    ajax({
+      url: api.indexGoodsList,
+      type: 'get',
+      data: {
+        page: 10,
+        curpage: this.curpage
+      },
+    }).then(res => {
+      if (res.code == 200) {
+        var list = res.datas.goods_list || []
+        this.goods_list = this.goods_list.concat(list)
+        this.hasmore = res.hasmore
+        this.$apply();
+      }
+    });
   }
   onShow() {}
   methods = {
-    tapName(id) {
+    tapName(url, id) {
+      this.$navigate({url: url})
+      return false
       if (id == 1) {
-        // this.$navigate({ url: `sale?id=${id}` }); // 促销
         this.$navigate({ url: `applyPartner` }); // 申请合伙人
       } else if (id == 2) {
         this.$navigate({ url: `pre?id=${id}` });
       } else if (id == 3) {
         this.$navigate({ url: `discount?id=${id}` });
       } else if (id == 4) {
-        // this.$navigate({ url: `sale?id=${id}` }); // 促销
         this.$navigate({ url: `assemble?id=${id}` }); // 拼团
       } else if (id == 5) {
         this.$navigate({ url: `bargain?id=${id}` });
       } else if (id == 6) {
-        // this.$navigate({ url: `assemble?id=${id}` }); // 拼团
         this.$navigate({ url: `merchant?id=${id}` }); // 特约商户
       } else if (id == 7) {
         this.$navigate({ url: `seckill?id=${id}` });
@@ -492,10 +493,6 @@ export default class Index extends wepy.page {
     /**
      * 底部导航跳转
      */
-    goPage(url, evt) {
-      // 销毁当前页{跳转}
-      this.$redirect(url);
-    },
     navSearch() {
       this.$navigate('/pages/search');
     }
@@ -507,11 +504,13 @@ export default class Index extends wepy.page {
       console.warn('globalData');
       this.userInfo = app.globalData.userInfo;
       this.hasUserInfo = true;
+      this.$apply()
     } else if (wx.canIUse('button.open-type.getUserInfo')) {
       app.userInfoReadyCallback = res => {
         console.warn('userInfoReadyCallback');
-        this.userInfo = app.globalData.userInfo;
+        this.userInfo = res.userInfo;
         this.hasUserInfo = true;
+        this.$apply()
       };
     } else {
       wx.getUserInfo({
@@ -520,6 +519,7 @@ export default class Index extends wepy.page {
           app.globalData.userInfo = res.userInfo;
           this.userInfo = app.globalData.userInfo;
           this.hasUserInfo = true;
+          this.$apply()
         }
       });
     }
@@ -534,5 +534,13 @@ export default class Index extends wepy.page {
   }
 
   onShareAppMessage() {}
+  onReachBottom () {
+    if(this.hasmore) {
+      this.curpage ++ 
+      this.requestIndexGoodsList()
+    }
+  }
+  onPullDownRefresh(e) {
+  }
 }
 </script>

@@ -281,7 +281,7 @@
 .store .saleShopWrap .saleShop .shopview .saleprice {
   font-weight: bolder;
   color: red;
-  font-size: 42rpx;
+  font-size: 30rpx;
 }
 .store .saleShopWrap .saleShop .shopview .saleexprice {
   color: #666;

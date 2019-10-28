@@ -54,39 +54,17 @@
       <view class="pay-btn">去结算</view>
     </view>
      
-<view class="nav">
-  <view class="footer">
-    <view class="ft_item {{$nav$navAction[0]}}">
-      <view bindtap="$nav$goIndex">
-        <view class="iconfont iconshouye-copy"/>
-        <text class="text">首页</text>
-      </view>
-    </view>
-    <view class="ft_item {{$nav$navAction[1]}}">
-      <view bindtap="$nav$goClass">
-        <view class="iconfont iconfenlei"/>
-        <text class="text">分类</text>
-      </view>
-    </view>
-    <view class="ft_item {{$nav$navAction[2]}}">
-      <view bindtap="$nav$goSettled">
-        <view class="iconfont iconshezhi"/>
-        <text class="text">入驻</text>
-      </view>
-    </view>
-    <view class="ft_item {{$nav$navAction[3]}}">
-      <view bindtap="$nav$goByCar">
-        <view class="iconfont icongouwuche-copy"/>
-        <text class="text">购物车</text>
-      </view>
-    </view>
-    <view class="ft_item {{$nav$navAction[4]}}">
-      <view bindtap="$nav$goUser">
-        <view class="iconfont iconwode"/>
-        <text class="text">我的</text>
-      </view>
+  <view class="nav">
+    <view class="footer">
+      <block wx:for="{{$nav$navList}}" wx:for-index="$nav$index" wx:for-item="$nav$item" wx:key="$nav$key">
+        <view class="ft_item {{$nav$item.active ? 'action':'noAction'}}">
+          <view bindtap="$nav$navPage" data-wpynavpage-a="{{$nav$item.url}}">
+            <view class="iconfont {{$nav$item.icon}}"/>
+            <text class="text">{{$nav$item.title}}</text>
+          </view>
+        </view>
+      </block>
     </view>
   </view>
-</view>
 
   </view>
