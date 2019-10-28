@@ -104,8 +104,7 @@
 import wepy from 'wepy';
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '砍价',
-    navigationBarBackgroundColor: 'white'
+    navigationBarTitleText: '砍价'
   };
   components = {
     // middlePopup

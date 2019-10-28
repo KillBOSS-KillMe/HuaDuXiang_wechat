@@ -109,8 +109,7 @@ import wepy from 'wepy';
 
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '新增地址',
-    navigationBarBackgroundColor: 'white'
+    navigationBarTitleText: '新增地址'
   };
   components = {};
 

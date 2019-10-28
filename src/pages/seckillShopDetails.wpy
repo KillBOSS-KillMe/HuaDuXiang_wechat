@@ -243,7 +243,7 @@ export default class Index extends wepy.page {
   onLoad() {
     // 倒计时s
     var wxTimer = new timer({
-      beginTime: '0:0:10',
+      beginTime: '10',
       name: 'firstTimer',
       complete() {}
     });

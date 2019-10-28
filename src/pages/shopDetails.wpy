@@ -16,7 +16,7 @@
           <repeat for="{{3}}" item="item">
             <swiper-item>
               <image
-                src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=990087231,1878185023&fm=26&gp=0.jpg"
+                src="{{requestImgUrl + goods_common.goods_image}}"
                 class="slide-image"
               />
             </swiper-item>
@@ -25,18 +25,18 @@
       </view>
       <view class="goods-head">
         <view class="title">
-          <text class="overflow-one">家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货</text>
+          <text class="overflow-one">{{goods_common.goods_name}}</text>
           <button open-type="share" class="share-btn" hover-class="none">
             <image src="/assets/img/image27.png" />
           </button>
         </view>
         <view
           class="desc overflow-two"
-        >家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货</view>
+        >{{goods_common.goods_jingle}}</view>
         <view class="price">
           <view class="present">
             ￥
-            <text>19</text>
+            <text>{{goods_common.goods_price}}</text>
           </view>
           <!-- <view class="pre">预购价</view>
           <view class="ear">定金￥200</view>-->
@@ -67,29 +67,29 @@
       <view class="store">
         <view class="shop">
           <view class="shopStore">
-            <image src="/assets/img/image.png" />
-            <text class="shopname">好吃点</text>
+            <image src="{{requestImgUrl + store_info.store_avatar}}" />
+            <text class="shopname">{{store_info.store_name}}</text>
             <text class="gostore">进店</text>
           </view>
         </view>
         <!-- goods item -->
         <view class="saleShopWrap">
           <view class="saleShop">
-            <repeat for="{{flowData}}" item="item">
-              <view class="shopview">
-                <image src="{{item.img}}" />
+            <repeat for="{{hot_sales}}" item="item">
+              <navigator class="shopview" hover-class="none" open-type="redirect" url="/pages/shopDetails?goods_id={{item.goods_id}}">
+                <image src="{{requestImgUrl + item.goods_image}}" />
                 <view class="saleTag">
-                  <text class="overflow-one">{{item.title}}暗示法撒打发斯蒂芬</text>
+                  <text class="overflow-one">{{item.goods_name}}</text>
                 </view>
                 <view>
                   <view>
-                    <text class="salep">促销价</text>
+                    <text class="salep">价格</text>
                     <text class="salesmple">￥</text>
-                    <text class="saleprice">{{item.price}}111</text>
-                    <!-- <text class="saleexprice">原价￥ {{item.exprice}}</text> -->
+                    <text class="saleprice">{{item.goods_sale_price}}</text>
+                    <!-- <text class="saleexprice">原价￥ {{item.goods_price}}</text> -->
                   </view>
                 </view>
-              </view>
+              </navigator>
             </repeat>
           </view>
         </view>
@@ -178,7 +178,7 @@ export default class Index extends wepy.page {
   data = {
     goodsNum: 1,
     attrFlag: false,
-    tabList: [{ name: '商品介绍', dotNum: 2 }, { name: '图文详情', dotNum: 3 }], // 顶部选项卡
+    tabList: [{ name: '商品介绍'}, { name: '图文详情' }], // 顶部选项卡
     currentTab: 0, // 顶部选项卡索引
     // 店铺
     flowData: [
@@ -212,7 +212,10 @@ export default class Index extends wepy.page {
       }
     ],
     goods_id: null, //商品goods_id
-    requestImgUrl: null //图片域名
+    requestImgUrl: null, //图片域名
+    goods_common: null, // 商品内容
+    store_info: null, // 店铺信息
+    hot_sales: [], //推荐商品列表
   };
 
   computed = {};
@@ -246,6 +249,11 @@ export default class Index extends wepy.page {
       }
     }).then(res => {
       console.log(res);
+      if(res.code == 200) {
+        this.goods_common = res.datas.goods_common
+        this.store_info = res.datas.store_info
+        this.hot_sales = res.datas.hot_sales
+      }
     });
 
     var article =
@@ -309,7 +317,7 @@ export default class Index extends wepy.page {
     align-items: center;
     padding: 20rpx 0 10rpx 0;
     text {
-      width: 500rpx;
+      width: 580rpx;
       font-weight: bold;
       font-size: 32rpx;
     }

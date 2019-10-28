@@ -186,7 +186,7 @@
       .saleprice {
         font-weight: bolder;
         color: red;
-        font-size: 42rpx;
+        font-size: 34rpx;
       }
       .saleexprice {
         color: #666;
@@ -271,18 +271,18 @@
       <!-- 商品 -->
       <view class="saleShopWrap">
         <view class="saleShop">
-          <repeat for="{{flowData}}" item="item">
-            <view class="shopview" @tap="jumpTimeDetails('{{item.id}}')">
-              <image src="http://img011.hc360.cn/g2/M06/45/BF/wKhQuFLfLl-EakIIAAAAAGqrml0128.jpg" />
+          <repeat for="{{goods_list}}" item="item">
+            <view class="shopview" @tap="jumpDetails({{item.goods_id}}, {{item.goods_sale_type}})">
+              <image src="{{requestImgUrl + item.goods_image_url}}" />
               <view class="saleTag">
-                <text class="overflow-one">{{item.title}}</text>
+                <text class="overflow-one">{{item.goods_name}}</text>
               </view>
               <view>
                 <view>
                   <text class="salep">秒杀价</text>
                   <text class="salesmple">￥</text>
-                  <text class="saleprice">{{item.price}}</text>
-                  <text class="saleexprice">原价￥ {{item.exprice}}</text>
+                  <text class="saleprice">{{item.goods_price}}</text>
+                  <!-- <text class="saleexprice">原价￥ {{item.goods_price}}</text> -->
                 </view>
               </view>
             </view>
@@ -298,8 +298,8 @@
       <view class="saleShopWrap">
         <view class="saleShop">
           <repeat for="{{goods_list}}" item="item">
-            <view class="shopview" @tap="jumpTimeDetails('{{item.goods_id}}')">
-              <image src="{{item.goods_image_url}}" />
+            <view class="shopview" @tap="jumpDetails({{item.goods_id}}, {{item.goods_sale_type}})">
+              <image src="{{requestImgUrl + item.goods_image_url}}" />
               <view class="saleTag">
                 <text class="overflow-one">{{item.goods_name}}</text>
               </view>
@@ -441,13 +441,14 @@ export default class Index extends wepy.page {
     });
     // 首页-轮播图和areaArr菜单
     ajax({
-      url: api.indexDefaultInfo
+      url: api.indexDefaultInfo,
+      // type: 'get'
     }).then(res => {
+      console.log(res);
       if (res.code == 200) {
         this.areaArr = res.datas.area || [];
         this.bannerArr = res.datas.banner || [];
         this.$apply();
-        console.log(res.datas);
       }
     });
   }
@@ -478,8 +479,15 @@ export default class Index extends wepy.page {
     /**
      * 跳转商品详情
      */
-    jumpTimeDetails(goods_id) {
-      this.$navigate(`/pages/shopDetails?goods_id=${goods_id}`);
+    jumpDetails(goods_id, goods_type) {
+      console.log(goods_id, goods_type)
+      switch (Number(goods_type)) {
+        case 0: 
+          this.$navigate(`/pages/shopDetails?goods_id=${goods_id}`);
+          break;
+        case 1:
+          this.$navigate(`/pages/seckillShopDetails?goods_id=${goods_id}`);
+      }
     },
     /**
      * 底部导航跳转

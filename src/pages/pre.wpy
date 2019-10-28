@@ -115,8 +115,7 @@ import wepy from 'wepy';
 
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '预购',
-    navigationBarBackgroundColor: 'white'
+    navigationBarTitleText: '预购'
   };
   components = {};
 

@@ -328,8 +328,7 @@ var timer = require('../utils/wxTimer.js'); // 倒计时
 
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '秒杀',
-    navigationBarBackgroundColor: 'white'
+    navigationBarTitleText: '秒杀'
   };
   components = {};
 

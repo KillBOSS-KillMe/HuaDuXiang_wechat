@@ -123,8 +123,7 @@ import wepy from 'wepy';
 
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '拼团',
-    navigationBarBackgroundColor: 'white'
+    navigationBarTitleText: '拼团'
   };
   components = {};
 

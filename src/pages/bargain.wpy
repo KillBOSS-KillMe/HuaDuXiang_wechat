@@ -404,8 +404,7 @@ import wepy from 'wepy';
 import mask from '../components/mask';
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '砍价',
-    navigationBarBackgroundColor: 'white'
+    navigationBarTitleText: '砍价'
   };
   components = {
     attrsmask: mask,

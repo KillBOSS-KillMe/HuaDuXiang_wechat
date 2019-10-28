@@ -869,8 +869,7 @@ page {
 import wepy from 'wepy';
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '弹窗',
-    navigationBarBackgroundColor: 'white'
+    navigationBarTitleText: '弹窗'
   };
   components = {
     // middlePopup

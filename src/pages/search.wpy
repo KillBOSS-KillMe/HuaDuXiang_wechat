@@ -18,8 +18,7 @@ import wepy from 'wepy';
 //通过继承自wepy.page的类创建页面逻辑
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '搜索',
-    navigationBarBackgroundColor: 'white'
+    navigationBarTitleText: '搜索'
   };
   //可用于页面模板绑定的数据
   data = {
