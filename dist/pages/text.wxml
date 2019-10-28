@@ -1,0 +1,32 @@
+
+<view>
+    <view class="bigs1">
+        <view class="hui">
+            <block wx:for="{{jindutiao}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+            <view class="viewsmall"/>
+            <view class="zhongJianSelect"  wx:if="{{item.statu}}"/>
+            <view class="zhongJian"  wx:else/>
+            </block>
+        </view>
+        <!--刻度杠  -->
+        <view class="kedudian" style="left:{{width-11}}%">
+                <image mode="scaleToFill" src="{{requestImgUrl}}text.png" class="jinduPng"/>
+                <text class="cantuanNumber">{{num}}人已参团</text> 
+        </view>
+        <view class="huang" style="width:{{width}}%"/>
+    </view>
+    <view class="bigs2">
+        <view class="viewbig">
+        <block wx:for="{{jindutiao}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+            <view class="viewsmall2" wx:if="{{item.statu}}">
+                <text class="viewsmall2Text">{{item.num}}人团</text>
+                <text class="viewsmall2Text">¥{{item.price}}</text>
+            </view>
+            <view class="viewsmall2" wx:else>
+                <text class="viewsmall2Text viewsmall2TextSelect">{{item.num}}人团</text>
+                <text class="viewsmall2Text viewsmall2TextSelect">¥{{item.price}}</text>
+            </view>
+        </block>
+        </view>
+    </view>
+</view>

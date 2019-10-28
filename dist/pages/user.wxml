@@ -1,0 +1,92 @@
+
+  <view>
+    <!-- 顶部获取个人信息 -->
+    <view class="top" bindtap="getMyRank">
+      <image class="top_imgbg" src="/assets/img/image36.png"/>
+      <view class="top_user">
+        <image class="imgSrc" data-id="data-id" src="{{userInfo.avatarUrl}}"/>
+        <view class="username">{{userInfo.nickName || '阿萨水电费'}}</view>
+      </view>
+      <view class="topVip">
+        <image src="copy.png"/>
+        <text>成为合伙人, 福利享不停</text>
+        <button>立即开通</button>
+      </view>
+    </view>
+
+    <!-- 我的订单 -->
+    <navigator hover-class="none" url="/pages/orderlist" class="my_order">
+      <view class="my_all">
+        <text>我的订单</text>
+        <text class="my_text" bindtap="allOrder">查看全部订单</text>
+        <image class="imgright" src="/assets/img/image25.png"/>
+      </view>
+      <!-- 功能区 -->
+      <view class="icon_entry">
+        <block wx:for="{{funList}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+          <view class="iconFun">
+            <text class="icon_num">{{ item.num }}</text>
+            <text class="icon_text">{{ item.funtext }}</text>
+          </view>
+        </block>
+      </view>
+    </navigator>
+    <!-- 我的服务 -->
+    <view class="personal_data">
+      <text class="mainorder">我的服务</text>
+      <view class="order">
+        <view class="orderitem" bindtap="getUserAddress">
+          <image class="img" src="/assets/img/image31.png"/>
+          <view>我的钱包</view>
+          <image class="imgright" src="/assets/img/image25.png"/>
+        </view>
+        <view class="orderitem">
+          <image class="img" src="/assets/img/image32.png"/>
+          <view>收货地址</view>
+          <image class="imgright" src="/assets/img/image25.png"/>
+        </view>
+        <view class="orderitem">
+          <image class="img" src="/assets/img/image33.png"/>
+          <view>客服服务</view>
+          <image class="imgright" src="/assets/img/image25.png"/>
+        </view>
+      </view>
+    </view>
+
+    
+<view class="nav">
+  <view class="footer">
+    <view class="ft_item {{$nav$navAction[0]}}">
+      <view bindtap="$nav$goIndex">
+        <view class="iconfont iconshouye-copy"/>
+        <text class="text">首页</text>
+      </view>
+    </view>
+    <view class="ft_item {{$nav$navAction[1]}}">
+      <view bindtap="$nav$goClass">
+        <view class="iconfont iconfenlei"/>
+        <text class="text">分类</text>
+      </view>
+    </view>
+    <view class="ft_item {{$nav$navAction[2]}}">
+      <view bindtap="$nav$goSettled">
+        <view class="iconfont iconshezhi"/>
+        <text class="text">入驻</text>
+      </view>
+    </view>
+    <view class="ft_item {{$nav$navAction[3]}}">
+      <view bindtap="$nav$goByCar">
+        <view class="iconfont icongouwuche-copy"/>
+        <text class="text">购物车</text>
+      </view>
+    </view>
+    <view class="ft_item {{$nav$navAction[4]}}">
+      <view bindtap="$nav$goUser">
+        <view class="iconfont iconwode"/>
+        <text class="text">我的</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+  </view>

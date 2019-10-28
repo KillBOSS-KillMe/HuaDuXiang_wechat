@@ -1,0 +1,62 @@
+
+    <view class="wrap">
+        <!-- 头部卡片 -->
+        <view class="topCard">
+            <image src="{{requestImgUrl}}card.png"/>
+        </view>
+        <!-- 促销选项卡 -->
+        <view class="saleTab">
+        <!--Tab布局-->
+            <view class="tabtitle">
+                <view class="tabclass">
+                    <view class="{{currentData == 0 ? 'tabactiveclass' : '' }}" data-current="0" bindtap="checkCurrent">时段促销</view>
+                    <view class="{{currentData == 1 ? 'tabactiveclass' : '' }}" data-current="1" bindtap="checkCurrent">数量促销</view>
+                    <view class="{{currentData == 2 ? 'tabactiveclass' : '' }}" data-current="2" bindtap="checkCurrent">组合促销</view>
+                    <view class="{{currentData == 3 ? 'tabactiveclass' : '' }}" data-current="3" bindtap="checkCurrent">满减促销</view>
+                </view>
+            </view>
+            <swiper current="{{currentData}}" style="height:  {{ heightShow ? '47px' :  '0px' }}">
+                <swiper-item>
+                    <scroll-view scroll-x="true">
+                        <view class="timesale">
+                            <view class="timetab {{currentDataTwo == 0 ? 'tabactiveclassTwo' : '' }}" data-current="0" bindtap="checkCurrentTwo">08:00-10:00</view>
+                            <view class="timetab {{currentDataTwo == 1 ? 'tabactiveclassTwo' : '' }}" data-current="1" bindtap="checkCurrentTwo">10:00-12:00</view>
+                            <view class="timetab {{currentDataTwo == 2 ? 'tabactiveclassTwo' : '' }}" data-current="2" bindtap="checkCurrentTwo">12:00-14:00</view>
+                            <view class="timetab {{currentDataTwo == 3 ? 'tabactiveclassTwo' : '' }}" data-current="3" bindtap="checkCurrentTwo">14:00-16:00</view>
+                        </view>
+                    </scroll-view>
+                </swiper-item>
+                <swiper-item>
+                    <view class="numsale">
+                        <view class="numtab {{currentDataThree == 0 ? 'tabactiveclassThree' : '' }}" data-current="0" bindtap="checkCurrentThree">全部商品</view>
+                        <view class="numtab {{currentDataThree == 1 ? 'tabactiveclassThree' : '' }}" data-current="1" bindtap="checkCurrentThree">超量促销</view>
+                        <view class="numtab {{currentDataThree == 2 ? 'tabactiveclassThree' : '' }}" data-current="2" bindtap="checkCurrentThree">第N件促销</view>
+                        <view class="numtab {{currentDataThree == 3 ? 'tabactiveclassThree' : '' }}" data-current="3" bindtap="checkCurrentThree">逢倍数促销</view>
+                        <!-- <view class="timetab">16:00-18:00</view> -->
+                        
+                    </view>
+                </swiper-item>
+            </swiper>
+        </view>
+        <!-- 商品 -->
+        <view class="saleShopWrap">
+            <view class="saleShop">
+                <block wx:for="{{flowData}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+                    <view class="shopview" bindtap="jumpTimeDetails" data-wpyjumptimedetails-a="{{item.id}}">
+                        <image src="{{requestImgUrl + item.img}}"/>
+                        <view class="saleTag">
+                            <text>{{item.title}}</text>
+                        </view>
+                        <view>
+                            <text class="salep"  wx:if="{{ tagOne }}"> 促销价</text>
+                            <text class="salep"  wx:if="{{ tagTwo }}"> 第二件</text>
+                            <text class="saleprice"><text class="salesmple">￥</text>{{item.price}}</text>
+                            <text class="saleexprice" wx:if="{{ tagthree }}">原价￥ {{item.exprice}}</text>
+                            <text class="saletag" wx:if="{{ tagFour }}">{{item.tag}}</text>
+                        </view>
+                        
+                    </view>
+                </block>
+            </view>
+        </view>
+    </view>

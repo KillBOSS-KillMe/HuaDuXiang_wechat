@@ -1,0 +1,52 @@
+page {
+  min-height: 100%;
+}
+.shade-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9996;
+  color: #979797;
+  background: rgba(18, 17, 16, 0.3);
+}
+.shade-box .shop-box {
+  position: relative;
+  height: 100%;
+}
+.shade-box .shop-box .item {
+  position: absolute;
+  width: 105%;
+  height: 480rpx;
+  left: 0;
+  bottom: 0;
+  background: #fff;
+  border-radius: 20rpx;
+}
+.shade-box .shop-box .item .shade-hd .img-box {
+  width: 50rpx;
+  height: 50rpx;
+  opacity: 0.6;
+}
+.shade-box .shade-ft {
+  position: relative;
+  padding: 30rpx 0 40rpx 0;
+}
+.shade-box .shade-ft .img-box {
+  width: 120rpx;
+  height: 120rpx;
+  margin: 30rpx auto;
+}
+.shade-box .shade-ft:after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  width: 1px;
+  height: 140rpx;
+  border-radius: 20rpx;
+  background-color: #e5e5e5;
+}

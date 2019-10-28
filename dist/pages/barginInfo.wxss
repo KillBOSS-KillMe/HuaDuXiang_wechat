@@ -1,0 +1,289 @@
+page {
+  background: #f9f9f9;
+  height: 100%;
+}
+.bargain-box {
+  width: 100%;
+  background: #fff;
+}
+.bargain-box .topwrap {
+  width: 100%;
+  height: 914rpx;
+  background: #e4312e;
+  position: relative;
+}
+.bargain-box .topwrap image {
+  width: 100%;
+  height: 100%;
+}
+.bargain-box .topwrap .topview {
+  width: 90%;
+  height: 90%;
+  background: #fff;
+  border-radius: 10rpx;
+  position: absolute;
+  top: 5%;
+  left: 5%;
+}
+.bargain-box .topwrap .topview .barginGoods {
+  width: 90%;
+  height: 220rpx;
+  background: #f6f6f6;
+  margin: 40rpx auto;
+  border-radius: 5rpx;
+  position: relative;
+}
+.bargain-box .topwrap .topview .barginGoods image {
+  width: 190rpx;
+  height: 190rpx;
+  margin: 15rpx;
+  border-radius: 10rpx;
+}
+.bargain-box .topwrap .topview .barginGoods .goodstitle {
+  position: absolute;
+  top: 5%;
+  left: 38%;
+  color: #333;
+  font-size: 32rpx;
+  font-weight: bold;
+  width: 370rpx;
+}
+.bargain-box .topwrap .topview .barginGoods .goodsprice {
+  position: absolute;
+  bottom: 5%;
+  left: 38%;
+  color: #333;
+  font-size: 26rpx;
+}
+.bargain-box .topwrap .topview .barginGoods .prolist {
+  width: 60%;
+  height: 65rpx;
+  position: absolute;
+  top: 35%;
+  left: 38%;
+}
+.bargain-box .topwrap .topview .barginGoods .prolist .progessTittle {
+  font-size: 26rpx;
+  color: #333;
+  padding-left: 200rpx;
+  padding-top: 20rpx;
+  font-weight: bold;
+}
+.bargain-box .topwrap .topview .barginGoods .prolist .progessTittle text {
+  color: red;
+}
+.bargain-box .topwrap .topview .barginGoods .prolist .countwrap {
+  width: 65%;
+  height: 25rpx;
+  position: relative;
+  top: 0;
+  left: 2%;
+  margin-top: 30rpx;
+  border-radius: 40rpx;
+}
+.bargain-box .topwrap .topview .barginGoods .prolist .countwrap .row {
+  height: 100%;
+  background: #ff2228;
+  border-radius: 40rpx;
+}
+.bargain-box .topwrap .topview .barginGoods .prolist .countwrap .surplus {
+  position: absolute;
+  left: 3%;
+  top: -9%;
+  color: #fff;
+  font-size: 20rpx;
+}
+.bargain-box .topwrap .topview .barginGoods .prolist .siglenum {
+  position: absolute;
+  right: 3%;
+  top: 40%;
+  color: #333;
+  font-size: 20rpx;
+  font-weight: bold;
+}
+.bargain-box .topwrap .topview .barginProgess {
+  width: 100%;
+  height: 150rpx;
+}
+.bargain-box .topwrap .topview .barginProgess .progessTittle {
+  font-size: 26rpx;
+  color: #333;
+  padding-left: 200rpx;
+  padding-top: 20rpx;
+  font-weight: bold;
+}
+.bargain-box .topwrap .topview .barginProgess .progessTittle text {
+  color: red;
+}
+.bargain-box .topwrap .topview .barginProgess .countwrap {
+  width: 80%;
+  background: #ffdadb;
+  height: 25rpx;
+  position: relative;
+  top: 0;
+  left: 10%;
+  margin-top: 30rpx;
+  border-radius: 40rpx;
+}
+.bargain-box .topwrap .topview .barginProgess .countwrap .row {
+  height: 100%;
+  background: #ff2228;
+  border-radius: 40rpx;
+}
+.bargain-box .topwrap .topview .sharbtn {
+  width: 90%;
+  height: 90rpx;
+  background: #ff2228;
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: bold;
+  border-radius: 10rpx;
+  line-height: 90rpx;
+  text-align: center;
+  margin: 0rpx 35rpx;
+}
+.bargain-box .topwrap .topview .goodsTime {
+  width: 60%;
+  font-size: 24rpx;
+  color: #333;
+  margin: 15rpx auto;
+  text-align: center;
+}
+.bargain-box .topwrap .topview .record {
+  width: 100%;
+  height: 200rpx;
+  position: relative;
+  overflow: hidden;
+}
+.bargain-box .topwrap .topview .record .recordtext {
+  color: #333333;
+  font-size: 30rpx;
+  text-align: center;
+  font-weight: bold;
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 100%;
+}
+.bargain-box .topwrap .topview .record .swiper-box {
+  width: 100%;
+  height: 130rpx;
+}
+.bargain-box .topwrap .topview .record .swiper-box .swiper_item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.bargain-box .topwrap .topview .record .swiper-box .swiper_item > image {
+  width: 70rpx;
+  height: 70rpx;
+  border-radius: 50%;
+  margin: 0 20rpx 0 30rpx;
+}
+.bargain-box .topwrap .topview .record .swiper-box .swiper_item .cent {
+  flex: 1;
+}
+.bargain-box .topwrap .topview .record .swiper-box .swiper_item .cent text {
+  display: block;
+}
+.bargain-box .topwrap .topview .record .swiper-box .swiper_item .cent .item-name {
+  color: #333;
+  font-weight: bold;
+  font-size: 28rpx;
+}
+.bargain-box .topwrap .topview .record .swiper-box .swiper_item .cent .item-num {
+  color: #333;
+  font-size: 24rpx;
+}
+.bargain-box .topwrap .topview .record .swiper-box .swiper_item .right {
+  display: flex;
+  align-items: center;
+  padding-right: 30rpx;
+}
+.bargain-box .topwrap .topview .record .swiper-box .swiper_item .right .item-price {
+  color: #333;
+  font-weight: bold;
+  font-size: 28rpx;
+}
+.bargain-box .topwrap .topview .record .swiper-box .swiper_item .right .item-price text {
+  color: red;
+}
+.bargain-box .topwrap .topview .record .swiper-box .swiper_item .right .barimg {
+  height: 40rpx;
+  width: 40rpx;
+  margin-right: 10rpx;
+}
+.bargain-box .saleShopWrap {
+  width: 100%;
+  height: 100%;
+  background: #f9f9f9;
+}
+.bargain-box .saleShopWrap .saleShop {
+  width: 92%;
+  height: 100%;
+  margin: 20rpx auto;
+  margin-bottom: 2%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.bargain-box .saleShopWrap .saleShop .shopview {
+  background: #fff;
+  width: 335rpx;
+  height: 488rpx;
+  display: inline-block;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 0rpx;
+  margin-bottom: 19rpx;
+  border-radius: 20rpx;
+}
+.bargain-box .saleShopWrap .saleShop .shopview image {
+  width: 327rpx;
+  height: 327rpx;
+}
+.bargain-box .saleShopWrap .saleShop .shopview .saleTag {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  padding: 30rpx;
+}
+.bargain-box .saleShopWrap .saleShop .shopview .salep {
+  font-size: 28rpx;
+  color: red;
+  font-weight: bold;
+  padding-left: 30rpx;
+}
+.bargain-box .saleShopWrap .saleShop .shopview .salesmple {
+  font-size: 24rpx;
+  color: red;
+  font-weight: normal;
+}
+.bargain-box .saleShopWrap .saleShop .shopview .saleprice {
+  font-weight: bolder;
+  color: red;
+  font-size: 42rpx;
+}
+.bargain-box .saleShopWrap .saleShop .shopview .saleexprice {
+  color: #666;
+  font-size: 24rpx;
+  font-weight: normal;
+  padding-left: 25rpx;
+  text-decoration: line-through;
+}
+.bargain-box .saleShopWrap .saleShop .shopview .saletag {
+  width: 60rpx;
+  background: red;
+  text-align: center;
+  line-height: 20rpx;
+  font-size: 10px;
+  padding: 8rpx;
+  color: white;
+  border-radius: 10rpx;
+  margin-left: 3%;
+  margin-top: -2%;
+}
+.bargain-box .shopview :nth-last-child(1) {
+  margin-bottom: 160rpx;
+}

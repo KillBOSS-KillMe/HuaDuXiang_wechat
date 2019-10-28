@@ -1,0 +1,29 @@
+
+  <view class="page">
+    <view class="channels-nav">
+      <block wx:for="{{navArr}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+        <view class="nav-item {{navIdx == index ? 'nav-active':''}}" bindtap="changeNav" data-wpychangenav-a="{{index}}">{{item}}</view>
+      </block>
+    </view>
+    <!-- 品牌 -->
+    <view class="channels-cont"  wx:if="{{navIdx == 0}}">
+      <view class="brand-list">
+        <block wx:for="{{9}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+          <view class="brand-item">
+            <image class="img" src="/assets/img/image.png"/>
+            <text>兰蔻</text>
+          </view>
+        </block>
+      </view>
+    </view>
+    <!-- 推荐商户 -->
+    <view class="channels-cont"  wx:if="{{navIdx == 1}}">
+      <view class="shops-list">
+        <block wx:for="{{9}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+          <view class="shops-item">
+            <image class="img" src="/assets/img/image.png"/>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>

@@ -1,0 +1,10 @@
+
+  <view>
+    <view class="search-wrap">
+      <view class="search-content">
+        <image src="/assets/img/image10.png"/>
+        <input placeholder="搜索" value="{{val}}" bindinput="inputVal"/>
+      </view>
+      <view class="search-btn" bindtap="submitHanld">搜索</view>
+    </view>
+  </view>

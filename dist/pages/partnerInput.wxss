@@ -1,0 +1,44 @@
+.partner {
+  min-height: 100vh;
+  background: #f9f9f9;
+  position: relative;
+}
+.partner .input-wrap {
+  background: #fff;
+  padding: 0 30rpx 100rpx 30rpx;
+}
+.partner .input-wrap .com-list .item {
+  height: 100rpx;
+  border-bottom: 1px solid #f1f1f1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.partner .input-wrap .com-list .item .title {
+  font-weight: bold;
+  font-size: 30rpx;
+  margin-right: 70rpx;
+}
+.partner .input-wrap .com-list .item > input {
+  flex: 1;
+  color: #333;
+}
+.partner .input-wrap .com-list .item > image {
+  width: 48rpx;
+  height: 48rpx;
+}
+.partner .btn {
+  position: absolute;
+  bottom: 60rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 690rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  border-radius: 10rpx;
+  font-weight: bold;
+  font-size: 30rpx;
+  background: #ff2228;
+  color: #fff;
+}

@@ -1,0 +1,23 @@
+
+    <view class="wrap">
+        <!-- 头部卡片 -->
+        <view class="topCard">
+            <image src="{{requestImgUrl}}card.png"/>
+        </view>
+        <!-- 商品 -->
+        <view class="saleShopWrap">
+            <view class="saleShop">
+                <block wx:for="{{flowData}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+                    <view class="shopview" bindtap="goPreDetails" data-wpygopredetails-a="{{item.id}}">
+                        <image src="{{requestImgUrl + item.img}}"/>
+                        <view>
+                            <text class="preTitle">{{item.title}}</text>
+                            <text class="preTag">{{item.tag}}</text>
+                            <text class="priceTag">预售价 <text class="priceclass">{{item.price}}</text><text class="yuanclass"> 元</text></text>
+                        </view>
+                        <button class="preBtn">立即预约</button>
+                    </view>
+                </block>
+            </view>
+        </view>
+    </view>

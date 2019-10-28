@@ -1,0 +1,58 @@
+
+  <view class="wrap">
+    <!-- 头部卡片 -->
+    <view class="topCard">
+      <image src="{{requestImgUrl}}card.png"/>
+    </view>
+    <!-- 促销选项卡 -->
+    <view class="saleTab">
+      <!--Tab布局-->
+      <view class="scroll-wrap">
+        <scroll-view scroll-x class="nav-scroll" scroll-into-view="{{scrollIdx}}" scroll-with-animation="scroll-with-animation">
+          <block wx:for="{{timeData}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+            <view class="nav-item {{navIdx == index ? 'nav-active' : ''}}" id="scroll{{index}}" bindtap="changNav" data-wpychangnav-a="{{index}}">
+              <image class="active-img" src="/assets/img/image24.png"/>
+              <view>
+                <text>{{item.time}}</text>
+                <view>{{index == 0 ? '已结束':index == 1 ? '抢购中' : index == 2 ? '即将开始' : '即将开始' }}</view>
+              </view>
+            </view>
+          </block>
+        </scroll-view>
+      </view>
+      <!-- 倒计时 -->
+      <view class="seckillCountdown"  wx:if="{{wxTimerList.firstTimer.wxTimerSecond != 0}}">
+        <view class="title">本场结束剩余</view>
+        <view class="count-down-wrap">
+          <text>{{wxTimerList.firstTimer.h}}</text>
+          <view>:</view>
+          <text>{{wxTimerList.firstTimer.m}}</text>
+          <view>:</view>
+          <text>{{wxTimerList.firstTimer.s}}</text>
+        </view>
+      </view>
+      <view class="seckillCountdown"  wx:if="{{wxTimerList.firstTimer.wxTimerSecond == 0}}">
+        <view class="title">本场已结束，请等待下场活动</view>
+      </view>
+    </view>
+    <!-- 商品 -->
+    <view class="saleShopWrap">
+      <view class="saleShop">
+        <block wx:for="{{flowData}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+          <view class="shopview" bindtap="jumpTimeDetails" data-wpyjumptimedetails-a="{{item.id}}">
+            <image src="{{requestImgUrl + item.img}}"/>
+            <view>
+              <text class="preTitle">{{item.title}}</text>
+              <view class="preprice">
+                <text class="skillPricr">秒杀价</text>
+                {{item.price}}
+              </view>
+              <text class="preexprice">原价￥ {{item.exprice}}</text>
+              <progress class="barginProgess" percent="{{item.num}}" font-size="14" backgroundColor="#FFE0E1" activeColor="#FF2228" stroke-width="9" border-radius="10"/>
+            </view>
+            <button class="preBtn" bindtap="goPreDetails" data-wpygopredetails-a="{{item.id}}">马上抢</button>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>

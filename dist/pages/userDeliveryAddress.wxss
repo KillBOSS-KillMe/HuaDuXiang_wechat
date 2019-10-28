@@ -1,0 +1,40 @@
+page {
+  background: #f9f9f9;
+}
+.fl_form {
+  width: 100%;
+  padding: 20rpx 40rpx;
+  position: relative;
+  background: #fff;
+}
+.fl_form .name {
+  position: absolute;
+  top: 25%;
+  left: 7%;
+  font-size: 30rpx;
+  color: #333;
+  font-weight: bold;
+}
+.fl_form .tel {
+  font-size: 28rpx;
+  color: #a3a3a3;
+  padding-left: 20%;
+}
+.fl_form .address {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: bold;
+  padding: 20rpx;
+}
+.formbtn {
+  width: 85%;
+  height: 88rpx;
+  border-radius: 15rpx;
+  background: #ff2228;
+  color: #fff;
+  font-size: 30rpx;
+  position: absolute;
+  bottom: 4%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

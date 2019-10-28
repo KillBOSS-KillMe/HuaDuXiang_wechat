@@ -1,0 +1,190 @@
+.red-color {
+  color: #ff2228;
+}
+.gray-color {
+  color: #999999;
+}
+.settlement-wrap {
+  margin-bottom: 100rpx;
+}
+.useraddress {
+  padding: 20rpx;
+  background: #fff;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.useraddress .imgadd {
+  width: 44rpx;
+  height: 44rpx;
+  margin-right: 24rpx;
+}
+.useraddress .center {
+  flex: 1;
+}
+.useraddress .center .userinfo {
+  font-size: 32rpx;
+  color: #292929;
+  font-weight: bold;
+  padding-bottom: 10rpx;
+}
+.useraddress .center .useradd {
+  font-size: 26rpx;
+  color: #999;
+  line-height: 1.5;
+}
+.useraddress .imgright {
+  width: 44rpx;
+  height: 44rpx;
+}
+.usergoods-wrap {
+  border-top: 10rpx solid #f9f9f9;
+}
+.usergoods-wrap .usergoods {
+  padding: 30rpx;
+  display: flex;
+  align-items: center;
+}
+.usergoods-wrap .usergoods .goodsimg {
+  width: 156rpx;
+  height: 156rpx;
+  border-radius: 10rpx;
+  margin-right: 26rpx;
+}
+.usergoods-wrap .usergoods .goods-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 160rpx;
+}
+.usergoods-wrap .usergoods .goods-right .goodsname {
+  font-weight: bold;
+  width: 500rpx;
+  font-size: 30rpx;
+}
+.usergoods-wrap .usergoods .goods-right .goodstag {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.usergoods-wrap .usergoods .goods-right .goodstag text {
+  display: block;
+  padding: 0 20rpx;
+  background: #fbfbfb;
+  border-radius: 6rpx;
+  height: 42rpx;
+  line-height: 42rpx;
+  color: #a3a3a3;
+  font-size: 26rpx;
+}
+.usergoods-wrap .usergoods .goods-right .goodstag .goodnum {
+  color: #999;
+}
+.usergoods-wrap .usergoods .goods-right .goodprice {
+  color: #f92832;
+  text-align: right;
+}
+.usergoods-wrap .usergoods .goods-right .goodprice .price {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+.option-wrap {
+  border-top: 10rpx solid #f2f2f2;
+}
+.option-wrap .option-item {
+  height: 90rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30rpx;
+  border-bottom: 1px solid #f2f2f2;
+}
+.option-wrap .option-item .com-title {
+  font-weight: bold;
+}
+.option-wrap .option-item .description {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: flex-end;
+}
+.option-wrap .option-item .description > image {
+  width: 24rpx;
+  height: 24rpx;
+}
+.option-wrap .option-item .description text {
+  font-size: 24rpx;
+  padding: 0 20rpx 0 10rpx;
+}
+.option-wrap .option-item > image {
+  width: 48rpx;
+  height: 48rpx;
+}
+.option-wrap .option-item .price {
+  color: #f92832;
+}
+.option-wrap .option-item .price text {
+  font-weight: bold;
+  font-size: 36rpx;
+}
+.settlebottom {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  bottom: 0;
+  z-index: 999;
+  height: 100rpx;
+  line-height: 100rpx;
+  width: 100%;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+}
+.settlebottom .priceall {
+  color: #a3a3a3;
+  font-size: 30rpx;
+}
+.settlebottom .priceall .allprice {
+  color: #f92832;
+  font-size: 38rpx;
+  font-weight: bold;
+}
+.settlebottom .sub-btn {
+  width: 226rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  background: #f92832;
+  border-radius: 10rpx;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  font-size: 30rpx;
+}
+.earnest-money {
+  position: relative;
+}
+.earnest-money .item {
+  display: flex;
+  height: 90rpx;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 30rpx 0;
+}
+.earnest-money .item:nth-of-type(1) {
+  padding-top: 0;
+}
+.earnest-money .item .title {
+  position: relative;
+}
+.earnest-money .item .price text {
+  font-weight: bold;
+}
+.earnest-money > text {
+  height: 90rpx;
+  line-height: 90rpx;
+  color: #999999;
+  padding-left: 30rpx;
+}

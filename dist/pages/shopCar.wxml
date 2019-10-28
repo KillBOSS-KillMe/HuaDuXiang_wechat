@@ -1,0 +1,92 @@
+
+  <view class="shop-cart">
+    <view class="good-list">
+      <block wx:for="{{goods}}" wx:for-index="index" wx:for-item="item" wx:key="item">
+        
+    <view class="swiper-item-wrapper">
+      <view bindtouchstart="$swiperDel$ts" bindtouchmove="$swiperDel$tm" bindtouchend="$swiperDel$te" class="swiper-content" style="{{item.txtStyle}}" data-com-index="{{index}}">
+        
+          <view class="goods-info">
+              <icon class="icon_check" type="success" size="20" catchtap="selectList" data-index="{{index}}"  wx:if="{{item.selected}}"/>
+              <icon class="icon_check" type="circle" size="20" catchtap="selectList" data-index="{{index}}"  wx:else/>
+              <view class="img-box">
+                <image src="{{item.imgurl}}" class="img"/>
+              </view>
+              <view class="text-box">
+                <view class="goods-title">
+                  {{item.name}}
+                </view>
+               <view class="goods-tag">
+                  {{item.tag}}
+                </view>          
+                  <view class="price">￥{{item.price}}</view>
+                  <view class="shop-count">
+                    
+  <view class="cart-count">
+      <view class="decrease" catchtap="$cartCount$decrease" data-com-index="{{index}}">-</view>
+      <input type="number" value="{{item.num}}" disabled/>
+      <view class="add" catchtap="$cartCount$add" data-com-index="{{index}}">+</view>
+  </view>
+
+                  </view>
+              </view>
+          </view>
+        
+      </view>
+      <view class="swiper-actions actions-right">
+        <view class="swiper-btn del" catchtap="$swiperDel$del" data-com-index="{{index}}">删除</view>
+      </view>
+</view>
+
+       </block>
+    </view>
+    <view class="check-box">
+       <view class="left-price">
+        <view class="all-select-box" catchtap="selectAll">
+          <icon type="success" size="20" wx:if="{{judgeAllSelect}}"/>
+          <icon type="circle" size="20" wx:else/>
+          <text>全选</text>
+        </view>
+        <view class="total">
+          共计 ￥ <text style="color:#FF2228;font-size:38rpx;font-weight:bold">{{totalPrice}}</text>
+        </view>
+      </view>
+      <view class="pay-btn">去结算</view>
+    </view>
+     
+<view class="nav">
+  <view class="footer">
+    <view class="ft_item {{$nav$navAction[0]}}">
+      <view bindtap="$nav$goIndex">
+        <view class="iconfont iconshouye-copy"/>
+        <text class="text">首页</text>
+      </view>
+    </view>
+    <view class="ft_item {{$nav$navAction[1]}}">
+      <view bindtap="$nav$goClass">
+        <view class="iconfont iconfenlei"/>
+        <text class="text">分类</text>
+      </view>
+    </view>
+    <view class="ft_item {{$nav$navAction[2]}}">
+      <view bindtap="$nav$goSettled">
+        <view class="iconfont iconshezhi"/>
+        <text class="text">入驻</text>
+      </view>
+    </view>
+    <view class="ft_item {{$nav$navAction[3]}}">
+      <view bindtap="$nav$goByCar">
+        <view class="iconfont icongouwuche-copy"/>
+        <text class="text">购物车</text>
+      </view>
+    </view>
+    <view class="ft_item {{$nav$navAction[4]}}">
+      <view bindtap="$nav$goUser">
+        <view class="iconfont iconwode"/>
+        <text class="text">我的</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+  </view>

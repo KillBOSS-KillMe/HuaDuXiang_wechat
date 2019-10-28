@@ -1,0 +1,14 @@
+
+  <view>
+    <view class="fl_form">
+      <text class="name">{{userName}}</text>
+      <text class="tel">{{userPhone}}</text>
+    </view>
+
+    <view class="fl_form">
+      <text class="address">{{detailedAddress}}</text>
+    </view>
+
+    <!-- 按钮 -->
+    <button class="formbtn" bindtap="orderMeeting">新增地址</button>
+  </view>

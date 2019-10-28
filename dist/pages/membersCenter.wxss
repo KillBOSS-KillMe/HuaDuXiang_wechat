@@ -1,0 +1,212 @@
+page {
+  background: #f7f7f7;
+  height: 100%;
+}
+.top {
+  width: 100%;
+  height: 450rpx;
+  background: #fff;
+  position: relative;
+}
+.top .topview {
+  width: 100%;
+  height: 200rpx;
+  background: #2e2e30;
+  border-bottom-left-radius: 18%;
+  border-bottom-right-radius: 18%;
+}
+.top .cardclass {
+  width: 90%;
+  height: 380rpx;
+  position: absolute;
+  top: 12%;
+  left: 5%;
+  /* 头像样式设置 */
+}
+.top .cardclass .top_imgbg {
+  width: 100%;
+  height: 100%;
+}
+.top .cardclass .imgSrc {
+  width: 100rpx;
+  height: 100rpx;
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #fff;
+}
+.top .cardclass .username {
+  position: absolute;
+  left: 24%;
+  top: 11%;
+  color: #fff;
+  font-size: 30rpx;
+}
+.top .cardclass .userintegral {
+  position: absolute;
+  left: 24.4%;
+  top: 24%;
+  color: #fff;
+  font-size: 24rpx;
+}
+.top .cardclass .userclass {
+  position: absolute;
+  right: 0%;
+  top: 0%;
+  color: #fff;
+  font-size: 24rpx;
+  background: #727272;
+  width: 130rpx;
+  height: 62rpx;
+  line-height: 62rpx;
+  text-align: center;
+  border-bottom-left-radius: 20rpx;
+}
+.top .cardclass .userclassThree {
+  background: #be8d53;
+}
+.top .cardclass .balance {
+  position: absolute;
+  left: 70%;
+  bottom: 35%;
+  color: #fff;
+  font-size: 24rpx;
+}
+.top .cardclass .balance text {
+  font-weight: bold;
+}
+.top .cardclass .info {
+  position: absolute;
+  left: 7%;
+  bottom: 12%;
+  color: #fff;
+  font-size: 26rpx;
+}
+.top .cardclass .infobtn {
+  position: absolute;
+  right: 6%;
+  bottom: 12%;
+  color: #fff;
+  font-size: 26rpx;
+  width: 200rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  text-align: center;
+  border-radius: 40rpx;
+  background: linear-gradient(to right, #cd9b5e 0, #bd8c52 100%);
+}
+.menberClass {
+  width: 100%;
+  height: 200rpx;
+  background: #fff;
+}
+.menberClass .classinfo {
+  font-size: 36rpx;
+  font-weight: bold;
+  padding: 26rpx 40rpx;
+  color: #333;
+}
+.menberClass .classPro {
+  width: 100%;
+  height: 100rpx;
+  background: #fff;
+  padding: 30rpx 0;
+}
+.menberClass .classPro .calssinfomation {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 24rpx;
+  color: #ba8747;
+  margin: 0 40rpx;
+}
+.menberClass .classPro .prowrap {
+  width: 93%;
+  height: 6rpx;
+  background: #e3e3e3;
+  border-radius: 40rpx;
+  margin: 40rpx 30rpx 0;
+  position: relative;
+}
+.menberClass .classPro .prowrap .proiten {
+  width: 30rpx;
+  height: 30rpx;
+  position: absolute;
+  top: -200%;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAhCAYAAABX5MJvAAAEEUlEQVRYR8VYS29bRRT+zn05jh2bxCHNg5g+SHhValykECGxALGBDeUvIKCLCsIfoAv+QapuKPAbYAPZINgg1BRRU1QExE2pnCa23Lghfvu+BuZSu/cx7rWJFWZlzcw55/OZ77wuYYClF35eJrA3ACwT8DQDUgCSAA4IKDPgDwDXGOhrbWbpWr+qKewi2/4haijRt4lhFYSFsPudcwJu2aA11Wx8TvMvNR8l90gQZjH7ps1wiYB0v8b99xiQlxhWldnMl710CEGwXC5ijdUuMYb3/qtxvxwRrsjV+Ae0sNAOnAWQl68mTD3CUb8yLAAuPd8pWvscpVYqbt0eT7CbNzUzpa8D9GovALbZhlnbg9WqwDIaYJYJIgLJGiQlAnkkASU+6fwWL/atUtZep9OndRd/Hl41i9lPej0BN67v52HUygBYqJPU+CS08bQQDH8aZTpzPgDC3M2eY4QvRNrNxj5a93JgthVq3ONmSUYkdRIcUIAHDG91yOo8x4Mw/F0UBXqlgHb5zkDG/ZcjE8ehJWc82zxqVLP5DA9fB4ReyF4g4LJf2KyX0SxtHgpARzg6tQglxnPbw8VA72szS5cdEMZudtOfiDgHGjs3hE9gWSYO9nZRr+7DaLccrWokilhiHMnUDGRZCbpfkjE6d8bLEYacOptZJL1440Vi9lW/FOeAUdsLKKtXyijtbMG2xPyQJBlTT5xCLOH911yREptEdMqbdBlJK2QUrn8E0Mdua9wL9e3rQgDFfH/PM51eFAKJzZ/1RQy7SEYh+xUAXpS6Sz/YQft+3gPCMg3kN7Ow+4wQ7pH0Ygayonr0RCbS0JJz7r11MgvZ2ww44d5tFn+D2fzLI3y/tI390t2BSDr++BwmjnnLjhJ9DNHpZ7t6CPiTe+IAQMKtvZb/CczqJjTnaPvWL9Bb9YFAaCOjmH/qjEeGZ9Z4+gX3XpWDCKS/6p0NgNke4du/boD59sIQ8XR+8vkV7zUijB337gk9MSwQnBcnnlsOA1EVcuIon6PDiUB0HCUxAawL88TRhii7KMyYR5msnIzZq3Y0SzmY9WDarlXKuHd3q2fSGihtd2oHByGqov0XsKbTWalaFKNj40hO9l/APFW0Vz/BPcE9MozFCxcvYJ0V6Cf4Qa/OajhNzZPQkrPezOnvrDqnZjF7hTG86//nw27viPCpMp3pjhOibvsbgF72A+Ec4ZVVRFbRc3HX84op6Lq/V2rx19zzR2D4YSFzh6fl1xtgtuFgIEmFrI0+aPlTkJQREbbwuaNLmv97AnPD52S1CWuHn0XpQ2V2SThOOF4MCz8nfNWRdyRGqww4FXa/c07Alk1sTTVanx1qKvcbFHyf4IHPG6IKAXv/fp+gHxlZ6+qxsxtEFD6q/WPkb9mOJFKqPPObAAAAAElFTkSuQmCC');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  z-index: 99;
+}
+.menberClass .classPro .prowrap .proline {
+  height: 7rpx;
+  background: #cb9a5d;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.menberClass .classPro .iconcenter {
+  position: relative;
+  top: 0%;
+  left: 0%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 85%;
+  height: 10rpx;
+  margin: -5rpx 60rpx 0;
+}
+.menberClass .classPro .iconcenter image {
+  width: 30rpx;
+  height: 30rpx;
+  margin-top: -10rpx;
+}
+.menberClass .classPro .iconcenterchoose {
+  position: relative;
+  top: 0%;
+  left: 0%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 85%;
+  height: 10rpx;
+  margin: -8rpx 60rpx 0;
+}
+.menberClass .classPro .iconcenterchoose image {
+  width: 30rpx;
+  height: 30rpx;
+  margin-top: -10rpx;
+}
+.menberExplain {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  margin-top: 70rpx;
+}
+.menberExplain .classinfo {
+  font-size: 36rpx;
+  font-weight: bold;
+  padding: 26rpx 40rpx 10rpx;
+  color: #333;
+}
+.menberExplain .explain {
+  width: 100%;
+  padding-bottom: 40rpx;
+}
+.menberExplain .explain .textbold {
+  padding: 26rpx 40rpx 15rpx;
+  color: #333333;
+  font-size: 28rpx;
+}
+.menberExplain .explain .textbold:nth-child(1) {
+  padding: 0rpx;
+}
+.menberExplain .explain .textsmall {
+  padding: 0rpx 40rpx 10rpx;
+  color: #a0a0a0;
+  font-size: 24rpx;
+}

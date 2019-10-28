@@ -1,0 +1,73 @@
+
+  <view class="wrap">
+    <form bindsubmit="submit"  wx:if="{{status == 0}}">
+      <view class="settle-list">
+        <view class="com-item">
+          <view class="title">商铺名称</view>
+          <input type="text" placeholder="请输入商铺名称"/>
+        </view>
+        <view class="com-item">
+          <view class="title">商铺编码</view>
+          <input type="text" placeholder="请输入商铺编号"/>
+        </view>
+        <view class="com-item">
+          <view class="title">联系人</view>
+          <input type="text" placeholder="请输入姓名"/>
+        </view>
+        <view class="com-item">
+          <view class="title">联系电话</view>
+          <input type="text" placeholder="请输入联系电话"/>
+        </view>
+        <view class="com-item">
+          <view class="title">商铺地址</view>
+          <input type="text" placeholder="请输入商铺地址"/>
+        </view>
+        <view class="com-item remarks">
+          <view class="title">入驻商备注</view>
+          <textarea placeholder="请输入备注"/>
+        </view>
+        <view class="com-item">
+          <view class="title">开店时间</view>
+          <input type="number" placeholder="请输入开店时间"/>
+          <text>年</text>
+        </view>
+      </view>
+      <button class="settled-btn" form-type="submit">下一步</button>
+    </form>
+    <view class="examine"  wx:if="{{status == 1}}">
+      <image class="examine-img" src="/assets/img/image43.png"/>
+    </view>
+    <view wx:if="{{status == 2}}">
+      <view class="settle-list">
+        <view class="com-item">
+          <view class="title">商铺名称</view>
+          <input type="text" value="请输入商铺名称" disabled/>
+        </view>
+        <view class="com-item">
+          <view class="title">商铺编码</view>
+          <input type="text" value="请输入商铺编号" disabled/>
+        </view>
+        <view class="com-item">
+          <view class="title">联系人</view>
+          <input type="text" value="请输入姓名" disabled/>
+        </view>
+        <view class="com-item">
+          <view class="title">联系电话</view>
+          <input type="text" value="请输入联系电话" disabled/>
+        </view>
+        <view class="com-item">
+          <view class="title">商铺地址</view>
+          <input type="text" value="请输入商铺地址" disabled/>
+        </view>
+        <view class="com-item remarks">
+          <view class="title">入驻商备注</view>
+          <textarea value="请输入备注" disabled/>
+        </view>
+        <view class="com-item">
+          <view class="title">开店时间</view>
+          <input type="number" value="1" disabled/>
+          <text>年</text>
+        </view>
+      </view>
+    </view>
+  </view>

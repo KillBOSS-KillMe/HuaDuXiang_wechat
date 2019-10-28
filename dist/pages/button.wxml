@@ -1,0 +1,165 @@
+
+  <view>
+    <button bindtap="getProup">选择地址</button>
+    <button bindtap="getShareProup">分享</button>
+    <button bindtap="getLookSpellList">查看拼单</button>
+    <button bindtap="getBargain">砍价</button>
+    <!-- 弹窗 -->
+    <!-- 选择地址 -->
+    <view class="shade-box" hidden="{{!showPopup}}">
+      <view class="shop-box" bindtap="hideProup">
+        <view class="item">
+          <view class="address">选择收货地址</view>
+          <view class="userAddress">
+            <text>啦啦啦 12015230214</text>
+            <text>山西省近海尽可能看到你的小区</text>
+            <image src="../assets/images/right.png"/>
+          </view>
+          <view class="newAddress">
+            <text>新增地址</text>
+            <image src="../assets/images/right.png"/>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 分享 -->
+    <view class="share-box" hidden="{{!sharePopup}}">
+      <view class="good-box" bindtap="hiddShare">
+        <view class="item">
+          <image mode="aspectFill" src="../assets/images/shareBG.png"/>
+          <text class="sharetitle">
+            您已经砍了
+            <text>200</text>元
+          </text>
+          <text class="sharetag">分享给好友, 可以多砍一刀哦!</text>
+          <button id="btnwx" open-type="share"/>
+          <view class="wximg">
+            <image src="../assets/images/wx.png"/>
+            <!-- <image src="../assets/images/wx.png" /> -->
+          </view>
+          <text class="wxclass">微 信</text>
+          <view class="QQimg">
+            <image src="../assets/images/qq.png"/>
+          </view>
+          <text class="QQclass">Q Q</text>
+        </view>
+      </view>
+    </view>
+    <!-- 查看拼单 -->
+    <view class="spell-box" hidden="{{!spellList}}">
+      <view class="good-box" bindtap="hiddShare">
+        <view class="item">
+          <view class="assemblePeo">
+            <image src="../assets/images/close.png" bindtap="hideSpell"/>
+            <view class="spelling">正在拼单</view>
+            <block wx:for="{{assembleData}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+              <view class="peoClass">
+                <image class="peoimg" src="{{item.img}}"/>
+                <text class="peoname">{{item.name}}</text>
+                <text class="peonum">
+                  还差<text>{{item.peo}}</text>人成团
+                </text>
+                <text class="peotime">剩余{{item.time}}</text>
+                <button bindtap="goToPuzzle" data-wpygotopuzzle-a="{{item}}">去拼团</button>
+              </view>
+            </block>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 参加拼单 -->
+    <view class="gopuzzle-box" hidden="{{!puzzleIng}}">
+        <view class="good-box">
+            <view class="item">
+                <view class="puzzlePeo">
+                    <image bindtap="hiddSpell" src="../assets/images/close.png"/>
+                    <block wx:for="{{goSpellData}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+                        <view class="puzzle">参与{{item.name}}的拼单</view>
+                        <view class="peoClass">
+                            <text class="peonum">仅剩<text>{{item.peo}}</text>个名额, {{item.time}}后结束</text>
+                            <image class="peoimg" src="{{item.img}}"/>
+                            <image class="peodoubtimg" src="../assets/images/doubt.png"/>
+                            <button bindtap="goToPinDan">去拼单</button>
+                        </view>
+                    </block>
+                </view>
+            </view>
+        </view>
+    </view>
+    <!-- -------------------砍价-------------------- -->
+    <view class="bargain-box" hidden="{{!bargainShow}}">
+        <view class="topwrap">
+            <image src="../assets/images/bargin-top.png"/>
+            <view class="topview">
+                <!-- 砍价商品 -->
+                <block wx:for="{{assembleData}}" wx:for-index="index" wx:for-item="item" wx:key="key"> 
+                    <view class="barginGoods">
+                            <image src="{{item.img}}"/>
+                            <text class="goodstitle">{{item.title}}</text>
+                            <!-- 剩余进度条 -->
+                            <view class="prolist">
+                                <!-- <view class='progessTittle'>已砍<text>{{BargainingRecord}}</text>元, 还差<text>{{BargainingSpreads}}</text></view> -->
+                                <view class="countwrap">
+                                    <view class="row" style="width:{{row2}}rpx"/>   
+                                    <text class="surplus">{{surplus}}</text>
+                                </view>
+                                    <text class="siglenum">已砍{{siglenum}}/{{countall}}件</text>
+                            </view>
+                            <text class="goodsprice">砍到0元拿</text>
+                    </view>
+                    
+                    <!-- 砍价进度条 -->
+                    <view class="barginProgess">
+                        <view class="progessTittle">已砍<text>{{BargainingRecord}}</text>元, 还差<text>{{BargainingSpreads}}</text></view>
+                        <view class="countwrap">
+                            <view class="row" style="width:{{row1}}rpx"/>   
+                        </view>
+                    </view>
+                    <!-- 分享按钮 -->
+                    <view class="sharbtn">分享给朋友, 多砍一刀</view>
+                    <!-- 过期时间 -->
+                    <view class="goodsTime">还剩{{item.time}}过期, 快来坎价吧~</view>
+                    <!-- 砍价记录 -->
+                    <view class="record">
+                        <view class="recordtext">砍价记录</view>   
+
+                        <swiper class="swiper-box" autoplay="true" interval="2000" duration="2000" vertical="true">
+                            <block wx:for="{{bargindata}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+                                <swiper-item bindtap="{{item.swiperBind}}">
+                                    <view class="swiper_item">
+                                        <image src="{{item.img}}"/>
+                                        <text class="item-name">{{item.name}}</text>
+                                        <text class="item-num">来一起砍价{{item.tag}}元拿</text>
+                                        <image class="barimg" src="../assets/images/bargin.png"/>
+                                        <text class="item-price">砍掉<text>{{item.barginprice}}</text>元</text>
+                                    </view>
+                                </swiper-item>
+                            </block>
+                        </swiper>    
+                    </view>
+                </block>
+            </view>
+        </view>
+              <!-- 商品 -->
+        <view class="saleShopWrap">
+            <view class="saleShop">
+            <block wx:for="{{flowData}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+                <view class="shopview" bindtap="jumpTimeDetails" data-wpyjumptimedetails-a="{{item.id}}">
+                <image src="{{item.img}}"/>
+                <view class="saleTag">
+                    <text>{{item.title}}</text>
+                </view>
+                <view>
+                    <view>
+                    <text class="salep">秒杀价</text>
+                    <text class="salesmple">￥</text>
+                    <text class="saleprice">{{item.price}}</text>
+                    <text class="saleexprice">原价￥ {{item.exprice}}</text>
+                    </view>
+                </view>
+                </view>
+            </block>
+            </view>
+        </view>
+    </view>
+  </view>

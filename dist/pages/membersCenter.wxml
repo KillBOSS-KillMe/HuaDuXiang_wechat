@@ -1,0 +1,55 @@
+
+  <view>
+    <!-- 会员信息 -->
+    <view class="top">
+      <view class="topview"/>
+      <view class="cardclass">
+        <image class="top_imgbg" src="{{requestImgUrl + menberImg}}"/>
+        <!-- 信息内容 -->
+        <image class="imgSrc" data-id="data-id" src="{{userInfo.avatarUrl}}"/>
+        <view class="username">{{userInfo.nickName || '111111'}}</view>
+        <view class="userintegral">积分: {{userMember.integral || ''}}</view>
+        <view class="userclass" style="background:{{goldenclass}}">{{userMember.class || ''}}</view>
+        <view class="info">{{tagText}}</view>
+        <view class="balance"  wx:if="{{balanceshow}}">
+          余额:
+          <text>{{balancetext}}</text>
+        </view>
+        <view class="infobtn"  wx:if="{{btnshow}}">{{btnText}}</view>
+      </view>
+    </view>
+    <!-- 会员信息 end -->
+    <!-- 会员进度 -->
+    <view class="menberClass">
+      <view class="classinfo">会员等级</view>
+      <view class="classPro">
+        <view class="calssinfomation">
+          <text>非会员</text>
+          <text>普通会员</text>
+          <text>银卡会员</text>
+          <text>金卡会员</text>
+          <text>钻石会员</text>
+        </view>
+        <view class="prowrap">
+          <view class="proiten" style="left:{{itemleft}}%"/>
+          <view class="proline" style="width:{{itemline}}%"/>
+        </view>
+        <view class="iconcenter">
+          <block wx:for="{{noCenter}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+            <image src="{{requestImgUrl + item.iamgs}}"/>
+          </block>
+        </view>
+      </view>
+    </view>
+    <!-- 会员进度 end -->
+    <!-- 会员详情 -->
+    <view class="menberExplain">
+      <view class="classinfo">会员说明</view>
+      <view class="explain">
+        <block wx:for="{{menberExplain}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+          <view class="textbold">{{item.membername}}</view>
+          <view class="textsmall">{{item.menberintroduce}}</view>
+        </block>
+      </view>
+    </view>
+  </view>

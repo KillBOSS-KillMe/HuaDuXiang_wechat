@@ -1,0 +1,23 @@
+.shop-wrap {
+  position: relative;
+}
+.shop-wrap .cont-img {
+  width: 750rpx;
+  min-height: 100vh;
+  display: block;
+}
+.shop-wrap .btn {
+  position: absolute;
+  bottom: 70rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 30rpx;
+  width: 626rpx;
+  height: 84rpx;
+  text-align: center;
+  line-height: 84rpx;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 10rpx;
+  background: #FFB921;
+}

@@ -1,0 +1,78 @@
+
+  <view class="settlement-wrap">
+    <view class="useraddress">
+      <image class="imgadd" src="{{requestImgUrl}}adres.png"/>
+      <view class="center" hidden>
+        <view class="userinfo">收货人: {{userinfo.username}} {{userinfo.phone}}</view>
+        <view class="useradd">{{userinfo.address}}</view>
+      </view>
+      <view class="center">
+        <view class="add-address">添加收货地址</view>
+      </view>
+      <image class="imgright" src="/assets/img/image25.png"/>
+    </view>
+    <view class="usergoods-wrap">
+      <block wx:for="{{2}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+        <view class="usergoods">
+          <image class="goodsimg" src="/assets/img/image.png"/>
+          <view class="goods-right">
+            <view class="goodsname overflow-one">萌粉订书机 小型萌粉订书机 小型萌粉订书机 小型</view>
+            <view class="goodstag">
+              <text>粉+白</text>
+              <view class="goodnum">×1</view>
+            </view>
+            <view class="goodprice">
+              ￥
+              <text class="price">99</text>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <!-- 定金 -->
+    <view class="earnest-money">
+      <view class="item  red-color">
+        <view class="title">定金</view>
+        <view class="price">
+          ￥
+          <text>2</text>
+        </view>
+      </view>
+      <view class="item  gray-color">
+        <view class="title">尾款</view>
+        <view class="price">
+          ￥
+          <text>2000</text>
+        </view>
+      </view>
+      <text>08月22日 00:0000开始支付尾款</text>
+    </view>
+
+    <view class="option-wrap">
+      <view class="option-item">
+        <view class="com-title">商品</view>
+        <!-- <image src="/assets/img/image25.png" /> -->
+        <view class="price">
+          ￥
+          <text>198</text>
+        </view>
+      </view>
+      <view class="option-item">
+        <view class="com-title">运费</view>
+        <view class="price">
+          ￥
+          <text>2</text>
+        </view>
+        <!-- <image src="/assets/img/image25.png" /> -->
+      </view>
+    </view>
+    <!-- 底部 订单提交 -->
+    <view class="settlebottom">
+      <view class="num">共件</view>
+      <view class="priceall">
+        共计 ￥
+        <text class="allprice">200</text>元
+      </view>
+      <button class="sub-btn" bindtap="getWXPayment">提交订单</button>
+    </view>
+  </view>

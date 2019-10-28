@@ -1,0 +1,81 @@
+page {
+  color: #282828;
+  font-size: 28rpx;
+  margin-bottom: 160rpx;
+}
+.address-btn {
+  width: 690rpx;
+  height: 88rpx;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  line-height: 88rpx;
+  font-size: 30rpx;
+  border-radius: 44rpx;
+  background: #f2292d;
+  position: fixed;
+  bottom: 60rpx;
+  left: 30rpx;
+}
+.address-wrap {
+  display: flex;
+  padding: 30rpx;
+  border-top: 10rpx solid #f9f9f9;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+  height: 142rpx;
+  position: relative;
+}
+.address-wrap > .icon-one {
+  width: 37rpx;
+  height: 45rpx;
+}
+.address-wrap > .icon-two {
+  width: 48rpx;
+  height: 48rpx;
+}
+.address-cent {
+  flex: 1;
+  margin-left: 30rpx;
+}
+.address-cent .address-cent-top {
+  display: flex;
+  align-items: center;
+  line-height: 1.5;
+}
+.address-cent .address-cent-top > view:nth-of-type(1) {
+  font-size: 32rpx;
+  color: #282828;
+  font-weight: bold;
+}
+.address-cent .address-cent-top > view:nth-of-type(2) {
+  font-size: 28rpx;
+  color: #8e8e8e;
+  margin-left: 20rpx;
+}
+.address-cent .address-cent-top > view:nth-of-type(3) {
+  font-size: 20rpx;
+  color: #ff7d27;
+  margin-left: 20rpx;
+  width: 70rpx;
+  height: 32rpx;
+  line-height: 32rpx;
+  text-align: center;
+  border-radius: 4rpx;
+  border: 1px solid #ff7d27;
+}
+.address-cent-foot {
+  color: #282828;
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+.address-wrap > image:nth-of-type(2) {
+  display: none;
+}
+.address-active > image:nth-of-type(1) {
+  display: none;
+}
+.address-active > image:nth-of-type(2) {
+  display: block;
+}

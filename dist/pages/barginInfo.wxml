@@ -1,0 +1,88 @@
+
+  <view>
+    <!-- -------------------砍价-------------------- -->
+    <view class="bargain-box">
+      <view class="topwrap">
+        <!-- <image src="{{requestImgUrl}}bargin-top.png" /> -->
+        <view class="topview">
+          <!-- 砍价商品 -->
+          <block wx:for="{{assembleData}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+            <view class="barginGoods">
+              <image src="{{item.img}}"/>
+              <text class="goodstitle overflow-one">啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊{{item.title}}</text>
+              <!-- 剩余进度条 -->
+              <view class="prolist">
+                <view class="countwrap">
+                  <progress percent="20" border-radius="10" stroke-width="11" activeColor="#FF2228" backgroundColor="#FFDADB"/>
+                </view>
+                <text class="siglenum">已砍{{siglenum}}/{{countall}}件</text>
+              </view>
+              <text class="goodsprice">砍到0元拿</text>
+            </view>
+
+            <!-- 砍价进度条 -->
+            <view class="barginProgess">
+              <view class="progessTittle">
+                已砍
+                <text>{{BargainingRecord}}</text>元, 还差
+                <text>{{BargainingSpreads}}</text>
+              </view>
+              <view class="countwrap">
+                <progress percent="50" border-radius="10" stroke-width="11" activeColor="#FF2228" backgroundColor="#FFDADB"/>
+              </view>
+            </view>
+            <!-- 分享按钮 -->
+            <view class="sharbtn">分享给朋友, 多砍一刀</view>
+            <!-- 过期时间 -->
+            <view class="goodsTime">还剩{{item.time}}过期, 快来坎价吧~</view>
+            <!-- 砍价记录 -->
+            <view class="record">
+              <view class="recordtext">砍价记录</view>
+
+              <swiper class="swiper-box" autoplay="{{true}}" duration="{{2000}}" vertical="true">
+                <block wx:for="{{bargindata}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+                  <swiper-item bindtap="{{item.swiperBind}}">
+                    <view class="swiper_item">
+                      <image src="{{item.img}}"/>
+                      <view class="cent">
+                        <text class="item-name">{{item.name}}</text>
+                        <text class="item-num">来一起砍价{{item.tag}}元拿</text>
+                      </view>
+                      <view class="right">
+                        <image class="barimg" src="{{requestImgUrl}}bargin.png"/>
+                        <view class="item-price">
+                          砍掉
+                          <text>{{item.barginprice}}</text>元
+                        </view>
+                      </view>
+                    </view>
+                  </swiper-item>
+                </block>
+              </swiper>
+            </view>
+          </block>
+        </view>
+      </view>
+      <!-- 商品 -->
+      <view class="saleShopWrap">
+        <view class="saleShop">
+          <block wx:for="{{flowData}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+            <view class="shopview" bindtap="jumpTimeDetails" data-wpyjumptimedetails-a="{{item.id}}">
+              <image src="{{item.img}}"/>
+              <view class="saleTag">
+                <text>{{item.title}}</text>
+              </view>
+              <view>
+                <view>
+                  <text class="salep">秒杀价</text>
+                  <text class="salesmple">￥</text>
+                  <text class="saleprice">{{item.price}}</text>
+                  <text class="saleexprice">原价￥ {{item.exprice}}</text>
+                </view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+  </view>

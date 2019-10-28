@@ -1,0 +1,28 @@
+
+  <view>
+    <view class="fl_form">
+      <text>联系人</text>
+      <input type="text" placeholder="请输入姓名" value="{{userName}}" disabled="{{inputDisabled}}" bindblur="userNameInput"/>
+    </view>
+
+    <view class="fl_form">
+      <text>电话</text>
+      <input type="text" placeholder="请输入手机号码" value="{{userPhone}}" disabled="{{inputDisabled}}" bindblur="userPhoneInput"/>
+    </view>
+
+    <view class="fl_form">
+      <text>地址</text>
+      <!-- <input type="text" placeholder='请输入收货地址(与审核地址一致)' disabled="{{inputDisabled}}" value="{{userAddress}}" bindblur='userAddressInput'/> -->
+      <picker class="pickeraddress" bindchange="userChangeRegin" mode="region" value="{{userRegion}}">
+        <view class="addressslect">{{ userRegion[0] == undefined ?'请选择收货地址':userRegion[0] + '-' + userRegion[1] + '-' + userRegion[2]}}</view>
+      </picker>
+    </view>
+
+    <view class="fl_form">
+      <text>详细地址</text>
+      <input type="text" placeholder="例: 7号楼225室" value="{{detailedAddress}}" disabled="{{inputDisabled}}" bindblur="detailedAddressInput"/>
+    </view>
+
+    <!-- 提交按钮 -->
+    <button class="formbtn" bindtap="orderMeeting">保 存</button>
+  </view>

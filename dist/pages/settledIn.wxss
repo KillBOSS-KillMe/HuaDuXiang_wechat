@@ -1,0 +1,66 @@
+.settle-list {
+  padding: 0 30rpx;
+}
+.settle-list .com-item {
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f1f1;
+}
+.settle-list .com-item .title {
+  font-weight: bold;
+  font-size: 30rpx;
+  width: 160rpx;
+}
+.settle-list .com-item input {
+  height: 100rpx;
+  flex: 1;
+  color: #333;
+  font-size: 28rpx;
+}
+.settle-list .com-item > text {
+  font-weight: bold;
+  font-size: 30rpx;
+}
+.settle-list .remarks {
+  height: auto;
+  padding: 36rpx 0;
+}
+.settle-list .remarks .title {
+  align-self: flex-start;
+}
+.settle-list .remarks textarea {
+  height: 160rpx;
+  border-radius: 10rpx;
+  border: 1px solid #dfdfdf;
+  flex: 1;
+  box-sizing: border-box;
+  padding: 20rpx;
+}
+.settled-btn {
+  width: 690rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 10rpx;
+  color: #fff;
+  font-size: 30rpx;
+  text-align: center;
+  background: #ff2228;
+  position: absolute;
+  bottom: 60rpx;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+}
+.examine {
+  position: relative;
+  height: 100vh;
+}
+.examine .examine-img {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translateX(-50%);
+  width: 330rpx;
+  height: 256rpx;
+}

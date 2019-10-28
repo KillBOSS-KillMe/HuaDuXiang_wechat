@@ -1,0 +1,15 @@
+"use strict";
+
+var URL = "http://www.shopdate.me";
+
+module.exports = {
+  // 登录
+  login: URL + "/api/mobile/index.php?w=logout&t=index",
+  // 首页—商品列表接口
+  indexGoodsList: URL + "/api/mobile/index.php?t=goods_list&w=goods",
+  // 普通商品详情
+  ordinaryGoodsDtail: URL + "/api/mobile/index.php?t=goods_detail&w=goods",
+  // 首页-轮播图和areaArr菜单
+  indexDefaultInfo: URL + "/api/mobile/index.php?w=index&t=index"
+};
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwaS5qcyJdLCJuYW1lcyI6WyJVUkwiLCJtb2R1bGUiLCJleHBvcnRzIiwibG9naW4iLCJpbmRleEdvb2RzTGlzdCIsIm9yZGluYXJ5R29vZHNEdGFpbCIsImluZGV4RGVmYXVsdEluZm8iXSwibWFwcGluZ3MiOiI7O0FBQ0EsSUFBTUEsTUFBTSx3QkFBWjs7QUFFQUMsT0FBT0MsT0FBUCxHQUFpQjtBQUNmO0FBQ0FDLFNBQU9ILE1BQU0sd0NBRkU7QUFHZjtBQUNBSSxrQkFBZ0JKLE1BQU0sNENBSlA7QUFLZjtBQUNBSyxzQkFBb0JMLE1BQU0sOENBTlg7QUFPZjtBQUNBTSxvQkFBa0JOLE1BQU07QUFSVCxDQUFqQiIsImZpbGUiOiJhcGkuanMiLCJzb3VyY2VzQ29udGVudCI6WyJcclxuY29uc3QgVVJMID0gXCJodHRwOi8vd3d3LnNob3BkYXRlLm1lXCJcclxuXHJcbm1vZHVsZS5leHBvcnRzID0ge1xyXG4gIC8vIOeZu+W9lVxyXG4gIGxvZ2luOiBVUkwgKyBcIi9hcGkvbW9iaWxlL2luZGV4LnBocD93PWxvZ291dCZ0PWluZGV4XCIsXHJcbiAgLy8g6aaW6aG14oCU5ZWG5ZOB5YiX6KGo5o6l5Y+jXHJcbiAgaW5kZXhHb29kc0xpc3Q6IFVSTCArIFwiL2FwaS9tb2JpbGUvaW5kZXgucGhwP3Q9Z29vZHNfbGlzdCZ3PWdvb2RzXCIsXHJcbiAgLy8g5pmu6YCa5ZWG5ZOB6K+m5oOFXHJcbiAgb3JkaW5hcnlHb29kc0R0YWlsOiBVUkwgKyBcIi9hcGkvbW9iaWxlL2luZGV4LnBocD90PWdvb2RzX2RldGFpbCZ3PWdvb2RzXCIsXHJcbiAgLy8g6aaW6aG1Lei9ruaSreWbvuWSjGFyZWFBcnLoj5zljZVcclxuICBpbmRleERlZmF1bHRJbmZvOiBVUkwgKyBcIi9hcGkvbW9iaWxlL2luZGV4LnBocD93PWluZGV4JnQ9aW5kZXhcIlxyXG59XHJcbiJdfQ==

@@ -1,0 +1,231 @@
+.wrap {
+  width: 100%;
+  height: 100%;
+  background: #f9f9f9;
+}
+.wrap .topCard {
+  width: 93%;
+  height: 260rpx;
+  background: #fff;
+  margin: 20rpx auto;
+}
+.wrap .topCard image {
+  width: 100%;
+  height: 100%;
+}
+.wrap .saleTab {
+  width: 100%;
+  background: #fff;
+}
+.wrap .saleTab .timesale {
+  width: 100%;
+  height: 88rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  position: relative;
+}
+.wrap .saleTab .timesale .timetab {
+  width: 212rpx;
+  height: 88rpx;
+  background: #ffe0e1;
+  color: #F7A7 E;
+  font-size: 28rpx;
+  text-align: center;
+  line-height: 88rpx;
+  color: #ff7b7f;
+}
+.wrap .saleTab .timesale .timetab .triangle-down {
+  display: block;
+  position: absolute;
+  bottom: -20%;
+  left: 10%;
+  width: 0;
+  height: 0;
+  border-left: solid 20rpx transparent;
+  border-right: solid 20rpx transparent;
+  border-top: solid 20rpx #ffe0e1;
+}
+.wrap .saleTab .timesale .tabactiveclass {
+  background: #ff2228;
+  color: #fff;
+}
+.wrap .saleTab .timesale .tabactiveclass .triangle-down {
+  display: block;
+  position: absolute;
+  bottom: -20%;
+  left: 10%;
+  width: 0;
+  height: 0;
+  border-left: solid 20rpx transparent;
+  border-right: solid 20rpx transparent;
+  border-top: solid 20rpx #ff2228;
+}
+.wrap .saleTab .lastTime {
+  width: 100%;
+  height: 90rpx;
+  background: #f9f9f9;
+  line-height: 100rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #333;
+}
+.wrap .saleShopWrap {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
+.wrap .saleShopWrap .saleShop {
+  width: 93%;
+  height: 100%;
+  margin: 20rpx auto;
+  background: #fff;
+  margin-bottom: 2%;
+}
+.wrap .saleShopWrap .saleShop .shopview {
+  width: 100%;
+  height: 160rpx;
+  position: relative;
+  padding: 20rpx 0rpx;
+  margin-bottom: 30rpx;
+  border-radius: 20rpx;
+  border-bottom: solid 1px #f9f9f9;
+}
+.wrap .saleShopWrap .saleShop .shopview image {
+  width: 150rpx;
+  height: 156rpx;
+}
+.wrap .saleShopWrap .saleShop .shopview .preTitle {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  position: absolute;
+  top: 12%;
+  left: 26%;
+}
+.wrap .saleShopWrap .saleShop .shopview .preTag {
+  position: absolute;
+  top: 36%;
+  left: 26%;
+  font-size: 22rpx;
+  color: #9e9e9e;
+}
+.wrap .saleShopWrap .saleShop .shopview .preprice {
+  position: absolute;
+  top: 38%;
+  left: 23%;
+  font-weight: bolder;
+  color: red;
+  font-size: 42rpx;
+}
+.wrap .saleShopWrap .saleShop .shopview .skillPricr {
+  color: #999999;
+  font-size: 24rpx;
+  font-weight: normal;
+  padding-left: 25rpx;
+}
+.wrap .saleShopWrap .saleShop .shopview .preexprice {
+  position: absolute;
+  top: 46%;
+  left: 52%;
+  color: #999999;
+  font-size: 24rpx;
+  font-weight: normal;
+  padding-left: 25rpx;
+  text-decoration: line-through;
+}
+.wrap .saleShopWrap .saleShop .shopview .barginProgess {
+  position: absolute;
+  top: 77%;
+  left: 26%;
+  font-size: 22rpx;
+  color: #9e9e9e;
+  width: 30%;
+}
+.wrap .saleShopWrap .saleShop .shopview .preBtn {
+  width: 180rpx;
+  height: 60rpx;
+  background: #ff2228;
+  color: white;
+  position: absolute;
+  bottom: 12%;
+  right: 1%;
+  font-size: small;
+  text-align: center;
+  line-height: 60rpx;
+}
+.seckillCountdown {
+  text-align: center;
+  padding: 20rpx 0;
+  color: #282828;
+  font-size: 28rpx;
+  font-weight: bold;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.seckillCountdown .title {
+  padding-right: 18rpx;
+}
+.seckillCountdown .count-down-wrap {
+  display: flex;
+  align-items: center;
+  height: 38rpx;
+}
+.seckillCountdown .count-down-wrap > text {
+  width: 38rpx;
+  height: 38rpx;
+  text-align: center;
+  background: #525252;
+  border-radius: 2rpx;
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: 500;
+  line-height: 38rpx;
+}
+.seckillCountdown .count-down-wrap > view {
+  font-size: 18rpx;
+  margin: 0 8rpx;
+}
+.nav-scroll {
+  white-space: nowrap;
+  height: 116rpx;
+  background: #fff;
+}
+.nav-item {
+  background: #fff;
+  display: inline-block;
+  width: 212rpx;
+  height: 116rpx;
+  text-align: center;
+  color: #8e8e8e;
+  font-size: 28rpx;
+  position: relative;
+}
+.nav-item > view {
+  background: #fff0d5;
+  height: 100rpx;
+  position: absolute;
+  width: 212rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.active-img {
+  display: none;
+  width: 212rpx;
+  height: 116rpx;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.nav-active view {
+  background: transparent;
+  color: #fff;
+}
+.nav-active .active-img {
+  display: block;
+}

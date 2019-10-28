@@ -1,0 +1,502 @@
+@import "./../components/mask.wxss";
+.shop-details-wrap {
+  margin-bottom: 100rpx;
+}
+.swiper-tab {
+  width: 100%;
+  text-align: center;
+  line-height: 80rpx;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background: #fff;
+}
+.swiper-tab .swiper-tab-list {
+  font-size: 28rpx;
+  flex: 1;
+  color: #999999;
+  margin: 0 80rpx;
+  position: relative;
+}
+.swiper-tab .active {
+  font-weight: bold;
+  color: #ff2228;
+  border-bottom: 5rpx solid #ff2228;
+}
+.swiper-tab .tab-content {
+  text-align: center;
+  padding: 100rpx 50rpx;
+  height: 100%;
+}
+.mainWheel {
+  width: 100%;
+  height: 564rpx;
+}
+.mainWheel swiper {
+  width: 100%;
+  height: 100%;
+}
+.mainWheel swiper .slide-image {
+  width: 100%;
+  height: 100%;
+}
+.goods-head {
+  padding: 0 30rpx;
+}
+.goods-head .title {
+  display: flex;
+  justify-content: space-between;
+  height: 48rpx;
+  align-items: center;
+  padding: 20rpx 0 10rpx 0;
+}
+.goods-head .title text {
+  width: 580rpx;
+  font-weight: bold;
+  font-size: 32rpx;
+}
+.goods-head .title .share-btn {
+  width: 48rpx;
+  height: 48rpx;
+}
+.goods-head .title .share-btn > image {
+  width: 100%;
+  height: 100%;
+}
+.goods-head .desc {
+  line-height: 1.5;
+  color: #8e8e8e;
+}
+.goods-head .price {
+  padding: 10rpx 0 20rpx;
+  display: flex;
+  align-items: center;
+}
+.goods-head .price .present text {
+  font-size: 38rpx;
+  color: #f2292d;
+  font-weight: bold;
+}
+.goods-head .price .orgin {
+  margin-left: 20rpx;
+  text-decoration: line-through;
+  color: #8e8e8e;
+}
+.goods-head .price .pre {
+  width: 76rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+  border-radius: 6rpx;
+  text-align: center;
+  background: #fff2f2;
+  color: #f2292d;
+  font-size: 20rpx;
+  margin: 0 20rpx;
+}
+.goods-head .price .ear {
+  color: #f2292d;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+.goods-head .pay-time {
+  padding-bottom: 20rpx;
+}
+.goods-head .pay-time text {
+  color: #8e8e8e;
+  line-height: 1.5;
+  display: block;
+}
+.seckillCountdown-wrap {
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
+  background: #ff2228;
+  height: 88rpx;
+  align-items: center;
+  padding: 0 30rpx;
+}
+.seckillCountdown-wrap .h {
+  font-weight: bold;
+  font-size: 30rpx;
+}
+.seckillCountdown-wrap .seckillCountdown {
+  text-align: center;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.seckillCountdown-wrap .seckillCountdown .title {
+  padding-right: 18rpx;
+}
+.seckillCountdown-wrap .seckillCountdown .count-down-wrap {
+  display: flex;
+  align-items: center;
+  height: 38rpx;
+}
+.seckillCountdown-wrap .seckillCountdown .count-down-wrap > text {
+  width: 38rpx;
+  height: 38rpx;
+  text-align: center;
+  background: #525252;
+  border-radius: 2rpx;
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: 500;
+  line-height: 38rpx;
+}
+.seckillCountdown-wrap .seckillCountdown .count-down-wrap > view {
+  font-size: 18rpx;
+  margin: 0 8rpx;
+}
+.option-wrap {
+  border-top: 1px solid #f2f2f2;
+}
+.option-wrap .option-item {
+  height: 90rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30rpx;
+}
+.option-wrap .option-item .description {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: flex-end;
+}
+.option-wrap .option-item .description > image {
+  width: 24rpx;
+  height: 24rpx;
+}
+.option-wrap .option-item .description text {
+  font-size: 24rpx;
+  padding: 0 20rpx 0 10rpx;
+}
+.option-wrap .option-item > image {
+  width: 48rpx;
+  height: 48rpx;
+}
+.textdetails {
+  border-top: 10rpx solid #f9f9f9;
+  padding: 30rpx;
+}
+.textdetails .textdetails-h {
+  font-weight: bold;
+  font-size: 32rpx;
+  text-align: center;
+  padding-bottom: 20rpx;
+}
+.store {
+  position: relative;
+  border-top: 10rpx solid #f9f9f9;
+}
+.store .shop {
+  width: 100%;
+  background: #fff;
+}
+.store .shop .shopStore {
+  width: 100%;
+  height: 200rpx;
+  background: #fff;
+  position: relative;
+  font-size: 32rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.store .shop .shopStore image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 10rpx;
+  padding: 40rpx 30rpx;
+}
+.store .shop .shopStore .shopname {
+  padding: 80rpx 20rpx 0;
+}
+.store .shop .shopStore .gostore {
+  width: 120rpx;
+  height: 56rpx;
+  text-align: center;
+  line-height: 56rpx;
+  border: solid 1px #f92832;
+  border-radius: 10rpx;
+  position: absolute;
+  right: 4%;
+  top: 35%;
+  font-size: 32rpx;
+  color: #f92832;
+  font-weight: bold;
+}
+.store .saleShopWrap {
+  height: 100%;
+  padding: 0 30rpx;
+  background: #f9f9f9;
+}
+.store .saleShopWrap .saleShop {
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.store .saleShopWrap .saleShop .shopview {
+  background: #fff;
+  width: 340rpx;
+  height: 488rpx;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20rpx;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+.store .saleShopWrap .saleShop .shopview image {
+  width: 340rpx;
+  height: 340rpx;
+  display: block;
+}
+.store .saleShopWrap .saleShop .shopview .saleTag {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  padding: 20rpx 30rpx 20rpx 30rpx;
+}
+.store .saleShopWrap .saleShop .shopview .saleTag text {
+  width: 260rpx;
+  display: block;
+}
+.store .saleShopWrap .saleShop .shopview .salep {
+  font-size: 28rpx;
+  color: red;
+  font-weight: bold;
+  padding-left: 30rpx;
+}
+.store .saleShopWrap .saleShop .shopview .salesmple {
+  font-size: 24rpx;
+  color: red;
+  font-weight: normal;
+}
+.store .saleShopWrap .saleShop .shopview .saleprice {
+  font-weight: bolder;
+  color: red;
+  font-size: 42rpx;
+}
+.store .saleShopWrap .saleShop .shopview .saleexprice {
+  color: #666;
+  font-size: 24rpx;
+  font-weight: normal;
+  padding-left: 25rpx;
+  text-decoration: line-through;
+}
+.store .saleShopWrap .saleShop .shopview .saletag {
+  width: 60rpx;
+  background: red;
+  text-align: center;
+  line-height: 20rpx;
+  font-size: 10px;
+  padding: 8rpx;
+  color: white;
+  border-radius: 10rpx;
+  margin-left: 3%;
+  margin-top: -2%;
+}
+.goods-action {
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+  width: 100%;
+  height: 98rpx;
+  align-items: center;
+  display: flex;
+  background: #fff;
+}
+.goods-action image {
+  width: 48rpx;
+  height: 48rpx;
+  display: block;
+}
+.goods-action .contact-btn,
+.goods-action .cart-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  line-height: 1;
+  flex: 1;
+}
+.goods-action .contact-btn text,
+.goods-action .cart-nav text {
+  font-size: 20rpx;
+  color: #a8a8a8;
+  padding-top: 6rpx;
+}
+.goods-action .buy {
+  width: 500rpx;
+  height: 100%;
+  background: #ff2228;
+  font-weight: bold;
+  font-size: 30rpx;
+  line-height: 98rpx;
+  text-align: center;
+  color: #fff;
+}
+.goods-action .earnest-money {
+  width: 250rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #fff;
+  font-size: 20rpx;
+  font-weight: bold;
+  background: #ff6f73;
+  height: 100%;
+}
+.goods-action .pay-deposit {
+  width: 250rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: bold;
+  background: #ff2228;
+  height: 100%;
+}
+.goods-action .add-cart {
+  width: 250rpx;
+  text-align: center;
+  line-height: 100rpx;
+  font-weight: bold;
+  color: #fff;
+  font-size: 30rpx;
+  background: #ff6f73;
+}
+.goods-action .purchase {
+  width: 250rpx;
+  text-align: center;
+  line-height: 100rpx;
+  font-weight: bold;
+  color: #fff;
+  font-size: 30rpx;
+  background: #ff2228;
+}
+.attr-box {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  z-index: 999;
+  border-top-left-radius: 40rpx;
+  border-top-right-radius: 40rpx;
+  box-sizing: border-box;
+  padding: 30rpx 30rpx 20rpx 30rpx;
+}
+.attr-box .goods-t {
+  display: flex;
+}
+.attr-box .goods-t .goods-img {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 10rpx;
+}
+.attr-box .goods-t .goods-right {
+  padding-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.attr-box .goods-t .goods-right .title {
+  font-weight: bold;
+  font-size: 30rpx;
+  width: 500rpx;
+}
+.attr-box .goods-t .goods-right .attr {
+  display: flex;
+  justify-content: space-between;
+  font-size: 26rpx;
+  color: #999;
+}
+.attr-box .goods-h {
+  font-weight: bold;
+  font-size: 32rpx;
+  padding: 30rpx 0 0rpx 0rpx;
+}
+.attr-box .prop {
+  display: flex;
+  flex-wrap: wrap;
+}
+.attr-box .prop .prop-i {
+  height: 60rpx;
+  border-radius: 10rpx;
+  line-height: 60rpx;
+  padding: 0 20rpx;
+  background: #f6f6f6;
+  margin: 30rpx 30rpx 0 0;
+}
+.attr-box .prop .prop-active {
+  background: #ff2228;
+  color: #fff;
+}
+.attr-box .change-num {
+  padding-top: 24rpx;
+  display: flex;
+  align-items: center;
+  width: 138rpx;
+  text-align: center;
+  height: 44rpx;
+  justify-content: space-between;
+}
+.attr-box .change-num .img {
+  width: 44rpx;
+  height: 44rpx;
+  display: block;
+}
+.attr-box .change-num .num {
+  font-weight: bold;
+  line-height: 44rpx;
+  font-size: 32rpx;
+}
+.attr-box .prop-btn {
+  color: #fff;
+  font-size: 28rpx;
+  border-radius: 10rpx;
+  height: 68rpx;
+  width: 150rpx;
+  text-align: center;
+  line-height: 68rpx;
+  background: #ff2228;
+  position: absolute;
+  bottom: 30rpx;
+  right: 30rpx;
+}
+.attr-box .prop-fot {
+  display: flex;
+  height: 80rpx;
+  margin-top: 50rpx;
+  justify-content: space-between;
+  padding: 0 30rpx;
+}
+.attr-box .prop-fot .add-cart {
+  background: #ff6f73;
+  width: 300rpx;
+  border-radius: 100rpx;
+  text-align: center;
+  line-height: 80rpx;
+  color: #fff;
+  font-weight: bold;
+  font-size: 30rpx;
+}
+.attr-box .prop-fot .purchase {
+  background: #ff2228;
+  width: 300rpx;
+  border-radius: 100rpx;
+  text-align: center;
+  line-height: 80rpx;
+  color: #fff;
+  font-weight: bold;
+  font-size: 30rpx;
+}

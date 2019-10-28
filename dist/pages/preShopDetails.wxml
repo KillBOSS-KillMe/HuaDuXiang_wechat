@@ -1,0 +1,163 @@
+
+  <view class="shop-details-wrap">
+    <!-- 选项卡导航 -->
+    <view class="swiper-tab">
+      <block  wx:key="key" wx:for="{{tabList}}" wx:for-index="index" wx:for-item="item">
+        <view class="swiper-tab-list {{currentTab==index ? 'active' : ''}}" bindtap="switchNav" data-wpyswitchnav-a="{{index}}">{{item.name}}</view>
+      </block>
+    </view>
+    <view class="tab-content"  wx:if="{{currentTab==0}}">
+      <view class="mainWheel">
+        <swiper autoplay>
+          <block wx:for="{{3}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+            <swiper-item>
+              <image src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=990087231,1878185023&fm=26&gp=0.jpg" class="slide-image"/>
+            </swiper-item>
+          </block>
+        </swiper>
+      </view>
+      <view class="goods-head">
+        <view class="title">
+          <text class="overflow-one">家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货</text>
+          <button open-type="share" class="share-btn" hover-class="none">
+            <image src="/assets/img/image27.png"/>
+          </button>
+        </view>
+        <view class="desc overflow-two">家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货</view>
+        <view class="price">
+          <view class="present">
+            ￥
+            <text>19</text>
+          </view>
+          <view class="pre">预购价</view>
+          <view class="ear">定金￥200</view>
+        </view>
+        <view class="pay-time">
+          <text>支付尾款时间：2019.08.22 00:00~2019.08.23 00:00</text>
+          <text>付尾款后5天内发货</text>
+        </view>
+      </view>
+
+      <view class="option-wrap">
+        <view class="option-item">
+          <view class="com-title">服务说明</view>
+          <view class="description">
+            <image src="/assets/img/image26.png"/>
+            <text>无忧退货</text>
+            <image src="/assets/img/image26.png"/>
+            <text>快速退款</text>
+          </view>
+          <image src="/assets/img/image25.png"/>
+        </view>
+        <view class="option-item" bindtap="showAttrMask">
+          <view class="com-title">选择规格</view>
+          <image src="/assets/img/image25.png"/>
+        </view>
+      </view>
+      <view class="textdetails">
+        <view class="textdetails-h">图文详情</view>
+        <view>（微晶一周鲜）功能，大家有没有这种苦恼，买来的新鲜肉放在冷藏容易坏，放在冷冻冻成了石头！要拿来吃的时候又得解冻了才能切，而且解冻的过程又容易滋生细菌并且营养流失影响口感，微晶这个功能就很好解决了，区别于传统的感知冰箱内温度，微晶是感知食材本身的温度，使食材始终处于微晶状态，随时拿出来随时切并且保留了食材的营养不流失～并且可以保存七天左右哦！</view>
+      </view>
+      <!-- 店铺 -->
+      <view class="store">
+        <view class="shop">
+          <view class="shopStore">
+            <image src="/assets/img/image.png"/>
+            <text class="shopname">好吃点</text>
+            <text class="gostore">进店</text>
+          </view>
+        </view>
+        <!-- goods item -->
+        <view class="saleShopWrap">
+          <view class="saleShop">
+            <block wx:for="{{flowData}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+              <view class="shopview">
+                <image src="{{item.img}}"/>
+                <view class="saleTag">
+                  <text class="overflow-one">{{item.title}}暗示法撒打发斯蒂芬</text>
+                </view>
+                <view>
+                  <view>
+                    <text class="salep">促销价</text>
+                    <text class="salesmple">￥</text>
+                    <text class="saleprice">{{item.price}}111</text>
+                    <!-- <text class="saleexprice">原价￥ {{item.exprice}}</text> -->
+                  </view>
+                </view>
+              </view>
+            </block>
+          </view>
+        </view>
+        <!--  -->
+      </view>
+    </view>
+    <view class="tab-content" wx:if="{{currentTab == 1}}">
+      <view class="textdetails">
+        <!-- <view class="textdetails-h">图文详情</view> -->
+        <view>（微晶一周鲜）功能，大家有没有这种苦恼，买来的新鲜肉放在冷藏容易坏，放在冷冻冻成了石头！要拿来吃的时候又得解冻了才能切，而且解冻的过程又容易滋生细菌并且营养流失影响口感，微晶这个功能就很好解决了，区别于传统的感知冰箱内温度，微晶是感知食材本身的温度，使食材始终处于微晶状态，随时拿出来随时切并且保留了食材的营养不流失～并且可以保存七天左右哦！</view>
+      </view>
+    </view>
+    <!-- 底部商品导航 -->
+    <view class="goods-action">
+      <button open-type="contact" class="contact-btn">
+        <image src="/assets/img/image28.png"/>
+        <text>客服</text>
+      </button>
+      <navigator class="cart-nav" url="/pages/shopCar">
+        <image src="/assets/img/image29.png"/>
+        <text>购物车</text>
+      </navigator>
+      <view class="earnest-money">
+        <text>08.22 23:30结束</text>
+        <text>付尾款后5天内发货</text>
+      </view>
+      <view class="pay-deposit" bindtap="showAttrMask">
+        <text>立即付定金</text>
+        <text>￥200</text>
+      </view>
+    </view>
+    <!-- 选择商品弹框 -->
+    
+  <view class="list">
+    <view class="{{$attrsmask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$attrsmask$move">
+      <view class="mask" bindtap="$attrsmask$hideMask"/>132465
+      
+      <view class="attr-box">
+        <view class="goods-t">
+          <image class="goods-img" src="/assets/img/image.png"/>
+          <view class="goods-right">
+            <view class="title overflow-one">萌粉订书机 小型萌粉订书机萌粉订书机萌粉订书机</view>
+            <view class="attr">
+              <view>粉+白</view>
+              <view>x1</view>
+            </view>
+          </view>
+        </view>
+        <view>
+          <view class="goods-h">规格</view>
+          <view class="prop">
+            <block wx:for="{{6}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+              <view class="prop-i {{index == 0 ? 'prop-active' : ''}}">大小</view>
+            </block>
+          </view>
+        </view>
+        <view>
+          <view class="goods-h">数量</view>
+          <view class="change-num">
+            <view class="i" bindtap="reduNum">
+              <image class="img" src="/assets/img/image19.png" wx:if="{{goodsNum == 1}}"/>
+              <image class="img" src="/assets/img/image20.png" wx:else/>
+            </view>
+            <view class="i num">{{goodsNum}}</view>
+            <view class="i" bindtap="addNum">
+              <image class="img" src="/assets/img/image21.png"/>
+            </view>
+          </view>
+        </view>
+        <view class="prop-btn" bindtap="attrBtnSubmit">确定</view>
+      </view>
+    
+    </view>
+  </view>
+
+  </view>

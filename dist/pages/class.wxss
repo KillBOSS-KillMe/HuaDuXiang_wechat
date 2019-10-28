@@ -1,0 +1,61 @@
+@import "./../components/nav.wxss";
+.goods-wrap {
+  display: flex;
+}
+.goods-wrap .left-scroll {
+  height: calc(100vh - 100rpx);
+  width: 200rpx;
+  background: #f9f9f9;
+}
+.goods-wrap .left-scroll .text {
+  text-align: center;
+  height: 87rpx;
+  line-height: 87rpx;
+  font-size: 28rpx;
+  color: #282828;
+}
+.goods-wrap .left-scroll .active-text {
+  background: #fff;
+  border-left: 4rpx solid #f2292d;
+  width: 200rpx;
+}
+.goods-wrap .goods-right .right-scroll {
+  height: calc(100vh - 100rpx);
+  padding: 0 30rpx 0 20rpx;
+}
+.goods-wrap .goods-right .right-scroll .advertisement {
+  padding-top: 30rpx;
+}
+.goods-wrap .goods-right .right-scroll .advertisement > image {
+  width: 500rpx;
+  height: 170rpx;
+  border-radius: 10rpx;
+}
+.goods-wrap .goods-right .right-scroll .two-type .title {
+  font-weight: bold;
+  font-size: 26rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+.goods-wrap .goods-right .right-scroll .two-type .two-type-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.goods-wrap .goods-right .right-scroll .two-type .two-type-list .item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 160rpx;
+  margin-bottom: 30rpx;
+}
+.goods-wrap .goods-right .right-scroll .two-type .two-type-list .item > image {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 10rpx;
+  display: block;
+}
+.goods-wrap .goods-right .right-scroll .two-type .two-type-list .item text {
+  font-size: 26rpx;
+  padding-top: 10rpx;
+}

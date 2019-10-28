@@ -1,0 +1,81 @@
+page {
+  color: #282828;
+  font-size: 28rpx;
+  margin-bottom: 160rpx;
+}
+.address-btn {
+  width: 690rpx;
+  height: 88rpx;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  line-height: 88rpx;
+  font-size: 30rpx;
+  border-radius: 44rpx;
+  background: #f2292d;
+  position: fixed;
+  bottom: 60rpx;
+  left: 30rpx;
+}
+.address-wrap {
+  border-top: 10rpx solid #f9f9f9;
+  padding: 30rpx 30rpx 0rpx;
+  box-sizing: border-box;
+}
+.address-top {
+  display: flex;
+  align-items: center;
+  line-height: 1.5;
+}
+.address-top > view:nth-of-type(1) {
+  font-weight: blod;
+  font-size: 32rpx;
+}
+.address-top > view:nth-of-type(2) {
+  color: #8e8e8e;
+  margin-left: 20rpx;
+}
+.address-top > view:nth-of-type(3) {
+  font-size: 20rpx;
+  color: #ff7d27;
+  border: 1px solid #ff7d27;
+  border-radius: 4rpx;
+  text-align: center;
+  height: 32rpx;
+  width: 70rpx;
+  line-height: 32rpx;
+  margin-left: 20rpx;
+}
+.address-text {
+  line-height: 1.5;
+  padding: 10rpx 0 20rpx;
+}
+.address-fot {
+  display: flex;
+  align-items: center;
+  height: 80rpx;
+  border-top: 1px solid #f1f1f1;
+  justify-content: space-between;
+  font-size: 28rpx;
+  color: #8e8e8e;
+}
+.flex-class {
+  display: flex;
+  align-items: center;
+}
+.flex-class > image {
+  margin-right: 10rpx;
+}
+.flex-class text {
+  display: block;
+  height: auto;
+}
+.bianji {
+  margin-right: 29rpx;
+}
+.no-content {
+  text-align: center;
+}
+.no-content > image {
+  margin: 155rpx 0 0 0;
+}

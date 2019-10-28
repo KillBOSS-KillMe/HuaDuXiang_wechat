@@ -1,0 +1,26 @@
+
+  <view>
+    <view  wx:if="{{emptyFlag}}" class="address-top">
+      <block wx:for="{{3}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+        <view class="address-wrap {{index == idx ? 'address-active':''}}">
+          <image src="/assets/img/image47.png" style="width: 44rpx;height:44rpx;"/>
+          <image src="/assets/img/image48.png" style="width: 44rpx;height:44rpx;"/>
+          <view class="address-cent" bindtap="changeAddress">
+            <view class="address-cent-top">
+              <view>{{item.name}}名字</view>
+              <view>{{item.phone}}13324565655</view>
+              <view>默认</view>
+            </view>
+            <view class="address-cent-foot">{{item.province}}{{item.city}}{{item.area}}{{item.address}}陕西省西安市蓝田县</view>
+          </view>
+          <navigator url="/pages/add-address/add-address?id={{item.id}}" hover-class="none">
+            <image class="icon-two" style="width: 44rpx; height: 44rpx;" src="/assets/img/images.png"/>
+          </navigator>
+        </view>
+      </block>
+    </view>
+
+    <view class="empty"  wx:if="{{!emptyFlag}}">暂无地址</view>
+
+    <navigator url="/pages/addAddress" hover-class="none" class="address-btn">添加收货地址</navigator>
+  </view>

@@ -1,0 +1,45 @@
+.fl_form {
+  width: 100%;
+  padding: 38rpx 40rpx;
+  display: flex;
+  border-bottom: solid 1px #f2f2f2;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  font-size: medium;
+}
+.fl_form text {
+  font-weight: bold;
+  color: #292929;
+}
+.fl_form input {
+  color: #a3a3a3;
+  position: absolute;
+  left: 25%;
+  width: 100%;
+}
+.fl_form .pickeraddress {
+  width: 62%;
+  height: 100rpx;
+  position: absolute;
+  right: 13%;
+  top: 8%;
+}
+.fl_form .pickeraddress .addressslect {
+  width: 100%;
+  height: 100rpx;
+  color: #a3a3a3;
+  line-height: 100rpx;
+}
+.formbtn {
+  width: 85%;
+  height: 88rpx;
+  border-radius: 15rpx;
+  background: #ff2228;
+  color: #fff;
+  font-size: 30rpx;
+  position: absolute;
+  bottom: 4%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
