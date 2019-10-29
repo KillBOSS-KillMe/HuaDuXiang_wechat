@@ -13,7 +13,7 @@ module.exports = {
           token: 12345678910
         }),
         header: e.header || {
-          'content-type': 'application/json'
+          'content-type': 'application/x-www-form-urlencoded'
         },
         method: e.type || "POST",
         dataType: e.dataType || "json",

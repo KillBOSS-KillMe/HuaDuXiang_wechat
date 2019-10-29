@@ -124,13 +124,15 @@
             </view>
           </view>
         </view>
-        <view>
-          <view class="goods-h">规格</view>
-          <view class="prop">
-            <block wx:for="{{6}}" wx:for-index="index" wx:for-item="item" wx:key="key">
-              <view class="prop-i {{index == 0 ? 'prop-active' : ''}}">大小</view>
-            </block>
-          </view>
+        <view class="prop-wrap">
+          <block wx:for="{{attr}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+            <view class="goods-h">{{item.title}}</view>
+            <view class="prop">
+              <block wx:for="{{item.prop}}" wx:for-index="idx" wx:for-item="ele" wx:key="key">
+                <view class="prop-i {{item.active == ele ? 'prop-active' : ''}}" bindtap="changeAttr" data-wpychangeattr-a="{{index}}" data-wpychangeattr-b="{{idx}}">{{ele}}</view>
+              </block>
+            </view>
+          </block>
         </view>
         <view>
           <view class="goods-h">数量</view>
@@ -145,7 +147,6 @@
             </view>
           </view>
         </view>
-        <!-- <view class="prop-btn" bindtap="attrBtnSubmit">确定</view> -->
         <view class="prop-fot">
           <view class="add-cart">加入购物车</view>
           <view class="purchase" bindtap="attrBtnSubmit">立即购买</view>

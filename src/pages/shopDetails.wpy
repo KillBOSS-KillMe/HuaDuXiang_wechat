@@ -128,13 +128,15 @@
             </view>
           </view>
         </view>
-        <view>
-          <view class="goods-h">规格</view>
-          <view class="prop">
-            <repeat for="{{6}}" item="item" index="index">
-              <view class="prop-i {{index == 0 ? 'prop-active' : ''}}">大小</view>
-            </repeat>
-          </view>
+        <view class="prop-wrap">
+          <repeat for="{{attr}}" item="item" index="index">
+            <view class="goods-h">{{item.title}}</view>
+            <view class="prop">
+              <repeat for="{{item.prop}}" item="ele" index="idx">
+                <view class="prop-i {{item.active == ele ? 'prop-active' : ''}}" @tap="changeAttr({{index}}, {{idx}})">{{ele}}</view>
+              </repeat>
+            </view>
+          </repeat>
         </view>
         <view>
           <view class="goods-h">数量</view>
@@ -149,7 +151,6 @@
             </view>
           </view>
         </view>
-        <!-- <view class="prop-btn" @tap="attrBtnSubmit">确定</view> -->
         <view class="prop-fot">
           <view class="add-cart">加入购物车</view>
           <view class="purchase" @tap="attrBtnSubmit">立即购买</view>
@@ -177,40 +178,9 @@ export default class Index extends wepy.page {
 
   data = {
     goodsNum: 1,
-    attrFlag: false,
+    attrFlag: true,
     tabList: [{ name: '商品介绍'}, { name: '图文详情' }], // 顶部选项卡
     currentTab: 0, // 顶部选项卡索引
-    // 店铺
-    flowData: [
-      {
-        id: '1',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: '/assets/img/image.png'
-      },
-      {
-        id: '2',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: '/assets/img/image.png'
-      },
-      {
-        id: '3',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: '/assets/img/image.png'
-      },
-      {
-        id: '3',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: '/assets/img/image.png'
-      }
-    ],
     goods_id: null, //商品goods_id
     requestImgUrl: null, //图片域名
     goods_content: null, // 商品内容
@@ -218,6 +188,10 @@ export default class Index extends wepy.page {
     hot_sales: [], //推荐商品列表
     goods_image_mobile: [], // 商品轮播图
     contractlist: {}, // 商品服务说明
+    attr: [
+      {title: '大小', prop: ['s','x','xl','xll'] },
+      {title: '颜色', prop: ['红色','黑色','白色','黄色'] }
+    ]
   };
 
   computed = {};
@@ -232,7 +206,47 @@ export default class Index extends wepy.page {
       this.attrFlag = true;
     },
     attrBtnSubmit() {
-      this.$navigate({ url: '/pages/settlement' });
+      var propArr = this.attr.filter(item => item.active).map(item => item.active)
+      if(propArr.length !== this.attr.length) {
+        wx.showToast({
+          title: '请选择商品规格',
+          icon: 'none'
+        })
+        return fasle
+      }
+      var app = this.$parent;
+      var goods_id = this.goods_id
+      var goodsNum = this.goodsNum
+      var key = '7731b8f19c93a412ee7b84a478fa6f8d'
+      ajax({
+        url: api.memberBuyOne + '&key=' + key,
+        data: {
+          cart_id: `${goods_id}|${goodsNum}`,
+        }
+      }).then(res => {
+        if(res.code == 200) {
+          app.globalData.orderInfo = res.datas
+          this.$navigate({ url: '/pages/settlement' });
+        }
+      })
+    },
+    addNum() {
+      this.goodsNum ++
+    },
+    reduNum(){
+      if(this.goodsNum <= 1) {
+        this.goodsNum = 1
+        return false
+      }
+      this.goodsNum--
+    },
+    changeAttr(one, two){
+      this.attr.forEach((item, index) => {
+        if(one == index) {
+          item.active = item.prop[two]
+          console.log(this)
+        }
+      })
     }
   };
 
@@ -265,6 +279,7 @@ export default class Index extends wepy.page {
     });
 
   }
+  
 }
 </script>
 
@@ -711,7 +726,10 @@ export default class Index extends wepy.page {
       line-height: 60rpx;
       padding: 0 20rpx;
       background: #f6f6f6;
-      margin: 30rpx 30rpx 0 0;
+      margin: 20rpx 20rpx 0 0;
+      &:last-of-type{
+        margin-right: 0;
+      }
     }
     .prop-active {
       background: #ff2228;
@@ -755,10 +773,9 @@ export default class Index extends wepy.page {
     height: 80rpx;
     margin-top: 50rpx;
     justify-content: space-between;
-    padding: 0 30rpx;
     .add-cart {
       background: #ff6f73;
-      width: 300rpx;
+      width: 330rpx;
       border-radius: 100rpx;
       text-align: center;
       line-height: 80rpx;
@@ -768,7 +785,7 @@ export default class Index extends wepy.page {
     }
     .purchase {
       background: #ff2228;
-      width: 300rpx;
+      width: 330rpx;
       border-radius: 100rpx;
       text-align: center;
       line-height: 80rpx;
@@ -776,6 +793,10 @@ export default class Index extends wepy.page {
       font-weight: bold;
       font-size: 30rpx;
     }
+  }
+  .prop-wrap {
+    max-height: 390rpx;
+    overflow: scroll;
   }
 }
 </style>

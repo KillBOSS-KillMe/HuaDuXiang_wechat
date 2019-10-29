@@ -435,7 +435,10 @@
   line-height: 60rpx;
   padding: 0 20rpx;
   background: #f6f6f6;
-  margin: 30rpx 30rpx 0 0;
+  margin: 20rpx 20rpx 0 0;
+}
+.attr-box .prop .prop-i:last-of-type {
+  margin-right: 0;
 }
 .attr-box .prop .prop-active {
   background: #ff2228;
@@ -478,11 +481,10 @@
   height: 80rpx;
   margin-top: 50rpx;
   justify-content: space-between;
-  padding: 0 30rpx;
 }
 .attr-box .prop-fot .add-cart {
   background: #ff6f73;
-  width: 300rpx;
+  width: 330rpx;
   border-radius: 100rpx;
   text-align: center;
   line-height: 80rpx;
@@ -492,11 +494,15 @@
 }
 .attr-box .prop-fot .purchase {
   background: #ff2228;
-  width: 300rpx;
+  width: 330rpx;
   border-radius: 100rpx;
   text-align: center;
   line-height: 80rpx;
   color: #fff;
   font-weight: bold;
   font-size: 30rpx;
+}
+.attr-box .prop-wrap {
+  max-height: 390rpx;
+  overflow: scroll;
 }

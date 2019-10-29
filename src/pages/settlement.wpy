@@ -1,37 +1,37 @@
 
 <template>
   <view class="settlement-wrap">
-    <view class="useraddress">
-      <image class="imgadd" src="{{requestImgUrl}}adres.png" />
-      <view class="center" hidden>
-        <view class="userinfo">收货人: {{userinfo.username}} {{userinfo.phone}}</view>
-        <view class="useradd">{{userinfo.address}}</view>
+    <navigator url="/pages/consignee" hover-class="none" class="useraddress">
+      <image class="imgadd" src="/assets/img/image33.png" />
+      <view class="center" wx:if="{{address}}">
+        <view class="userinfo">收货人: {{address.true_name}} {{address.tel_phone}}</view>
+        <view class="useradd">{{address.area_info}}{{address.address}}</view>
       </view>
-      <view class="center">
+      <view class="center" wx:elif>
         <view class="add-address">添加收货地址</view>
       </view>
       <image class="imgright" src="/assets/img/image25.png" />
-    </view>
+    </navigator>
     <view class="usergoods-wrap">
-      <repeat for="{{2}}">
+      <repeat for="{{goods_list}}">
         <view class="usergoods">
-          <image class="goodsimg" src="/assets/img/image.png" />
+          <image class="goodsimg" src="{{item.goods_image_url}}" />
           <view class="goods-right">
-            <view class="goodsname overflow-one">萌粉订书机 小型萌粉订书机 小型萌粉订书机 小型</view>
+            <view class="goodsname overflow-one">{{item.goods_name}}</view>
             <view class="goodstag">
-              <text>粉+白</text>
-              <view class="goodnum">×1</view>
+              <text>{{item.goods_spec}}</text>
+              <view class="goodnum">×{{item.goods_num}}</view>
             </view>
             <view class="goodprice">
               ￥
-              <text class="price">99</text>
+              <text class="price">{{item.goods_price}}</text>
             </view>
           </view>
         </view>
       </repeat>
     </view>
     <!-- 定金 -->
-    <view class="earnest-money">
+    <view class="earnest-money" hidden >
       <view class="item  red-color">
         <view class="title">定金</view>
         <view class="price">
@@ -52,27 +52,25 @@
     <view class="option-wrap">
       <view class="option-item">
         <view class="com-title">商品</view>
-        <!-- <image src="/assets/img/image25.png" /> -->
         <view class="price">
           ￥
-          <text>198</text>
+          <text>{{goodsPrice}}</text>
         </view>
       </view>
-      <view class="option-item">
+      <view class="option-item" wx:if="{{false}}" >
         <view class="com-title">运费</view>
         <view class="price">
           ￥
           <text>2</text>
         </view>
-        <!-- <image src="/assets/img/image25.png" /> -->
       </view>
     </view>
     <!-- 底部 订单提交 -->
     <view class="settlebottom">
-      <view class="num">共件</view>
+      <view class="num">共{{goodsAllNum}}件</view>
       <view class="priceall">
         共计 ￥
-        <text class="allprice">200</text>元
+        <text class="allprice">{{allPrice}}</text>元
       </view>
       <button class="sub-btn" @tap="getWXPayment">提交订单</button>
     </view>
@@ -93,15 +91,13 @@ export default class ShopCart extends wepy.page {
 
   data = {
     requestImgUrl: '',
-    preId: '1', //预购id
-    allSelected: false,
+    address: null, //地址信息
+    goods_list: [], //下单商品信息
+    store_cart_list: [], //下单店铺列表
+    allPrice: 0, //订单总价格
+    goodsPrice: 0, // 商品总价格
     goodsAllNum: 0, //总共件数
-    goodsAllPrice: 0, // 总共价格
-    userinfo: {
-      username: '李白',
-      phone: '18002101520',
-      address: '陕西省西安市莲湖区安美居构建公司家属院'
-    }
+    
   };
 
   computed = {};
@@ -115,8 +111,34 @@ export default class ShopCart extends wepy.page {
   events = {};
   onLoad(options) {}
   onShow() {
-    // this.userInfo = this.$parent.globalData.userInfo
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
+    var app = this.$parent;
+    // 全局订单信息
+    var orderInfo = app.globalData.orderInfo
+    console.log(orderInfo)
+    // 地址信息
+    this.address = orderInfo.address_info
+    // 多店铺信息
+    this.store_cart_list = orderInfo.store_cart_list
+    // 商品列表
+    var goods_list = []
+    // 商品总价格
+    var goodsPrice = 0
+    Object.values(orderInfo.store_cart_list).forEach(item => {
+      goods_list = goods_list.concat(item.goods_list)
+      goodsPrice += Number(item.store_goods_total)
+    })
+    this.goodsPrice = goodsPrice.toFixed(2)
+    this.goods_list = goods_list
+    // 商品总数量
+    var goodsAllNum = 0
+    goods_list.forEach(item => {
+      goodsAllNum += Number(item.goods_num)
+    })
+    this.goodsAllNum = goodsAllNum
+
+    // 订单总价格
+    this.allPrice = Number(orderInfo.order_amount).toFixed(2)
   }
 }
 </script>

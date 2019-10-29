@@ -6,6 +6,17 @@ export default class extends wepy.app {
   constructor() {
     super();
     this.use('promisify');
+    this.intercept('request', {
+      config(p) {
+        p.timestamp = new Date().getTime();
+        return p;
+      },
+      success(p) {
+        return p;
+      },
+      fail(p) {},
+      complete(p) {}
+    });
   }
   config = {
     pages: [

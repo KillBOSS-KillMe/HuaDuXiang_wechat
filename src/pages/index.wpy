@@ -359,50 +359,6 @@ export default class Index extends wepy.page {
       { id: '6', img: '/assets/img/image17.png', title: '特约商户' },
       { id: '8', img: '/assets/img/image18.png', title: '更多频道' }
     ],
-    flowData: [
-      {
-        id: '1',
-        title: '萌分订书机a萌分订书机a萌分订书机a萌分订书机a',
-        price: '5',
-        exprice: '25',
-        img: 'indeximg.png'
-      },
-      {
-        id: '2',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: 'indeximg.png'
-      },
-      {
-        id: '3',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: 'indeximg.png'
-      },
-      {
-        id: '4',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: 'indeximg.png'
-      },
-      {
-        id: '5',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: 'indeximg.png'
-      },
-      {
-        id: '6',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: 'indeximg.png'
-      }
-    ],
     // 轮播
     imgUrls: [
       { id: '1', img: 'indexlunbo.png' },
@@ -454,7 +410,26 @@ export default class Index extends wepy.page {
       }
     });
   }
-  onShow() {}
+
+  onShow() {
+    this.$interceptors = {
+      'request': {
+          config (p) {
+            console.log(p)
+              return p;
+          },
+          success (rst) {
+            console.log(rst)
+            return rst
+          }
+      }
+    }
+
+
+
+    
+  }
+
   methods = {
     tapName(url, id) {
       this.$navigate({url: url})
