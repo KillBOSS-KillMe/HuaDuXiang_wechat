@@ -59,6 +59,20 @@
 .vip-head .vip-head-cont .cont .price text {
   font-size: 32rpx;
 }
+.vip-head .vip-head-cont .cont .level-tap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 135rpx;
+  height: 62rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #727272;
+  font-size: 24rpx;
+  border-radius: 0 20rpx 0 20rpx;
+  color: #fff;
+}
 .vip-head .vip-head-cont .recharge {
   display: flex;
   justify-content: space-between;

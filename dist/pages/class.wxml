@@ -1,26 +1,26 @@
 
   <view>
     <view class="goods-wrap">
-      <scroll-view class="left-scroll" scroll-y bindscroll="bindscroll">
+      <scroll-view class="left-scroll" scroll-y>
         <view>
-          <block wx:for="{{20}}" wx:for-index="index" wx:for-item="item" wx:key="key">
-            <view class="text {{leftNav == index ? 'active-text':''}}" bindtap="changeLeftNav">{{item.name}}分类</view>
+          <block wx:for="{{oneList}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+            <view class="text {{leftNav == index ? 'active-text':''}}" bindtap="changeLeftNav" data-wpychangeleftnav-a="{{index}}">{{item.gc_name}}</view>
           </block>
         </view>
       </scroll-view>
       <view class="goods-right">
         <scroll-view class="right-scroll" scroll-y>
           <view class="advertisement" hover-class="none">
-            <image src="/assets/img/image.png"/>
+            <image src="{{oneList[leftNav].imagesrc}}"/>
           </view>
-          <block wx:for="{{10}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+          <block wx:for="{{twoList}}" wx:for-index="index" wx:for-item="item" wx:key="key">
             <view class="two-type">
-              <view class="title">水果</view>
+              <view class="title">{{item.gc_name}}</view>
               <view class="two-type-list">
-                <block wx:for="{{10}}" wx:for-index="index" wx:for-item="item" wx:key="key">
-                  <view class="item">
-                    <image src="/assets/img/image.png"/>
-                    <text>葡萄</text>
+                <block wx:for="{{item.three}}" wx:for-index="index" wx:for-item="ele" wx:key="key">
+                  <view class="item" bindtap="navGoodsList" data-wpynavgoodslist-a="{{ele.gc_id}}">
+                    <image src="{{ele.imagesrc}}"/>
+                    <text>{{ele.new_name}}</text>
                   </view>
                 </block>
               </view>

@@ -47,7 +47,7 @@
         <view class="option-item">
           <view class="com-title">服务说明</view>
           <view class="description">
-            <repeat for="{{contractlist}}" item="val" index="key">
+            <repeat for="{{contractlist}}" item="val" index="key" wx:if="{{key<=3}}">
               <image src="{{val.cti_icon_url}}" />
               <text>{{val.cti_name}}</text>
             </repeat>
@@ -76,7 +76,7 @@
         <view class="saleShopWrap">
           <view class="saleShop">
             <repeat for="{{hot_sales}}" item="item">
-              <navigator class="shopview" hover-class="none" open-type="redirect" url="/pages/shopDetails?goods_id={{item.goods_id}}">
+              <view @tap="navGoodsDetails({{item.goods_id}})" class="shopview">
                 <image src="{{requestImgUrl + item.goods_image}}" />
                 <view class="saleTag">
                   <text class="overflow-one">{{item.goods_name}}</text>
@@ -89,7 +89,7 @@
                     <!-- <text class="saleexprice">原价￥ {{item.goods_price}}</text> -->
                   </view>
                 </view>
-              </navigator>
+              </view>
             </repeat>
           </view>
         </view>
@@ -178,7 +178,7 @@ export default class Index extends wepy.page {
 
   data = {
     goodsNum: 1,
-    attrFlag: true,
+    attrFlag: false,
     tabList: [{ name: '商品介绍'}, { name: '图文详情' }], // 顶部选项卡
     currentTab: 0, // 顶部选项卡索引
     goods_id: null, //商品goods_id
@@ -212,19 +212,20 @@ export default class Index extends wepy.page {
           title: '请选择商品规格',
           icon: 'none'
         })
-        return fasle
+        return false
       }
       var app = this.$parent;
       var goods_id = this.goods_id
       var goodsNum = this.goodsNum
-      var key = '7731b8f19c93a412ee7b84a478fa6f8d'
+      var cart_id = `${goods_id}|${goodsNum}`
       ajax({
-        url: api.memberBuyOne + '&key=' + key,
+        url: api.memberBuyOne,
         data: {
-          cart_id: `${goods_id}|${goodsNum}`,
+          cart_id,
         }
       }).then(res => {
         if(res.code == 200) {
+          res.datas.cart_id = cart_id
           app.globalData.orderInfo = res.datas
           this.$navigate({ url: '/pages/settlement' });
         }
@@ -244,9 +245,11 @@ export default class Index extends wepy.page {
       this.attr.forEach((item, index) => {
         if(one == index) {
           item.active = item.prop[two]
-          console.log(this)
         }
       })
+    },
+    navGoodsDetails(goods_id) {
+      this.$redirect({ url: `shopDetails?goods_id=${goods_id}` });
     }
   };
 
@@ -264,7 +267,6 @@ export default class Index extends wepy.page {
         goods_id: this.goods_id
       }
     }).then(res => {
-      console.log(res);
       if(res.code == 200) {
         this.goods_content = res.datas.goods_content
         this.contractlist = res.datas.goods_content.contractlist || {}

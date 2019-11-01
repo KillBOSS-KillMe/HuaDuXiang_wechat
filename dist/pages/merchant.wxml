@@ -1,10 +1,10 @@
 
   <view class="merchant-wrap">
     <view class="merchant-list">
-      <block wx:for="{{10}}" wx:for-index="index" wx:for-item="item" wx:key="key">
-        <view class="merchant-item" bindtap="navigate">
-          <image class="search-img" src="/assets/img/image.png"/>
-        </view>
+      <block wx:for="{{storeRecommendList}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+        <navigator url="/pages/merchantIndex?store_id={{item.store_id}}" hover-class="none" class="merchant-item">
+          <image class="search-img" src="{{item.store_avatar}}"/>
+        </navigator>
       </block>
     </view>
   </view>

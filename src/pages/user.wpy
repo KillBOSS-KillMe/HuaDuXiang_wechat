@@ -5,13 +5,20 @@
     <view class="top" @tap="getMyRank">
       <image class="top_imgbg" src="/assets/img/image36.png" />
       <view class="top_user">
-        <image class="imgSrc" data-id src="{{userInfo.avatarUrl}}" />
-        <view class="username">{{userInfo.nickName || '阿萨水电费'}}</view>
+        <image class="imgSrc" src="{{member_info.avatar}}" />
+        <view class="username">{{member_info.user_name}}</view>
+        <view class="vip-tap" wx:if="{{member_info.level==0}}">普通会员</view>
+        <view class="vip-tap" wx:if="{{member_info.level==1}}">银卡会员</view>
+        <view class="vip-tap" wx:if="{{member_info.level==2}}">金卡会员</view>
+        <view class="vip-tap" wx:if="{{member_info.level==3}}">砖石会员</view>
       </view>
       <view class="topVip">
-        <image src="copy.png" />
-        <text>成为合伙人, 福利享不停</text>
-        <button>立即开通</button>
+        <image src="/assets/img/image50.png" />
+        <text wx:if="{{member_info.level==0}}">成为银卡会员, 福利享不停</text>
+        <text wx:if="{{member_info.level==1}}">成为金卡会员, 福利享不停</text>
+        <text wx:if="{{member_info.level==2}}">成为砖石会员, 福利享不停</text>
+        <text wx:if="{{member_info.level==3}}">砖石会员, 福利享不停</text>
+        <button wx:if="{{member_info.level !== 3}}">立即开通</button>
       </view>
     </view>
 
@@ -36,19 +43,20 @@
     <view class="personal_data">
       <text class="mainorder">我的服务</text>
       <view class="order">
-        <view class="orderitem" @tap="getUserAddress">
-          <image class="img" src="/assets/img/image31.png" />
+        <navigator url="/pages/vip" hover-class="none" class="orderitem">
+          <image class="img" src="/assets/img/image32.png" />
           <view>我的钱包</view>
           <image class="imgright" src="/assets/img/image25.png" />
-        </view>
-        <view class="orderitem">
-          <image class="img" src="/assets/img/image32.png" />
+        </navigator>
+        <view class="orderitem"  @tap="getUserAddress">
+          <image class="img" src="/assets/img/image33.png" />
           <view>收货地址</view>
           <image class="imgright" src="/assets/img/image25.png" />
         </view>
-        <view class="orderitem">
-          <image class="img" src="/assets/img/image33.png" />
+        <view class="orderitem" @tap="callPhone">
+          <image class="img" src="/assets/img/image34.png" />
           <view>客服服务</view>
+          <view class="phone">{{member_serves_tel}}</view>
           <image class="imgright" src="/assets/img/image25.png" />
         </view>
       </view>
@@ -61,6 +69,8 @@
 <script>
 import wepy from 'wepy';
 import nav from '../components/nav'; // 底部导航
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 
 export default class ShopCart extends wepy.page {
   config = {
@@ -82,7 +92,9 @@ export default class ShopCart extends wepy.page {
     ], // 功能入口
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     userInfo: {},
-    index: '2'
+    index: '2',
+    member_info: null, // 接口返回用户信息
+    member_serves_tel: '',//客服电话
   };
 
   computed = {};
@@ -92,13 +104,13 @@ export default class ShopCart extends wepy.page {
      * 收货地址
      */
     getUserAddress() {
-      this.$navigate({ url: `userDeliveryAddress` });
+      this.$navigate({ url: `addressList` });
     },
     /**
      * 查看我的会员等级
      */
     getMyRank() {
-      this.$navigate({ url: `membersCenter` });
+      this.$navigate({ url: `vip` });
     },
     /**
      * 底部导航跳转
@@ -106,6 +118,11 @@ export default class ShopCart extends wepy.page {
     goPage(url, evt) {
       // 销毁当前页{跳转}
       this.$redirect(url);
+    },
+    callPhone(){
+      wx.makePhoneCall({
+        phoneNumber: this.member_serves_tel
+      })
     }
   };
 
@@ -114,9 +131,25 @@ export default class ShopCart extends wepy.page {
   onLoad() {
     this.userInfo = this.$parent.globalData.userInfo;
     console.log(this.userInfo);
+    
   }
   onShow() {
-    // this.userInfo = this.$parent.globalData.userInfo
+
+    // 用户个人中心数据接口
+    ajax({
+      url: api.memberInfo,
+    }).then(res => {
+      console.log(res)
+      if(res.code == 200) {
+        this.member_info = res.datas.member_info
+        this.funList[0].num = res.datas.member_info.order_nopay_count || 0
+        this.funList[1].num = res.datas.member_info.order_noreceipt_count || 0
+        this.funList[2].num = res.datas.member_info.order_noreceipt_count || 0
+        this.funList[3].num = res.datas.member_info.return || 0
+        this.member_serves_tel = res.datas.member_serves_tel
+        this.$apply()
+      }
+    })
   }
   /**
    * 状态跳转
@@ -141,37 +174,48 @@ page {
 .top {
   position: relative;
   width: 100%;
-  height: 404rpx;
+  height: 320rpx;
   margin-bottom: 10rpx;
 
   /* 背景图设置 */
   .top_imgbg {
     width: 100%;
     height: 100%;
-    // height: 260rpx;
+    position: relative;
   }
   .top_user {
+     position: absolute;
     width: 100%;
     height: 250rpx;
+    top: 0;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 30rpx;
     /* 头像样式设置 */
     .imgSrc {
       width: 100rpx;
       height: 100rpx;
-      position: absolute;
-      top: 18%;
-      left: 5%;
       border-radius: 50%;
       overflow: hidden;
+      margin: 0 20rpx 0 20rpx;
     }
 
     /* 用户名称设置 */
 
     .username {
-      position: absolute;
-      left: 22%;
-      top: 26%;
       color: #333333;
       font-size: 32rpx;
+    }
+    .vip-tap {
+      height: 36rpx;
+      line-height: 36rpx;
+      padding: 0 20rpx;
+      border-radius: 18rpx;
+      background: #C6C6C6;
+      color:#fff;
+      font-size: 26rpx;
+      margin-left: 10rpx;
     }
   }
   .topVip {
@@ -327,6 +371,11 @@ page {
       .imgright {
         width: 44rpx;
         height: 44rpx;
+      }
+      .phone {
+        text-align: right;
+        font-size: 28rpx;
+        color: #333;
       }
     }
   }

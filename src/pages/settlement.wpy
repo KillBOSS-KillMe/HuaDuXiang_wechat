@@ -78,6 +78,8 @@
 </template>
 
 <script>
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 import wepy from 'wepy';
 
 export default class ShopCart extends wepy.page {
@@ -97,19 +99,68 @@ export default class ShopCart extends wepy.page {
     allPrice: 0, //订单总价格
     goodsPrice: 0, // 商品总价格
     goodsAllNum: 0, //总共件数
-    
+    address_api: null, // 地址信息hash
+    vat_hash: null, //发票信息hash
+    cart_id: null, //商品id数量
+    payment_list: [], // 支付方式
   };
 
   computed = {};
 
   methods = {
-    getWXPayment() {
-      console.log('提交订单');
+    async getWXPayment() {
+      //async函数，避免异步函数嵌套 https://wepyjs.github.io/wepy-docs/1.x/#/?id=针对原生api进行优化
+      var resOrder = await ajax({
+        url: api.placeOrder,
+        data: {
+          cart_id: this.cart_id,
+          ifcart: 0,  // 1=是购物车，0=不是购物车
+          address_id: this.address.address_id,  // 地址id
+          vat_hash: this.vat_hash,  //发票信息hash，
+          offpay_hash: this.address_api.offpay_hash,    // 是否支持货到付款，
+          offpay_hash_batch: this.address_api.offpay_hash_batch,   //店铺是否支持货到付款hash
+          pay_name: 'online',
+          invoice_id: 0,
+        }
+      }).then(res => res.datas)
+
+      var resPay = await ajax({
+        url: api.pay,
+        data: {
+          pay_sn: resOrder.pay_sn,
+          payment_code: 'mini_wxpay',
+        }
+      }).then(res => res.datas)
+
+      wx.requestPayment({
+        timeStamp: resPay.timeStamp,
+        nonceStr: resPay.nonceStr,
+        package: resPay.package,
+        signType: 'MD5',
+        paySign: resPay.paySign,
+        success (res) {
+          console.log(res, 'success')
+        },
+        fail (res) {
+          console.log(res,'fail')
+        }
+      })
+
     }
   };
 
   events = {};
-  onLoad(options) {}
+  onLoad(options) {
+    // 支付方式列表
+    ajax({
+      url: api.memberPayment,
+      type: 'get',
+    }).then(res => {
+      if(res.code == 200) {
+        this.payment_list = res.datas.payment_list
+      }
+    })
+  }
   onShow() {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     var app = this.$parent;
@@ -136,9 +187,14 @@ export default class ShopCart extends wepy.page {
       goodsAllNum += Number(item.goods_num)
     })
     this.goodsAllNum = goodsAllNum
-
     // 订单总价格
     this.allPrice = Number(orderInfo.order_amount).toFixed(2)
+    // 地址hash
+    this.address_api = orderInfo.address_api
+    // 发票信息hash
+    this.vat_hash = orderInfo.vat_hash
+    // 商品信息
+    this.cart_id = orderInfo.cart_id
   }
 }
 </script>

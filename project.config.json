@@ -18,7 +18,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"appid": "wxd57d8ed0c22dc367",
+	"appid": "wx1d61a3c822ca5c83",
 	"projectname": "huaduxiang",
 	"miniprogramRoot": "dist/",
 	"simulatorType": "wechat",
@@ -40,8 +40,12 @@
 		"game": {
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
-			"current": 4,
+			"current": -1,
 			"list": [
 				{
 					"id": 0,
@@ -83,6 +87,20 @@
 					"name": "拼团商品详情",
 					"pathName": "pages/assembleShopDetails",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/goodsList",
+					"pathName": "pages/goodsList",
+					"query": "store_id=1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "店铺首页",
+					"pathName": "pages/merchantIndex",
+					"query": "store_id=1",
 					"scene": null
 				}
 			]

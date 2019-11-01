@@ -58,6 +58,8 @@
 
 <script>
 import wepy from 'wepy';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 
 export default class ShopCart extends wepy.page {
   config = {
@@ -72,21 +74,12 @@ export default class ShopCart extends wepy.page {
     requestImgUrl: '',
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     userInfo: {},
-    itemleft: 0, // 判断已注册的图标距离左边的位置
-    itemline: 0, // 判断注册后线距离左边的位置
     btnText: '', // 根据class判断按钮文字
     tagText: '', // 充值提示信息
     balancetext: 0, //余额
     balanceshow: true, //余额显示
     btnshow: true, //充值按钮显示
     goldenclass: '',
-    menberImg: 'menber.png', // 会员背景图片
-    //
-    userMember: {
-      name: '',
-      integral: '200',
-      class: 1
-    },
     menberExplain: [
       { class: 0 },
       {
@@ -119,7 +112,8 @@ export default class ShopCart extends wepy.page {
       { iamgs: 'nocenter.png' },
       { iamgs: 'nocenter.png' },
       { iamgs: 'nocenter.png' }
-    ]
+    ],
+    member_info: null,
   };
 
   computed = {};
@@ -128,69 +122,23 @@ export default class ShopCart extends wepy.page {
 
   events = {};
   onShow() {
-    // this.userInfo = this.$parent.globalData.userInfo
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
+
+     // 用户个人中心数据接口
+    ajax({
+      url: api.memberInfo,
+    }).then(res => {
+      console.log(res)
+      if(res.code == 200) {
+        this.member_info = res.datas.member_info
+      
+        this.$apply()
+      }
+    })
   }
 
   onLoad() {
-    this.userInfo = this.$parent.globalData.userInfo;
-    console.log(this.noCenter[0].iamgs);
-    switch (this.userMember.class) {
-      case 0:
-        this.userMember.class = '非会员';
-        this.itemleft = 4.5;
-        this.itemline = 5;
-        this.balanceshow = false;
-        this.btnText = '立即关注';
-        this.tagText = '关注公众号即可成为普通会员';
-        break;
-      case 1:
-        this.userMember.class = '普通会员';
-        this.itemleft = 26;
-        this.itemline = 26;
-        this.btnText = '立即充值';
-        this.tagText = '充值1000元即可成为银卡会员';
-        this.noCenter[0].iamgs = 'center.png';
-        break;
-      case 2:
-        this.userMember.class = '银卡会员';
-        this.itemleft = 48;
-        this.itemline = 48;
-        this.btnText = '立即充值';
-        this.tagText = '充值2500元即可成为h金卡会员';
-        this.noCenter[0].iamgs = 'center.png';
-        this.noCenter[1].iamgs = 'center.png';
-        break;
-      case 3:
-        this.userMember.class = '金卡会员';
-        this.itemleft = 69.5;
-        this.itemline = 70;
-        this.btnText = '立即充值';
-        this.tagText = '充值7000元即可成为钻石会员';
-        this.menberImg = 'golden.png';
-        this.goldenclass = '#BE8D53';
-
-        this.noCenter[0].iamgs = 'center.png';
-        this.noCenter[1].iamgs = 'center.png';
-        this.noCenter[2].iamgs = 'center.png';
-        break;
-      case 4:
-        this.userMember.class = '钻石会员';
-        this.itemleft = 91.5;
-        this.itemline = 100;
-        this.menberImg = 'black.png';
-        this.goldenclass = '#BE8D53';
-        this.btnshow = false;
-        this.noCenter[0].iamgs = 'center.png';
-        this.noCenter[1].iamgs = 'center.png';
-        this.noCenter[2].iamgs = 'center.png';
-        this.noCenter[3].iamgs = 'center.png';
-
-        break;
-
-      default:
-        break;
-    }
+   
   }
 }
 </script>

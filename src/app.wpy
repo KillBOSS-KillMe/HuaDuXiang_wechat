@@ -8,7 +8,7 @@ export default class extends wepy.app {
     this.use('promisify');
     this.intercept('request', {
       config(p) {
-        p.timestamp = new Date().getTime();
+        // p.timestamp = new Date().getTime();
         return p;
       },
       success(p) {
@@ -28,7 +28,7 @@ export default class extends wepy.app {
       'pages/membersCenter', // 会员中心
       'pages/userDeliveryAddress', // --我的收货地址
       'pages/newdeliveryAddress', // --我的新增地址
-      'pages/discount', // 首页模块跳转 折扣
+      'pages/discount', // 首页模块跳转 秒赚钱
       'pages/pre', // 首页模块跳转 预购
       'pages/sale', // 首页模块跳转 促销
       'pages/assemble', // 首页模块跳转 拼团
@@ -54,12 +54,13 @@ export default class extends wepy.app {
       'pages/settledInPay', // 入驻付款
       'pages/addressList', // 地址列表
       'pages/addAddress', // 添加地址
-      'pages/consignee' // 商品详情跳转添加地址
+      'pages/consignee', // 商品详情跳转添加地址
+      'pages/goodsList'
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#ffffff',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: '华都详',
       navigationBarTextStyle: 'black'
     }
   };
@@ -133,4 +134,5 @@ input {
 button::after {
   border: none;
 }
+
 </style>

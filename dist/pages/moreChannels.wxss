@@ -36,17 +36,14 @@
 .page .channels-cont .brand-list {
   display: flex;
   flex-wrap: wrap;
-  padding: 0 30rpx;
 }
 .page .channels-cont .brand-list .brand-item {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 30rpx 70rpx 20rpx 0;
-}
-.page .channels-cont .brand-list .brand-item:nth-of-type(4n) {
-  margin-right: 0;
+  width: 25%;
+  margin: 30rpx 0;
 }
 .page .channels-cont .brand-list .brand-item .img {
   width: 120rpx;

@@ -93,6 +93,9 @@
       </view>
     </view>
     <button open-type="getUserInfo" id="getUserInfo"  wx:if="{{!hasUserInfo}}" bindgetuserinfo="getUserInfo"/>
+    <view class="logo-wrap" bindtap="logoHanld">
+      <image class="logo-img" src="/assets/img/logo.png"/>
+    </view>
     
   <view>
     <view class="footer">

@@ -127,9 +127,7 @@
     }
   }
 }
-.recommend {
-  margin-bottom: 160rpx;
-}
+
 // 商品
 .saleShopWrap {
   width: 100%;
@@ -219,6 +217,14 @@
   right: 0;
   opacity: 0;
   z-index: 999;
+}
+.logo-wrap {
+  margin-bottom: 160rpx;
+  text-align: center;
+  .logo-img {
+    width: 250rpx;
+    height: 70rpx;
+  }
 }
 </style>
 <template>
@@ -321,6 +327,9 @@
       wx:if="{{!hasUserInfo}}"
       bindgetuserinfo="getUserInfo"
     ></button>
+    <view class="logo-wrap" @tap="logoHanld">
+      <image class="logo-img" src="/assets/img/logo.png" />
+    </view>
     <nav />
   </view>
 </template>
@@ -452,9 +461,6 @@ export default class Index extends wepy.page {
         this.$navigate({ url: `moreChannels?id=${id}` });
       }
     },
-    /**
-     * 跳转商品详情
-     */
     jumpDetails(goods_id, goods_type) {
       console.log(goods_id, goods_type)
       switch (Number(goods_type)) {
@@ -465,11 +471,13 @@ export default class Index extends wepy.page {
           this.$navigate(`/pages/seckillShopDetails?goods_id=${goods_id}`);
       }
     },
-    /**
-     * 底部导航跳转
-     */
     navSearch() {
       this.$navigate('/pages/search');
+    },
+    logoHanld(){
+      wx.previewImage({
+        urls: ['/assets/img/logo.png']
+      })
     }
   };
   events = {};

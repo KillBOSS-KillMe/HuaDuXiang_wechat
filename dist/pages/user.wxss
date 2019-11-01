@@ -6,35 +6,47 @@ page {
 .top {
   position: relative;
   width: 100%;
-  height: 404rpx;
+  height: 320rpx;
   margin-bottom: 10rpx;
   /* 背景图设置 */
 }
 .top .top_imgbg {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 .top .top_user {
+  position: absolute;
   width: 100%;
   height: 250rpx;
+  top: 0;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 30rpx;
   /* 头像样式设置 */
   /* 用户名称设置 */
 }
 .top .top_user .imgSrc {
   width: 100rpx;
   height: 100rpx;
-  position: absolute;
-  top: 18%;
-  left: 5%;
   border-radius: 50%;
   overflow: hidden;
+  margin: 0 20rpx 0 20rpx;
 }
 .top .top_user .username {
-  position: absolute;
-  left: 22%;
-  top: 26%;
   color: #333333;
   font-size: 32rpx;
+}
+.top .top_user .vip-tap {
+  height: 36rpx;
+  line-height: 36rpx;
+  padding: 0 20rpx;
+  border-radius: 18rpx;
+  background: #C6C6C6;
+  color: #fff;
+  font-size: 26rpx;
+  margin-left: 10rpx;
 }
 .top .topVip {
   width: 90%;
@@ -185,6 +197,11 @@ page {
 .personal_data .order .orderitem .imgright {
   width: 44rpx;
   height: 44rpx;
+}
+.personal_data .order .orderitem .phone {
+  text-align: right;
+  font-size: 28rpx;
+  color: #333;
 }
 /* 客服服务 */
 .custorm_data {

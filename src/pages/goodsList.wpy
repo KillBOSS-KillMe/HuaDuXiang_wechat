@@ -1,0 +1,113 @@
+<template>
+  <view class="wrap">
+    <!-- <image class="chooseImg" src="{{item.img}}" />
+    <repeat for="{{ChooesData}}" item="item">-->
+    <image class="head-img" src="/assets/img/image.png" />
+    <view class="goods-list">
+      <repeat for="{{11}}" item="item">
+        <navigator url="/pages/shopDetails" class="goods-item">
+          <image class="goods-img" src="/assets/img/image.png" />
+          <view class="goods-fot">
+            <view class="title overflow-one">新款冬季棉拖鞋新款冬季棉拖鞋新款冬季棉拖鞋</view>
+            <view class="price">
+              ￥
+              <text>19</text>
+            </view>
+          </view>
+        </navigator>
+      </repeat>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '商品列表'
+  };
+  components = {};
+
+  mixins = [];
+
+  data = {
+    requestImgUrl: ''
+  };
+
+  computed = {};
+  onLoad(options) {
+    console.log(options)
+  }
+  onShow() {}
+  methods = {};
+
+  events = {};
+}
+</script>
+
+<style lang="less">
+.wrap {
+  background: #f9f9f9;
+  min-height: 100vh;
+  .head-img {
+    width: 690rpx;
+    height: 260rpx;
+    border-radius: 20rpx;
+    display: block;
+    margin: 20rpx 30rpx;
+  }
+  .goods-list {
+    padding: 0 30rpx;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .goods-item {
+      width: 340rpx;
+      border-radius: 10rpx;
+      overflow: hidden;
+      .goods-img {
+        width: 340rpx;
+        height: 340rpx;
+        display: block;
+      }
+      .goods-fot {
+        width: 340rpx;
+        height: 150rpx;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 20rpx 30rpx 30rpx 20rpx;
+        box-sizing: border-box;
+        background: #ffffff;
+        .title {
+          font-size: 30rpx;
+          font-weight: bold;
+        }
+        .price {
+          display: flex;
+          align-items: flex-end;
+          color: #ff2228;
+          font-size: 24rpx;
+          justify-content: space-between;
+          text:nth-of-type(1) {
+            font-size: 38rpx;
+            font-weight: bold;
+            flex: 1;
+          }
+          text:nth-of-type(2) {
+            color: #ffffff;
+            font-size: 28rpx;
+            width: 142rpx;
+            height: 52rpx;
+            line-height: 52rpx;
+            text-align: center;
+            border-radius: 6rpx;
+            background: #ff2228;
+          }
+        }
+      }
+    }
+  }
+}
+</style>

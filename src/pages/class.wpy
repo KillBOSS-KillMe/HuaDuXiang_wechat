@@ -2,29 +2,29 @@
 <template>
   <view>
     <view class="goods-wrap">
-      <scroll-view class="left-scroll" scroll-y bindscroll="bindscroll">
+      <scroll-view class="left-scroll" scroll-y>
         <view>
-          <repeat for="{{20}}" item="item">
+          <repeat for="{{oneList}}" item="item">
             <view
               class="text {{leftNav == index ? 'active-text':''}}"
-              bindtap="changeLeftNav"
-            >{{item.name}}分类</view>
+              @tap="changeLeftNav({{index}})"
+            >{{item.gc_name}}</view>
           </repeat>
         </view>
       </scroll-view>
       <view class="goods-right">
         <scroll-view class="right-scroll" scroll-y>
           <view class="advertisement" hover-class="none">
-            <image src="/assets/img/image.png" />
+            <image src="{{oneList[leftNav].imagesrc}}" />
           </view>
-          <repeat for="{{10}}" item="item">
+          <repeat for="{{twoList}}" item="item">
             <view class="two-type">
-              <view class="title">水果</view>
+              <view class="title">{{item.gc_name}}</view>
               <view class="two-type-list">
-                <repeat for="{{10}}" item="item">
-                  <view class="item">
-                    <image src="/assets/img/image.png" />
-                    <text>葡萄</text>
+                <repeat for="{{item.three}}" item="ele">
+                  <view class="item" @tap="navGoodsList({{ele.gc_id}})">
+                    <image src="{{ele.imagesrc}}" />
+                    <text>{{ele.new_name}}</text>
                   </view>
                 </repeat>
               </view>
@@ -41,6 +41,8 @@
 <script>
 import wepy from 'wepy';
 import nav from '../components/nav'; // 底部导航
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 
 export default class Index extends wepy.page {
   config = {
@@ -53,25 +55,49 @@ export default class Index extends wepy.page {
   mixins = [];
 
   data = {
-    leftNav: 0
+    leftNav: 0,
+    oneList: [],
+    twoList: []
   };
 
   computed = {};
 
   methods = {
-    /**
-     * 底部导航跳转
-     */
-    goPage(url, evt) {
-      // 销毁当前页{跳转}
-      this.$redirect(url);
+    // 切换一级分类
+    changeLeftNav(idx) {
+      if(idx == this.leftNav) return
+      this.leftNav = idx
+      this.setList()
+    },
+    navGoodsList(gc_id) {
+      this.$navigate({url: `goodsList?gc_id=${gc_id}`})
     }
   };
 
   events = {};
 
   onLoad() {}
-  onShow() {}
+  onShow() {
+    // 一级分类
+    ajax({
+      url: api.oneGoodsClass,
+    }).then(res => {
+      this.oneList = res.datas || []
+      this.setList()
+      this.$apply()
+    })
+  }
+  // 处理二三级分类数据
+  setList(idx){
+    this.twoList = this.oneList[this.leftNav].two
+    this.twoList.forEach(item => {
+      if( Object.prototype.toString.call(item.three) == '[object Array]') {
+        item.three.forEach(ele => {
+          ele.new_name = ele.gc_name.toString().slice(0, 4)
+        })
+      }
+    })
+  }
 }
 </script>
 

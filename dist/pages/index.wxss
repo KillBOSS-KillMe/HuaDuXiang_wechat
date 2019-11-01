@@ -115,9 +115,6 @@
   font-size: 18rpx;
   margin: 0 8rpx;
 }
-.recommend {
-  margin-bottom: 160rpx;
-}
 .saleShopWrap {
   width: 100%;
   height: 100%;
@@ -203,4 +200,12 @@
   right: 0;
   opacity: 0;
   z-index: 999;
+}
+.logo-wrap {
+  margin-bottom: 160rpx;
+  text-align: center;
+}
+.logo-wrap .logo-img {
+  width: 250rpx;
+  height: 70rpx;
 }

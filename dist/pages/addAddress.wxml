@@ -9,18 +9,14 @@
         <view>电话</view>
         <input placeholder="请输入手机号码" name="phone" type="number" value="{{phone}}"/>
       </view>
-      <view class="com-add">
-        <view>邮政编码</view>
-        <input placeholder="请输入邮政编码" name="code" type="number" value="{{zipcode}}"/>
-      </view>
-      <picker mode="region" bindchange="bindRegionChange" value="{{region}}">
-        <view class="picker"  wx:if="{{true}}">
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range="{{addressArr}}" range-key="area_name">
+        <view class="picker"  wx:if="{{!addressInfo.area_info}}">
           <text>所在地区</text>
           <view class="input-placeholder">请选择所在省份、城市、区县</view>
         </view>
         <view class="picker"  wx:else>
           <text>所在地区</text>
-          <view>{{region[0]}}，{{region[1]}}，{{region[2]}}</view>
+          <view>{{addressInfo.area_info}}</view>
         </view>
       </picker>
       <view class="com-add">
@@ -30,8 +26,8 @@
     </view>
 
     <view class="set-address" bindtap="setAddress">
-      <image wx:if="{{!flag}}" style="width: 48rpx;height: 48rpx;" src="/assets/img/image47.png"/>
-      <image wx:else style="width: 48rpx;height: 48rpx;" src="/assets/img/image46.png"/>
+      <image wx:if="{{is_default == 0}}" style="width: 48rpx;height: 48rpx;" src="/assets/img/image46.png"/>
+      <image wx:else style="width: 48rpx;height: 48rpx;" src="/assets/img/image47.png"/>
       <text>设为默认收货地址</text>
     </view>
 

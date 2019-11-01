@@ -1,40 +1,58 @@
 <template>
   <view class="shop-wrap">
-    <!-- <repeat for="{{10}}" item="item"> -->
-    <!-- <image class="search-img" src="/assets/img/image.png" /> -->
     <view class="shop-head">
-      <image class="head-bg-img" src="/assets/img/image.png" />
+      <image class="head-bg-img" src="{{store_info.mb_title_img}}" />
       <view class="cont">
+        <image class="back-img" @tap="back" src="/assets/img/image49.png" />
         <view>
-          <image class="head-img" src="/assets/img/image.png" />
-          <text>苏泊尔旗舰店</text>
+          <image class="head-img" src="{{store_info.store_avatar}}" />
+          <text>{{store_info.store_name}}</text>
         </view>
       </view>
     </view>
-    <view class="shop-title">全部商品</view>
-    <view class="saleShopWrap">
+    <!-- <view class="shop-title">全部商品</view> -->
+    <view class="nav-wrap">
+        <repeat for="{{['全部商品','分类查看']}}" item="item">
+          <view class="nav-item  {{index == navIdx ? 'nav-active':''}}" @tap="changeNav({{index}})">{{item}}</view>
+        </repeat>
+    </view>
+
+    <view class="saleShopWrap" wx:if="{{navIdx == 0}}">
       <view class="saleShop">
-        <repeat for="{{flowData}}" item="item">
-          <view class="shopview" @tap="navigate">
-            <image src="http://img011.hc360.cn/g2/M06/45/BF/wKhQuFLfLl-EakIIAAAAAGqrml0128.jpg" />
+        <repeat for="{{rec_goods_list}}" item="item">
+          <view class="shopview" @tap="navGoodsDetails({{item.goods_id}})">
+            <image src="{{item.goods_image_url}}" />
             <view class="saleTag">
-              <text class="overflow-one">{{item.title}}</text>
+              <text class="overflow-one">{{item.goods_name}}</text>
             </view>
             <view class="fot">
               <text class="salesmple">￥</text>
-              <text class="saleprice">{{item.price}}</text>
-              <text class="saleexprice">原价￥ {{item.exprice}}</text>
+              <text class="saleprice">{{item.goods_price}}</text>
+              <!-- <text class="saleexprice">原价￥ {{item.exprice}}</text> -->
             </view>
           </view>
         </repeat>
       </view>
+    </view>
+    <view class="type-wrap" wx:if="{{navIdx == 1}}">
+        <repeat for="{{store_goods_class}}" item="item">
+          <view class="type-one-item">
+            <view class="type-h">一级分类</view>
+              <view class="type-list">  
+                <repeat for="{{30}}" item="ele" index="idx">
+                    <view class="type-two-item" @tap="navGoodsList">分类啊啊</view>
+                </repeat>
+              </view>
+          </view>
+        </repeat>
     </view>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy';
-
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 export default class ShopCart extends wepy.page {
   config = {
     navigationBarTitleText: '商户',
@@ -47,64 +65,69 @@ export default class ShopCart extends wepy.page {
   mixins = [];
 
   data = {
-    flowData: [
-      {
-        id: '1',
-        title: '萌分订书机a萌分订书机a萌分订书机a萌分订书机a',
-        price: '5',
-        exprice: '25',
-        img: 'indeximg.png'
-      },
-      {
-        id: '2',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: 'indeximg.png'
-      },
-      {
-        id: '3',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: 'indeximg.png'
-      },
-      {
-        id: '4',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: 'indeximg.png'
-      },
-      {
-        id: '5',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: 'indeximg.png'
-      },
-      {
-        id: '6',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: 'indeximg.png'
-      }
-    ]
+    requestImgUrl: '',
+    store_info: null, // 店铺信息
+    rec_goods_list: [], //商品列表
+    navIdx: 1,
+    store_goods_class: [] //店铺分类
   };
 
   computed = {};
 
   methods = {
-    navigate() {
-      this.$navigate({ url: 'shopDetails' });
+    navGoodsDetails(goods_id) {
+      this.$navigate({ url: `shopDetails?goods_id=${goods_id}` });
+    },
+    changeNav(idx) {
+      if(idx == this.navIdx) return false
+      this.navIdx = idx
+    },
+    navGoodsList(){
+      this.$navigate({ url: `goodsList` });
+    },
+    back(){
+      wx.navigateBack()
     }
   };
 
   events = {};
-  onShow() {}
+  onShow() {
+    
+  }
 
-  onLoad(t) {console.log(t, '店铺id')}
+  onLoad(t) {
+    this.requestImgUrl = this.$parent.globalData.requestImgUrl;
+
+    console.log(t, '店铺id')
+    // 店铺首页接口
+    ajax({
+      url: api.storeIndex,
+      data: {
+        store_id: t.store_id
+      }
+    }).then(res => {
+      if(res.code == 200) {
+        console.log(res.datas)
+        this.store_info = res.datas.store_info
+        this.rec_goods_list = res.datas.rec_goods_list || []
+        this.$apply()
+      }
+    })
+
+    // 店铺商品分类接口
+    ajax({
+      url: api.storeGoodsClass,
+      data: {
+        store_id: t.store_id
+      }
+    }).then(res => {
+      if(res.code == 200) {
+        this.store_goods_class = res.datas.store_goods_class || []
+        this.$apply()
+      }
+    })
+
+  }
 }
 </script>
 
@@ -113,9 +136,11 @@ export default class ShopCart extends wepy.page {
   background: #f9f9f9;
 }
 .shop-head {
-  position: relative;
+  position: fixed;
+  top: 0;
   height: 284rpx;
   width: 100%;
+  background: #fff;
   .head-bg-img {
     width: 100%;
     height: 100%;
@@ -152,12 +177,77 @@ export default class ShopCart extends wepy.page {
   padding: 20rpx 30rpx 0 30rpx;
   font-weight: bold;
 }
+.nav-wrap {
+  display: flex;
+  align-items: center;
+  height: 88rpx;
+  position: fixed;
+  top: 284rpx;
+  width: 100%;
+  background-color: #fff;
+  .nav-item {
+    flex: 1;
+    text-align: center;
+    line-height: 88rpx;
+    font-size: 28rpx;
+    color:#333;
+    position: relative;
+  }
+  .nav-active {
+    color:#FF2228;
+    font-weight: bold;
+    &::after {
+      content: '';
+      width: 60rpx;
+      height: 4rpx;
+      background-color: #FF2228;
+      position: absolute;
+      bottom: 4rpx;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}
+.type-wrap {
+  padding: 372rpx  0 50rpx;
+  box-sizing: border-box;
+  .type-one-item {
+    padding: 0 30rpx;
+    .type-h {
+      color:#282828;
+      font-size: 30rpx;
+      font-weight: bold;
+      height: 76rpx;
+      line-height: 76rpx;
+    }
+    .type-list {
+      display: flex;
+      flex-wrap: wrap;
+      box-sizing: border-box;
+      padding: 0 10rpx;
+      .type-two-item {
+        margin: 0rpx 20rpx 24rpx 0;
+        background-color: #eee;
+        border-radius: 14rpx;
+        height: 66rpx;
+        font-size: 28rpx;
+        line-height: 66rpx;
+        text-align: center;
+        width: 150rpx;
+        &:nth-of-type(4n) {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+}
 // 商品
 .saleShopWrap {
   width: 100%;
   height: 100%;
   background: #f9f9f9;
-  padding-bottom: 160rpx;
+  padding-top: 372rpx;
   .saleShop {
     width: 92%;
     height: 100%;
@@ -211,7 +301,7 @@ export default class ShopCart extends wepy.page {
       .saleprice {
         font-weight: bolder;
         color: red;
-        font-size: 42rpx;
+        font-size: 38rpx;
       }
       .saleexprice {
         color: #666;
@@ -234,6 +324,14 @@ export default class ShopCart extends wepy.page {
       }
     }
   }
+}
+
+.back-img {
+  width: 44rpx;
+  height: 44rpx;
+  position: fixed;
+  top: 64rpx;
+  left: 26rpx;
 }
 </style>
 

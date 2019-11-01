@@ -7,20 +7,29 @@
         <image class="bg-img" src="/assets/img/{{bgImg}}" />
         <view class="cont">
           <view class="info">
-            <image src="/assets/img/image.png" />
+            <image src="{{member_info.avatar}}" />
             <view class="info-t">
-              <text class="name">李白白</text>
-              <text>积分：300</text>
-              <text>编号：1234567890</text>
+              <text class="name">{{member_info.user_name}}</text>
+              <text>积分：{{member_data.member_points}}</text>
+              <text>编号：{{member_data.member_id}}</text>
             </view>
           </view>
           <view class="price">
             余额:
-            <text>3000</text>
+            <text>{{member_data.available_predeposit}}</text>
           </view>
           <view class="recharge">
-            <text>充值7000元即可成为钻石会员</text>
+            <text wx:if="{{member_info.level == 0}}">充值7000元即可成为银卡会员</text>
+            <text  wx:if="{{member_info.level == 1}}">充值7000元即可成为金卡会员</text>
+            <text  wx:if="{{member_info.level == 2}}">充值7000元即可成为砖石会员</text>
+            <text  wx:if="{{member_info.level == 3}}">您已成为钻石会员</text>
             <button class="btn">立即充值</button>
+          </view>
+          <view class="level-tap">
+            <text  wx:if="{{member_info.level == 0}}">普通会员</text>
+            <text  wx:if="{{member_info.level == 1}}">银卡会员</text>
+            <text  wx:if="{{member_info.level == 2}}">金卡会员</text>
+            <text  wx:if="{{member_info.level == 3}}">砖石会员</text>
           </view>
         </view>
       </view>
@@ -30,7 +39,7 @@
       <repeat for="{{gradeArr}}" item="item">
         <view class="grade-item">
           <text>{{item.title}}</text>
-          <view class="schedule {{active > index ? 'schedule-active' : '' }} {{active == index + 1? 'schedule-bg':''}}">
+          <view class="schedule {{member_info.level >= index ? 'schedule-active' : '' }} {{member_info.level == index? 'schedule-bg':''}}">
             <image class="default" src="/assets/img/image41.png" />
             <image class="active" src="/assets/img/image42.png" />
           </view>
@@ -53,6 +62,8 @@
 
 <script>
 import wepy from 'wepy';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 
 export default class Index extends wepy.page {
   config = {
@@ -91,7 +102,9 @@ export default class Index extends wepy.page {
         menberintroduce:
           '普通会员累计消费20000元或者一次性充值满10000元; \n 金卡会员补充7500元, 普通会员累计充值20000元即可成为钻石会员, 全场商品享受9折优惠; \n 同时不定期推出针对钻石会员的劲爆活动.'
       }
-    ]
+    ],
+    member_info: null,
+    member_data: null,
   };
 
   computed = {};
@@ -99,20 +112,34 @@ export default class Index extends wepy.page {
   events = {};
 
   onLoad(options) {
-    switch (this.active) {
-      case 1:
-        this.bgImg = 'image37.png';
-        break;
-      case 2:
-        this.bgImg = 'image38.png';
-        break;
-      case 3:
-        this.bgImg = 'image39.png';
-        break;
-      case 4:
-        this.bgImg = 'image34.png';
-        break;
-    }
+    
+  }
+
+  onShow(){
+     // 用户个人中心数据接口
+    ajax({
+      url: api.memberInfo,
+    }).then(res => {
+      if(res.code == 200) {
+        this.member_info = res.datas.member_info
+        this.member_data = res.datas.member_data
+        switch (res.datas.member_info.level) {
+          case 0:
+            this.bgImg = 'image37.png';
+            break;
+          case 1:
+            this.bgImg = 'image38.png';
+            break;
+          case 2:
+            this.bgImg = 'image39.png';
+            break;
+          case 3:
+            this.bgImg = 'image34.png';
+            break;
+        }
+        this.$apply()
+      }
+    })
   }
 
   methods = {};
@@ -177,6 +204,20 @@ export default class Index extends wepy.page {
         text {
           font-size: 32rpx;
         }
+      }
+      .level-tap {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 135rpx;
+        height: 62rpx;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #727272;
+        font-size: 24rpx;
+        border-radius: 0 20rpx 0 20rpx;
+        color: #fff;
       }
     }
     .recharge {

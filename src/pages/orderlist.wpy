@@ -156,9 +156,9 @@ export default class ShopCart extends wepy.page {
     navArr: [
       { title: '全部', id: 0 },
       { title: '待付款' },
+      { title: '待发货' },
       { title: '待收货' },
-      { title: '已完成' },
-      { title: '已取消' }
+      { title: '已完成' }
     ],
     navIdx: 0
   };

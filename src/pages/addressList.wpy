@@ -1,17 +1,17 @@
 <template>
   <view>
-    <repeat for="{{5}}" item="item" wx:if="{{emptyFlag}}">
+    <repeat for="{{address_list}}" item="item" wx:if="{{emptyFlag == 1}}">
       <view class="address-wrap">
         <view class="address-top">
-          <view>{{item.name}}名字</view>
-          <view>{{item.phone}}13324565655</view>
-          <view>默认</view>
+          <view>{{item.true_name}}</view>
+          <view>{{item.tel_phone}}</view>
+          <view wx:if="{{item.is_default == 1}}">默认</view>
         </view>
         <view
           class="address-text overflow-two"
-        >{{item.province}}{{item.city}}{{item.area}}{{item.address}}陕西省西安市蓝田县</view>
+        >{{item.area_info}}{{item.address}}</view>
         <view class="address-fot">
-          <view class="flex-class" bindtap="setAddress" data-id="{{item.id}}">
+          <view class="flex-class" @tap="setAddress({{item.address_id}})">
             <image
               wx:if="{{true}}"
               style="width: 48rpx;height: 48rpx;"
@@ -23,13 +23,13 @@
           <view class="flex-class">
             <navigator
               hover-class="none"
-              url="/pages/add-address/add-address?id={{item.id}}"
+              url="/pages/addAddress?address_id={{item.address_id}}"
               class="flex-class bianji"
             >
               <image style="width: 20rpx;height: 20rpx;" src="/assets/img/image45.png" />
               <view>编辑</view>
             </navigator>
-            <view class="flex-class" data-id="{{item.id}}" bindtap="deleAddress">
+            <view class="flex-class"  @tap="deleAddress({{item.address_id}})">
               <image style="width: 20rpx;height: 20rpx;" src="/assets/img/image44.png" />
               <view>删除</view>
             </view>
@@ -37,7 +37,7 @@
         </view>
       </view>
     </repeat>
-    <view class="no-content" wx:if="{{!emptyFlag}}">
+    <view class="no-content" wx:if="{{emptyFlag == 0}}">
       <image src="/assets/img/image48.png" style="height: 296rpx; width: 296rpx;" />
       <view>暂无地址</view>
     </view>
@@ -47,80 +47,91 @@
 
 <script>
 import wepy from 'wepy';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 
 export default class Index extends wepy.page {
   config = {
     navigationBarTitleText: '地址'
   };
   data = {
-    emptyFlag: true
+    emptyFlag: null,
+    address_list: []
   };
   components = {};
   computed = {};
   methods = {
     // 删除地址
-    deleAddress(e) {
-      var that = this;
-      var id = e.currentTarget.dataset.id;
+    deleAddress(address_id) {
+      var that = this
       wx.showModal({
         title: '提示',
         content: '确定删除地址？',
         success(res) {
           if (res.confirm) {
-            app.ajax({
+            ajax({
               url: api.addressDel,
               data: {
-                id
-              },
-              success(res) {
-                if (res.code == 200) {
-                  var list = that.data.list || [];
-                  that.setData({
-                    list: list.filter(item => item.id != id)
-                  });
-                  wx.showToast({
-                    title: '删除成功'
-                  });
-                } else {
-                  app.showToast1(res.msg);
-                }
+                address_id
               }
-            });
+            }).then(res => {
+              if(res.datas.state == 1) {
+                wx.showToast({
+                  title: res.datas.msg
+                })
+                that.address_list = that.address_list.filter(item => item.address_id != address_id )
+                that.$apply()
+              } else {
+                 wx.showToast({
+                  title: res.datas.msg,
+                  icon: 'none'
+                })
+              }
+            })
           }
         }
       });
     },
     // 设为默认地址
-    setAddress(e) {
+    setAddress(address_id) {
+      // addressSetdefault
       var that = this;
       wx.showModal({
         title: '提示',
         content: '确定设置为默认地址？',
         success(res) {
           if (res.confirm) {
-            app.ajax({
-              url: api.addressAddUpdate,
+            ajax({
+              url: api.addressSetdefault,
               data: {
-                id: e.currentTarget.dataset.id
-              },
-              success(res) {
-                if (res.code == 200) {
-                  var list = that.data.list;
-                  that.onShow();
-                  wx.showToast({
-                    title: '设置成功'
-                  });
-                } else {
-                  app.showToast1(res.msg);
-                }
+                address_id
               }
-            });
+            }).then(res => {
+              console.log(res)
+              if(res.datas.state == 1) {
+                wx.showToast({
+                  title: res.msg
+                })
+                that.onShow()
+              }
+            })
           }
         }
       });
     }
   };
   onLoad() {}
+  onShow() {
+    // 用户收货地址列表
+    ajax({
+      url: api.addressList
+    }).then(res => {
+      this.address_list = res.datas.address_list
+      this.emptyFlag = res.datas.address_list.length ? 1 : 0
+      this.$apply()
+    })
+
+  }
 }
 </script>
 

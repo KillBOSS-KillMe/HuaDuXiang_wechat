@@ -1,10 +1,10 @@
 <template>
   <view class="merchant-wrap">
     <view class="merchant-list">
-      <repeat for="{{10}}" item="item">
-        <view class="merchant-item" @tap="navigate">
-          <image class="search-img" src="/assets/img/image.png" />
-        </view>
+      <repeat for="{{storeRecommendList}}" item="item">
+        <navigator url="/pages/merchantIndex?store_id={{item.store_id}}" hover-class="none" class="merchant-item">
+          <image class="search-img" src="{{item.store_avatar}}" />
+        </navigator>
       </repeat>
     </view>
   </view>
@@ -12,6 +12,8 @@
 
 <script>
 import wepy from 'wepy';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 
 export default class ShopCart extends wepy.page {
   config = {
@@ -22,7 +24,9 @@ export default class ShopCart extends wepy.page {
 
   mixins = [];
 
-  data = {};
+  data = {
+    storeRecommendList: []
+  };
 
   computed = {};
 
@@ -36,7 +40,17 @@ export default class ShopCart extends wepy.page {
   events = {};
   onShow() {}
 
-  onLoad() {}
+  onLoad() {
+        this.requestStoreRecommendList()
+  }
+  requestStoreRecommendList(){
+    ajax({
+      url: api.storeRecommendList,
+    }).then(res => {
+      this.storeRecommendList = res.datas || []
+      this.$apply()
+    })
+  }
 }
 </script>
 

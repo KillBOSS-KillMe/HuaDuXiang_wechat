@@ -4,13 +4,20 @@
     <view class="top" bindtap="getMyRank">
       <image class="top_imgbg" src="/assets/img/image36.png"/>
       <view class="top_user">
-        <image class="imgSrc" data-id="data-id" src="{{userInfo.avatarUrl}}"/>
-        <view class="username">{{userInfo.nickName || '阿萨水电费'}}</view>
+        <image class="imgSrc" src="{{member_info.avatar}}"/>
+        <view class="username">{{member_info.user_name}}</view>
+        <view class="vip-tap"  wx:if="{{member_info.level==0}}">普通会员</view>
+        <view class="vip-tap"  wx:if="{{member_info.level==1}}">银卡会员</view>
+        <view class="vip-tap" wx:if="{{member_info.level==2}}">金卡会员</view>
+        <view class="vip-tap" wx:if="{{member_info.level==3}}">砖石会员</view>
       </view>
       <view class="topVip">
-        <image src="copy.png"/>
-        <text>成为合伙人, 福利享不停</text>
-        <button>立即开通</button>
+        <image src="/assets/img/image50.png"/>
+        <text wx:if="{{member_info.level==0}}">成为银卡会员, 福利享不停</text>
+        <text wx:if="{{member_info.level==1}}">成为金卡会员, 福利享不停</text>
+        <text wx:if="{{member_info.level==2}}">成为砖石会员, 福利享不停</text>
+        <text wx:if="{{member_info.level==3}}">砖石会员, 福利享不停</text>
+        <button wx:if="{{member_info.level !== 3}}">立即开通</button>
       </view>
     </view>
 
@@ -35,19 +42,20 @@
     <view class="personal_data">
       <text class="mainorder">我的服务</text>
       <view class="order">
-        <view class="orderitem" bindtap="getUserAddress">
-          <image class="img" src="/assets/img/image31.png"/>
+        <navigator url="/pages/vip" hover-class="none" class="orderitem">
+          <image class="img" src="/assets/img/image32.png"/>
           <view>我的钱包</view>
           <image class="imgright" src="/assets/img/image25.png"/>
-        </view>
-        <view class="orderitem">
-          <image class="img" src="/assets/img/image32.png"/>
+        </navigator>
+        <view class="orderitem" bindtap="getUserAddress">
+          <image class="img" src="/assets/img/image33.png"/>
           <view>收货地址</view>
           <image class="imgright" src="/assets/img/image25.png"/>
         </view>
-        <view class="orderitem">
-          <image class="img" src="/assets/img/image33.png"/>
+        <view class="orderitem" bindtap="callPhone">
+          <image class="img" src="/assets/img/image34.png"/>
           <view>客服服务</view>
+          <view class="phone">{{member_serves_tel}}</view>
           <image class="imgright" src="/assets/img/image25.png"/>
         </view>
       </view>

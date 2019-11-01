@@ -12,21 +12,21 @@
     <!-- 品牌 -->
     <view class="channels-cont" wx:if="{{navIdx == 0}}">
       <view class="brand-list">
-        <repeat for="{{9}}" item="item">
-          <view class="brand-item">
-            <image class="img" src="/assets/img/image.png" />
-            <text>兰蔻</text>
-          </view>
+        <repeat for="{{recommendList}}" item="item">
+          <navigator url="/pages/goodsList?brand_id={{item.brand_id}}" hover-class="none" class="brand-item">
+            <image class="img" src="{{item.brand_pic}}" />
+            <text>{{item.brand_name}}</text>
+          </navigator>
         </repeat>
       </view>
     </view>
     <!-- 推荐商户 -->
     <view class="channels-cont" wx:if="{{navIdx == 1}}">
-      <view class="shops-list">
-        <repeat for="{{9}}" item="item">
-          <view class="shops-item">
-            <image class="img" src="/assets/img/image.png" />
-          </view>
+      <view  class="shops-list">
+        <repeat for="{{storeRecommendList}}" item="item">
+          <navigator url="/pages/merchantIndex?store_id={{item.store_id}}" hover-class="none" class="shops-item">
+            <image class="img" src="{{item.store_avatar}}" />
+          </navigator>
         </repeat>
       </view>
     </view>
@@ -35,6 +35,8 @@
 
 <script>
 import wepy from 'wepy';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 
 export default class Index extends wepy.page {
   config = {
@@ -46,18 +48,48 @@ export default class Index extends wepy.page {
 
   data = {
     navArr: [ '品牌', '推荐商户'],
-    navIdx: 0
+    navIdx: 0,
+    requestImgUrl: '',
+    recommendList: [],
+    storeRecommendList: []
   };
 
   computed = {};
 
   events = {};
 
-  onLoad(options) {}
+  onLoad(options) {
+    this.requestImgUrl = this.$parent.globalData.requestImgUrl;
+
+    this.requestRecommendList()
+  }
+  requestRecommendList(){
+    ajax({
+      url: api.recommendList,
+    }).then(res => {
+      this.recommendList = res.datas.brand_list || []
+      this.$apply()
+    })
+  }
+  requestStoreRecommendList(){
+    ajax({
+      url: api.storeRecommendList,
+    }).then(res => {
+      this.storeRecommendList = res.datas || []
+      this.$apply()
+    })
+  }
   onShow() {}
   methods = {
     changeNav(idx) {
+      if(this.navIdx == idx) return
       this.navIdx = idx;
+      if(idx == 0) {
+        this.requestRecommendList()
+      } else {
+        this.requestStoreRecommendList()
+      }
+
     }
   };
 }
@@ -102,17 +134,13 @@ export default class Index extends wepy.page {
     .brand-list {
       display: flex;
       flex-wrap: wrap;
-      padding: 0 30rpx;
       .brand-item {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin: 30rpx 70rpx 20rpx 0;
-        &:nth-of-type(4n) {
-          margin-right: 0;
-        }
-
+        width: 25%;
+        margin: 30rpx 0;
         .img {
           width: 120rpx;
           height: 120rpx;

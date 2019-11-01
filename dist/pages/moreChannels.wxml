@@ -8,21 +8,21 @@
     <!-- 品牌 -->
     <view class="channels-cont"  wx:if="{{navIdx == 0}}">
       <view class="brand-list">
-        <block wx:for="{{9}}" wx:for-index="index" wx:for-item="item" wx:key="key">
-          <view class="brand-item">
-            <image class="img" src="/assets/img/image.png"/>
-            <text>兰蔻</text>
-          </view>
+        <block wx:for="{{recommendList}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+          <navigator url="/pages/goodsList?brand_id={{item.brand_id}}" hover-class="none" class="brand-item">
+            <image class="img" src="{{item.brand_pic}}"/>
+            <text>{{item.brand_name}}</text>
+          </navigator>
         </block>
       </view>
     </view>
     <!-- 推荐商户 -->
     <view class="channels-cont"  wx:if="{{navIdx == 1}}">
       <view class="shops-list">
-        <block wx:for="{{9}}" wx:for-index="index" wx:for-item="item" wx:key="key">
-          <view class="shops-item">
-            <image class="img" src="/assets/img/image.png"/>
-          </view>
+        <block wx:for="{{storeRecommendList}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+          <navigator url="/pages/merchantIndex?store_id={{item.store_id}}" hover-class="none" class="shops-item">
+            <image class="img" src="{{item.store_avatar}}"/>
+          </navigator>
         </block>
       </view>
     </view>

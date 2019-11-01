@@ -1,32 +1,49 @@
 
   <view class="shop-wrap">
-    <!-- <repeat for="{{10}}" item="item"> -->
-    <!-- <image class="search-img" src="/assets/img/image.png" /> -->
     <view class="shop-head">
-      <image class="head-bg-img" src="/assets/img/image.png"/>
+      <image class="head-bg-img" src="{{store_info.mb_title_img}}"/>
       <view class="cont">
+        <image class="back-img" bindtap="back" src="/assets/img/image49.png"/>
         <view>
-          <image class="head-img" src="/assets/img/image.png"/>
-          <text>苏泊尔旗舰店</text>
+          <image class="head-img" src="{{store_info.store_avatar}}"/>
+          <text>{{store_info.store_name}}</text>
         </view>
       </view>
     </view>
-    <view class="shop-title">全部商品</view>
-    <view class="saleShopWrap">
+    <!-- <view class="shop-title">全部商品</view> -->
+    <view class="nav-wrap">
+        <block wx:for="{{['全部商品','分类查看']}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+          <view class="nav-item  {{index == navIdx ? 'nav-active':''}}" bindtap="changeNav" data-wpychangenav-a="{{index}}">{{item}}</view>
+        </block>
+    </view>
+
+    <view class="saleShopWrap"  wx:if="{{navIdx == 0}}">
       <view class="saleShop">
-        <block wx:for="{{flowData}}" wx:for-index="index" wx:for-item="item" wx:key="key">
-          <view class="shopview" bindtap="navigate">
-            <image src="http://img011.hc360.cn/g2/M06/45/BF/wKhQuFLfLl-EakIIAAAAAGqrml0128.jpg"/>
+        <block wx:for="{{rec_goods_list}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+          <view class="shopview" bindtap="navGoodsDetails" data-wpynavgoodsdetails-a="{{item.goods_id}}">
+            <image src="{{item.goods_image_url}}"/>
             <view class="saleTag">
-              <text class="overflow-one">{{item.title}}</text>
+              <text class="overflow-one">{{item.goods_name}}</text>
             </view>
             <view class="fot">
               <text class="salesmple">￥</text>
-              <text class="saleprice">{{item.price}}</text>
-              <text class="saleexprice">原价￥ {{item.exprice}}</text>
+              <text class="saleprice">{{item.goods_price}}</text>
+              <!-- <text class="saleexprice">原价￥ {{item.exprice}}</text> -->
             </view>
           </view>
         </block>
       </view>
+    </view>
+    <view class="type-wrap"  wx:if="{{navIdx == 1}}">
+        <block wx:for="{{store_goods_class}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+          <view class="type-one-item">
+            <view class="type-h">一级分类</view>
+              <view class="type-list">  
+                <block wx:for="{{30}}" wx:for-index="idx" wx:for-item="ele" wx:key="key">
+                    <view class="type-two-item" bindtap="navGoodsList">分类啊啊</view>
+                </block>
+              </view>
+          </view>
+        </block>
     </view>
   </view>

@@ -9,18 +9,14 @@
         <view>电话</view>
         <input placeholder="请输入手机号码" name="phone" type="number" value="{{phone}}" />
       </view>
-      <view class="com-add">
-        <view>邮政编码</view>
-        <input placeholder="请输入邮政编码" name="code" type="number" value="{{zipcode}}" />
-      </view>
-      <picker mode="region" bindchange="bindRegionChange" value="{{region}}">
-        <view class="picker" wx:if="{{true}}">
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range="{{addressArr}}" range-key="area_name">
+        <view class="picker" wx:if="{{!addressInfo.area_info}}">
           <text>所在地区</text>
           <view class="input-placeholder">请选择所在省份、城市、区县</view>
         </view>
         <view class="picker" wx:else>
           <text>所在地区</text>
-          <view>{{region[0]}}，{{region[1]}}，{{region[2]}}</view>
+          <view>{{addressInfo.area_info}}</view>
         </view>
       </picker>
       <view class="com-add">
@@ -29,9 +25,9 @@
       </view>
     </view>
 
-    <view class="set-address" bindtap="setAddress">
-      <image wx:if="{{!flag}}" style="width: 48rpx;height: 48rpx;" src="/assets/img/image47.png" />
-      <image wx:else style="width: 48rpx;height: 48rpx;" src="/assets/img/image46.png" />
+    <view class="set-address" @tap="setAddress">
+      <image wx:if="{{is_default == 0}}" style="width: 48rpx;height: 48rpx;" src="/assets/img/image46.png" />
+      <image wx:else style="width: 48rpx;height: 48rpx;" src="/assets/img/image47.png" />
       <text>设为默认收货地址</text>
     </view>
 
@@ -41,34 +37,35 @@
 
 <script>
 import wepy from 'wepy';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
+
 
 export default class Index extends wepy.page {
-  config = {
-    navigationBarTitleText: '添加地址'
-  };
+  config = {};
   data = {
-    flag: true,
-    region: []
+    addressInfo: {}, // 地址信息
+    is_default: 0, // 是否默认
+    parent_id: null, // 区域上级id
+    deep: 1, // 1省2市3区
+    addressArr: [], // 省市区信息
+    name: '', // 名字
+    phone: '', // 手机
+    address: '', //详细地址
   };
   components = {};
   computed = {};
   methods = {
     // 切换是否选中默认地址
     setAddress() {
-      this.setData({
-        flag: !this.data.flag
-      });
-    },
-    // 改变地区
-    bindRegionChange: function(e) {
-      this.setData({
-        region: e.detail.value
-      });
+      this.is_default = this.is_default == 0 ? 1: 0
+      this.$apply()
+      this.addressInfo.is_default = this.is_default
     },
     // 保存
     submit(e) {
       var that = this;
-      var { address, code, name, phone } = { ...e.detail.value };
+      var { address, name, phone } = { ...e.detail.value };
       if (!name) {
         wx.showToast({
           title: '请输入姓名',
@@ -83,14 +80,7 @@ export default class Index extends wepy.page {
         });
         return false;
       }
-      if (!code) {
-        wx.showToast({
-          title: '请输入邮政编码',
-          icon: 'none'
-        });
-        return false;
-      }
-      if (!this.data.region.length) {
+      if (!this.addressInfo.area_info) {
         wx.showToast({
           title: '请选择地区',
           icon: 'none'
@@ -104,86 +94,136 @@ export default class Index extends wepy.page {
         });
         return false;
       }
-      // id存在 就是编辑地址 否则是添加新地址
-      if (that.data.id) {
-        app.ajax({
-          url: api.addressUpdate,
+      // address_id存在 就是编辑地址 否则是添加新地址
+      if (this.addressInfo.address_id) {
+        ajax({
+          url: api.addressEdit,
           data: {
-            id: that.data.id,
-            name,
-            phone,
-            zipcode: code,
-            province: that.data.region[0],
-            city: that.data.region[1],
-            area: that.data.region[2],
-            address,
-            is_default: that.data.flag ? '2' : '1'
-          },
-          success(res) {
-            if (res.code == 200) {
-              app.showToast1(
-                res.msg,
-                1500,
-                function() {
-                  wx.navigateBack(1);
-                },
-                'success'
-              );
-            } else {
-              app.showToast1(res.msg);
-            }
+            true_name: name,
+            address: address,
+            area_info: this.addressInfo.area_info,
+            tel_phone: phone,
+            area_id: this.addressInfo.area_id,
+            city_id: this.addressInfo.city_id,
+            is_default: this.is_default,
+            address_id: this.addressInfo.address_id
           }
-        });
+        }).then(res => {
+          if(res.datas.state == 1) {
+            wx.showToast({
+              title: res.datas.msg
+            })
+            var timer = setTimeout(() => {
+              wx.navigateBack()
+              clearTimeout(timer)
+            }, 1000)
+          } else {
+            wx.showToast({
+              title: res.datas.msg,
+              icon: 'none'
+            })
+          }
+        })
       } else {
-        app.ajax({
+        ajax({
           url: api.addressAdd,
           data: {
-            name,
-            phone,
-            zipcode: code,
-            province: that.data.region[0],
-            city: that.data.region[1],
-            area: that.data.region[2],
-            address,
-            is_default: that.data.flag ? '2' : '1'
-          },
-          success(res) {
-            if (res.code == 200) {
-              app.showToast1(
-                res.msg,
-                1500,
-                function() {
-                  wx.navigateBack(1);
-                },
-                'success'
-              );
-            } else {
-              app.showToast1(res.msg);
-            }
+            true_name: name,
+            address: address,
+            area_info: this.addressInfo.area_info,
+            tel_phone: phone,
+            area_id: this.addressInfo.area_id,
+            city_id: this.addressInfo.city_id,
+            is_default: this.is_default
           }
-        });
+        }).then(res => {
+          if(res.datas.state == 1) {
+            wx.showToast({
+              title: res.datas.msg
+            })
+            var timer = setTimeout(() => {
+              wx.navigateBack()
+              clearTimeout(timer)
+            }, 1000)
+          } else {
+            wx.showToast({
+              title: res.datas.msg,
+              icon: 'none'
+            })
+          }
+        })
+      }
+    },
+    bindMultiPickerChange(e){
+      var arr = e.detail.value
+      var province = this.addressArr[0][arr[0]].area_name
+      var city = this.addressArr[1][arr[1]].area_name
+      var area = this.addressArr[2][arr[2]].area_name
+      this.addressInfo.area_info = `${province},${city},${area}`
+      this.addressInfo.city_id = this.addressArr[1][arr[1]].area_id
+      this.addressInfo.area_id = this.addressArr[2][arr[2]].area_id
+    },
+    bindMultiPickerColumnChange(e){
+      var column = e.detail.column
+      var value = e.detail.value
+      this.parent_id = this.addressArr[column][value].area_id
+      this.deep = column + 2
+      this.$apply()
+      // 2.选择'省'请求 '市','区' 2次
+      // 3.选择'市'请求 '区' 1次
+      // 4.选择'区'不请求
+      if(column<2) {
+        this.requestAreaList()
       }
     }
   };
   onLoad(options) {
     var that = this;
+    console.log(options)
     // 传id进来就是改变地址 先请地址信息
-    if (options.id) {
-      app.ajax({
-        url: api.addressOne,
+    if (options.address_id) {
+      wx.setNavigationBarTitle({
+        title: '修改地址'
+      })
+      ajax({
+        url: api.addressInfo,
         data: {
-          id: options.id
-        },
-        success(res) {
-          if (res.code == 200) {
-            that.setData(res.data);
-            that.setData({
-              region: [res.data.province, res.data.city, res.data.area]
-            });
-          }
+          address_id: options.address_id
         }
-      });
+      }).then(res => {
+        this.addressInfo = res.datas.address_info
+        this.is_default = res.datas.address_info.is_default
+        this.name = res.datas.address_info.true_name
+        this.phone = res.datas.address_info.tel_phone
+        this.address = res.datas.address_info.address
+        this.$apply()
+      })
+    } else {
+       wx.setNavigationBarTitle({
+        title: '添加地址'
+      })
     }
+    // 1.默认请求 '省','市','区' 3次
+    this.requestAreaList()
+  }
+
+  requestAreaList(){
+    ajax({
+      icon: 'none',
+      url: api.areaList,
+      data: {
+        parent_id: this.parent_id,
+        deep: this.deep,
+      }
+    }).then(res => {
+      this.parent_id = res.datas[0].area_id
+      this.addressArr[this.deep - 1] = res.datas
+      this.$apply()
+      if(this.deep < 3) {
+        this.deep ++
+        this.requestAreaList()
+      }
+    })
   }
 }
 </script>
