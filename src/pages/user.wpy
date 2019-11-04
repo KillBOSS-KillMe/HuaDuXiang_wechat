@@ -59,6 +59,12 @@
           <view class="phone">{{member_serves_tel}}</view>
           <image class="imgright" src="/assets/img/image25.png" />
         </view>
+        <navigator url="/pages/distribution" hover-class="none" class="orderitem">
+          <image class="img" src="/assets/img/image32.png" />
+          <view>我的分销</view>
+          <image class="imgright" src="/assets/img/image25.png" />
+        </navigator>
+        
       </view>
     </view>
 

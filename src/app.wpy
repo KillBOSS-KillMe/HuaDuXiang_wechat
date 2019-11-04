@@ -55,7 +55,9 @@ export default class extends wepy.app {
       'pages/addressList', // 地址列表
       'pages/addAddress', // 添加地址
       'pages/consignee', // 商品详情跳转添加地址
-      'pages/goodsList'
+      'pages/goodsList',
+      'pages/distribution' // 分销
+      
     ],
     window: {
       backgroundTextStyle: 'light',

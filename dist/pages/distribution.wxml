@@ -1,0 +1,45 @@
+
+  <view>
+    <view class="apply"  wx:if="{{false}}">
+      <button class="btn">申请成为分销员</button>
+    </view>
+    <view class="income">
+      <view>
+        <view class="income-title">我的收入</view>
+        <view class="income-price">
+          <text>￥</text>5200
+        </view>
+      </view>
+      <view class="{{scrollFlag ? 'nav-top-active' : ''}}">
+        <view class="nav-wrap">
+          <block wx:for="{{bannerArr}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+            <view class="nav-item {{navIdx == index ? 'nav-active' : ''}}" bindtap="changeNav" data-wpychangenav-a="{{index}}">{{item}}</view>
+          </block>
+        </view>
+        <view class="details-list"  wx:if="{{navIdx == 0}}">
+          <block wx:for="{{9}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+            <view class="details-item">
+              <view class="title">
+                <view>分销收入</view>
+                <view class="price">
+                  <text>+</text>￥60
+                </view>
+              </view>
+              <view class="fot">
+                <view>张三</view>
+                <view>2018.9.1</view>
+              </view>
+            </view>
+          </block>
+        </view>
+        <view class="details-list" wx:if="{{navIdx == 1}}">
+          <block wx:for="{{9}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+            <view class="recommend">
+              <view class="name">张三</view>
+              <view class="time">注册于2019.12.21 12:23</view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+  </view>

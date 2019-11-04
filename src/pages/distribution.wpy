@@ -1,0 +1,213 @@
+<template>
+  <view>
+    <view class="apply" wx:if="{{false}}">
+      <button class="btn">申请成为分销员</button>
+    </view>
+    <view class="income">
+      <view>
+        <view class="income-title">我的收入</view>
+        <view class="income-price">
+          <text>￥</text>5200
+        </view>
+      </view>
+      <view class="{{scrollFlag ? 'nav-top-active' : ''}}">
+        <view class="nav-wrap">
+          <repeat for="{{bannerArr}}" item="item">
+            <view
+              class="nav-item {{navIdx == index ? 'nav-active' : ''}}"
+              @tap="changeNav({{index}})"
+            >{{item}}</view>
+          </repeat>
+        </view>
+        <view class="details-list" wx:if="{{navIdx == 0}}">
+          <repeat for="{{9}}" item="item">
+            <view class="details-item">
+              <view class="title">
+                <view>分销收入</view>
+                <view class="price">
+                  <text>+</text>￥60
+                </view>
+              </view>
+              <view class="fot">
+                <view>张三</view>
+                <view>2018.9.1</view>
+              </view>
+            </view>
+          </repeat>
+        </view>
+        <view class="details-list" wx:if="{{navIdx == 1}}">
+          <repeat for="{{9}}" item="item">
+            <view class="recommend">
+              <view class="name">张三</view>
+              <view class="time">注册于2019.12.21 12:23</view>
+            </view>
+          </repeat>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '我的分销'
+  };
+  components = {};
+
+  mixins = [];
+
+  data = {
+    requestImgUrl: '',
+    bannerArr: ['收入明细', '我的推荐'],
+    navIdx: 0,
+    topHeight: null,  // 吸顶距离
+    scrollFlag: false, // 吸顶flag
+    isDist: true, // 是否分销员
+  };
+
+  computed = {};
+  onLoad(options) {
+    var that = this;
+    wx.getSystemInfo({
+      success(res) {
+        var windowWidth = res.windowWidth;
+        that.topHeight = (270 / 750) * windowWidth;
+        console.log(that.topHeight);
+      }
+    });
+  }
+  onShow() {}
+  methods = {
+    changeNav(idx) {
+      if (idx == this.navIdx) return;
+      this.navIdx = idx;
+    }
+  };
+  onPageScroll(e) {
+    var isSatisfy = e.scrollTop >= this.topHeight ? true : false;
+    if (this.scrollFlag == isSatisfy) {
+      return false;
+    }
+    this.scrollFlag = isSatisfy;
+    this.$apply();
+  }
+
+  events = {};
+}
+</script>
+
+
+<style lang="less">
+.apply {
+  .btn {
+    width: 690rpx;
+    height: 88rpx;
+    background: #ff2228;
+    border-radius: 10rpx;
+    text-align: center;
+    height: 88rpx;
+    line-height: 88rpx;
+    color: #fff;
+    font-weight: bold;
+    font-size: 30rpx;
+    margin: 180rpx auto;
+  }
+}
+.income {
+  .income-title {
+    font-size: 34rpx;
+    color: #333;
+    font-weight: bold;
+    padding: 30rpx;
+  }
+  .income-price {
+    font-weight: bold;
+    font-size: 50rpx;
+    text-align: center;
+    padding: 20rpx 0 80rpx;
+    text {
+      font-size: 34rpx;
+    }
+  }
+  .nav-wrap {
+    border-top: 20rpx solid #f3f3f3;
+    display: flex;
+    width: 100%;
+    height: 96rpx;
+    text-align: center;
+    line-height: 96rpx;
+    .nav-item {
+      flex: 1;
+      font-size: 30rpx;
+      font-weight: bold;
+      position: relative;
+    }
+    .nav-active {
+      &::after {
+        content: '';
+        width: 38rpx;
+        height: 4rpx;
+        background: #ff2228;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  }
+  .details-list {
+    border-top: 1px solid #ececec;
+    padding: 20rpx 30rpx;
+    .details-item {
+      padding: 20rpx 0;
+      .title {
+        display: flex;
+        justify-content: space-between;
+        font-size: 32rpx;
+        font-weight: bold;
+        .price {
+          color: #ff2228;
+          font-size: 36rpx;
+        }
+      }
+      .fot {
+        display: flex;
+        justify-content: space-between;
+        font-size: 28rpx;
+        color: #898989;
+        padding-top: 10rpx;
+      }
+    }
+    .recommend {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20rpx 30rpx;
+      .name {
+        font-weight: bold;
+        font-size: 32rpx;
+        color: #222;
+      }
+      .time {
+        font-size: 24rpx;
+        color: #898989;
+      }
+    }
+  }
+}
+
+.nav-top-active {
+  .nav-wrap{
+    position: fixed;
+    top: 0;
+    background: #fff;
+  }
+  .details-list {
+    margin-top: 116rpx;
+  }
+}
+</style>
