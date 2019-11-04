@@ -405,7 +405,6 @@ export default class Index extends wepy.page {
   requestIndexGoodsList() {
     ajax({
       url: api.indexGoodsList,
-      type: 'get',
       data: {
         page: 10,
         curpage: this.curpage
@@ -420,24 +419,7 @@ export default class Index extends wepy.page {
     });
   }
 
-  onShow() {
-    this.$interceptors = {
-      'request': {
-          config (p) {
-            console.log(p)
-              return p;
-          },
-          success (rst) {
-            console.log(rst)
-            return rst
-          }
-      }
-    }
-
-
-
-    
-  }
+  onShow() {}
 
   methods = {
     tapName(url, id) {

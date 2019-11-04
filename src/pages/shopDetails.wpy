@@ -254,7 +254,9 @@ export default class Index extends wepy.page {
   };
 
   events = {};
-
+  onShareAppMessage(){
+    console.log(999)
+  }
   onLoad(t) {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     this.goods_id = t.goods_id;

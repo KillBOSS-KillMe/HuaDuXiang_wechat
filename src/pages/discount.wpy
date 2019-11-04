@@ -2,20 +2,20 @@
   <view class="wrap">
     <!-- <image class="chooseImg" src="{{item.img}}" />
     <repeat for="{{ChooesData}}" item="item">-->
-    <image class="head-img" src="/assets/img/image.png" />
+    <image class="head-img" src="{{requestImgUrl + topImg}}" />
     <view class="goods-list">
-      <repeat for="{{11}}" item="item">
-        <navigator url="/pages/shopDetails" class="goods-item">
-          <image class="goods-img" src="/assets/img/image.png" />
+      <repeat for="{{goods_list}}" item="item">
+        <view @tap="navShopDetails({{item.goods_id}})" class="goods-item">
+          <image class="goods-img" src="{{requestImgUrl + item.goods_image_url}}" />
           <view class="goods-fot">
-            <view class="title overflow-one">新款冬季棉拖鞋新款冬季棉拖鞋新款冬季棉拖鞋</view>
+            <view class="title overflow-one">{{item.goods_name}}</view>
             <view class="price">
               ￥
-              <text>19</text>
+              <text>{{item.goods_price}}</text>
               <text>分享赚钱</text>
             </view>
           </view>
-        </navigator>
+        </view>
       </repeat>
     </view>
   </view>
@@ -23,6 +23,8 @@
 
 <script>
 import wepy from 'wepy';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 
 export default class Index extends wepy.page {
   config = {
@@ -33,13 +35,55 @@ export default class Index extends wepy.page {
   mixins = [];
 
   data = {
-    requestImgUrl: ''
+    requestImgUrl: '',
+    topImg: '', // 顶部商品图
+    goods_list: [],
+    hasmore: false, // 是否有下一页
+    curpage: 1, //当前页数
   };
 
   computed = {};
-  onLoad(options) {}
-  onShow() {}
-  methods = {};
+  onLoad(options) {
+    this.requestImgUrl = this.$parent.globalData.requestImgUrl;
+    ajax({
+      url: api.memberFx,
+    }).then(res => {
+      this.topImg = res.datas.img_area
+    })
+
+    this.requestIndexGoodsList()
+  }
+  // 首页—普通商品列表接口
+  requestIndexGoodsList() {
+    ajax({
+      url: api.indexGoodsList,
+      data: {
+        page: 3,
+        curpage: this.curpage,
+        is_fx: 1 // 默认值为1，表示获取分销商品的列表
+      },
+    }).then(res => {
+      if (res.code == 200) {
+        var list = res.datas.goods_list || []
+        this.goods_list = this.goods_list.concat(list)
+        this.hasmore = res.hasmore
+        this.$apply();
+      }
+    });
+  }
+  onReachBottom () {
+    if(this.hasmore) {
+      this.curpage ++ 
+      this.requestIndexGoodsList()
+    }
+  }
+  onShow() {
+  }
+  methods = {
+    navShopDetails(goods_id){
+      this.$navigate(`/pages/shopDetails?goods_id=${goods_id}`)
+    }
+  };
 
   events = {};
 }
@@ -90,7 +134,7 @@ export default class Index extends wepy.page {
           font-size: 24rpx;
           justify-content: space-between;
           text:nth-of-type(1) {
-            font-size: 42rpx;
+            font-size: 34rpx;
             font-weight: bold;
             flex: 1;
           }

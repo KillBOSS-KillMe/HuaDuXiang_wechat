@@ -107,6 +107,13 @@
 					"id": -1,
 					"name": "分销",
 					"pathName": "pages/distribution",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "分销列表",
+					"pathName": "pages/discount",
 					"scene": null
 				}
 			]

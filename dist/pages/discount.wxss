@@ -47,7 +47,7 @@
   justify-content: space-between;
 }
 .wrap .goods-list .goods-item .goods-fot .price text:nth-of-type(1) {
-  font-size: 42rpx;
+  font-size: 34rpx;
   font-weight: bold;
   flex: 1;
 }

@@ -1,5 +1,8 @@
 
 const URL = "http://www.shopdate.me"
+// const URL = "http://www.mywdl.com"
+
+
 
 module.exports = {
   // 登录
@@ -48,7 +51,7 @@ module.exports = {
   recommendList: URL + "/api/mobile/index.php?w=brand&t=recommend_list",
   // 商家推荐店铺列表
   storeRecommendList: URL + "/api/mobile/index.php?w=store&t=store_recommend_list",
-
-
+  // 分销商品(秒赚钱)页面
+  memberFx: URL + "/api/mobile/index.php?t=fx_index&w=member_fx",
 
 }
