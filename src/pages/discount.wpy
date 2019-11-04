@@ -57,8 +57,9 @@ export default class Index extends wepy.page {
   requestIndexGoodsList() {
     ajax({
       url: api.indexGoodsList,
+      type: 'get',
       data: {
-        page: 3,
+        page: 10,
         curpage: this.curpage,
         is_fx: 1 // 默认值为1，表示获取分销商品的列表
       },

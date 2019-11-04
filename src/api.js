@@ -53,5 +53,7 @@ module.exports = {
   storeRecommendList: URL + "/api/mobile/index.php?w=store&t=store_recommend_list",
   // 分销商品(秒赚钱)页面
   memberFx: URL + "/api/mobile/index.php?t=fx_index&w=member_fx",
+  // 用户申请分销员页面—-接口
+  fxMemberApply: URL + "/api/mobile/index.php?t=fx_member_apply&w=member_index"
 
 }

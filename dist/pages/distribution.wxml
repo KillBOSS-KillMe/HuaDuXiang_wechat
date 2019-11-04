@@ -1,9 +1,9 @@
 
   <view>
-    <view class="apply"  wx:if="{{false}}">
-      <button class="btn">申请成为分销员</button>
+    <view class="apply"  wx:if="{{state != 2}}">
+      <button class="btn" bindtap="distHanld">{{txt}}</button>
     </view>
-    <view class="income">
+    <view class="income"  wx:else>
       <view>
         <view class="income-title">我的收入</view>
         <view class="income-price">
@@ -16,7 +16,7 @@
             <view class="nav-item {{navIdx == index ? 'nav-active' : ''}}" bindtap="changeNav" data-wpychangenav-a="{{index}}">{{item}}</view>
           </block>
         </view>
-        <view class="details-list"  wx:if="{{navIdx == 0}}">
+        <view class="details-list" wx:if="{{navIdx == 0}}">
           <block wx:for="{{9}}" wx:for-index="index" wx:for-item="item" wx:key="key">
             <view class="details-item">
               <view class="title">

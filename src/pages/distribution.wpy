@@ -1,9 +1,9 @@
 <template>
   <view>
-    <view class="apply" wx:if="{{false}}">
-      <button class="btn">申请成为分销员</button>
+    <view class="apply" wx:if="{{state != 2}}">
+      <button class="btn" @tap="distHanld">{{txt}}</button>
     </view>
-    <view class="income">
+    <view class="income" wx:else>
       <view>
         <view class="income-title">我的收入</view>
         <view class="income-price">
@@ -64,9 +64,11 @@ export default class Index extends wepy.page {
     requestImgUrl: '',
     bannerArr: ['收入明细', '我的推荐'],
     navIdx: 0,
-    topHeight: null,  // 吸顶距离
+    topHeight: null, // 吸顶距离
     scrollFlag: false, // 吸顶flag
     isDist: true, // 是否分销员
+    state: null,
+    txt: ''
   };
 
   computed = {};
@@ -79,12 +81,61 @@ export default class Index extends wepy.page {
         console.log(that.topHeight);
       }
     });
+    // 申请成为分销商
+    ajax({
+      url: api.fxMemberApply
+    }).then(res => {
+      this.state = res.datas.state;
+      switch (res.datas.state) {
+        case '0':
+          this.txt = '申请成为分销员'
+          break;
+        default:
+          this.txt = '重新申请成为分销员'
+          break;
+      }
+      this.$apply()
+    });
+  }
+  fxMemberApply() {
+    // 申请成为分销商
+    ajax({
+      url: api.fxMemberApply,
+      data: {
+        apply: 1
+      }
+    }).then(res => {
+      if (res.datas.state == 1) {
+        wx.showToast({
+          title: '申请成功'
+        });
+        var timer = setTimeout(() => {
+          wx.navigateBack();
+          clearTimeout(timer)
+        }, 2000);
+      } else {
+        wx.showToast({
+          msg: res.datas.state,
+          icon: 'none'
+        })
+      }
+    });
   }
   onShow() {}
   methods = {
     changeNav(idx) {
       if (idx == this.navIdx) return;
       this.navIdx = idx;
+    },
+    distHanld() {
+      if(this.state == 1) {
+        wx.showToast({
+          title: '正在审核中，请勿重复',
+          icon: 'none'
+        })
+        return false
+      } 
+      this.fxMemberApply();
     }
   };
   onPageScroll(e) {
@@ -201,7 +252,7 @@ export default class Index extends wepy.page {
 }
 
 .nav-top-active {
-  .nav-wrap{
+  .nav-wrap {
     position: fixed;
     top: 0;
     background: #fff;

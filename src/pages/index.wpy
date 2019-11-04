@@ -405,6 +405,7 @@ export default class Index extends wepy.page {
   requestIndexGoodsList() {
     ajax({
       url: api.indexGoodsList,
+      type: 'get',
       data: {
         page: 10,
         curpage: this.curpage
