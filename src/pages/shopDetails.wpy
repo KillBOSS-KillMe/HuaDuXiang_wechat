@@ -152,7 +152,7 @@
           </view>
         </view>
         <view class="prop-fot">
-          <view class="add-cart">加入购物车</view>
+          <view class="add-cart" @tap.stop="addCart">加入购物车</view>
           <view class="purchase" @tap="attrBtnSubmit">立即购买</view>
         </view>
       </view>
@@ -245,6 +245,29 @@ export default class Index extends wepy.page {
       this.attr.forEach((item, index) => {
         if(one == index) {
           item.active = item.prop[two]
+        }
+      })
+    },
+    addCart(){
+      var that = this
+      ajax({
+        url: api.cartAdd,
+        data: {
+          goods_id: this.goods_id,
+          quantity: this.goodsNum
+        }
+      }).then(res => {
+        if(res.datas.state == 1) {
+          wx.showToast({
+            title: '添加成功'
+          })
+          this.attrFlag = false
+          this.$apply()
+        } else {
+          wx.showToast({
+            title: res.datas.error,
+            icon: 'none'
+          })
         }
       })
     },

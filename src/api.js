@@ -54,6 +54,17 @@ module.exports = {
   // 分销商品(秒赚钱)页面
   memberFx: URL + "/api/mobile/index.php?t=fx_index&w=member_fx",
   // 用户申请分销员页面—-接口
-  fxMemberApply: URL + "/api/mobile/index.php?t=fx_member_apply&w=member_index"
-
+  fxMemberApply: URL + "/api/mobile/index.php?t=fx_member_apply&w=member_index",
+  // 砍价背景图接口
+  memberKj: URL + "/api/mobile/index.php?w=member_kj",
+  // 预购背景图
+  memberYg: URL + "/api/mobile/index.php?w=member_yg",
+  // 秒杀背景图
+  memberMs: URL + "/api/mobile/index.php?w=member_ms",
+  // 拼团背景图接口
+  memberPt: URL + "/api/mobile/index.php?w=member_pt",
+  // 购物车添加商品接口
+  cartAdd: URL + "/api/mobile/index.php?w=member_cart&t=cart_add",
+  // 购物车查询列表
+  cartList: URL + "/api/mobile/index.php?w=member_cart&t=cart_list",
 }

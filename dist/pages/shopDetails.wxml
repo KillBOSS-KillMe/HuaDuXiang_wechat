@@ -148,7 +148,7 @@
           </view>
         </view>
         <view class="prop-fot">
-          <view class="add-cart">加入购物车</view>
+          <view class="add-cart" catchtap="addCart">加入购物车</view>
           <view class="purchase" bindtap="attrBtnSubmit">立即购买</view>
         </view>
       </view>

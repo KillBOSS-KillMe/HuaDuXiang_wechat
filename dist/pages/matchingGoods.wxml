@@ -28,7 +28,7 @@
                     
   <view class="cart-count">
       <view class="decrease" catchtap="$cartCount$decrease" data-com-index="{{index}}">-</view>
-      <input type="number" value="{{item.num}}" disabled/>
+      <input type="number" value="{{item.goods_num}}" disabled/>
       <view class="add" catchtap="$cartCount$add" data-com-index="{{index}}">+</view>
   </view>
 

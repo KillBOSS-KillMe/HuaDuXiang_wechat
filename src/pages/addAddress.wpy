@@ -155,13 +155,16 @@ export default class Index extends wepy.page {
       }
     },
     bindMultiPickerChange(e){
+      console.log(e)
       var arr = e.detail.value
+      arr = arr.map(item => item ? item : 0)
       var province = this.addressArr[0][arr[0]].area_name
       var city = this.addressArr[1][arr[1]].area_name
       var area = this.addressArr[2][arr[2]].area_name
       this.addressInfo.area_info = `${province},${city},${area}`
       this.addressInfo.city_id = this.addressArr[1][arr[1]].area_id
       this.addressInfo.area_id = this.addressArr[2][arr[2]].area_id
+      this.$apply()
     },
     bindMultiPickerColumnChange(e){
       var column = e.detail.column

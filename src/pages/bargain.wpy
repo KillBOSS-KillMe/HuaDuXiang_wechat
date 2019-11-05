@@ -297,7 +297,7 @@
   <view class="wrap">
     <!-- 头部卡片 -->
     <view class="topCard">
-      <image src="{{requestImgUrl}}card.png" />
+      <image src="{{requestImgUrl + topImg}}" />
     </view>
     <!-- 商品 -->
     <view class="saleShopWrap">
@@ -402,6 +402,9 @@
 <script>
 import wepy from 'wepy';
 import mask from '../components/mask';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
+
 export default class Index extends wepy.page {
   config = {
     navigationBarTitleText: '砍价'
@@ -461,28 +464,9 @@ export default class Index extends wepy.page {
         totalNum: 20,
         img: 'indeximg.png',
         tag: '满三减一'
-      },
-      {
-        id: '5',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        num: 5,
-        totalNum: 20,
-        img: 'indeximg.png',
-        tag: '满三减一'
-      },
-      {
-        id: '6',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        num: 5,
-        totalNum: 20,
-        img: 'indeximg.png',
-        tag: '满三减一'
       }
-    ]
+    ],
+    topImg: '',
   };
 
   computed = {};
@@ -519,6 +503,15 @@ export default class Index extends wepy.page {
 
   events = {};
 
-  onLoad() {}
+  onLoad() {
+    this.requestImgUrl = this.$parent.globalData.requestImgUrl;
+
+    ajax({
+      url: api.memberKj,
+    }).then(res => {
+      this.topImg = res.datas.img_area
+      this.$apply()
+    })
+  }
 }
 </script>

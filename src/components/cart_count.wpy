@@ -1,7 +1,7 @@
 <template>
   <view class="cart-count">
       <view class="decrease" @tap.stop="decrease">-</view>
-      <input type="number" value="{{good.num}}" disabled/>
+      <input type="number" value="{{good.goods_num}}" disabled/>
       <view class="add" @tap.stop="add">+</view>
   </view>
 </template>
@@ -22,20 +22,20 @@ export default class CartCount extends wepy.component {
   // 方法集
   methods = {
     add () {
-      this.good.num++
+      this.good.goods_num++
       this.$emit('getGood', this.good)
     },
     decrease () {
-      if (this.good.num === 1){
+      if (this.good.goods_num === 1){
          return false
       }
-      this.good.num--
+      this.good.goods_num--
       this.$emit('getGood', this.good)
     }
   }
   onLoad () {
-    // console.log(this.good)
   }
+
 }
 </script>
 

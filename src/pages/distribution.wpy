@@ -87,7 +87,7 @@ export default class Index extends wepy.page {
     }).then(res => {
       this.state = res.datas.state;
       switch (res.datas.state) {
-        case '0':
+        case 0:
           this.txt = '申请成为分销员'
           break;
         default:

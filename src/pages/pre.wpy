@@ -89,7 +89,7 @@
     <view class="wrap">
         <!-- 头部卡片 -->
         <view class="topCard">
-            <image src="{{requestImgUrl}}card.png"></image>
+            <image src="{{requestImgUrl + topImg}}" />
         </view>
         <!-- 商品 -->
         <view class="saleShopWrap">
@@ -112,6 +112,8 @@
 
 <script>
 import wepy from 'wepy';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 
 export default class Index extends wepy.page {
   config = {
@@ -132,16 +134,22 @@ export default class Index extends wepy.page {
         {id:'5',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
         {id:'6',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'}
       ],
+      topImg: '',
   };
 
-  computed = {};
+    computed = {};
 
 
-  events = {};
+    events = {};
 
     onLoad(options) {
-        this.preId = options.id
-        console.log('options',options.id)
+        this.requestImgUrl = this.$parent.globalData.requestImgUrl;
+        ajax({
+            url: api.memberYg,
+        }).then(res => {
+            this.topImg = res.datas.img_area
+            this.$apply()
+        })
     }
     onShow() {
       // this.userInfo = this.$parent.globalData.userInfo

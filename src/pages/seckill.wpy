@@ -249,7 +249,7 @@
   <view class="wrap">
     <!-- 头部卡片 -->
     <view class="topCard">
-      <image src="{{requestImgUrl}}card.png" />
+      <image src="{{requestImgUrl + topImg}}" />
     </view>
     <!-- 促销选项卡 -->
     <view class="saleTab">
@@ -325,6 +325,8 @@
 <script>
 import wepy from 'wepy';
 var timer = require('../utils/wxTimer.js'); // 倒计时
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 
 export default class Index extends wepy.page {
   config = {
@@ -339,6 +341,7 @@ export default class Index extends wepy.page {
     scrollIdx: 'scroll0', //横向导航滚动
     wxTimerList: {}, // 倒计时
     requestImgUrl: '',
+    topImg: '',
     currentData: 0,
     downShow: false,
     seckillId: '',
@@ -428,10 +431,16 @@ export default class Index extends wepy.page {
     //   wxTimer.stop();
     // }, 5000);
     // 倒计时e
+
+    this.requestImgUrl = this.$parent.globalData.requestImgUrl;
+    ajax({
+        url: api.memberMs,
+    }).then(res => {
+        this.topImg = res.datas.img_area
+        this.$apply()
+    })
   }
   onShow() {
-    // this.userInfo = this.$parent.globalData.userInfo
-    this.requestImgUrl = this.$parent.globalData.requestImgUrl;
   }
   methods = {
     changNav(idx) {

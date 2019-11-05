@@ -2,7 +2,7 @@
     <view class="wrap">
         <!-- 头部卡片 -->
         <view class="topCard">
-            <image src="{{requestImgUrl}}card.png"/>
+            <image src="{{requestImgUrl + topImg}}"/>
         </view>
         <!-- 商品 -->
         <view class="saleShopWrap">

@@ -96,7 +96,7 @@
     <view class="wrap">
         <!-- 头部卡片 -->
         <view class="topCard">
-            <image src="{{requestImgUrl}}card.png"></image>
+            <image src="{{requestImgUrl + topImg}}"></image>
         </view>
         <!-- 商品 -->
         <view class="saleShopWrap">
@@ -120,7 +120,8 @@
 
 <script>
 import wepy from 'wepy';
-
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 export default class Index extends wepy.page {
   config = {
     navigationBarTitleText: '拼团'
@@ -130,6 +131,7 @@ export default class Index extends wepy.page {
   mixins = [];
 
   data = {
+      topImg:'',
       requestImgUrl: '',
       assembleId: '',
       flowData:[
@@ -144,7 +146,13 @@ export default class Index extends wepy.page {
 
     computed = {};
     onLoad(options) {
-        this.assembleId = options.id
+        this.requestImgUrl = this.$parent.globalData.requestImgUrl;
+        ajax({
+            url: api.memberPt,
+        }).then(res => {
+            this.topImg = res.datas.img_area
+            this.$apply()
+        })
     }
     onShow() {
         // this.userInfo = this.$parent.globalData.userInfo
@@ -155,9 +163,7 @@ export default class Index extends wepy.page {
     * 跳转商品详情
     */
     jumpTimeDetails(shopid){
-    //   console.log(shopid)
-    console.log('拼团',this.assembleId);
-    this.$navigate(`/pages/assembleShopDetails?shopid=${shopid}&assembleId=${this.assembleId}`)
+        this.$navigate(`/pages/assembleShopDetails?shopid=${shopid}&assembleId=${this.assembleId}`)
     },
   };
 

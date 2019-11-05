@@ -136,7 +136,7 @@ page{
     color: #ffffff;
     font-size: 30rpx;
     font-weight: bold;
-    margin: auto 7%;
+    margin: auto 7% auto 0;
     &.no-select {
       background-color: #cccccc;
     }
@@ -147,22 +147,22 @@ page{
 <template>
   <view class="shop-cart">
     <view class="good-list">
-      <repeat for="{{goods}}" key="item">
+      <repeat for="{{goodsList}}" key="item">
         <swiperDel :swiperData.sync="item" @getDel.user="getDel">
           <view class="goods-info">
-              <icon class="icon_check" type="success" size="20" @tap.stop="selectList" data-index="{{index}}" wx:if="{{item.selected}}"></icon>
-              <icon class="icon_check" type="circle" size="20" @tap.stop="selectList" data-index="{{index}}" wx:else></icon>
+              <icon class="icon_check" type="success" size="20" @tap.stop="selectList({{index}})" wx:if="{{item.selected}}"></icon>
+              <icon class="icon_check" type="circle" size="20" @tap.stop="selectList({{index}})" wx:else></icon>
               <view class="img-box">
-                <image src="{{item.imgurl}}" class="img"/>
+                <image src="{{item.goods_image_url}}" class="img"/>
               </view>
               <view class="text-box">
                 <view class="goods-title">
-                  {{item.name}}
+                  {{item.goods_name}}
                 </view>
                <view class="goods-tag">
-                  {{item.tag}}
+                 规格
                 </view>          
-                  <view class="price">￥{{item.price}}</view>
+                  <view class="price">￥{{item.goods_price}}</view>
                   <view class="shop-count">
                     <cartCount :good.sync="item" @getGood.user="getGood"></cartCount>
                   </view>
@@ -179,7 +179,7 @@ page{
           <text>全选</text>
         </view>
         <view class="total">
-          共计 ￥ <text style="color:#FF2228;font-size:38rpx;font-weight:bold">{{totalPrice}}</text>
+          共计 ￥ <text style="color:#FF2228;font-size:34rpx;font-weight:bold">{{totalPrice}}</text>
         </view>
       </view>
       <view class="pay-btn">去结算</view>
@@ -193,6 +193,9 @@ import wepy from 'wepy'
 import swiperDel from '../components/swiper_delete' 
 import cartCount from '../components/cart_count'
 import nav from '../components/nav' // 底部导航
+
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 
 export default class ShopCart extends wepy.page {
   config = {
@@ -210,95 +213,78 @@ export default class ShopCart extends wepy.page {
   data = {
     requestImgUrl: '',
     allSelected: false,
-    goods: [
-      {
-        id:1,
-        name: '新款冬季棉拖鞋',
-        price: 5,
-        num: 1,
-        tag:'肤色/M',
-        imgurl: ''
-      },
-      {
-        id:2,
-        name: '萌粉订书机 小型',
-        price: 10,
-        num: 1,
-        tag:'肤色/M',
-        imgurl: ''
-      },
-      {
-        id:3,
-        name: '创意家居卫生间用品卫生间用品卫生间用品卫生间用品',
-        price: 20,
-        num: 5,
-        tag:'肤色/M',
-        imgurl: ''
-      }
-    ]
+    goodsList: [],
+    isAllSelected: false
   };
 
   computed = {
     totalPrice() { // 总价格
       let that = this
       let totalPrice = 0
-      for (let good of that.goods) {
+      for (let good of that.goodsList) {
         if (good.selected) {
-          totalPrice += good.num * good.price
+          totalPrice += Number(good.goods_num) * Number(good.goods_price)
         }
       }
-      return totalPrice
+      return totalPrice.toFixed(2)
     },
     judgeAllSelect() { //判断全选
-      let that = this
-      let isAllSelected = that.goods.every((item) => { // 只要有一个没选就为false
+      let isAllSelected = this.goodsList.every((item) => { // 只要有一个没选就为false
         return item.selected
       })
-      isAllSelected ? (that.allSelected = true) : (that.allSelected = false)
+      isAllSelected ? (this.allSelected = true) : (this.allSelected = false)
       return isAllSelected
     }
   }
-
   methods = {
-    selectList(e) { // 当前勾选选中
-      let that = this
-      let curIndex = e.target.dataset.index // 获取当前索
-      let curItem = that.goods[curIndex]
+    selectList(idx) { // 当前勾选选中
+      let curItem = this.goodsList[idx]
       curItem.selected = !curItem.selected // 取反
     },
     selectAll(e) { // 全选
-      let that = this
-      that.allSelected = !that.allSelected 
-      for (let good of that.goods) { // 商品每项选中的值和全选的状态值一致
-        good.selected = that.allSelected
+      this.allSelected = !this.allSelected 
+      for (let good of this.goodsList) { // 商品每项选中的值和全选的状态值一致
+        good.selected = this.allSelected
       }
     },
     getGood (item) { // 自定义事件
       // console.log(this.goods)
     },
     getDel(item){
-        let that = this
-        that.goods.splice(item,1)
+      var idx = this.goodsList.findIndex((ele, idx) => item.cart_id == ele.cart_id)
+      this.goodsList.splice(idx,1)
     },
     /**
      * 底部导航跳转
      */
     goPage (url, evt) {
     // 销毁当前页{跳转}
-    this.$redirect(url)
+      this.$redirect(url)
     },
-  };
+  }
 
-  events = {};
+  events = {}
   onLoad() {
+    this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     let that = this
-    that.goods.forEach((good) => { // 刚开始默认都是未选中状态
-      good.selected = false
+  
+    this.requestGoodsList()
+  }
+  requestGoodsList () {
+    ajax({
+      url: api.cartList
+    }).then(res => {
+      console.log(res)
+      var cart_list = res.datas.cart_list
+      var goodsList = []
+      cart_list.forEach(item => {
+        goodsList = goodsList.concat(item.goods)
+      })
+      this.goodsList = goodsList
+      this.$apply()
     })
   }
   onShow() {
-        // this.userInfo = this.$parent.globalData.userInfo
-      this.requestImgUrl = this.$parent.globalData.requestImgUrl
   }
 }
 </script>

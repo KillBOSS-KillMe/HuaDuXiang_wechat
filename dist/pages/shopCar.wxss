@@ -134,7 +134,7 @@ page {
   color: #ffffff;
   font-size: 30rpx;
   font-weight: bold;
-  margin: auto 7%;
+  margin: auto 7% auto 0;
 }
 .check-box .pay-btn.no-select {
   background-color: #cccccc;

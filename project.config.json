@@ -114,6 +114,27 @@
 					"id": -1,
 					"name": "分销列表",
 					"pathName": "pages/discount",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "购物车列表",
+					"pathName": "pages/shopCar",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "选择收货人",
+					"pathName": "pages/consignee",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/addAddress",
+					"pathName": "pages/addAddress",
 					"scene": null
 				}
 			]
