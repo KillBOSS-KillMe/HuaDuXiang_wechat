@@ -252,6 +252,14 @@ export default class ShopCart extends wepy.page {
     },
     getDel(item){
       var idx = this.goodsList.findIndex((ele, idx) => item.cart_id == ele.cart_id)
+
+      ajax({
+        url: api.cartDel,
+        data: {
+          cart_id: item.cart_id
+        }
+      })
+
       this.goodsList.splice(idx,1)
     },
     /**

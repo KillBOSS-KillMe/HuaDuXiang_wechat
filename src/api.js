@@ -67,4 +67,8 @@ module.exports = {
   cartAdd: URL + "/api/mobile/index.php?w=member_cart&t=cart_add",
   // 购物车查询列表
   cartList: URL + "/api/mobile/index.php?w=member_cart&t=cart_list",
+  // 用户购物车商品删除
+  cartDel: URL + "/api/mobile/index.php?t=cart_del&w=member_cart",
+  // 购物车修改数量接口
+  cartEditQuantity: URL + "/api/mobile/index.php?w=member_cart&t=cart_edit_quantity",
 }
