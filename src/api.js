@@ -71,4 +71,18 @@ module.exports = {
   cartDel: URL + "/api/mobile/index.php?t=cart_del&w=member_cart",
   // 购物车修改数量接口
   cartEditQuantity: URL + "/api/mobile/index.php?w=member_cart&t=cart_edit_quantity",
+  // 查询是否是合伙人
+  isPartner: URL + "/api/mobile/index.php?w=partner&t=is_partner",
+  // 申请成为合伙人
+  addPartner: URL + "/api/mobile/index.php?w=partner&t=add_partner",
+  // 用户订单列表接口
+  orderList: URL + "/api/mobile/index.php?w=member_order&t=order_list",
+  // 取消订单接口
+  orderCancel: URL + "/api/mobile/index.php?w=member_order&t=order_cancel",
+  // 订单删除接口
+  orderDelete: URL + "/api/mobile/index.php?w=member_order&t=order_delete",
+  // 订单确认收货接口
+  orderReceive: URL + "/api/mobile/index.php?w=member_order&t=order_receive",
+  // 订单物流信息接口
+  searchDeliver: URL + "/api/mobile/index.php?w=member_order&t=search_deliver"
 }

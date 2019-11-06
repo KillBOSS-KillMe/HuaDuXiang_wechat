@@ -1,6 +1,6 @@
 
   <view class="shop-wrap">
-    <!-- <repeat for="{{10}}" item="item"> -->
+    <image class="back-img" bindtap="back" src="/assets/img/image49.png"/>
     <image class="cont-img" src="/assets/img/0.jpg" mode="widthFix"/>
-    <navigator url="/pages/partnerInput" class="btn">立即申请</navigator>
+    <view class="btn" bindtap="navPartner">立即申请</view>
   </view>

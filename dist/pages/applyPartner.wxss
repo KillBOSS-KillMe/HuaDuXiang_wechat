@@ -21,3 +21,10 @@
   border-radius: 10rpx;
   background: #FFB921;
 }
+.back-img {
+  width: 44rpx;
+  height: 44rpx;
+  position: fixed;
+  top: 64rpx;
+  left: 26rpx;
+}

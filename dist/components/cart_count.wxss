@@ -12,8 +12,6 @@
   border-left: 1rpx solid #ccc;
   border-bottom: 1px solid #ccc;
   border-top: 1px solid #ccc;
-  border-bottom-left-radius: 6rpx;
-  border-top-left-radius: 6px;
 }
 .cart-count .add {
   width: 48rpx;

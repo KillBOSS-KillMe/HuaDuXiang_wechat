@@ -142,47 +142,70 @@ page{
     }
   }
 }
+.none-content {
+  text-align: center;
+  image {
+    width: 500rpx;
+    height: 500rpx;
+  }
+  .go{
+    height: 80rpx;
+    border-radius: 50rpx;
+    width: 300rpx;
+    line-height: 80rpx;
+    border: 1px solid #FF2228;
+    font-size: 30rpx;
+    color: #FF2228;
+    margin: 0 auto;
+  }
+}
 </style>
 
 <template>
   <view class="shop-cart">
-    <view class="good-list">
-      <repeat for="{{goodsList}}" key="item">
-        <swiperDel :swiperData.sync="item" @getDel.user="getDel">
-          <view class="goods-info">
-              <icon class="icon_check" type="success" size="20" @tap.stop="selectList({{index}})" wx:if="{{item.selected}}"></icon>
-              <icon class="icon_check" type="circle" size="20" @tap.stop="selectList({{index}})" wx:else></icon>
-              <view class="img-box">
-                <image src="{{item.goods_image_url}}" class="img"/>
-              </view>
-              <view class="text-box">
-                <view class="goods-title">
-                  {{item.goods_name}}
+    <view wx:if="{{goodsList.length}}">
+      <view class="good-list">
+        <repeat for="{{goodsList}}" key="item">
+          <swiperDel :swiperData.sync="item" @getDel.user="getDel">
+            <view class="goods-info">
+                <icon class="icon_check" type="success" size="20" @tap.stop="selectList({{index}})" wx:if="{{item.selected}}"></icon>
+                <icon class="icon_check" type="circle" size="20" @tap.stop="selectList({{index}})" wx:else></icon>
+                <view class="img-box">
+                  <image src="{{item.goods_image_url}}" class="img"/>
                 </view>
-               <view class="goods-tag">
-                 规格
-                </view>          
-                  <view class="price">￥{{item.goods_price}}</view>
-                  <view class="shop-count">
-                    <cartCount :good.sync="item" @getGood.user="getGood"></cartCount>
+                <view class="text-box">
+                  <view class="goods-title">
+                    {{item.goods_name}}
                   </view>
-              </view>
-          </view>
-        </swiperDel>
-       </repeat>
-    </view>
-    <view class="check-box">
-       <view class="left-price">
-        <view class="all-select-box" @tap.stop="selectAll">
-          <icon type="success" size="20" wx:if="{{judgeAllSelect}}"></icon>
-          <icon type="circle" size="20" wx:else></icon>
-          <text>全选</text>
-        </view>
-        <view class="total">
-          共计 ￥ <text style="color:#FF2228;font-size:34rpx;font-weight:bold">{{totalPrice}}</text>
-        </view>
+                <view class="goods-tag">
+                  规格
+                  </view>          
+                    <view class="price">￥{{item.goods_price}}</view>
+                    <view class="shop-count">
+                      <cartCount :good.sync="item" @getGood.user="getGood"></cartCount>
+                    </view>
+                </view>
+            </view>
+          </swiperDel>
+        </repeat>
       </view>
-      <view class="pay-btn">去结算</view>
+      <view class="check-box">
+        <view class="left-price">
+          <view class="all-select-box" @tap.stop="selectAll">
+            <icon type="success" size="20" wx:if="{{judgeAllSelect}}"></icon>
+            <icon type="circle" size="20" wx:else></icon>
+            <text>全选</text>
+          </view>
+          <view class="total">
+            共计 ￥ <text style="color:#FF2228;font-size:34rpx;font-weight:bold">{{totalPrice}}</text>
+          </view>
+        </view>
+        <view class="pay-btn">去结算</view>
+      </view>
+    </view>
+    <view class="none-content" wx:else>
+      <image src="/assets/img/image48.png"/>
+      <navigator url="/pages/index" hover-class="none" open-type="reLaunch" class="go">去选购</navigator>
     </view>
      <nav class="nav" @childFn.user="goPage"/>
   </view>
@@ -247,20 +270,31 @@ export default class ShopCart extends wepy.page {
         good.selected = this.allSelected
       }
     },
-    getGood (item) { // 自定义事件
-      // console.log(this.goods)
+    getGood (item, type) { // 自定义事件
+    
     },
     getDel(item){
       var idx = this.goodsList.findIndex((ele, idx) => item.cart_id == ele.cart_id)
-
       ajax({
         url: api.cartDel,
         data: {
           cart_id: item.cart_id
         }
+      }).then(res => {
+        if(res.datas.state == 1) {
+          wx.showToast({
+            title: res.datas.msg
+          })
+          this.goodsList.splice(idx,1)
+          this.$apply()
+        } else {
+           wx.showToast({
+            title: res.datas.msg,
+            icon: 'none'
+          })
+        }
       })
 
-      this.goodsList.splice(idx,1)
     },
     /**
      * 底部导航跳转

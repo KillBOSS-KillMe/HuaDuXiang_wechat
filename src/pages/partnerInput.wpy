@@ -1,29 +1,33 @@
 <template>
   <view class="partner">
-    <view class="input-wrap">
-      <view class="com-list">
-        <view class="item">
-          <view class="title">姓名</view>
-          <input type="text" placeholder="请输入姓名" />
-          <image class="search-img" src="/assets/img/image25.png" />
-        </view>
-        <view class="item">
-          <view class="title">电话</view>
-          <input type="number" placeholder="请输入手机号码" />
-        </view>
-        <view class="item">
-          <view class="title">地址</view>
-          <input type="text" placeholder="请选择收货地址" disabled />
-          <image class="search-img" src="/assets/img/image25.png" />
+    <form bindsubmit="bindsubmit">
+      <view class="input-wrap">
+        <view class="com-list">
+          <view class="item">
+            <view class="title">姓名</view>
+            <input type="text" placeholder="请输入姓名" name="member_name" value="{{address.true_name}}" />
+          </view>
+          <view class="item">
+            <view class="title">电话</view>
+            <input type="number" placeholder="请输入手机号码" name="member_tel" value="{{address.tel_phone}}"  />
+          </view>
+          <navigator url="/pages/consignee" class="item">
+            <view class="title">地址</view>
+            <input type="text" placeholder="请选择收货地址" name="member_addr" value="{{address.area_info}}{{address.address}}" disabled />
+            <image class="search-img" src="/assets/img/image25.png" />
+          </navigator>
         </view>
       </view>
-    </view>
-    <button class="btn">提交</button>
+      <button form-type="submit"  class="btn">提交</button>
+    </form>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
+
 
 export default class ShopCart extends wepy.page {
   config = {
@@ -34,14 +38,59 @@ export default class ShopCart extends wepy.page {
 
   mixins = [];
 
-  data = {};
+  data = {
+    address: '',
+  };
 
   computed = {};
 
-  methods = {};
+  methods = {
+    bindsubmit(e){
+      var {member_addr, member_name, member_tel} = e.detail.value
+      if(!member_name) {
+        wx.showToast({
+          title: '请输入姓名',
+          icon: 'none'
+        })
+        return false
+      }
+      if(member_tel.length !== 11) {
+        wx.showToast({
+          title: '请输入正确的手机号码',
+          icon: 'none'
+        })
+        return false
+      }
+      if(!member_addr) {
+        wx.showToast({
+          title: '请输入地址',
+          icon: 'none'
+        })
+        return false
+      }
+      ajax({
+        url: api.addPartner,
+        data: {
+          member_name,
+          member_tel,
+          member_addr
+        }
+      }).then(res => {
+        wx.showToast({
+          title: res.datas.msg,
+          icon: 'none'
+        })
+        var timer = setTimeout(() => {
+          wx.navigateBack()
+        }, 1000)
+      })
+    }
+  };
 
   events = {};
-  onShow() {}
+  onShow() {
+    this.address =  this.$parent.globalData.address
+  }
 
   onLoad() {}
 }

@@ -6,96 +6,77 @@
       </block>
     </view>
     <view class="goods-wrap">
-      <block wx:for="{{10}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+      <block wx:for="{{orderList}}" wx:for-index="index" wx:for-item="item" wx:key="key">
         <view class="goods-item">
           <view class="goods-head">
             <view class="contract-title">
-              <text>订单编号：{{item.order_id}}132456789</text>
-              <text class="state"  wx:if="{{index == 2}}">等待发货</text>
-              <text class="state"  wx:elif="{{index == 3}}">已发货</text>
-              <text class="state" wx:elif="{{index == 4}}">交易完成</text>
-              <text class="state" wx:elif="{{index == 5}}">交易关闭</text>
-              <text class="state" wx:elif="{{index == 6}}">已删除</text>
-              <text class="state" wx:elif="{{index == 7}}">已取消</text>
-              <text class="state" wx:elif="{{index == 8}}">已收货</text>
+              <text>订单编号：{{item.pay_sn}}</text>
+              <text class="state"  wx:if="{{item.order_state == 0}}">已取消</text>
+              <text class="state"  wx:elif="{{item.order_state == 10}}">待支付</text>
+              <text class="state" wx:elif="{{item.order_state == 20}}">待发货</text>
+              <text class="state" wx:elif="{{item.order_state == 30}}">待收货</text>
+              <text class="state" wx:elif="{{item.order_state == 40}}">交易完成</text>
             </view>
           </view>
           <view class="goods-cont">
-            <navigator class="goods-list" hover-class="none" url="/pages/order-info/order-info?order_id={{item.order_id}}">
-              <view class="goods-info">
-                <image src="/assets/img/image.png"/>
-                <view class="info-r">
-                  <view class="name">
-                    <view>{{ele.goods_name}}名称</view>
-                    <text>×{{ele.number}}12</text>
-                  </view>
-                  <view class="spec">
-                    <view>红大</view>
-                  </view>
-                  <view class="price">
-                    <text/>
-                    <text>￥</text>
-                    <text>{{ele.good_price}}12</text>
+            <block wx:for="{{item.extend_order_goods}}" wx:for-index="idx" wx:for-item="ele" wx:key="key">
+              <navigator class="goods-list" hover-class="none" url="/pages/order-info/order-info?order_id={{item.order_id}}">
+                <view class="goods-info">
+                  <image src="{{ele.goods_image_url}}"/>
+                  <view class="info-r">
+                    <view class="name">
+                      <view>{{ele.goods_name}}</view>
+                      <text>×{{ele.goods_num}}</text>
+                    </view>
+                    <view class="spec">
+                      <view>规格</view>
+                    </view>
+                    <view class="price">
+                      <text/>
+                      <text>￥</text>
+                      <text>{{ele.goods_price}}</text>
+                    </view>
                   </view>
                 </view>
-              </view>
-            </navigator>
+              </navigator>
+            </block>
             <view class="goods-fot">
               <view class="should-price">
                 应付金额
-                <view class="text">￥{{item.pay_price}}144</view>
+                <view class="text">￥{{item.order_amount}}</view>
+              </view>
+               <!-- 0 已取消 -->
+              <view class="goods-option" wx:if="{{item.order_state == 0}}">
+                 <view class="goods-btn" bindtap="orderDelete" data-wpyorderdelete-a="{{item.order_id}}" data-wpyorderdelete-b="{{index}}">删除订单</view>
               </view>
               <!-- 1 待付款 -->
-              <view class="goods-option" wx:if="{{index == 1}}">
-                <view class="goods-btn">
-                  <navigator url="/pages/order-info/order-info?order_id={{item.order_id}}" hover-class="none">取消订单</navigator>
+              <view class="goods-option" wx:if="{{item.order_state == 10}}">
+                <view class="goods-btn" bindtap="orderCancel" data-wpyordercancel-a="{{item.order_id}}" data-wpyordercancel-b="{{index}}">
+                  取消订单
                 </view>
                 <view class="goods-btn color-y" data-order_id="{{item.order_id}}" bindtap="pay">立即付款</view>
               </view>
               <!-- 2 待发货   -->
-              <view class="goods-option" wx:elif="{{index == 2}}">
+              <view class="goods-option" wx:elif="{{item.order_state == 20}}">
                 <view class="goods-btn color-y">
-                  <navigator url="/pages/order-track/order-track?order_id={{item.order_id}}" hover-class="none">查看物流</navigator>
+                  <navigator url="/pages/order-track/order-track?order_id={{item.order_id}}" hover-class="none">申请退款</navigator>
                 </view>
               </view>
               <!-- 3 已发货/待收货 -->
-              <view class="goods-option" wx:elif="{{index == 3}}">
-                <view class="goods-btn">
-                  <navigator url="/pages/order-track/order-track?order_id={{item.order_id}}" hover-class="none">查看物流</navigator>
+              <view class="goods-option" wx:elif="{{item.order_state == 30}}">
+                <view class="goods-btn" bindtap="searchDeliver" data-wpysearchdeliver-a="{{item.order_id}}">
+                  <!-- <navigator
+                    url="/pages/order-track/order-track?order_id={{item.order_id}}"
+                    hover-class="none"
+                  > -->
+                  查看物流
+                  <!-- </navigator> -->
                 </view>
-                <view class="goods-btn" bindtap="myReceipt" data-order_id="{{item.order_id}}">确认收货</view>
+                <view class="goods-btn" bindtap="orderReceive" data-wpyorderreceive-a="{{item.order_id}}" data-wpyorderreceive-b="{{index}}">确认收货</view>
               </view>
-              <!-- 4 已完成/已评价 -->
-              <view class="goods-option" wx:elif="{{index == 4}}">
-                <view class="goods-btn" wx:if="{{item.is_comment == 1}}">
-                  <navigator url="/pages/eval-details/eval-details?id={{item.order_id}}" hover-class="none">查看评价</navigator>
-                </view>
-                <view class="goods-btn">
-                  <navigator url="/pages/goods-info/goods-info?id={{item.goods[0].good_id}}" hover-class="none">再次购买</navigator>
-                </view>
-                <view class="goods-btn" bindtap="myReceiptDelete" data-idx="{{index}}" data-order_id="{{item.order_id}}">删除订单</view>
-              </view>
-              <!-- 5 已关闭 -->
-              <view class="goods-option" wx:elif="{{index == 5}}">
-                <view class="goods-btn" bindtap="myReceiptDelete" data-idx="{{index}}" data-order_id="{{item.order_id}}">删除订单</view>
-                <view class="goods-btn">重新购买</view>
-              </view>
-              <!-- 6 待发货 -->
-              <view class="goods-option" wx:elif="{{index == 6}}">
-                <view class="goods-btn">
-                  <navigator url="/pages/order-track/order-track?order_id={{item.order_id}}" hover-class="none">查看物流</navigator>
-                </view>
-                <view class="goods-btn" bindtap="myReceipt" data-order_id="{{item.order_id}}">确认收货</view>
-              </view>
-              <!-- 7 已取消 -->
-              <view class="goods-option" wx:elif="{{index == 7}}">
-                <view class="goods-btn">删除订单</view>
-              </view>
-              <!-- 8 已收货/待评价 -->
-              <view class="goods-option" wx:elif="{{index == 8}}">
-                <view class="goods-btn">
-                  <navigator url="/pages/goods-info/goods-info?id={{item.goods[0].good_id}}">再次购买</navigator>
-                </view>
+              <!-- 4 已完成 -->
+              <view class="goods-option" wx:elif="{{item.order_state == 40}}">
+                <view class="goods-btn" bindtap="orderDelete" data-wpyorderdelete-a="{{item.order_id}}" data-wpyorderdelete-b="{{index}}">删除订单</view>
               </view>
             </view>
           </view>

@@ -1,41 +1,66 @@
 <template>
   <view class="cart-count">
-      <view class="decrease" @tap.stop="decrease">-</view>
-      <input type="number" value="{{good.goods_num}}" disabled/>
-      <view class="add" @tap.stop="add">+</view>
+    <view class="decrease" @tap.stop="decrease">-</view>
+    <input type="number" value="{{good.goods_num}}" disabled>
+    <view class="add" @tap.stop="add">+</view>
   </view>
 </template>
 
 <script>
-import wepy from 'wepy'
+import wepy from 'wepy';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 
 export default class CartCount extends wepy.component {
-  data = {}
+  data = {};
   props = {
     good: {
-      type: Object,
+      type: Object
     }
-  }
-  components = {}
+  };
+  components = {};
   // 计算属性
-  computed = {}
+  computed = {};
   // 方法集
   methods = {
-    add () {
-      this.good.goods_num++
-      this.$emit('getGood', this.good)
+    add() {
+      var num = this.good.goods_num;
+      num++
+      this.changeNum(num)
     },
-    decrease () {
-      if (this.good.goods_num === 1){
-         return false
+    decrease() {
+      var num = this.good.goods_num;
+      if (num === 1) {
+        return false;
       }
-      this.good.goods_num--
-      this.$emit('getGood', this.good)
-    }
+      num--
+      this.changeNum(num)
+    },
+  };
+  changeNum(num) {
+    ajax({
+      url: api.cartEditQuantity,
+      data: {
+        goods_id: this.good.goods_id,
+        cart_id: this.good.cart_id,
+        quantity: num
+      }
+    }).then(res => {
+      if (res.datas.state == 1) {
+        this.good.goods_num = res.datas.quantity;
+        this.good.goods_price = res.datas.goods_price;
+        this.$apply();
+        // this.$emit('getGood', this.good);
+      } else {
+        wx.showToast({
+          title: res.datas.error,
+          icon: 'none'
+        });
+      }
+    });
   }
-  onLoad () {
+  onLoad() {
   }
-
 }
 </script>
 
@@ -53,8 +78,6 @@ export default class CartCount extends wepy.component {
     border-left: 1rpx solid #ccc;
     border-bottom: 1px solid #ccc;
     border-top: 1px solid #ccc;
-    border-bottom-left-radius: 6rpx;
-    border-top-left-radius: 6px;
   }
   .add {
     width: 48rpx;
@@ -76,7 +99,7 @@ export default class CartCount extends wepy.component {
     text-align: center;
     font-size: 24rpx;
     border: 1px solid #cccccc;
-    // color: 
+    // color:
   }
 }
 </style>

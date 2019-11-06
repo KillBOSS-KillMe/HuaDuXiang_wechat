@@ -37,10 +37,10 @@
     <view class="type-wrap" wx:if="{{navIdx == 1}}">
         <repeat for="{{store_goods_class}}" item="item">
           <view class="type-one-item">
-            <view class="type-h">一级分类</view>
+            <view class="type-h">{{item.name}}</view>
               <view class="type-list">  
-                <repeat for="{{30}}" item="ele" index="idx">
-                    <view class="type-two-item" @tap="navGoodsList">分类啊啊</view>
+                <repeat for="{{item.sun}}" item="ele" index="idx">
+                    <view class="type-two-item" @tap="navGoodsList({{ele.pid}}, {{ele.id}})">{{ele.new_name}}</view>
                 </repeat>
               </view>
           </view>
@@ -123,6 +123,13 @@ export default class ShopCart extends wepy.page {
     }).then(res => {
       if(res.code == 200) {
         this.store_goods_class = res.datas.store_goods_class || []
+        res.datas.store_goods_class.forEach(item => {
+          if( Object.prototype.toString.call(item.sun) == '[object Array]') {
+            item.sun.forEach(ele => {
+              ele.new_name = ele.name.toString().slice(0, 5)
+            })
+          }
+        })
         this.$apply()
       }
     })

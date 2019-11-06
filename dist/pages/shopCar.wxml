@@ -1,57 +1,63 @@
 
   <view class="shop-cart">
-    <view class="good-list">
-      <block wx:for="{{goodsList}}" wx:for-index="index" wx:for-item="item" wx:key="item">
-        
+    <view  wx:if="{{goodsList.length}}">
+      <view class="good-list">
+        <block wx:for="{{goodsList}}" wx:for-index="index" wx:for-item="item" wx:key="item">
+          
     <view class="swiper-item-wrapper">
       <view bindtouchstart="$swiperDel$ts" bindtouchmove="$swiperDel$tm" bindtouchend="$swiperDel$te" class="swiper-content" style="{{item.txtStyle}}" data-com-index="{{index}}">
         
-          <view class="goods-info">
-              <icon class="icon_check" type="success" size="20" catchtap="selectList"  wx:if="{{item.selected}}" data-wpyselectlist-a="{{index}}"/>
-              <icon class="icon_check" type="circle" size="20" catchtap="selectList"  wx:else data-wpyselectlist-a="{{index}}"/>
-              <view class="img-box">
-                <image src="{{item.goods_image_url}}" class="img"/>
-              </view>
-              <view class="text-box">
-                <view class="goods-title">
-                  {{item.goods_name}}
+            <view class="goods-info">
+                <icon class="icon_check" type="success" size="20" catchtap="selectList" wx:if="{{item.selected}}" data-wpyselectlist-a="{{index}}"/>
+                <icon class="icon_check" type="circle" size="20" catchtap="selectList" wx:else data-wpyselectlist-a="{{index}}"/>
+                <view class="img-box">
+                  <image src="{{item.goods_image_url}}" class="img"/>
                 </view>
-               <view class="goods-tag">
-                 规格
-                </view>          
-                  <view class="price">￥{{item.goods_price}}</view>
-                  <view class="shop-count">
-                    
+                <view class="text-box">
+                  <view class="goods-title">
+                    {{item.goods_name}}
+                  </view>
+                <view class="goods-tag">
+                  规格
+                  </view>          
+                    <view class="price">￥{{item.goods_price}}</view>
+                    <view class="shop-count">
+                      
   <view class="cart-count">
-      <view class="decrease" catchtap="$cartCount$decrease" data-com-index="{{index}}">-</view>
-      <input type="number" value="{{item.goods_num}}" disabled/>
-      <view class="add" catchtap="$cartCount$add" data-com-index="{{index}}">+</view>
+    <view class="decrease" catchtap="$cartCount$decrease" data-com-index="{{index}}">-</view>
+    <input type="number" value="{{item.goods_num}}" disabled/>
+    <view class="add" catchtap="$cartCount$add" data-com-index="{{index}}">+</view>
   </view>
 
-                  </view>
-              </view>
-          </view>
-        
+                    </view>
+                </view>
+            </view>
+          
       </view>
       <view class="swiper-actions actions-right">
         <view class="swiper-btn del" catchtap="$swiperDel$del" data-com-index="{{index}}">删除</view>
       </view>
 </view>
 
-       </block>
-    </view>
-    <view class="check-box">
-       <view class="left-price">
-        <view class="all-select-box" catchtap="selectAll">
-          <icon type="success" size="20" wx:if="{{judgeAllSelect}}"/>
-          <icon type="circle" size="20" wx:else/>
-          <text>全选</text>
-        </view>
-        <view class="total">
-          共计 ￥ <text style="color:#FF2228;font-size:34rpx;font-weight:bold">{{totalPrice}}</text>
-        </view>
+        </block>
       </view>
-      <view class="pay-btn">去结算</view>
+      <view class="check-box">
+        <view class="left-price">
+          <view class="all-select-box" catchtap="selectAll">
+            <icon type="success" size="20" wx:if="{{judgeAllSelect}}"/>
+            <icon type="circle" size="20" wx:else/>
+            <text>全选</text>
+          </view>
+          <view class="total">
+            共计 ￥ <text style="color:#FF2228;font-size:34rpx;font-weight:bold">{{totalPrice}}</text>
+          </view>
+        </view>
+        <view class="pay-btn">去结算</view>
+      </view>
+    </view>
+    <view class="none-content"  wx:else>
+      <image src="/assets/img/image48.png"/>
+      <navigator url="/pages/index" hover-class="none" open-type="reLaunch" class="go">去选购</navigator>
     </view>
      
   <view class="nav">

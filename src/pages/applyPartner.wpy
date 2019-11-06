@@ -1,13 +1,15 @@
 <template>
   <view class="shop-wrap">
-    <!-- <repeat for="{{10}}" item="item"> -->
+    <image class="back-img" @tap="back" src="/assets/img/image49.png" />
     <image class="cont-img" src="/assets/img/0.jpg" mode='widthFix' />
-    <navigator url="/pages/partnerInput" class="btn">立即申请</navigator>
+    <view class="btn" @tap="navPartner">立即申请</view>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 
 export default class ShopCart extends wepy.page {
   config = {
@@ -26,11 +28,31 @@ export default class ShopCart extends wepy.page {
   computed = {};
 
   methods = {
-   
+    navPartner(){
+      this.isPartner()
+    },
+    back(){
+      wx.navigateBack()
+    }
   };
 
   events = {};
-  onShow() {}
+  onShow() {
+    }
+  isPartner(){
+    ajax({
+      url: api.isPartner,
+    }).then(res => {
+      if(res.datas.state == -1 || res.datas.state == 0) {
+        this.$navigate('partnerInput')
+      } else if(res.datas.state == 1 || res.datas.state == 2) {
+        wx.showToast({
+          title: res.datas.msg,
+          icon: 'none'
+        })
+      }
+    })
+  }
 
   onLoad() {}
 }
@@ -59,6 +81,14 @@ export default class ShopCart extends wepy.page {
     border-radius: 10rpx;
     background: #FFB921;
   }
+}
+
+.back-img {
+  width: 44rpx;
+  height: 44rpx;
+  position: fixed;
+  top: 64rpx;
+  left: 26rpx;
 }
 </style>
 

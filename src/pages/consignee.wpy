@@ -50,7 +50,10 @@ export default class Index extends wepy.page {
   methods = {
     changeAddress(item) {
       var app = this.$parent;
-      app.globalData.orderInfo.address_info = item
+      app.globalData.address = item
+      if(app.globalData.orderInfo) {
+        app.globalData.orderInfo.address_info = item
+      }
       wx.navigateBack()
     }
   };

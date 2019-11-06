@@ -420,7 +420,13 @@ export default class Index extends wepy.page {
     });
   }
 
-  onShow() {}
+  onShow() {
+    wx.login({
+      success(res) {
+        console.log(res)
+      }
+    })
+  }
 
   methods = {
     tapName(url, id) {
