@@ -57,7 +57,8 @@ export default class extends wepy.app {
       'pages/consignee', // 商品详情跳转添加地址
       'pages/goodsList',
       'pages/distribution', // 分销
-      'pages/orderInfo' // 订单详情
+      'pages/orderInfo', // 订单详情
+      'pages/logistics' // 物流信息
       
     ],
     window: {

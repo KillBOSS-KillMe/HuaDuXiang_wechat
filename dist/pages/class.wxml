@@ -11,7 +11,7 @@
       <view class="goods-right">
         <scroll-view class="right-scroll" scroll-y>
           <view class="advertisement" hover-class="none">
-            <image src="{{oneList[leftNav].imagesrc}}"/>
+            <image  wx:if="{{oneList[leftNav].imagesrc}}" src="{{oneList[leftNav].imagesrc}}"/>
           </view>
           <block wx:for="{{twoList}}" wx:for-index="index" wx:for-item="item" wx:key="key">
             <view class="two-type">
@@ -19,7 +19,7 @@
               <view class="two-type-list">
                 <block wx:for="{{item.three}}" wx:for-index="index" wx:for-item="ele" wx:key="key">
                   <view class="item" bindtap="navGoodsList" data-wpynavgoodslist-a="{{ele.gc_id}}">
-                    <image src="{{ele.imagesrc}}"/>
+                    <image src="{{ele.imagesrc}}"  wx:if="{{ele.imagesrc}}"/>
                     <text>{{ele.new_name}}</text>
                   </view>
                 </block>

@@ -26,7 +26,7 @@
               <navigator
                 class="goods-list"
                 hover-class="none"
-                url="/pages/order-info/order-info?order_id={{item.order_id}}"
+                url="/pages/orderInfo?order_id={{item.order_id}}"
               >
                 <view class="goods-info">
                   <image src="{{ele.goods_image_url}}" />
@@ -77,13 +77,13 @@
               </view>
               <!-- 3 已发货/待收货 -->
               <view class="goods-option" wx:elif="{{item.order_state == 30}}">
-                <view class="goods-btn" @tap="searchDeliver({{item.order_id}})">
-                  <!-- <navigator
-                    url="/pages/order-track/order-track?order_id={{item.order_id}}"
+                <view class="goods-btn">
+                  <navigator
+                    url="/pages/logistics?order_id={{item.order_id}}"
                     hover-class="none"
-                  > -->
+                  >
                   查看物流
-                  <!-- </navigator> -->
+                  </navigator>
                 </view>
                 <view class="goods-btn" @tap="orderReceive({{item.order_id}},{{index}})">确认收货</view>
               </view>
@@ -218,14 +218,6 @@ export default class ShopCart extends wepy.page {
           }
         }
       })
-    },
-    searchDeliver(order_id) {
-      ajax({
-        url: api.searchDeliver,
-        data: {
-          order_id
-        }
-      }).then(res => console.log(res))
     }
   };
   onLoad() {}

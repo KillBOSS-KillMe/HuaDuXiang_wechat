@@ -48,6 +48,7 @@
   flex-direction: column;
   width: 160rpx;
   margin-bottom: 30rpx;
+  min-height: 70rpx;
 }
 .goods-wrap .goods-right .right-scroll .two-type .two-type-list .item > image {
   width: 80rpx;

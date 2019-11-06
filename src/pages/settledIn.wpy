@@ -69,6 +69,7 @@
           <text>年</text>
         </view>
       </view>
+      <navigator hover-class="none" url="/pages/merchantIndex?store_id=3" class="settled-btn" form-type="submit">前往店铺</navigator>
     </view>
   </view>
 </template>
@@ -85,7 +86,7 @@ export default class Index extends wepy.page {
   mixins = [];
 
   data = {
-    status: 2 // 0 没入驻 1入驻审核中 2入驻成功
+    status: 0 // 0 没入驻 1入驻审核中 2入驻成功
   };
 
   computed = {};

@@ -15,7 +15,7 @@
       <view class="goods-right">
         <scroll-view class="right-scroll" scroll-y>
           <view class="advertisement" hover-class="none">
-            <image src="{{oneList[leftNav].imagesrc}}" />
+            <image wx:if="{{oneList[leftNav].imagesrc}}"  src="{{oneList[leftNav].imagesrc}}" />
           </view>
           <repeat for="{{twoList}}" item="item">
             <view class="two-type">
@@ -23,7 +23,7 @@
               <view class="two-type-list">
                 <repeat for="{{item.three}}" item="ele">
                   <view class="item" @tap="navGoodsList({{ele.gc_id}})">
-                    <image src="{{ele.imagesrc}}" />
+                    <image src="{{ele.imagesrc}}" wx:if="{{ele.imagesrc}}" />
                     <text>{{ele.new_name}}</text>
                   </view>
                 </repeat>
@@ -151,6 +151,7 @@ export default class Index extends wepy.page {
             flex-direction: column;
             width: 160rpx;
             margin-bottom: 30rpx;
+            min-height: 70rpx;
             > image {
               width: 80rpx;
               height: 80rpx;

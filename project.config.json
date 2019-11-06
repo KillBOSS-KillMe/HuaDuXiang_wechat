@@ -112,8 +112,9 @@
 				},
 				{
 					"id": -1,
-					"name": "pages/orderInfo",
-					"pathName": "pages/orderInfo",
+					"name": "物流信息",
+					"pathName": "pages/logistics",
+					"query": "",
 					"scene": null
 				}
 			]

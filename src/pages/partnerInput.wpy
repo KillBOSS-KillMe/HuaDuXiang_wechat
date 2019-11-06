@@ -71,9 +71,9 @@ export default class ShopCart extends wepy.page {
       ajax({
         url: api.addPartner,
         data: {
-          member_name,
-          member_tel,
-          member_addr
+          partner_name: member_name,
+          partner_tel: member_tel,
+          partner_addr: member_addr
         }
       }).then(res => {
         wx.showToast({
