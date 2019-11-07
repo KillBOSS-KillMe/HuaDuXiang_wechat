@@ -296,6 +296,31 @@
         </view>
       </view>
     </view>
+    <!-- 预购商品 -->
+    <view class="seckill recommend">
+      <view class="seckilltitle">
+        <view>预购商品</view>
+      </view>
+      <view class="saleShopWrap">
+        <view class="saleShop">
+          <repeat for="{{goods_list}}" item="item">
+            <view class="shopview" @tap="jumpDetails({{item.goods_id}}, {{item.goods_sale_type}})">
+              <image src="{{requestImgUrl + item.goods_image_url}}" />
+              <view class="saleTag">
+                <text class="overflow-one">{{item.goods_name}}</text>
+              </view>
+              <view>
+                <view>
+                  <text class="salep">预购价</text>
+                  <text class="salesmple">￥</text>
+                  <text class="saleprice">{{item.goods_price}}</text>
+                </view>
+              </view>
+            </view>
+          </repeat>
+        </view>
+      </view>
+    </view>
     <!-- 推荐产品 -->
     <view class="seckill recommend">
       <view class="seckilltitle">
@@ -381,12 +406,22 @@ export default class Index extends wepy.page {
     bannerArr: [], //轮播图
     hasmore: false, // 是否有下一页
     curpage: 1, //当前页数
+    isJoin: '', // 商家入驻状态
   };
 
   computed = {};
-  onLoad() {
+  async onLoad() {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     this.getAppUserInfo();
+    var data = await wepy.login();
+    ajax({
+      url: api.getToken,
+      data: {
+        code: data.code
+      }
+    }).then(res=> {
+      wx.setStorageSync('user', res.datas)
+    })
     // 首页-轮播图和areaArr菜单
     ajax({
       url: api.indexDefaultInfo,
@@ -421,11 +456,7 @@ export default class Index extends wepy.page {
   }
 
   onShow() {
-    wx.login({
-      success(res) {
-        console.log(res)
-      }
-    })
+    
   }
 
   methods = {
@@ -502,6 +533,15 @@ export default class Index extends wepy.page {
       app.globalData.userInfo = e.detail.userInfo;
       this.userInfo = app.globalData.userInfo;
       this.hasUserInfo = true;
+      var userInfo = e.detail.userInfo
+      ajax({
+        url: api.setUserinfo,
+        data: {
+          nickName: userInfo.nickName,
+          gender: userInfo.gender,
+          avatarUrl: userInfo.avatarUrl
+        }
+      })
     }
   }
 

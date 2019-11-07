@@ -4,15 +4,14 @@ import wepy from 'wepy';
 module.exports = {
   ajax(e) {
     var key = '7731b8f19c93a412ee7b84a478fa6f8d'
+    // key = wx.getStorageSync('user').token
     return new Promise(resolve => {
       e.icon !== 'none' && wepy.showLoading({
         title: "加载中"
       })
       wepy.request({
         url: e.url + '&key=' + key,
-        data: Object.assign({}, e.data, {
-          token: '公共参数放在ajax.js里面'
-        }),
+        data: Object.assign({}, e.data),
         header: e.header || {
           'content-type': 'application/x-www-form-urlencoded'
         },

@@ -1,10 +1,11 @@
 
-const URL = "http://www.shopdate.me"
 // const URL = "http://www.mywdl.com"
-
-
+const URL = "http://www.shopdate.me"
+// const URL = "http://www.hdx.cc"
 
 module.exports = {
+  // 小程序授权微信-返回用户 user_id—接口，用户信息接口。
+  getToken: URL +  '/api/mobile/index.php?w=connect&t=wechat',
   // 登录
   login: URL + "/api/mobile/index.php?w=logout&t=index",
   // 首页—商品列表接口
@@ -84,5 +85,15 @@ module.exports = {
   // 订单确认收货接口
   orderReceive: URL + "/api/mobile/index.php?w=member_order&t=order_receive",
   // 订单物流信息接口
-  searchDeliver: URL + "/api/mobile/index.php?w=member_order&t=search_deliver"
+  searchDeliver: URL + "/api/mobile/index.php?w=member_order&t=search_deliver",
+  // 判断是否提交入驻申请
+  isJoin: URL + "/api/mobile/index.php?w=store_joinin&t=is_join",
+  // 商家入驻申请
+  addStore: URL + "/api/mobile/index.php?w=store_joinin&t=addStore",
+  // 获取店铺等级
+  getStoreGrade: URL + "/api/mobile/index.php?w=store_joinin&t=getStoreGrade",
+  // 用户个人信息设置接口（获取微信用户头像，性别，昵称）
+  setUserinfo: URL + "/api/mobile/index.php?t=set_userinfo&w=member_index",
+  
+
 }

@@ -116,6 +116,12 @@
 					"pathName": "pages/logistics",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "入驻",
+					"pathName": "pages/settledIn",
+					"scene": null
 				}
 			]
 		}

@@ -300,7 +300,7 @@ export default class Index extends wepy.page {
         this.hot_sales = res.datas.hot_sales
         this.$apply()
         var article = res.datas.goods_content.goods_body
-        article = article.replace(/src="/g, `src="${that.requestImgUrl}`);
+        // article = article.replace(/src="/g, `src="${that.requestImgUrl}`);
         WxParse.wxParse('article', 'html', article, that, 5);
       }
     });
@@ -311,6 +311,7 @@ export default class Index extends wepy.page {
 </script>
 
 <style lang="less">
+@import "../utils/wxParse/wxParse.wxss";
 .shop-details-wrap {
   margin-bottom: 100rpx;
 }
