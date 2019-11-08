@@ -240,7 +240,8 @@ export default class Index extends wepy.page {
 
   events = {};
 
-  onLoad() {
+  onLoad(t) {
+    console.log(t)
     // 倒计时s
     var wxTimer = new timer({
       beginTime: '10',

@@ -31,9 +31,15 @@
           <input type="text" name="address" placeholder="请输入商铺地址" />
         </view>
         <view class="com-item">
-          <view class="title">店铺类型</view>
+          <view class="title">店铺分类</view>
+          <picker bindchange="storeClassChange" range="{{storeClass}}"  range-key="sc_name">
+            <input type="text" placeholder="请选择店铺分类" value="{{storeClass[storeClassIndex].sc_name}}" disabled />
+          </picker>
+        </view>
+        <view class="com-item">
+          <view class="title">店铺等级</view>
           <picker bindchange="storeGradeChange" range="{{storeGrade}}"  range-key="sg_name">
-            <input type="text" placeholder="请选择店铺类型" value="{{storeGrade[storeGradeIndex].sg_name}}" disabled />
+            <input type="text" placeholder="请选择店铺等级" value="{{storeGrade[storeGradeIndex].sg_name}}" disabled />
           </picker>
         </view>
         <view class="com-item">
@@ -121,6 +127,8 @@ export default class Index extends wepy.page {
     timeIndex: 0,
     useCostPrice: 0, // 平台使用费用
     bondPrice: 0, // 商家保证金
+    storeClass: [], // 店铺分类
+    storeClassIndex: 0, //店铺分类索引
   };
 
   computed = {
@@ -128,6 +136,10 @@ export default class Index extends wepy.page {
       var num = this.timeArr[this.timeIndex].num
       var price = this.storeGrade[this.storeGradeIndex] && this.storeGrade[this.storeGradeIndex].sg_price
       return (Number(num) * Number(price)).toFixed(2)
+    },
+    bondPrice() {
+      var price = this.storeClass[this.storeClassIndex] && this.storeClass[this.storeClassIndex].sc_bail
+      return Number(price).toFixed(2)
     }
   };
   onShow() {}
@@ -192,8 +204,32 @@ export default class Index extends wepy.page {
         })
         return false
       }
-
-      this.$navigate({ url: 'settledInPay' });
+      ajax({
+        url: api.addStore,
+        data: {
+          store_name: name, //'店铺名',
+          store_code: code, //'商家自定编码',
+          contacts_name: contacts, //'商家联系人',
+          contacts_phone: phone, //'商家联系电话',
+          company_address_detail: address, //'商家地址',
+          remark: remarks, //'入驻申请备注',
+          joinin_year: this.timeArr[this.timeIndex].num, //'入驻时长',
+          sc_id:  this.storeClass[this.storeClassIndex].sc_id, //'店铺分类编号',
+          sc_name: this.storeClass[this.storeClassIndex].sc_name, //'店铺分类名称',
+          sc_bail: this.storeClass[this.storeClassIndex].sc_bail, //'店铺分类保证金',
+          sg_id: this.storeGrade[this.storeGradeIndex].sg_id, //'店铺等级编号',
+          sg_name: this.storeGrade[this.storeGradeIndex].sg_name, //'店铺等级名称',
+          sg_info: this.storeGrade[this.storeGradeIndex].sg_price, //'店铺等级价格',
+          seller_name: admin, //'卖家账号'
+          seller_psw: password, // 密码
+        }
+      }).then(res => {
+        wx.showToast({
+          title: res.datas.msg,
+          icon: 'none'
+        })
+      })
+      // this.$navigate({ url: 'settledInPay' });
     },
     storeGradeChange(e) {
       var value = e.detail.value
@@ -201,6 +237,10 @@ export default class Index extends wepy.page {
     },
     timeChange(e){
       this.timeIndex = e.detail.value
+    },
+    storeClassChange(e) {
+      this.storeClassIndex = e.detail.value
+
     }
   };
 
@@ -216,13 +256,22 @@ export default class Index extends wepy.page {
       this.status = res.datas.state
       this.$apply()
     })
-
+    // 店铺等级
     ajax({
       url: api.getStoreGrade
     }).then(res => {
       this.storeGrade = res.datas.data
       this.$apply()
     })
+    // 店铺分类
+    ajax({
+      url: api.getStoreClass
+    }).then(res => {
+      this.storeClass = res.datas.data || []
+      this.$apply()
+    })
+
+
     
   }
 }

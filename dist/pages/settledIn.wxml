@@ -31,9 +31,15 @@
           <input type="text" name="address" placeholder="请输入商铺地址"/>
         </view>
         <view class="com-item">
-          <view class="title">店铺类型</view>
+          <view class="title">店铺分类</view>
+          <picker bindchange="storeClassChange" range="{{storeClass}}" range-key="sc_name">
+            <input type="text" placeholder="请选择店铺分类" value="{{storeClass[storeClassIndex].sc_name}}" disabled/>
+          </picker>
+        </view>
+        <view class="com-item">
+          <view class="title">店铺等级</view>
           <picker bindchange="storeGradeChange" range="{{storeGrade}}" range-key="sg_name">
-            <input type="text" placeholder="请选择店铺类型" value="{{storeGrade[storeGradeIndex].sg_name}}" disabled/>
+            <input type="text" placeholder="请选择店铺等级" value="{{storeGrade[storeGradeIndex].sg_name}}" disabled/>
           </picker>
         </view>
         <view class="com-item">

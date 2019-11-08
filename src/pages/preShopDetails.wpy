@@ -234,7 +234,9 @@ export default class Index extends wepy.page {
 
   events = {};
 
-  onLoad() {}
+  onLoad(t) {
+    console.log(t)
+  }
 }
 </script>
 

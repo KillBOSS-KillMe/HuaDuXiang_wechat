@@ -277,9 +277,9 @@
       <!-- 商品 -->
       <view class="saleShopWrap">
         <view class="saleShop">
-          <repeat for="{{goods_list}}" item="item">
-            <view class="shopview" @tap="jumpDetails({{item.goods_id}}, {{item.goods_sale_type}})">
-              <image src="{{requestImgUrl + item.goods_image_url}}" />
+          <repeat for="{{goods_list_miaosha}}" item="item">
+            <navigator url="/pages/seckillShopDetails?goods_id={{item.goods_id}}" hover-class="none" class="shopview">
+              <image src="{{item.goods_image_url}}" />
               <view class="saleTag">
                 <text class="overflow-one">{{item.goods_name}}</text>
               </view>
@@ -287,11 +287,11 @@
                 <view>
                   <text class="salep">秒杀价</text>
                   <text class="salesmple">￥</text>
-                  <text class="saleprice">{{item.goods_price}}</text>
+                  <text class="saleprice">{{item.robbuy_price}}</text>
                   <!-- <text class="saleexprice">原价￥ {{item.goods_price}}</text> -->
                 </view>
               </view>
-            </view>
+            </navigator>
           </repeat>
         </view>
       </view>
@@ -303,9 +303,9 @@
       </view>
       <view class="saleShopWrap">
         <view class="saleShop">
-          <repeat for="{{goods_list}}" item="item">
-            <view class="shopview" @tap="jumpDetails({{item.goods_id}}, {{item.goods_sale_type}})">
-              <image src="{{requestImgUrl + item.goods_image_url}}" />
+          <repeat for="{{goods_list_yushou}}" item="item">
+            <navigator url="/pages/preShopDetails?goods_id={{item.goods_id}}" hover-class="none" class="shopview">
+              <image src="{{item.goods_image}}" />
               <view class="saleTag">
                 <text class="overflow-one">{{item.goods_name}}</text>
               </view>
@@ -313,10 +313,11 @@
                 <view>
                   <text class="salep">预购价</text>
                   <text class="salesmple">￥</text>
-                  <text class="saleprice">{{item.goods_price}}</text>
+                  <!-- <text class="saleprice">{{item.goods_price}}</text> -->
+                  <text class="saleprice">{{item.book_down_payment}}</text>
                 </view>
               </view>
-            </view>
+            </navigator>
           </repeat>
         </view>
       </view>
@@ -407,6 +408,8 @@ export default class Index extends wepy.page {
     hasmore: false, // 是否有下一页
     curpage: 1, //当前页数
     isJoin: '', // 商家入驻状态
+    goods_list_yushou: [],
+    goods_list_miaosha: [],
   };
 
   computed = {};
@@ -434,6 +437,14 @@ export default class Index extends wepy.page {
     });
 
     this.requestIndexGoodsList()
+
+    ajax({
+      url: api.goodsGblist
+    }).then(res => {
+      this.goods_list_yushou = res.datas.goods_list_yushou || []
+      this.goods_list_miaosha = res.datas.goods_list || []
+      this.$apply()
+    })
   }
   
   // 首页—普通商品列表接口
