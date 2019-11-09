@@ -63,7 +63,7 @@
         </view>
       </view>
 
-      <button class="settled-btn" form-type="submit">下一步</button>
+      <button class="settled-btn" form-type="submit">提交申请</button>
     </form>
     <view class="examine" wx:if="{{status == 10}}">
       <image class="examine-img" src="/assets/img/image43.png" />
@@ -71,36 +71,66 @@
     <view wx:if="{{status == 40}}">
       <view class="settle-list">
         <view class="com-item">
-          <view class="title">商铺名称</view>
-          <input type="text" value="请输入商铺名称" disabled />
+          <view class="title">商铺账号</view>
+          <input type="text" name="admin" value="商铺账号(6-20位字母数字组合)" disabled />
         </view>
         <view class="com-item">
-          <view class="title">商铺编码</view>
-          <input type="text" value="请输入商铺编号" disabled />
+          <view class="title">商铺密码</view>
+          <input type="text" name="password" value="商铺密码(6-20位字母数字组合)" disabled />
+        </view>
+        <view class="com-item">
+          <view class="title">商铺名称</view>
+          <input type="text" name="name" value="请输入商铺名称" disabled />
+        </view>
+        <view class="com-item">
+          <view class="title">商铺编号</view>
+          <input type="text" name="code" value="商铺编号(6-20位字母数字组合)" disabled />
         </view>
         <view class="com-item">
           <view class="title">联系人</view>
-          <input type="text" value="请输入姓名" disabled />
+          <input type="text" name="contacts" value="请输入联系人姓名" disabled />
         </view>
         <view class="com-item">
           <view class="title">联系电话</view>
-          <input type="text" value="请输入联系电话" disabled />
+          <input type="number" name="phone" value="请输入联系电话" disabled />
         </view>
         <view class="com-item">
           <view class="title">商铺地址</view>
-          <input type="text" value="请输入商铺地址" disabled />
+          <input type="text" name="address" value="请输入商铺地址" disabled />
         </view>
-        <view class="com-item remarks">
-          <view class="title">入驻商备注</view>
-          <textarea value="请输入备注" disabled></textarea>
+        <view class="com-item">
+          <view class="title">店铺分类</view>
+          <picker bindchange="storeClassChange" range="{{storeClass}}"  range-key="sc_name">
+            <input type="text" value="请选择店铺分类" value="{{storeClass[storeClassIndex].sc_name}}" disabled />
+          </picker>
+        </view>
+        <view class="com-item">
+          <view class="title">店铺等级</view>
+          <picker bindchange="storeGradeChange" range="{{storeGrade}}"  range-key="sg_name">
+            <input type="text" value="请选择店铺等级" value="{{storeGrade[storeGradeIndex].sg_name}}" disabled />
+          </picker>
         </view>
         <view class="com-item">
           <view class="title">开店时间</view>
-          <input type="number" value="1" disabled />
+          <picker bindchange="timeChange" value="{{timeIndex}}" range="{{timeArr}}" range-key="num">
+            <input type="number" value="请选择开店时间"  value="{{timeArr[timeIndex].num}}"  disabled />
+          </picker>
           <text>年</text>
         </view>
+        <view class="com-item">
+          <view class="title">平台使用费</view>
+          <input type="text" value="平台使用费" value="{{useCostPrice}}元" disabled />
+        </view>
+        <view class="com-item">
+          <view class="title">商家保证金</view>
+          <input type="text" value="商家保证金" value="{{bondPrice}}元" disabled />
+        </view>
+        <view class="com-item remarks">
+          <view class="title">入驻商备注</view>
+          <textarea value="请输入备注" name="remarks" disabled></textarea>
+        </view>
       </view>
-      <navigator hover-class="none" url="/pages/merchantIndex?store_id=3" class="settled-btn" form-type="submit">前往店铺</navigator>
+      <navigator hover-class="none" url="/pages/merchantIndex?store_id={{store_id}}" class="settled-btn" form-type="submit">前往店铺</navigator>
     </view>
   </view>
 </template>
@@ -120,7 +150,7 @@ export default class Index extends wepy.page {
   mixins = [];
 
   data = {
-    status: 0, // -10 没入驻 10入驻审核中 30驳回申请  40入驻成功
+    status: 0, // -10 没入驻 10入驻审核中 20审核成功 30驳回申请  40入驻成功
     storeGrade: [],  // 入驻店铺等级
     timeArr: [{num: 1},{num: 2},{num: 3}],
     storeGradeIndex: 0,
@@ -129,6 +159,7 @@ export default class Index extends wepy.page {
     bondPrice: 0, // 商家保证金
     storeClass: [], // 店铺分类
     storeClassIndex: 0, //店铺分类索引
+    store_id: '', // 店铺id
   };
 
   computed = {
@@ -254,6 +285,7 @@ export default class Index extends wepy.page {
       type: 'get',
     }).then(res => {
       this.status = res.datas.state
+      this.store_id = res.datas.store_id
       this.$apply()
     })
     // 店铺等级

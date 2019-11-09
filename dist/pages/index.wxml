@@ -1,5 +1,8 @@
 
   <view class="wrap">
+    <!-- <Painter></Painter>
+    <painter customStyle='position: absolute; left: -9999rpx;' palette="{{template}}" bind:imgOK="onImgOK" widthPixels="1000"/>
+    <image src="{{image}}" style="width: 654rpx; height: 1000rpx; margin-left:40rpx;"/> -->
     <view class="search-wrap" bindtap="navSearch">
       <view class="search">
         <image class="search-img" src="/assets/img/image10.png"/>
@@ -76,7 +79,7 @@
         <view class="saleShop">
           <block wx:for="{{goods_list_yushou}}" wx:for-index="index" wx:for-item="item" wx:key="key">
             <navigator url="/pages/preShopDetails?goods_id={{item.goods_id}}" hover-class="none" class="shopview">
-              <image src="{{item.goods_image}}"/>
+              <image src="{{requestImgUrl + item.goods_image_url}}"/>
               <view class="saleTag">
                 <text class="overflow-one">{{item.goods_name}}</text>
               </view>

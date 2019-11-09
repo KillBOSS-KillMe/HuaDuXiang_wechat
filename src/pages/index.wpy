@@ -229,6 +229,9 @@
 </style>
 <template>
   <view class="wrap">
+    <!-- <Painter></Painter>
+    <painter customStyle='position: absolute; left: -9999rpx;' palette="{{template}}" bind:imgOK="onImgOK" widthPixels="1000"/>
+    <image src="{{image}}" style="width: 654rpx; height: 1000rpx; margin-left:40rpx;"/> -->
     <view class="search-wrap" @tap="navSearch">
       <view class="search">
         <image class="search-img" src="/assets/img/image10.png" />
@@ -305,7 +308,7 @@
         <view class="saleShop">
           <repeat for="{{goods_list_yushou}}" item="item">
             <navigator url="/pages/preShopDetails?goods_id={{item.goods_id}}" hover-class="none" class="shopview">
-              <image src="{{item.goods_image}}" />
+              <image src="{{requestImgUrl + item.goods_image_url}}" />
               <view class="saleTag">
                 <text class="overflow-one">{{item.goods_name}}</text>
               </view>
@@ -366,6 +369,9 @@ import nav from '../components/nav'; // 底部导航
 var timer = require('../utils/wxTimer.js'); // 倒计时
 var api = require('../api.js');
 import { ajax } from '../ajax.js';
+
+import Painter from '../components/painter/painter'; // 底部导航
+
 export default class Index extends wepy.page {
   config = {
     navigationBarTitleText: '首页',
@@ -373,7 +379,8 @@ export default class Index extends wepy.page {
     backgroundTextStyle: 'light'
   };
   components = {
-    nav: nav
+    nav: nav,
+    Painter: Painter
   };
 
   mixins = [];

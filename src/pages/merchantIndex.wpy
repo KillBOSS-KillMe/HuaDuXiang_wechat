@@ -68,7 +68,7 @@ export default class ShopCart extends wepy.page {
     requestImgUrl: '',
     store_info: null, // 店铺信息
     rec_goods_list: [], //商品列表
-    navIdx: 1,
+    navIdx: 0,
     store_goods_class: [] //店铺分类
   };
 
