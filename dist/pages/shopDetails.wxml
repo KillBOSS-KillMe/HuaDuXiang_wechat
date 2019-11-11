@@ -10,9 +10,9 @@
     <view class="tab-content"  wx:if="{{currentTab==0}}">
       <view class="mainWheel">
         <swiper autoplay>
-          <block wx:for="{{goods_image_mobile}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+          <block wx:for="{{image_list}}" wx:for-index="index" wx:for-item="item" wx:key="key">
             <swiper-item>
-              <image src="{{requestImgUrl + item}}" class="slide-image"/>
+              <image src="{{requestImgUrl + item._big}}" class="slide-image"/>
             </swiper-item>
           </block>
         </swiper>
@@ -111,16 +111,19 @@
     
   <view class="list">
     <view class="{{$attrsmask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$attrsmask$move">
-      <view class="mask" bindtap="$attrsmask$hideMask"/>132465
+      <view class="mask" bindtap="$attrsmask$hideMask"/>
       
       <view class="attr-box">
         <view class="goods-t">
-          <image class="goods-img" src="/assets/img/image.png"/>
+          <image class="goods-img" src="{{requestImgUrl + image_list[0]._big}}"/>
           <view class="goods-right">
-            <view class="title overflow-one">萌粉订书机 小型萌粉订书机萌粉订书机萌粉订书机</view>
+            <view class="title overflow-one">{{goods_content.goods_name}}</view>
+            <view class="price">{{goods_content.goods_price}}</view>
             <view class="attr">
-              <view>粉+白</view>
-              <view>x1</view>
+              <view>
+                 <block wx:key="key" wx:for="{{goods_spec}}" wx:for-index="index" wx:for-item="item">{{item}}</block>
+              </view>
+              <view>x{{goodsNum}}</view>
             </view>
           </view>
         </view>
@@ -129,7 +132,7 @@
             <view class="goods-h">{{item.title}}</view>
             <view class="prop">
               <block wx:for="{{item.prop}}" wx:for-index="idx" wx:for-item="ele" wx:key="key">
-                <view class="prop-i {{item.active == ele ? 'prop-active' : ''}}" bindtap="changeAttr" data-wpychangeattr-a="{{index}}" data-wpychangeattr-b="{{idx}}">{{ele}}</view>
+                <view class="prop-i {{goods_spec[index] == ele ? 'prop-active' : ''}}" bindtap="changeAttr" data-wpychangeattr-a="{{index}}" data-wpychangeattr-b="{{idx}}" data-wpychangeattr-c="{{ele}}">{{ele}}</view>
               </block>
             </view>
           </block>

@@ -229,9 +229,7 @@
 </style>
 <template>
   <view class="wrap">
-    <!-- <Painter></Painter>
-    <painter customStyle='position: absolute; left: -9999rpx;' palette="{{template}}" bind:imgOK="onImgOK" widthPixels="1000"/>
-    <image src="{{image}}" style="width: 654rpx; height: 1000rpx; margin-left:40rpx;"/> -->
+    <paspopup @pasHanld.user="pasHanld" :pasFlag.sync="pasFlag" :pasPrice.sync="pasPrice"></paspopup>
     <view class="search-wrap" @tap="navSearch">
       <view class="search">
         <image class="search-img" src="/assets/img/image10.png" />
@@ -316,8 +314,7 @@
                 <view>
                   <text class="salep">预购价</text>
                   <text class="salesmple">￥</text>
-                  <!-- <text class="saleprice">{{item.goods_price}}</text> -->
-                  <text class="saleprice">{{item.book_down_payment}}</text>
+                  <text class="saleprice">{{item.is_presell == '0' ? item.goods_sale_price : item.book_down_payment}}</text>
                 </view>
               </view>
             </navigator>
@@ -370,22 +367,23 @@ var timer = require('../utils/wxTimer.js'); // 倒计时
 var api = require('../api.js');
 import { ajax } from '../ajax.js';
 
-import Painter from '../components/painter/painter'; // 底部导航
+import paspopup from '../components/pas_popup'; // 底部导航
+
 
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '首页',
-    // enablePullDownRefresh: true,
-    backgroundTextStyle: 'light'
+    navigationBarTitleText: '首页'
   };
   components = {
     nav: nav,
-    Painter: Painter
+    paspopup
   };
 
   mixins = [];
 
   data = {
+    pasFlag: false,  // 余额支付
+    pasPrice: '1000', // 余额支付
     chooesId: '',
     hasUserInfo: false,
     userInfo: {},
@@ -402,12 +400,7 @@ export default class Index extends wepy.page {
       { id: '8', img: '/assets/img/image18.png', title: '更多频道' }
     ],
     // 轮播
-    imgUrls: [
-      { id: '1', img: 'indexlunbo.png' },
-      { id: '2', img: 'indexlunbo.png' },
-      { id: '3', img: 'indexlunbo.png' },
-      { id: '4', img: 'indexlunbo.png' }
-    ],
+    imgUrls: [],
     wxTimerList: {}, // 倒计时
     goods_list: [], // 商品列表
     areaArr: [], // area区域
@@ -416,7 +409,7 @@ export default class Index extends wepy.page {
     curpage: 1, //当前页数
     isJoin: '', // 商家入驻状态
     goods_list_yushou: [],
-    goods_list_miaosha: [],
+    goods_list_miaosha: []
   };
 
   computed = {};
@@ -432,6 +425,7 @@ export default class Index extends wepy.page {
     }).then(res=> {
       wx.setStorageSync('user', res.datas)
     })
+
     // 首页-轮播图和areaArr菜单
     ajax({
       url: api.indexDefaultInfo,
@@ -448,8 +442,8 @@ export default class Index extends wepy.page {
     ajax({
       url: api.goodsGblist
     }).then(res => {
-      this.goods_list_yushou = res.datas.goods_list_yushou || []
-      this.goods_list_miaosha = res.datas.goods_list || []
+      this.goods_list_yushou = res.datas.goods_list_yushou.list || []
+      this.goods_list_miaosha = res.datas.goods_list.list || []
       this.$apply()
     })
   }
@@ -478,26 +472,30 @@ export default class Index extends wepy.page {
   }
 
   methods = {
-    tapName(url, id) {
-      this.$navigate({url: url})
-      return false
-      if (id == 1) {
-        this.$navigate({ url: `applyPartner` }); // 申请合伙人
-      } else if (id == 2) {
-        this.$navigate({ url: `pre?id=${id}` });
-      } else if (id == 3) {
-        this.$navigate({ url: `discount?id=${id}` });
-      } else if (id == 4) {
-        this.$navigate({ url: `assemble?id=${id}` }); // 拼团
-      } else if (id == 5) {
-        this.$navigate({ url: `bargain?id=${id}` });
-      } else if (id == 6) {
-        this.$navigate({ url: `merchant?id=${id}` }); // 特约商户
-      } else if (id == 7) {
-        this.$navigate({ url: `seckill?id=${id}` });
-      } else if (id == 8) {
-        this.$navigate({ url: `moreChannels?id=${id}` });
+    // 余额支付密码回调
+    pasHanld(e){
+      console.log(e)
+      this.pasFlag = false
+    },
+    async tapName(url, id) {
+      var that = this
+      if(url == 'discount') {
+        // 申请成为分销商
+        var resData = await ajax({url: api.fxMemberApply});
+        if(resData.datas.state != 2) {
+          wx.showModal({
+            content: '申请成为分销员?',
+            success (res) {
+              if (res.confirm) {
+                that.$navigate('distribution')
+              }
+            }
+          })
+          return false
+        }
       }
+      console.log(url)
+      this.$navigate({url: url})
     },
     jumpDetails(goods_id, goods_type) {
       console.log(goods_id, goods_type)
@@ -516,8 +514,9 @@ export default class Index extends wepy.page {
       wx.previewImage({
         urls: ['/assets/img/logo.png']
       })
-    }
+    },
   };
+
   events = {};
   getAppUserInfo() {
     var app = this.$parent;
@@ -572,5 +571,6 @@ export default class Index extends wepy.page {
   }
   onPullDownRefresh(e) {
   }
+
 }
 </script>

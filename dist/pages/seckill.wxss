@@ -91,66 +91,68 @@
   margin-bottom: 30rpx;
   border-radius: 20rpx;
   border-bottom: solid 1px #f9f9f9;
+  display: flex;
+  align-items: center;
 }
 .wrap .saleShopWrap .saleShop .shopview image {
   width: 150rpx;
   height: 156rpx;
 }
-.wrap .saleShopWrap .saleShop .shopview .preTitle {
+.wrap .saleShopWrap .saleShop .shopview .goods-right {
+  height: 160rpx;
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+.wrap .saleShopWrap .saleShop .shopview .goods-right .preTitle {
+  width: 500rpx;
   font-size: 30rpx;
   font-weight: bold;
   color: #333;
-  position: absolute;
-  top: 12%;
-  left: 26%;
 }
-.wrap .saleShopWrap .saleShop .shopview .preTag {
-  position: absolute;
-  top: 36%;
-  left: 26%;
+.wrap .saleShopWrap .saleShop .shopview .goods-right .preTag {
   font-size: 22rpx;
   color: #9e9e9e;
 }
-.wrap .saleShopWrap .saleShop .shopview .preprice {
-  position: absolute;
-  top: 38%;
-  left: 23%;
+.wrap .saleShopWrap .saleShop .shopview .goods-right .preprice {
   font-weight: bolder;
   color: red;
-  font-size: 42rpx;
+  font-size: 36rpx;
 }
-.wrap .saleShopWrap .saleShop .shopview .skillPricr {
+.wrap .saleShopWrap .saleShop .shopview .goods-right .skillPricr {
   color: #999999;
   font-size: 24rpx;
   font-weight: normal;
   padding-left: 25rpx;
 }
-.wrap .saleShopWrap .saleShop .shopview .preexprice {
-  position: absolute;
-  top: 46%;
-  left: 52%;
+.wrap .saleShopWrap .saleShop .shopview .goods-right .preexprice {
   color: #999999;
   font-size: 24rpx;
   font-weight: normal;
   padding-left: 25rpx;
   text-decoration: line-through;
 }
-.wrap .saleShopWrap .saleShop .shopview .barginProgess {
-  position: absolute;
-  top: 77%;
-  left: 26%;
+.wrap .saleShopWrap .saleShop .shopview .goods-right .fot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.wrap .saleShopWrap .saleShop .shopview .goods-right .fot .barginProgess {
   font-size: 22rpx;
   color: #9e9e9e;
   width: 30%;
 }
-.wrap .saleShopWrap .saleShop .shopview .preBtn {
+.wrap .saleShopWrap .saleShop .shopview .goods-right .fot .surplus {
+  font-size: 22rpx;
+  color: #9e9e9e;
+}
+.wrap .saleShopWrap .saleShop .shopview .goods-right .fot .preBtn {
   width: 180rpx;
   height: 60rpx;
   background: #ff2228;
   color: white;
-  position: absolute;
-  bottom: 12%;
-  right: 1%;
   font-size: small;
   text-align: center;
   line-height: 60rpx;

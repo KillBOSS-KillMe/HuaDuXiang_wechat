@@ -153,26 +153,22 @@ page {
 /* 我的服务 */
 .personal_data {
   width: 100%;
-  height: 383rpx;
   background: #f9f9f9;
   position: relative;
   margin-top: 20rpx;
+  padding-top: 20rpx;
 }
 .personal_data .mainorder {
   height: 100%;
   width: 100%;
-  position: absolute;
-  top: 8%;
-  left: 5%;
   font-weight: bold;
   color: #333;
   font-size: 30rpx;
+  margin-left: 40rpx;
 }
 .personal_data .order {
   width: 90%;
-  position: absolute;
-  top: 20%;
-  left: 5%;
+  margin: 0 auto;
 }
 .personal_data .order .orderitem {
   line-height: 100rpx;
@@ -223,10 +219,7 @@ page {
 }
 .custorm_data .order {
   width: 90%;
-  height: 100%;
-  position: absolute;
-  top: 20%;
-  left: 5%;
+  margin: 0 auto;
 }
 .custorm_data .order .orderitem {
   line-height: 100rpx;

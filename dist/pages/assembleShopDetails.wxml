@@ -146,7 +146,7 @@
     
   <view class="list">
     <view class="{{$attrsmask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$attrsmask$move">
-      <view class="mask" bindtap="$attrsmask$hideMask"/>132465
+      <view class="mask" bindtap="$attrsmask$hideMask"/>
       
       <view class="attr-box">
         <view class="goods-t">
@@ -193,7 +193,7 @@
     
   <view class="list">
     <view class="{{$asslistmask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$asslistmask$move">
-      <view class="mask" bindtap="$asslistmask$hideMask"/>132465
+      <view class="mask" bindtap="$asslistmask$hideMask"/>
       
       <view class="asslist-box">
         <image class="close" src="/assets/img/image30.png" bindtap="hideAsslistMask"/>
@@ -227,7 +227,7 @@
     
   <view class="list">
     <view class="{{$participatemask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$participatemask$move">
-      <view class="mask" bindtap="$participatemask$hideMask"/>132465
+      <view class="mask" bindtap="$participatemask$hideMask"/>
       
       <view class="participate-box">
         <image class="close" src="/assets/img/image30.png" bindtap="hideParticipateMask"/>

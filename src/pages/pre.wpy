@@ -42,6 +42,7 @@
                     position: absolute;
                     top: 12%;
                     left: 26%;
+                    width: 500rpx;
                 }
                 .preTag{
                     position: absolute;
@@ -49,6 +50,8 @@
                     left: 26%;
                     font-size: 22rpx;
                     color: #9E9E9E;
+                    width: 500rpx;
+
                 }
                 .priceTag{
                     position: absolute;
@@ -94,13 +97,13 @@
         <!-- 商品 -->
         <view class="saleShopWrap">
             <view class="saleShop">
-                <repeat for="{{flowData}}" item="item">
-                    <view class="shopview" @tap="goPreDetails('{{item.id}}')">
-                        <image src="{{requestImgUrl + item.img}}"/>
+                <repeat for="{{goods_list}}" item="item">
+                    <view class="shopview" @tap="goPreDetails({{item.goods_id}})">
+                        <image src="{{requestImgUrl + item.goods_image_url}}"/>
                         <view>
-                            <text class="preTitle">{{item.title}}</text>
-                            <text class="preTag">{{item.tag}}</text>
-                            <text class="priceTag">预售价 <text class="priceclass">{{item.price}}</text><text class="yuanclass"> 元</text></text>
+                            <text class="preTitle overflow-one">{{item.goods_name}}</text>
+                            <text class="preTag overflow-one">{{item.goods_jingle}}</text>
+                            <text class="priceTag">预售价 <text class="priceclass">{{item.is_presell == '0' ? item.goods_sale_price : item.book_down_payment}}</text><text class="yuanclass"> 元</text></text>
                         </view>
                         <button class="preBtn">立即预约</button>
                     </view>
@@ -126,15 +129,10 @@ export default class Index extends wepy.page {
   data = {
       requestImgUrl: '',
       preId: '',
-      flowData:[
-        {id:'1',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
-        {id:'2',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
-        {id:'3',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
-        {id:'4',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
-        {id:'5',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'},
-        {id:'6',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'满三减一'}
-      ],
       topImg: '',
+      hasmore: false, // 是否有下一页
+      curpage: 1, //当前页数
+      goods_list: []  
   };
 
     computed = {};
@@ -150,18 +148,42 @@ export default class Index extends wepy.page {
             this.topImg = res.datas.img_area
             this.$apply()
         })
+
+        this.requestList()
+    }
+    requestList() {
+        ajax({
+            url: api.ysGoodsList,
+            data: {
+                page: 10,
+                curpage: this.curpage
+            }
+            }).then(res => {
+            if (res.code == 200) {
+                var list = res.datas.list || []
+                this.goods_list = this.goods_list.concat(list)
+                this.hasmore = res.datas.hasmore
+                this.$apply();
+            }
+        });
     }
     onShow() {
       // this.userInfo = this.$parent.globalData.userInfo
         this.requestImgUrl = this.$parent.globalData.requestImgUrl
     }
+    onReachBottom () {
+        if(this.hasmore) {
+            this.curpage ++ 
+            this.requestList()
+        }
+    }
     methods = {
         /**
          * 跳转商品详情
          */
-        goPreDetails(shopid){
-            // console.log('preId',this.preId)
-            this.$navigate(`/pages/preShopDetails?shopid=${shopid}&preId=${this.preId}`)
+        goPreDetails(goods_id){
+            console.log(goods_id)
+            this.$navigate(`/pages/preShopDetails?goods_id=${goods_id}`)
         }
     };
 }

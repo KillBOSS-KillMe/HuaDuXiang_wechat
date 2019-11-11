@@ -32,6 +32,7 @@
 
     
   <view class="nav">
+    <view style="height: 100rpx;"/>
     <view class="footer">
       <block wx:for="{{$nav$navList}}" wx:for-index="$nav$index" wx:for-item="$nav$item" wx:key="$nav$key">
         <view class="ft_item {{$nav$item.active ? 'action':'noAction'}}">

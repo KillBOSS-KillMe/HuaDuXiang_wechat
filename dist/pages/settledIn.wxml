@@ -1,34 +1,34 @@
 
   <view class="wrap">
-    <form bindsubmit="submit"  wx:if="{{status == -10}}">
+    <form bindsubmit="submit"  wx:if="{{status == -10 || status == 10}}">
       <view class="settle-list">
         <view class="com-item">
           <view class="title">商铺账号</view>
-          <input type="text" name="admin" placeholder="商铺账号(6-20位字母数字组合)"/>
+          <input type="text" name="admin" placeholder="商铺账号(6-20位字母数字组合)" value="{{joinInfo.seller_name}}"/>
         </view>
         <view class="com-item">
           <view class="title">商铺密码</view>
-          <input type="text" name="password" placeholder="商铺密码(6-20位字母数字组合)"/>
+          <input type="text" name="password" placeholder="商铺密码(6-20位字母数字组合)" value="{{joinInfo.seller_psw}}"/>
         </view>
         <view class="com-item">
           <view class="title">商铺名称</view>
-          <input type="text" name="name" placeholder="请输入商铺名称"/>
+          <input type="text" name="name" placeholder="请输入商铺名称" value="{{joinInfo.store_name}}"/>
         </view>
         <view class="com-item">
           <view class="title">商铺编号</view>
-          <input type="text" name="code" placeholder="商铺编号(6-20位字母数字组合)"/>
+          <input type="text" name="code" placeholder="商铺编号(6-20位字母数字组合)" value="{{joinInfo.store_code}}"/>
         </view>
         <view class="com-item">
           <view class="title">联系人</view>
-          <input type="text" name="contacts" placeholder="请输入联系人姓名"/>
+          <input type="text" name="contacts" placeholder="请输入联系人姓名" value="{{joinInfo.contacts_name}}"/>
         </view>
         <view class="com-item">
           <view class="title">联系电话</view>
-          <input type="number" name="phone" placeholder="请输入联系电话"/>
+          <input type="number" name="phone" placeholder="请输入联系电话" value="{{joinInfo.contacts_phone}}"/>
         </view>
         <view class="com-item">
           <view class="title">商铺地址</view>
-          <input type="text" name="address" placeholder="请输入商铺地址"/>
+          <input type="text" name="address" placeholder="请输入商铺地址" value="{{joinInfo.company_address_detail}}"/>
         </view>
         <view class="com-item">
           <view class="title">店铺分类</view>
@@ -59,75 +59,75 @@
         </view>
         <view class="com-item remarks">
           <view class="title">入驻商备注</view>
-          <textarea placeholder="请输入备注" name="remarks"/>
+          <textarea placeholder="请输入备注" name="remarks" value="{{joinInfo.remark}}"/>
         </view>
       </view>
 
       <button class="settled-btn" form-type="submit">提交申请</button>
     </form>
-    <view class="examine"  wx:if="{{status == 10}}">
+    <view class="examine"  wx:if="{{status == 11}}">
       <image class="examine-img" src="/assets/img/image43.png"/>
     </view>
     <view wx:if="{{status == 40}}">
       <view class="settle-list">
         <view class="com-item">
           <view class="title">商铺账号</view>
-          <input type="text" name="admin" value="商铺账号(6-20位字母数字组合)" disabled/>
+          <input type="text" name="admin" placeholder="商铺账号(6-20位字母数字组合)" disabled value="{{joinInfo.seller_name}}"/>
         </view>
         <view class="com-item">
           <view class="title">商铺密码</view>
-          <input type="text" name="password" value="商铺密码(6-20位字母数字组合)" disabled/>
+          <input type="text" name="password" placeholder="商铺密码(6-20位字母数字组合)" disabled value="{{joinInfo.seller_psw}}"/>
         </view>
         <view class="com-item">
           <view class="title">商铺名称</view>
-          <input type="text" name="name" value="请输入商铺名称" disabled/>
+          <input type="text" name="name" placeholder="请输入商铺名称" disabled value="{{joinInfo.store_name}}"/>
         </view>
         <view class="com-item">
           <view class="title">商铺编号</view>
-          <input type="text" name="code" value="商铺编号(6-20位字母数字组合)" disabled/>
+          <input type="text" name="code" placeholder="商铺编号(6-20位字母数字组合)" disabled value="{{joinInfo.store_code}}"/>
         </view>
         <view class="com-item">
           <view class="title">联系人</view>
-          <input type="text" name="contacts" value="请输入联系人姓名" disabled/>
+          <input type="text" name="contacts" placeholder="请输入联系人姓名" disabled value="{{joinInfo.contacts_name}}"/>
         </view>
         <view class="com-item">
           <view class="title">联系电话</view>
-          <input type="number" name="phone" value="请输入联系电话" disabled/>
+          <input type="number" name="phone" placeholder="请输入联系电话" disabled value="{{joinInfo.contacts_phone}}"/>
         </view>
         <view class="com-item">
           <view class="title">商铺地址</view>
-          <input type="text" name="address" value="请输入商铺地址" disabled/>
+          <input type="text" name="address" placeholder="请输入商铺地址" disabled value="{{joinInfo.company_address_detail}}"/>
         </view>
         <view class="com-item">
           <view class="title">店铺分类</view>
-          <picker bindchange="storeClassChange" range="{{storeClass}}" range-key="sc_name">
-            <input type="text" value="{{storeClass[storeClassIndex].sc_name}}" disabled/>
+          <picker bindchange="storeClassChange" range="{{storeClass}}" range-key="sc_name" disabled>
+            <input type="text" placeholder="请选择店铺分类" value="{{storeClass[storeClassIndex].sc_name}}" disabled/>
           </picker>
         </view>
         <view class="com-item">
           <view class="title">店铺等级</view>
-          <picker bindchange="storeGradeChange" range="{{storeGrade}}" range-key="sg_name">
-            <input type="text" value="{{storeGrade[storeGradeIndex].sg_name}}" disabled/>
+          <picker bindchange="storeGradeChange" range="{{storeGrade}}" range-key="sg_name" disabled>
+            <input type="text" placeholder="请选择店铺等级" value="{{storeGrade[storeGradeIndex].sg_name}}" disabled/>
           </picker>
         </view>
         <view class="com-item">
           <view class="title">开店时间</view>
-          <picker bindchange="timeChange" value="{{timeIndex}}" range="{{timeArr}}" range-key="num">
-            <input type="number" value="{{timeArr[timeIndex].num}}" disabled/>
+          <picker bindchange="timeChange" value="{{timeIndex}}" range="{{timeArr}}" range-key="num" disabled>
+            <input type="number" placeholder="请选择开店时间" value="{{timeArr[timeIndex].num}}" disabled/>
           </picker>
           <text>年</text>
         </view>
         <view class="com-item">
           <view class="title">平台使用费</view>
-          <input type="text" value="{{useCostPrice}}元" disabled/>
+          <input type="text" placeholder="平台使用费" value="{{useCostPrice}}元" disabled/>
         </view>
         <view class="com-item">
           <view class="title">商家保证金</view>
-          <input type="text" value="{{bondPrice}}元" disabled/>
+          <input type="text" placeholder="商家保证金" value="{{bondPrice}}元" disabled/>
         </view>
         <view class="com-item remarks">
           <view class="title">入驻商备注</view>
-          <textarea value="请输入备注" name="remarks" disabled/>
+          <textarea placeholder="请输入备注" name="remarks" value="{{joinInfo.remark}}" disabled/>
         </view>
       </view>
       <navigator hover-class="none" url="/pages/merchantIndex?store_id={{store_id}}" class="settled-btn" form-type="submit">前往店铺</navigator>

@@ -63,12 +63,17 @@
           <view>我的分销</view>
           <image class="imgright" src="/assets/img/image25.png"/>
         </navigator>
+        <navigator url="/pages/set-up" hover-class="none" class="orderitem">
+          <image class="img" src="/assets/img/image32.png"/>
+          <view>设置</view>
+          <image class="imgright" src="/assets/img/image25.png"/>
+        </navigator>
         
       </view>
     </view>
-
     
   <view class="nav">
+    <view style="height: 100rpx;"/>
     <view class="footer">
       <block wx:for="{{$nav$navList}}" wx:for-index="$nav$index" wx:for-item="$nav$item" wx:key="$nav$key">
         <view class="ft_item {{$nav$item.active ? 'action':'noAction'}}">

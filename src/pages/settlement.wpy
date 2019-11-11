@@ -131,21 +131,17 @@ export default class ShopCart extends wepy.page {
           payment_code: 'mini_wxpay',
         }
       }).then(res => res.datas)
-
-      wx.requestPayment({
-        timeStamp: resPay.timeStamp,
-        nonceStr: resPay.nonceStr,
-        package: resPay.package,
-        signType: 'MD5',
-        paySign: resPay.paySign,
-        success (res) {
-          console.log(res, 'success')
-        },
-        fail (res) {
-          console.log(res,'fail')
-        }
-      })
-
+      if(resPay.state == 1) {
+        wx.requestPayment({
+          ...resPay.api_pay,
+          success (res) {
+            console.log(res, 'success')
+          },
+          fail (res) {
+            console.log(res,'fail')
+          }
+        })
+      } 
     }
   };
 

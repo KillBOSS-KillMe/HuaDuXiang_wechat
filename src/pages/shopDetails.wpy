@@ -13,10 +13,10 @@
     <view class="tab-content" wx:if="{{currentTab==0}}">
       <view class="mainWheel">
         <swiper autoplay>
-          <repeat for="{{goods_image_mobile}}" item="item">
+          <repeat for="{{image_list}}" item="item">
             <swiper-item>
               <image
-                src="{{requestImgUrl + item}}"
+                src="{{requestImgUrl + item._big}}"
                 class="slide-image"
               />
             </swiper-item>
@@ -119,12 +119,15 @@
     <attrsmask :maskFlag.sync="attrFlag">
       <view class="attr-box">
         <view class="goods-t">
-          <image class="goods-img" src="/assets/img/image.png" />
+          <image class="goods-img" src="{{requestImgUrl + image_list[0]._big}}" />
           <view class="goods-right">
-            <view class="title overflow-one">萌粉订书机 小型萌粉订书机萌粉订书机萌粉订书机</view>
+            <view class="title overflow-one">{{goods_content.goods_name}}</view>
+            <view class="price">{{goods_content.goods_price}}</view>
             <view class="attr">
-              <view>粉+白</view>
-              <view>x1</view>
+              <view>
+                 <repeat for="{{goods_spec}}" wx:key="index">{{item}}</repeat>
+              </view>
+              <view>x{{goodsNum}}</view>
             </view>
           </view>
         </view>
@@ -133,7 +136,7 @@
             <view class="goods-h">{{item.title}}</view>
             <view class="prop">
               <repeat for="{{item.prop}}" item="ele" index="idx">
-                <view class="prop-i {{item.active == ele ? 'prop-active' : ''}}" @tap="changeAttr({{index}}, {{idx}})">{{ele}}</view>
+                <view class="prop-i {{goods_spec[index] == ele ? 'prop-active' : ''}}" @tap="changeAttr({{index}}, {{idx}}, {{ele}})">{{ele}}</view>
               </repeat>
             </view>
           </repeat>
@@ -186,12 +189,12 @@ export default class Index extends wepy.page {
     goods_content: null, // 商品内容
     store_info: null, // 店铺信息
     hot_sales: [], //推荐商品列表
-    goods_image_mobile: [], // 商品轮播图
+    image_list: [], // 商品轮播图
     contractlist: {}, // 商品服务说明
-    attr: [
-      {title: '大小', prop: ['s','x','xl','xll'] },
-      {title: '颜色', prop: ['红色','黑色','白色','黄色'] }
-    ]
+    attr: [],  // 商品总属性数组
+    activeAttr: [], // 当前点击属性数组
+    goods_spec: [], // 默认属性数组
+    spec_list: {} // 所有属性对应的商品goods_id
   };
 
   computed = {};
@@ -206,14 +209,6 @@ export default class Index extends wepy.page {
       this.attrFlag = true;
     },
     attrBtnSubmit() {
-      var propArr = this.attr.filter(item => item.active).map(item => item.active)
-      if(propArr.length !== this.attr.length) {
-        wx.showToast({
-          title: '请选择商品规格',
-          icon: 'none'
-        })
-        return false
-      }
       var app = this.$parent;
       var goods_id = this.goods_id
       var goodsNum = this.goodsNum
@@ -241,12 +236,14 @@ export default class Index extends wepy.page {
       }
       this.goodsNum--
     },
-    changeAttr(one, two){
-      this.attr.forEach((item, index) => {
-        if(one == index) {
-          item.active = item.prop[two]
-        }
-      })
+    changeAttr(index, idx, ele){
+      this.activeAttr[index] = idx
+      this.goods_spec[index] = ele
+      var goods_id = this.spec_list[this.activeAttr.join('|')]
+      this.goods_id = goods_id;
+      console.log(goods_id)
+      this.$apply()
+      // this.getShopDetails()
     },
     addCart(){
       var that = this
@@ -283,6 +280,11 @@ export default class Index extends wepy.page {
   onLoad(t) {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     this.goods_id = t.goods_id;
+    this.$apply()
+    this.getShopDetails()
+  }
+
+  getShopDetails() {
     var that = this;
     // 普通商品详情
     ajax({
@@ -295,39 +297,32 @@ export default class Index extends wepy.page {
       if(res.code == 200) {
         this.goods_content = res.datas.goods_content
         this.contractlist = res.datas.goods_content.contractlist || {}
-        this.goods_image_mobile = res.datas.goods_image_mobile || []
+        this.image_list = res.datas.image_list || []
         this.store_info = res.datas.store_info
         this.hot_sales = res.datas.hot_sales
+        // 商品属性
+        var spec_name = Object.values(res.datas.goods_content.spec_name)
+        var spec_value = Object.values(res.datas.goods_content.spec_value)
+        var attr = []
+        spec_value.forEach((item, index) => {
+          if(!attr[index]) {
+            attr[index] = {}
+          }
+          attr[index].title = spec_name[index] 
+          attr[index].prop = item
+        })
+        this.attr = attr
+        console.log(attr)
+        this.goods_spec = Object.values(res.datas.goods_content.goods_spec)
+        this.activeAttr = Object.keys(res.datas.goods_content.goods_spec)
+        this.spec_list = res.datas.spec_list
         this.$apply()
         var article = res.datas.goods_content.goods_body
         // article = article.replace(/src="/g, `src="${that.requestImgUrl}`);
         WxParse.wxParse('article', 'html', article, that, 5);
       }
     });
-
-
-    var t = this.formatDate('1573206175')
-    console.log(t)
   }
-
-  formatDate (secs){ //123456789 --> 年-月-日 时：分：秒
-     var length = secs.toString().length
-     secs = length == 10 ? Number(secs + '000') : Number(secs)
-     var t = new Date(secs)
-     var year = t.getFullYear()
-     var month = t.getMonth() + 1
-     if(month < 10){month = '0' + month}
-     var date = t.getDate()
-     if(date < 10){date = '0' + date}
-     var hour = t.getHours()
-     if(hour < 10){hour = '0' + hour}
-     var minute = t.getMinutes()
-     if(minute < 10){minute = '0' + minute}
-     var second = t.getSeconds()
-     if(second < 10){second = '0' + second}
-     return year+'-'+month+'-'+date+' '+hour+':'+minute+':'+second
-}
-  
 }
 </script>
 
@@ -748,6 +743,11 @@ export default class Index extends wepy.page {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
+      .price {
+        color: #ff2228;
+        font-weight: bold;
+        font-size: 26rpx;
+      }
       .title {
         font-weight: bold;
         font-size: 30rpx;

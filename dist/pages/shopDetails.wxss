@@ -662,6 +662,11 @@ view {
   flex-direction: column;
   justify-content: space-around;
 }
+.attr-box .goods-t .goods-right .price {
+  color: #ff2228;
+  font-weight: bold;
+  font-size: 26rpx;
+}
 .attr-box .goods-t .goods-right .title {
   font-weight: bold;
   font-size: 30rpx;

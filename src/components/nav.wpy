@@ -47,6 +47,7 @@
 </style>
 <template>
   <view>
+    <view style="height: 100rpx;"></view>
     <view class="footer">
       <repeat for="{{navList}}" item="item">
         <view class="ft_item {{item.active ? 'action':'noAction'}}">

@@ -1,0 +1,85 @@
+.header-acc {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 30rpx;
+  padding-top: 50rpx;
+}
+.header-acc text {
+  color: #999;
+}
+.header-acc > navigator {
+  color: #5EB320;
+  text-decoration: underline;
+}
+.account-content {
+  padding: 190rpx 124rpx  144rpx;
+}
+.account-content .com-item {
+  display: flex;
+  align-items: center;
+  height: 68rpx;
+  justify-content: center;
+  margin-top: 36rpx;
+}
+.account-content .com-item > image {
+  width: 32rpx;
+  height: 32rpx;
+}
+.input-placeholder {
+  color: #BEBEBE;
+  font-size: 32rpx;
+}
+.account-content .com-item .input-wrap {
+  border-bottom: 1px solid #D4D4D4;
+  margin-left: 30rpx;
+  flex: 1;
+  height: 100%;
+  display: flex;
+}
+.account-content .com-item .input-wrap input {
+  height: 100%;
+  font-size: 32rpx;
+  flex: 1;
+}
+.account-content .com-item .input-wrap button {
+  width: 142rpx;
+  height: 56rpx;
+  background: #5EB320;
+  border-radius: 10rpx;
+  text-align: center;
+  line-height: 56rpx;
+  color: #fff;
+  font-size: 24rpx;
+  white-space: nowrap;
+}
+.account-btn {
+  width: 489rpx;
+  margin: 0 auto;
+  height: 90rpx;
+  line-height: 90rpx;
+  text-align: center;
+  color: #fff;
+  border-radius: 10rpx;
+  background: linear-gradient(-45deg, #5eb320 0%, #98e273 100%);
+  font-size: 32rpx;
+}
+.change-method {
+  text-align: center;
+  text-decoration: underline;
+  color: #999999;
+  margin-top: 134rpx;
+}
+.account-wechat-btn {
+  text-align: center;
+  margin-top: 70rpx;
+}
+.account-wechat-btn > image {
+  width: 60rpx;
+  height: 60rpx;
+}
+.account-wechat-btn > view {
+  color: #999999;
+  font-size: 24rpx;
+  margin-top: 6rpx;
+}

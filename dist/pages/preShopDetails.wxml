@@ -120,7 +120,7 @@
     
   <view class="list">
     <view class="{{$attrsmask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$attrsmask$move">
-      <view class="mask" bindtap="$attrsmask$hideMask"/>132465
+      <view class="mask" bindtap="$attrsmask$hideMask"/>
       
       <view class="attr-box">
         <view class="goods-t">

@@ -1,0 +1,153 @@
+<style lang="less">
+.pas-box {
+  position: fixed;
+  width: 80%;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%); 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #fff;
+  z-index: 999;
+  height: 500rpx;
+  border-radius: 20rpx;
+  padding:40rpx 30rpx;
+  box-sizing: border-box;
+  .title {
+    text-align: center;
+    position: relative;
+    font-size: 30rpx;
+    color: #000;
+    font-weight: bold;
+    .close {
+      position: absolute;
+      left: 0;
+      padding: 20rpx;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+  .price {
+    font-weight: bold;
+    font-size: 48rpx;
+    text-align: center;
+  }
+  .pay-type {
+    display: flex;
+    justify-content: space-between;
+    color: #666;
+    padding: 40rpx 20rpx 0;
+  }
+  .input-hide {
+    // width: 0rpx;
+    // height: 0rpx;
+    // overflow: hidden;
+  }
+  .pas-input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > view {
+      width: 80rpx;
+      height: 80rpx;
+      text-align: center;
+      line-height: 80rpx;
+      border: 1px solid #ccc;
+      border-right: none;
+      font-weight: bold;
+      color: #000;
+      font-size: 30rpx;
+      &:last-of-type {
+        border-right: 1px solid #ccc;
+      }
+    }
+  }
+}
+</style>
+<template>
+  <pas :maskFlag.sync="pasFlag">
+    <view class="pas-box">
+      <view class="title">
+        <view class="close" @tap="hideMask">X</view>
+        <text>请输入支付密码</text>
+      </view>
+      <view class="price">￥{{pasPrice}}</view>
+      <view class="pay-type">
+        <view>支付方式</view>
+        <view>余额</view>
+      </view>
+      <view class="input-hide"> 
+        <input type="number" focus="{{focus}}" maxlength="6" @blur="bindblur" value="{{pasvalue}}" @input="bindinput">
+      </view>
+      <view @tap="onFocus" class="pas-input">
+           <repeat for="{{pasArr}}" item="item">
+             <view>{{item}}</view>
+           </repeat>
+      </view>
+    </view>
+  </pas>
+</template>
+<script>
+import wepy from 'wepy';
+import mask from '../components/mask';
+
+export default class Panel extends wepy.component {
+  data = {
+    focus: false,
+    pasArr: ['','','','','',''],
+    pasvalue: '',
+  };
+  props = {
+    pasFlag: {
+      type: Boolean,
+      default: false,
+      twoWay: true
+    },
+    pasPrice: {
+      type: String,
+      default: 0
+    }
+  }
+  components = {
+    pas: mask,
+    num: mask
+  };
+  watch = {
+    pasFlag (newValue, oldValue) {
+      if(newValue) {
+        this.focus = true
+      } else {
+        this.focus = false
+      }
+      this.pasArr = ['','','','','','']
+      this.pasvalue = ''
+    }
+  }
+  methods = {
+    hideMask() {
+      this.pasFlag = false
+    },
+    onFocus() {
+      this.focus = true
+    },
+    bindblur(e) {
+      this.focus = false
+    },
+    bindinput(e) {
+      var arr = e.detail.value.split('')
+      var pasArr = this.pasArr.map((item, index) => {
+        return arr[index] == undefined ? '' : '*'
+      })
+      var val = e.detail.value
+      this.pasvalue = val
+      this.pasArr = pasArr
+      if(val.toString().length == 6) {
+        this.$emit('pasHanld', val)
+      }
+    }
+  }
+  onLoad() {
+  }
+}
+</script>

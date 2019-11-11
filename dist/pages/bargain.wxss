@@ -45,6 +45,7 @@
   position: absolute;
   top: 12%;
   left: 26%;
+  width: 480rpx;
 }
 .wrap .saleShopWrap .saleShop .shopview .barginProgess {
   position: absolute;

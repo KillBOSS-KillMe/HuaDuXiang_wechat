@@ -1,3 +1,4 @@
+@import "./../components/pas_popup.wxss";
 @import "./../components/nav.wxss";
 .wrap {
   background: #f9f9f9;

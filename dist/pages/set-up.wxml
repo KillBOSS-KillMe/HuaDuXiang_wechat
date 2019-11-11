@@ -1,0 +1,37 @@
+
+    <view class="wrap">
+      <view class="header-acc"  wx:if="{{type != 1}}">
+        <text/>
+        <navigator hover-class="none" url="/pages/set-up?type=1" open-type="redirect">忘记密码</navigator>
+      </view>
+
+      <view class="account-content">
+        <view class="com-item">
+          <image src="/assets/img/image53.png"/>
+          <view class="input-wrap">
+            <input placeholder="请输入手机号码" type="number" bindinput="phone" value="{{phone}}" maxlength="11"/>
+          </view>
+        </view>
+        <view class="com-item">
+          <image src="/assets/img/image54.png"/>
+          <view class="input-wrap">
+            <input placeholder="请输入验证码" type="number" bindinput="code" value="{{code}}"/>
+            <button hover-class="none" class="send-btn" bindtap="cardButton" disabled="{{cardFlag}}">
+              <view  wx:if="{{!cardFlag}}">获取验证码</view>
+              <view wx:else class="res">重发({{s}}秒)</view>
+            </button>
+          </view>
+        </view>
+        <view class="com-item">
+          <image src="/assets/img/image55.png"/>
+          <view class="input-wrap">
+            <input placeholder="请设置密码(6位数字)" type="number" maxlength="6" bindinput="password" value="{{password}}"/>
+          </view>
+        </view>
+      </view>
+
+      <view class="account-btn" bindtap="accountSubmit">提交</view>
+
+
+      
+    </view>

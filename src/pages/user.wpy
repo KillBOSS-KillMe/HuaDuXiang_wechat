@@ -64,10 +64,14 @@
           <view>我的分销</view>
           <image class="imgright" src="/assets/img/image25.png" />
         </navigator>
+        <navigator url="/pages/set-up" hover-class="none" class="orderitem">
+          <image class="img" src="/assets/img/image32.png" />
+          <view>设置</view>
+          <image class="imgright" src="/assets/img/image25.png" />
+        </navigator>
         
       </view>
     </view>
-
     <nav class="nav" @childFn.user="goPage" />
   </view>
 </template>
@@ -336,25 +340,21 @@ page {
 /* 我的服务 */
 .personal_data {
   width: 100%;
-  height: 383rpx;
   background: #f9f9f9;
   position: relative;
   margin-top: 20rpx;
+  padding-top: 20rpx;
   .mainorder {
     height: 100%;
     width: 100%;
-    position: absolute;
-    top: 8%;
-    left: 5%;
     font-weight: bold;
     color: #333;
     font-size: 30rpx;
+    margin-left: 40rpx;
   }
   .order {
     width: 90%;
-    position: absolute;
-    top: 20%;
-    left: 5%;
+    margin: 0 auto;
     .orderitem {
       line-height: 100rpx;
       height: 100rpx;
@@ -405,10 +405,7 @@ page {
   }
   .order {
     width: 90%;
-    height: 100%;
-    position: absolute;
-    top: 20%;
-    left: 5%;
+    margin: 0 auto;
     .orderitem {
       line-height: 100rpx;
       height: 100rpx;

@@ -54,7 +54,7 @@
                 <view class="goods-btn" bindtap="orderCancel" data-wpyordercancel-a="{{item.order_id}}" data-wpyordercancel-b="{{index}}">
                   取消订单
                 </view>
-                <view class="goods-btn color-y" data-order_id="{{item.order_id}}" bindtap="pay">立即付款</view>
+                <view class="goods-btn color-y" data-order_id="{{item.order_id}}" bindtap="pay" data-wpypay-a="{{item.order_id}}" data-wpypay-b="{{index}}">立即付款</view>
               </view>
               <!-- 2 待发货   -->
               <view class="goods-option" wx:elif="{{item.order_state == 20}}">

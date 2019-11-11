@@ -8,55 +8,60 @@
     <view class="saleShopWrap">
       <view class="saleShop">
         <block wx:for="{{barginData}}" wx:for-index="index" wx:for-item="item" wx:key="key">
-          <view class="shopview" bindtap="jumpTimeDetails" data-wpyjumptimedetails-a="{{item.id}}">
-            <image src="{{requestImgUrl + item.img}}"/>
+          <view class="shopview" bindtap="jumpTimeDetails" data-wpyjumptimedetails-a="{{item.goods_id}}" data-wpyjumptimedetails-b="{{item.is_join}}">
+            <image src="{{requestImgUrl + item.goods_img}}"/>
             <view>
-              <text class="barginTitle">{{item.title}}</text>
-              <progress class="barginProgess" percent="{{item.num}}" font-size="14" backgroundColor="#FFE0E1" activeColor="#FF2228" stroke-width="9" border-radius="10"/>
+              <text class="barginTitle overflow-one">{{item.goods_name}}</text>
+              <progress class="barginProgess" percent="{{100 * item.num / item.stock}}" font-size="14" backgroundColor="#FFE0E1" activeColor="#FF2228" stroke-width="9" border-radius="10"/>
               <text class="barginSurplus">已抢{{item.num}}件</text>
-              <text class="barginPriceNum">限量{{item.num}}件</text>
+              <text class="barginPriceNum">限量{{item.stock}}件</text>
             </view>
             <button class="barginBtn">点击免费拿</button>
           </view>
         </block>
       </view>
     </view>
-    <text>显示进度数字/字号22</text>
-    <block wx:for="{{barginData}}" wx:for-index="index" wx:for-item="item" wx:key="key"/>
     <!-- 选择商品属性 -->
     
   <view class="list">
     <view class="{{$attrsmask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$attrsmask$move">
-      <view class="mask" bindtap="$attrsmask$hideMask"/>132465
+      <view class="mask" bindtap="$attrsmask$hideMask"/>
       
       <view class="attr-box">
         <view class="goods-t">
-          <image class="goods-img" src="{{requestImgUrl}}card.png"/>
+          <image class="goods-img" src="{{requestImgUrl + image_list[0]._big}}"/>
           <view class="goods-right">
-            <view class="title overflow-one">萌粉订书机 小型萌粉订书机萌粉订书机萌粉订书机</view>
+            <view class="title overflow-one">{{goods_content.goods_name}}</view>
             <view class="attr">
-              <view>粉+白</view>
-              <view>x1</view>
+              <view>
+                 <block  wx:key="key" wx:for="{{goods_spec}}" wx:for-index="index" wx:for-item="item">{{item}}</block>
+              </view>
+              <view>x{{goodsNum}}</view>
             </view>
           </view>
         </view>
-        <view>
-          <view class="goods-h">规格</view>
-          <view class="prop">
-            <block wx:for="{{propArr}}" wx:for-index="index" wx:for-item="item" wx:key="key">
-              <view class="prop-i {{index == 0 ? 'prop-active' : ''}}">大小</view>
-            </block>
-          </view>
+
+         <view class="prop-wrap">
+          <block wx:for="{{attr}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+            <view class="goods-h">{{item.title}}</view>
+            <view class="prop">
+              <block wx:for="{{item.prop}}" wx:for-index="idx" wx:for-item="ele" wx:key="key">
+                <view class="prop-i {{goods_spec[index] == ele ? 'prop-active' : ''}}" bindtap="changeAttr" data-wpychangeattr-a="{{index}}" data-wpychangeattr-b="{{idx}}" data-wpychangeattr-c="{{ele}}">{{ele}}</view>
+              </block>
+            </view>
+          </block>
         </view>
+
         <view>
           <view class="goods-h">数量</view>
           <view class="change-num">
             <view class="i" bindtap="reduNum">
               <image class="img" src="/assets/img/image19.png"  wx:if="{{goodsNum == 1}}"/>
-              <image class="img" src="/assets/img/image20.png"  wx:else/>
+              <image class="img" src="/assets/img/image20.png" wx:else/>
             </view>
             <view class="i num">{{goodsNum}}</view>
-            <view class="i" bindtap="addNum">
+            <!-- <view class="i" bindtap="addNum"> -->
+            <view class="i">
               <image class="img" src="/assets/img/image21.png"/>
             </view>
           </view>
@@ -71,7 +76,7 @@
     
   <view class="list">
     <view class="{{$addressmask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$addressmask$move">
-      <view class="mask" bindtap="$addressmask$hideMask"/>132465
+      <view class="mask" bindtap="$addressmask$hideMask"/>
       
       <view class="shop-box">
         <view class="address">选择收货地址</view>
@@ -94,7 +99,7 @@
     
   <view class="list">
     <view class="{{$sharesmask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$sharesmask$move">
-      <view class="mask" bindtap="$sharesmask$hideMask"/>132465
+      <view class="mask" bindtap="$sharesmask$hideMask"/>
       
       <view class="share-box">
         <image class="bg-img" src="/assets/img/image22.png"/>

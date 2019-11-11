@@ -1,5 +1,7 @@
 <template>
   <view class="shop-details-wrap">
+        <import src="../utils/wxParse/wxParse.wxml" />
+
     <!-- 选项卡导航 -->
     <view class="swiper-tab">
       <repeat for="{{tabList}}" wx:key="index">
@@ -12,10 +14,10 @@
     <view class="tab-content" wx:if="{{currentTab==0}}">
       <view class="mainWheel">
         <swiper autoplay>
-          <repeat for="{{3}}" item="item">
+          <repeat for="{{image_list}}" item="item">
             <swiper-item>
               <image
-                src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=990087231,1878185023&fm=26&gp=0.jpg"
+                src="{{requestImgUrl + item._big}}"
                 class="slide-image"
               />
             </swiper-item>
@@ -24,18 +26,18 @@
       </view>
       <view class="goods-head">
         <view class="title">
-          <text class="overflow-one">家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货</text>
+          <text class="overflow-one">{{goods_content.goods_name}}</text>
           <button open-type="share" class="share-btn" hover-class="none">
             <image src="/assets/img/image27.png" />
           </button>
         </view>
         <view
           class="desc overflow-two"
-        >家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货</view>
+        >{{goods_content.goods_jingle}}</view>
         <view class="price">
           <view class="present">
             ￥
-            <text>19</text>
+            <text>{{goods_content.goods_price}}</text>
           </view>
           <view class="orgin">￥29</view>
         </view>
@@ -61,10 +63,10 @@
         <view class="option-item">
           <view class="com-title">服务说明</view>
           <view class="description">
-            <image src="/assets/img/image26.png" />
-            <text>无忧退货</text>
-            <image src="/assets/img/image26.png" />
-            <text>快速退款</text>
+            <repeat for="{{contractlist}}" item="val" index="key" wx:if="{{key<=3}}">
+              <image src="{{val.cti_icon_url}}" />
+              <text>{{val.cti_name}}</text>
+            </repeat>
           </view>
           <image src="/assets/img/image25.png" />
         </view>
@@ -75,32 +77,32 @@
       </view>
       <view class="textdetails">
         <view class="textdetails-h">图文详情</view>
-        <view>（微晶一周鲜）功能，大家有没有这种苦恼，买来的新鲜肉放在冷藏容易坏，放在冷冻冻成了石头！要拿来吃的时候又得解冻了才能切，而且解冻的过程又容易滋生细菌并且营养流失影响口感，微晶这个功能就很好解决了，区别于传统的感知冰箱内温度，微晶是感知食材本身的温度，使食材始终处于微晶状态，随时拿出来随时切并且保留了食材的营养不流失～并且可以保存七天左右哦！</view>
+        <template is="wxParse" data="{{wxParseData:article.nodes}}" />
       </view>
       <!-- 店铺 -->
       <view class="store">
-        <view class="shop">
+        <navigator url="/pages/merchantIndex?store_id={{store_info.store_id}}" hover-class="none" class="shop">
           <view class="shopStore">
-            <image src="/assets/img/image.png" />
-            <text class="shopname">好吃点</text>
+            <image src="{{requestImgUrl + store_info.store_avatar}}" />
+            <text class="shopname">{{store_info.store_name}}</text>
             <text class="gostore">进店</text>
           </view>
-        </view>
+        </navigator>
         <!-- goods item -->
         <view class="saleShopWrap">
           <view class="saleShop">
-            <repeat for="{{flowData}}" item="item">
-              <view class="shopview">
-                <image src="{{item.img}}" />
+            <repeat for="{{hot_sales}}" item="item">
+              <view @tap="navGoodsDetails({{item.goods_id}})" class="shopview">
+                <image src="{{requestImgUrl + item.goods_image}}" />
                 <view class="saleTag">
-                  <text class="overflow-one">{{item.title}}暗示法撒打发斯蒂芬</text>
+                  <text class="overflow-one">{{item.goods_name}}</text>
                 </view>
                 <view>
                   <view>
-                    <text class="salep">促销价</text>
+                    <text class="salep">价格</text>
                     <text class="salesmple">￥</text>
-                    <text class="saleprice">{{item.price}}111</text>
-                    <!-- <text class="saleexprice">原价￥ {{item.exprice}}</text> -->
+                    <text class="saleprice">{{item.goods_sale_price}}</text>
+                    <!-- <text class="saleexprice">原价￥ {{item.goods_price}}</text> -->
                   </view>
                 </view>
               </view>
@@ -113,7 +115,7 @@
     <view class="tab-content" wx:if="{{currentTab == 1}}">
       <view class="textdetails">
         <!-- <view class="textdetails-h">图文详情</view> -->
-        <view>（微晶一周鲜）功能，大家有没有这种苦恼，买来的新鲜肉放在冷藏容易坏，放在冷冻冻成了石头！要拿来吃的时候又得解冻了才能切，而且解冻的过程又容易滋生细菌并且营养流失影响口感，微晶这个功能就很好解决了，区别于传统的感知冰箱内温度，微晶是感知食材本身的温度，使食材始终处于微晶状态，随时拿出来随时切并且保留了食材的营养不流失～并且可以保存七天左右哦！</view>
+        <template is="wxParse" data="{{wxParseData:article.nodes}}" />
       </view>
     </view>
     <!-- 底部商品导航 -->
@@ -132,22 +134,27 @@
     <attrsmask :maskFlag.sync="attrFlag">
       <view class="attr-box">
         <view class="goods-t">
-          <image class="goods-img" src="/assets/img/image.png" />
+          <image class="goods-img" src="{{requestImgUrl + image_list[0]._big}}" />
           <view class="goods-right">
-            <view class="title overflow-one">萌粉订书机 小型萌粉订书机萌粉订书机萌粉订书机</view>
-            <view class="attr">
-              <view>粉+白</view>
-              <view>x1</view>
+            <view class="title overflow-one">{{goods_content.goods_name}}</view>
+            <view class="price">{{goods_content.goods_price}}</view>
+             <view class="attr">
+              <view>
+                 <repeat for="{{goods_spec}}" wx:key="index">{{item}}</repeat>
+              </view>
+              <view>x{{goodsNum}}</view>
             </view>
           </view>
         </view>
-        <view>
-          <view class="goods-h">规格</view>
-          <view class="prop">
-            <repeat for="{{6}}" item="item" index="index">
-              <view class="prop-i {{index == 0 ? 'prop-active' : ''}}">大小</view>
-            </repeat>
-          </view>
+        <view class="prop-wrap">
+          <repeat for="{{attr}}" item="item" index="index">
+            <view class="goods-h">{{item.title}}</view>
+            <view class="prop">
+              <repeat for="{{item.prop}}" item="ele" index="idx">
+                <view class="prop-i {{goods_spec[index] == ele ? 'prop-active' : ''}}" @tap="changeAttr({{index}}, {{idx}}, {{ele}})">{{ele}}</view>
+              </repeat>
+            </view>
+          </repeat>
         </view>
         <view>
           <view class="goods-h">数量</view>
@@ -172,6 +179,10 @@
 import wepy from 'wepy';
 import mask from '../components/mask';
 var timer = require('../utils/wxTimer.js'); // 倒计时
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
+import { formatDate } from '../utils/base.js';
+var WxParse = require('../utils/wxParse/wxParse.js');
 
 export default class Index extends wepy.page {
   config = {
@@ -189,37 +200,18 @@ export default class Index extends wepy.page {
     tabList: [{ name: '商品介绍', dotNum: 2 }, { name: '图文详情', dotNum: 3 }], // 顶部选项卡
     currentTab: 0, // 顶部选项卡索引
     wxTimerList: {}, // 倒计时
-    // 店铺
-    flowData: [
-      {
-        id: '1',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: '/assets/img/image.png'
-      },
-      {
-        id: '2',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: '/assets/img/image.png'
-      },
-      {
-        id: '3',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: '/assets/img/image.png'
-      },
-      {
-        id: '3',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: '/assets/img/image.png'
-      }
-    ]
+    goods_id: null, //商品goods_id
+    requestImgUrl: null, //图片域名
+    goods_content: null, // 商品内容
+    store_info: null, // 店铺信息
+    hot_sales: [], //推荐商品列表
+    image_list: [], // 商品轮播图
+    contractlist: {}, // 商品服务说明
+    attr: [],  // 商品总属性数组
+    activeAttr: [], // 当前点击属性数组
+    goods_spec: [], // 默认属性数组
+    spec_list: {} // 所有属性对应的商品goods_id
+
   };
 
   computed = {};
@@ -241,7 +233,8 @@ export default class Index extends wepy.page {
   events = {};
 
   onLoad(t) {
-    console.log(t)
+    this.goods_id = t.goods_id;
+    this.$apply()
     // 倒计时s
     var wxTimer = new timer({
       beginTime: '10',
@@ -253,11 +246,53 @@ export default class Index extends wepy.page {
     //   wxTimer.stop();
     // }, 5000);
     // 倒计时e
+    this.getShopDetails()
+  }
+
+  getShopDetails() {
+    var that = this;
+    // 普通商品详情
+    ajax({
+      url: api.ordinaryGoodsDtail,
+      type: 'get',
+      data: {
+        goods_id: this.goods_id
+      }
+    }).then(res => {
+      if(res.code == 200) {
+        this.goods_content = res.datas.goods_content
+        this.contractlist = res.datas.goods_content.contractlist || {}
+        this.image_list = res.datas.image_list || []
+        this.store_info = res.datas.store_info
+        this.hot_sales = res.datas.hot_sales
+        // 商品属性
+        return false
+        var spec_name = Object.values(res.datas.goods_content.spec_name)
+        var spec_value = Object.values(res.datas.goods_content.spec_value)
+        var attr = []
+        spec_value.forEach((item, index) => {
+          if(!attr[index]) {
+            attr[index] = {}
+          }
+          attr[index].title = spec_name[index] 
+          attr[index].prop = item
+        })
+        this.attr = attr
+        console.log(attr)
+        this.goods_spec = Object.values(res.datas.goods_content.goods_spec)
+        this.activeAttr = Object.keys(res.datas.goods_content.goods_spec)
+        this.spec_list = res.datas.spec_list
+        this.$apply()
+        var article = res.datas.goods_content.goods_body
+        // article = article.replace(/src="/g, `src="${that.requestImgUrl}`);
+        WxParse.wxParse('article', 'html', article, that, 5);
+      }
+    });
   }
 }
 </script>
 
-<style lang="less">
+<style lang="less"> 
 .shop-details-wrap {
   margin-bottom: 100rpx;
 }

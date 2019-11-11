@@ -2,7 +2,7 @@
 <template>
   <view class="list">
     <view class="{{maskFlag ? 'block':''}} mask-wrap" @touchmove.stop="move">
-      <view class="mask" bindtap="hideMask"></view>132465
+      <view class="mask" bindtap="hideMask"></view>
       <slot></slot>
     </view>
   </view>

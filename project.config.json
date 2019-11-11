@@ -55,10 +55,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 1,
 					"name": "秒杀商品详情",
 					"pathName": "pages/seckillShopDetails",
-					"query": "",
+					"query": "goods_id=11",
 					"scene": null
 				},
 				{
@@ -79,7 +79,7 @@
 					"id": 4,
 					"name": "普通商品详情",
 					"pathName": "pages/shopDetails",
-					"query": "goods_id=36",
+					"query": "goods_id=42",
 					"scene": null
 				},
 				{
@@ -121,6 +121,35 @@
 					"id": -1,
 					"name": "入驻",
 					"pathName": "pages/settledIn",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/user",
+					"query": "goods_id=42",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "设置密码",
+					"pathName": "pages/set-up",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "砍价",
+					"pathName": "pages/bargain",
+					"query": "goods_id=42",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "秒杀列表",
+					"pathName": "pages/seckill",
+					"query": "",
 					"scene": null
 				}
 			]

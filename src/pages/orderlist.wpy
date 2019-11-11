@@ -64,7 +64,7 @@
                 <view class="goods-btn" @tap="orderCancel({{item.order_id}}, {{index}})">
                   取消订单
                 </view>
-                <view class="goods-btn color-y" data-order_id="{{item.order_id}}" bindtap="pay">立即付款</view>
+                <view class="goods-btn color-y" data-order_id="{{item.order_id}}" @tap="pay({{item.order_id}}, {{index}})">立即付款</view>
               </view>
               <!-- 2 待发货   -->
               <view class="goods-option" wx:elif="{{item.order_state == 20}}">
@@ -218,6 +218,26 @@ export default class ShopCart extends wepy.page {
           }
         }
       })
+    },
+    async pay(order_id, index) {
+      var resData = await ajax({
+        url: api.pay,
+        data: {
+          pay_sn: '900626631146390007',
+          payment_code: 'mini_wxpay'
+        }
+      })
+
+      if(resData.datas.state == 1) {
+        var api_pay = resData.datas.api_pay
+        wx.requestPayment({
+          ...api_pay,
+          success(res) {
+            console.log(res)
+          },
+          complete(d) {console.log(d)}
+        })
+      }
     }
   };
   onLoad() {}

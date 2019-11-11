@@ -1,7 +1,7 @@
 
 // const URL = "http://www.mywdl.com"
 const URL = "http://www.shopdate.me"
-// const URL = "http://www.hdx.cc"
+// const URL = "http://www.hdx.cc"  
 
 module.exports = {
   // 小程序授权微信-返回用户 user_id—接口，用户信息接口。
@@ -98,4 +98,16 @@ module.exports = {
   getStoreClass: URL + "/api/mobile/index.php?w=store_joinin&t=getStoreClass",
   // 平台首页秒杀商品4-8条数据
   goodsGblist: URL + "/api/mobile/index.php?t=goods_gblist&w=goods",
+  // 用户个人输入手机号后接收短信的接口
+  sendModifyMobile: URL + "/api/mobile/index.php?w=member_index&t=send_modify_mobile",
+  // 用户设置二级密码接口
+  setPassword: URL + "/api/mobile/index.php?w=member_index&t=set_password",
+  // 砍价列表接口
+  bargainGoodsList: URL + "/api/mobile/index.php?w=bargain&t=bargainGoodsList",
+  // 秒杀商品列表页面（带分页）
+  msGoodsList: URL + "/api/mobile/index.php?w=goods&t=msGoodsList",
+  // 获取预售商品列表
+  ysGoodsList: URL + "/api/mobile/index.php?w=goods&t=ysGoodsList",
+
+
 }

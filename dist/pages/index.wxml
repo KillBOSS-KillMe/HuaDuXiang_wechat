@@ -1,8 +1,35 @@
 
   <view class="wrap">
-    <!-- <Painter></Painter>
-    <painter customStyle='position: absolute; left: -9999rpx;' palette="{{template}}" bind:imgOK="onImgOK" widthPixels="1000"/>
-    <image src="{{image}}" style="width: 654rpx; height: 1000rpx; margin-left:40rpx;"/> -->
+    
+  
+  <view class="list">
+    <view class="{{$paspopup$pas$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$paspopup$pas$move">
+      <view class="mask" bindtap="$paspopup$pas$hideMask"/>
+      
+    <view class="pas-box">
+      <view class="title">
+        <view class="close" bindtap="$paspopup$hideMask">X</view>
+        <text>请输入支付密码</text>
+      </view>
+      <view class="price">￥{{$paspopup$pasPrice}}</view>
+      <view class="pay-type">
+        <view>支付方式</view>
+        <view>余额</view>
+      </view>
+      <view class="input-hide"> 
+        <input type="number" focus="{{$paspopup$focus}}" maxlength="6" bindblur="$paspopup$bindblur" value="{{$paspopup$pasvalue}}" bindinput="$paspopup$bindinput"/>
+      </view>
+      <view bindtap="$paspopup$onFocus" class="pas-input">
+           <block wx:for="{{$paspopup$pasArr}}" wx:for-index="$paspopup$index" wx:for-item="$paspopup$item" wx:key="$paspopup$key">
+             <view>{{$paspopup$item}}</view>
+           </block>
+      </view>
+    </view>
+  
+    </view>
+  </view>
+
+
     <view class="search-wrap" bindtap="navSearch">
       <view class="search">
         <image class="search-img" src="/assets/img/image10.png"/>
@@ -87,8 +114,7 @@
                 <view>
                   <text class="salep">预购价</text>
                   <text class="salesmple">￥</text>
-                  <!-- <text class="saleprice">{{item.goods_price}}</text> -->
-                  <text class="saleprice">{{item.book_down_payment}}</text>
+                  <text class="saleprice">{{item.is_presell == '0' ? item.goods_sale_price : item.book_down_payment}}</text>
                 </view>
               </view>
             </navigator>
@@ -127,6 +153,7 @@
     </view>
     
   <view>
+    <view style="height: 100rpx;"/>
     <view class="footer">
       <block wx:for="{{$nav$navList}}" wx:for-index="$nav$index" wx:for-item="$nav$item" wx:key="$nav$key">
         <view class="ft_item {{$nav$item.active ? 'action':'noAction'}}">
