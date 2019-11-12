@@ -108,6 +108,8 @@ module.exports = {
   msGoodsList: URL + "/api/mobile/index.php?w=goods&t=msGoodsList",
   // 获取预售商品列表
   ysGoodsList: URL + "/api/mobile/index.php?w=goods&t=ysGoodsList",
+  // 拼团商品列表数据展示。
+  pingou: URL + "/api/mobile/index.php?w=pingou&t=index",
 
 
 }

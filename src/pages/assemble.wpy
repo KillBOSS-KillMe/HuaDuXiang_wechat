@@ -123,26 +123,28 @@ import wepy from 'wepy';
 var api = require('../api.js');
 import { ajax } from '../ajax.js';
 export default class Index extends wepy.page {
-  config = {
-    navigationBarTitleText: '拼团'
-  };
-  components = {};
+    config = {
+        navigationBarTitleText: '拼团'
+    };
+    components = {};
 
-  mixins = [];
+    mixins = [];
 
-  data = {
-      topImg:'',
-      requestImgUrl: '',
-      assembleId: '',
-      flowData:[
-        {id:'1',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
-        {id:'2',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
-        {id:'3',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
-        {id:'4',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
-        {id:'5',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
-        {id:'6',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'}
-      ],
-  };
+    data = {
+        topImg:'',
+        requestImgUrl: '',
+        flowData:[
+            {id:'1',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
+            {id:'2',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
+            {id:'3',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
+            {id:'4',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
+            {id:'5',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
+            {id:'6',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'}
+        ],
+        goods_list: [],
+        hasmore: false, // 是否有下一页
+        curpage: 1, //当前页数
+    };
 
     computed = {};
     onLoad(options) {
@@ -153,19 +155,38 @@ export default class Index extends wepy.page {
             this.topImg = res.datas.img_area
             this.$apply()
         })
+        this.requestList()
     }
     onShow() {
-        // this.userInfo = this.$parent.globalData.userInfo
         this.requestImgUrl = this.$parent.globalData.requestImgUrl
     }
-  methods = {
-    /**
-    * 跳转商品详情
-    */
-    jumpTimeDetails(shopid){
-        this.$navigate(`/pages/assembleShopDetails?shopid=${shopid}&assembleId=${this.assembleId}`)
-    },
-  };
+    methods = {
+        jumpTimeDetails(shopid){
+            this.$navigate(`/pages/assembleShopDetails?shopid=${shopid}&assembleId=${this.assembleId}`)
+        },
+    };
+    requestList() {
+        ajax({
+            url: api.pingou,
+            data: {
+                page: 1,
+                curpage: this.curpage
+            }
+        }).then(res => {
+            if (res.code == 200) {
+                var list = res.datas.list || []
+                this.goods_list = this.goods_list.concat(list)
+                this.hasmore = res.datas.hasmore
+                this.$apply();
+            }
+        });
+    }
+    onReachBottom () {
+        if(this.hasmore) {
+        this.curpage ++ 
+        this.requestList()
+        }
+    }
 
   events = {};
 

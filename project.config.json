@@ -147,8 +147,8 @@
 				},
 				{
 					"id": -1,
-					"name": "秒杀列表",
-					"pathName": "pages/seckill",
+					"name": "拼团",
+					"pathName": "pages/assemble",
 					"query": "",
 					"scene": null
 				}
