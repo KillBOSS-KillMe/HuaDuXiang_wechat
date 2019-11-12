@@ -1,3 +1,69 @@
+@import "./../components/mask.wxss";
+.vip-box {
+  width: 700rpx;
+  height: 700rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  z-index: 999;
+  position: fixed;
+  top: 10%;
+  padding: 40rpx 50rpx;
+  box-sizing: border-box;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.vip-box .title {
+  font-weight: bold;
+  font-size: 34rpx;
+  padding-top: 20rpx;
+}
+.vip-box input {
+  text-align: center;
+  width: 50%;
+  border-bottom: 1px solid #ccc;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-weight: bold;
+  font-size: 36rpx;
+}
+.vip-box .input-placeholder {
+  font-weight: 400;
+  font-size: 32rpx;
+}
+.vip-box .price-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.vip-box .price-list .price-item {
+  width: 160rpx;
+  margin: 20rpx 18rpx;
+  border: 1px solid #ccc;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  color: #999;
+  border-radius: 10rpx;
+  font-size: 32rpx;
+}
+.vip-box .price-list .price-active {
+  color: #FF6888;
+  border-color: #FF6888;
+}
+.vip-box .btn {
+  width: 570rpx;
+  height: 80rpx;
+  border-radius: 10rpx;
+  line-height: 80rpx;
+  text-align: center;
+  background: linear-gradient(to right, #FF6888 0, #FF2228 100%);
+  color: #ffffff;
+  font-size: 30rpx;
+  font-weight: bold;
+}
 .vip-head {
   position: relative;
 }

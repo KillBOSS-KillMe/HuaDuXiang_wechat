@@ -1,6 +1,6 @@
 
   <view class="wrap">
-    <form bindsubmit="submit"  wx:if="{{status == -10 || status == 10}}">
+    <form bindsubmit="submit"  wx:if="{{status == -10 || status == 10|| status == 20}}">
       <view class="settle-list">
         <view class="com-item">
           <view class="title">商铺账号</view>
@@ -8,7 +8,7 @@
         </view>
         <view class="com-item">
           <view class="title">商铺密码</view>
-          <input type="text" name="password" placeholder="商铺密码(6-20位字母数字组合)" value="{{joinInfo.seller_psw}}"/>
+          <input type="text" name="password" placeholder="商铺密码(6-20位字母数字组合)"/>
         </view>
         <view class="com-item">
           <view class="title">商铺名称</view>
@@ -32,7 +32,7 @@
         </view>
         <view class="com-item">
           <view class="title">店铺分类</view>
-          <picker bindchange="storeClassChange" range="{{storeClass}}" range-key="sc_name">
+          <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range="{{storeClass}}" range-key="gc_name">
             <input type="text" placeholder="请选择店铺分类" value="{{storeClass[storeClassIndex].sc_name}}" disabled/>
           </picker>
         </view>

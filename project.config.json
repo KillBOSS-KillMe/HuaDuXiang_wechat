@@ -151,6 +151,12 @@
 					"pathName": "pages/assemble",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "vip",
+					"pathName": "pages/vip",
+					"scene": null
 				}
 			]
 		}

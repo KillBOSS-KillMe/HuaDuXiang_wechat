@@ -9,7 +9,7 @@
             <image src="{{member_info.avatar}}"/>
             <view class="info-t">
               <text class="name">{{member_info.user_name}}</text>
-              <text>积分：{{member_data.member_points}}</text>
+              <!-- <text>积分：{{member_data.member_points}}</text> -->
               <text>编号：{{member_data.member_id}}</text>
             </view>
           </view>
@@ -22,7 +22,7 @@
             <text  wx:if="{{member_info.level == 1}}">充值7000元即可成为金卡会员</text>
             <text wx:if="{{member_info.level == 2}}">充值7000元即可成为砖石会员</text>
             <text wx:if="{{member_info.level == 3}}">您已成为钻石会员</text>
-            <button class="btn">立即充值</button>
+            <button class="btn" bindtap="showVipFlag">立即充值</button>
           </view>
           <view class="level-tap">
             <text wx:if="{{member_info.level == 0}}">普通会员</text>
@@ -56,4 +56,27 @@
         </block>
       </view>
     </view>
+
+
+    
+  <view class="list">
+    <view class="{{$vipmask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$vipmask$move">
+      <view class="mask" bindtap="$vipmask$hideMask"/>
+      
+      <view class="vip-box">
+        <view class="title">充值金额</view>
+        <input type="number" placeholder="请输入" value="{{price}}" bindfocus="bindfocus" bindinput="bindinput"/>
+        <view class="price-list">
+          <block wx:for="{{priceArr}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+            <view class="price-item {{index == priceActive ? 'price-active':''}}" bindtap="changePrice" data-wpychangeprice-a="{{item}}" data-wpychangeprice-b="{{index}}">
+              {{item}}
+            </view>
+          </block>
+        </view>
+        <view class="btn">充值</view>
+      </view>
+    
+    </view>
+  </view>
+
   </view>

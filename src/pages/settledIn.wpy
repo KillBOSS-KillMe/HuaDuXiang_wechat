@@ -1,6 +1,6 @@
 <template>
   <view class="wrap">
-    <form @submit="submit" wx:if="{{status == -10 || status == 10}}">
+    <form @submit="submit" wx:if="{{status == -10 || status == 10|| status == 20}}">
       <view class="settle-list">
         <view class="com-item">
           <view class="title">商铺账号</view>
@@ -8,7 +8,7 @@
         </view>
         <view class="com-item">
           <view class="title">商铺密码</view>
-          <input type="text" name="password" placeholder="商铺密码(6-20位字母数字组合)" value="{{joinInfo.seller_psw}}"/>
+          <input type="text" name="password" placeholder="商铺密码(6-20位字母数字组合)"/>
         </view>
         <view class="com-item">
           <view class="title">商铺名称</view>
@@ -32,7 +32,7 @@
         </view>
         <view class="com-item">
           <view class="title">店铺分类</view>
-          <picker bindchange="storeClassChange" range="{{storeClass}}"  range-key="sc_name">
+          <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range="{{storeClass}}"  range-key="gc_name">
             <input type="text" placeholder="请选择店铺分类" value="{{storeClass[storeClassIndex].sc_name}}" disabled />
           </picker>
         </view>
@@ -160,7 +160,8 @@ export default class Index extends wepy.page {
     storeClass: [], // 店铺分类
     storeClassIndex: 0, //店铺分类索引
     store_id: '', // 店铺id
-    joinInfo: {}
+    joinInfo: {},
+    storeClassList: []
   };
 
   computed = {
@@ -178,7 +179,6 @@ export default class Index extends wepy.page {
   watch = {}
   methods = {
     submit(e) {
-      console.log(e.detail.value)
       var {admin, password, name, code, contacts, phone, address, remarks} = e.detail.value
       if(!/^(\w){6,20}$/.test(admin)) {
         wx.showToast({
@@ -274,8 +274,28 @@ export default class Index extends wepy.page {
     storeClassChange(e) {
       this.storeClassIndex = e.detail.value
 
-    }
+    },
+    bindMultiPickerChange(e) {
+
+    },
+    bindMultiPickerColumnChange(e){
+       console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+       this.setList(e.detail.column, e.detail.value)
+    },
+
   };
+  setList(idx, val) {
+    if(val == 2) return
+    var storeClass = this.storeClass
+    if(idx == 0) {
+      this.storeClass[idx + 1] = storeClass[idx][val].two
+    }
+    if(idx == 1) {
+      this.storeClass[idx + 1] = storeClass[idx][val].three || []
+    }
+    
+    this.$apply()
+  }
 
   events = {};
 
@@ -315,17 +335,26 @@ export default class Index extends wepy.page {
     })
     // 店铺分类
     ajax({
-      url: api.getStoreClass
+      url: api.oneGoodsClass
     }).then(res => {
-      this.storeClass = res.datas.data || []
-      var sc_id = this.joinInfo.sc_id 
-      res.datas.data.forEach((item, index) => {
-        if(item.sc_id == sc_id) {
-          this.storeClassIndex = index
-        }
-      })
+      // this.storeClassList = res.datas || []
+      // var sc_id = this.joinInfo.sc_id 
+      // res.datas.data.forEach((item, index) => {
+      //   if(item.sc_id == sc_id) {
+      //     this.storeClassIndex = index
+      //   }
+      // })
+      var oneList = res.datas
+      var twoList = oneList[0].two
+      var threeList = twoList[0].three
+      var arr = []
+      arr.push(oneList)
+      arr.push(twoList)
+      arr.push(threeList)
+      this.storeClass = arr
       this.$apply()
     })
+
 
 
     

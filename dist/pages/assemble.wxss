@@ -44,6 +44,7 @@
   position: absolute;
   top: 12%;
   left: 26%;
+  width: 500rpx;
 }
 .wrap .saleShopWrap .saleShop .shopview .preTag {
   position: absolute;
@@ -51,6 +52,7 @@
   left: 26%;
   font-size: 22rpx;
   color: #9E9E9E;
+  width: 500rpx;
 }
 .wrap .saleShopWrap .saleShop .shopview .preprice {
   position: absolute;
@@ -58,7 +60,7 @@
   left: 26%;
   font-weight: bolder;
   color: red;
-  font-size: 42rpx;
+  font-size: 36rpx;
 }
 .wrap .saleShopWrap .saleShop .shopview .preexprice {
   position: absolute;

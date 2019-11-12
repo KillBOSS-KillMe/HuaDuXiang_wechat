@@ -10,7 +10,7 @@
   color: #999;
 }
 .header-acc > navigator {
-  color: #5EB320;
+  color: #FF6888;
   text-decoration:underline;
 }
 .account-content {
@@ -46,7 +46,7 @@
 .account-content .com-item  .input-wrap button {
   width: 142rpx;
   height: 56rpx;
-  background: #5EB320;
+  background: linear-gradient(to right, #FF6888 0, #FF2228 100%);
   border-radius: 10rpx;
   text-align: center;
   line-height: 56rpx;
@@ -62,7 +62,7 @@
   text-align: center;
   color: #fff;
   border-radius: 10rpx;
-  background:linear-gradient(-45deg,rgba(94,179,32,1) 0%,rgba(152,226,115,1) 100%);
+  background:linear-gradient(to right, #FF6888 0, #FF2228 100%);
   font-size: 32rpx;
 }
 .change-method {
@@ -243,7 +243,8 @@ export default class Index extends wepy.page {
         }).then(res => {
           if(res.datas.state == 1) {
             wx.showToast({
-              title: res.datas.msg
+              title: res.datas.msg,
+              icon: 'none'
             })
             var timer =  setTimeout(() => {
               wx.navigateBack()
