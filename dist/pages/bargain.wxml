@@ -12,9 +12,9 @@
             <image src="{{requestImgUrl + item.goods_img}}"/>
             <view>
               <text class="barginTitle overflow-one">{{item.goods_name}}</text>
-              <progress class="barginProgess" percent="{{100 * item.num / item.stock}}" font-size="14" backgroundColor="#FFE0E1" activeColor="#FF2228" stroke-width="9" border-radius="10"/>
-              <text class="barginSurplus">已抢{{item.num}}件</text>
-              <text class="barginPriceNum">限量{{item.stock}}件</text>
+              <progress class="barginProgess" percent="{{100 - 100 * item.goods_que / item.goods_nums}}" font-size="14" backgroundColor="#FFE0E1" activeColor="#FF2228" stroke-width="9" border-radius="10"/>
+              <text class="barginSurplus">已抢{{item.goods_que}}件</text>
+              <text class="barginPriceNum">限量{{item.goods_nums}}件</text>
             </view>
             <button class="barginBtn">点击免费拿</button>
           </view>
@@ -32,6 +32,7 @@
           <image class="goods-img" src="{{requestImgUrl + image_list[0]._big}}"/>
           <view class="goods-right">
             <view class="title overflow-one">{{goods_content.goods_name}}</view>
+            <view class="price">{{goods_content.goods_price}}</view>
             <view class="attr">
               <view>
                  <block  wx:key="key" wx:for="{{goods_spec}}" wx:for-index="index" wx:for-item="item">{{item}}</block>
@@ -52,20 +53,6 @@
           </block>
         </view>
 
-        <view>
-          <view class="goods-h">数量</view>
-          <view class="change-num">
-            <view class="i" bindtap="reduNum">
-              <image class="img" src="/assets/img/image19.png"  wx:if="{{goodsNum == 1}}"/>
-              <image class="img" src="/assets/img/image20.png" wx:else/>
-            </view>
-            <view class="i num">{{goodsNum}}</view>
-            <!-- <view class="i" bindtap="addNum"> -->
-            <view class="i">
-              <image class="img" src="/assets/img/image21.png"/>
-            </view>
-          </view>
-        </view>
         <view class="prop-btn" bindtap="attrBtnSubmit">确定</view>
       </view>
     
@@ -81,14 +68,13 @@
       <view class="shop-box">
         <view class="address">选择收货地址</view>
         <view class="userAddress">
-          <text>啦啦啦 12015230214</text>
-          <text>山西省近海尽可能看到你的小区</text>
-          <image src="{{requestImgUrl}}right.png"/>
+          <text>{{address.true_name}}{{address.tel_phone}}</text>
+          <text>{{address.area_info}}{{address.address}}</text>
         </view>
-        <view class="newAddress">
+        <navigator class="newAddress" hover-class="none" url="/pages/consignee">
           <text>新增地址</text>
-          <image src="{{requestImgUrl}}right.png"/>
-        </view>
+          <image src="/assets/img/img25.png"/>
+        </navigator>
         <view class="address-btn" bindtap="addressBtnSubmit">确定</view>
       </view>
     

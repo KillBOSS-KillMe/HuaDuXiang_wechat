@@ -1,6 +1,6 @@
 <template>
   <view class="wrap">
-    <form @submit="submit" wx:if="{{status == -10 || status == 10|| status == 20}}">
+    <form @submit="submit" wx:if="{{status == -10}}">
       <view class="settle-list">
         <view class="com-item">
           <view class="title">商铺账号</view>
@@ -32,8 +32,14 @@
         </view>
         <view class="com-item">
           <view class="title">店铺分类</view>
-          <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range="{{storeClass}}"  range-key="gc_name">
+          <picker bindchange="storeClassChange" range="{{storeClass}}"  range-key="sc_name">
             <input type="text" placeholder="请选择店铺分类" value="{{storeClass[storeClassIndex].sc_name}}" disabled />
+          </picker>
+        </view>
+        <view class="com-item">
+          <view class="title">店铺条目</view>
+          <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range="{{entryArr}}"  range-key="gc_name" value="{{entryIndex}}">
+            <input type="text" placeholder="请选择店铺条目" value="{{entryName}}" disabled />
           </picker>
         </view>
         <view class="com-item">
@@ -65,43 +71,61 @@
 
       <button class="settled-btn" form-type="submit">提交申请</button>
     </form>
+    <view class="examine" wx:if="{{status == 10}}">
+      <view class="title">信息提交审核:</view>
+      <image class="examine-img" src="/assets/img/image43.png" />
+      <view class="again-info" @tap="againInfo">重新填写信息</view>
+    </view>
+    <view class="examine" wx:if="{{status == 20}}">
+      <view class="title">信息提交审核:</view>
+      <image class="examine-img success-img" src="/assets/img/image56.png" />
+      <view class="again-info" @tap="settledIn">入驻</view>
+    </view>
     <view class="examine" wx:if="{{status == 11}}">
+      <view class="title">付款审核请耐心等待:</view>
       <image class="examine-img" src="/assets/img/image43.png" />
     </view>
-    <view wx:if="{{status == 40}}">
+
+    <form @submit="submit" wx:if="{{status == 40}}">
       <view class="settle-list">
         <view class="com-item">
           <view class="title">商铺账号</view>
-          <input type="text" name="admin" placeholder="商铺账号(6-20位字母数字组合)"  disabled value="{{joinInfo.seller_name}}"/>
+          <input type="text" name="admin" placeholder="商铺账号(6-20位字母数字组合)"  value="{{joinInfo.seller_name}}" disabled/>
         </view>
         <view class="com-item">
           <view class="title">商铺密码</view>
-          <input type="text" name="password" placeholder="商铺密码(6-20位字母数字组合)" disabled value="{{joinInfo.seller_psw}}"/>
+          <input type="text" name="password" placeholder="商铺密码(6-20位字母数字组合)" value="******" disabled/>
         </view>
         <view class="com-item">
           <view class="title">商铺名称</view>
-          <input type="text" name="name" placeholder="请输入商铺名称" disabled value="{{joinInfo.store_name}}"/>
+          <input type="text" name="name" placeholder="请输入商铺名称" value="{{joinInfo.store_name}}" disabled/>
         </view>
         <view class="com-item">
           <view class="title">商铺编号</view>
-          <input type="text" name="code" placeholder="商铺编号(6-20位字母数字组合)" disabled value="{{joinInfo.store_code}}" />
+          <input type="text" name="code" placeholder="商铺编号(6-20位字母数字组合)" value="{{joinInfo.store_code}}" disabled/>
         </view>
         <view class="com-item">
           <view class="title">联系人</view>
-          <input type="text" name="contacts" placeholder="请输入联系人姓名" disabled  value="{{joinInfo.contacts_name}}" />
+          <input type="text" name="contacts" placeholder="请输入联系人姓名"  value="{{joinInfo.contacts_name}}" disabled/>
         </view>
         <view class="com-item">
           <view class="title">联系电话</view>
-          <input type="number" name="phone" placeholder="请输入联系电话" disabled value="{{joinInfo.contacts_phone}}" />
+          <input type="number" name="phone" placeholder="请输入联系电话" value="{{joinInfo.contacts_phone}}" disabled/>
         </view>
         <view class="com-item">
           <view class="title">商铺地址</view>
-          <input type="text" name="address" placeholder="请输入商铺地址"  disabled value="{{joinInfo.company_address_detail}}"/>
+          <input type="text" name="address" placeholder="请输入商铺地址"  value="{{joinInfo.company_address_detail}}" disabled/>
         </view>
         <view class="com-item">
           <view class="title">店铺分类</view>
-          <picker bindchange="storeClassChange" range="{{storeClass}}"  range-key="sc_name" disabled>
+          <picker bindchange="storeClassChange" range="{{storeClass}}"  range-key="sc_name">
             <input type="text" placeholder="请选择店铺分类" value="{{storeClass[storeClassIndex].sc_name}}" disabled />
+          </picker>
+        </view>
+        <view class="com-item">
+          <view class="title">店铺条目</view>
+          <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range="{{entryArr}}"  range-key="gc_name" value="{{entryIndex}}" disabled>
+            <input type="text" placeholder="请选择店铺条目" value="{{entryName}}" disabled />
           </picker>
         </view>
         <view class="com-item">
@@ -130,8 +154,10 @@
           <textarea placeholder="请输入备注" name="remarks" value="{{joinInfo.remark}}" disabled></textarea>
         </view>
       </view>
-      <navigator hover-class="none" url="/pages/merchantIndex?store_id={{store_id}}" class="settled-btn" form-type="submit" >前往店铺</navigator>
-    </view>
+
+      <navigator class="settled-btn" form-type="submit" hover-class="none" url="/pages/merchantIndex?store_id={{store_id}}">跳转店铺</navigator>
+    </form>
+
   </view>
 </template>
 
@@ -150,7 +176,7 @@ export default class Index extends wepy.page {
   mixins = [];
 
   data = {
-    status: 0, // -10 没入驻   11交完钱审核中   20提交信息成功  31 交钱审核失败    40入驻成功
+    status: 20, // -10没入驻  10填完信息待审核   11交完钱审核中   20填完信息审核成功  30填完信息审核失败  31交钱审核失败    40入驻成功
     storeGrade: [],  // 入驻店铺等级
     timeArr: [{num: 1},{num: 2},{num: 3}],
     storeGradeIndex: 0,
@@ -159,9 +185,14 @@ export default class Index extends wepy.page {
     bondPrice: 0, // 商家保证金
     storeClass: [], // 店铺分类
     storeClassIndex: 0, //店铺分类索引
+    storeClassList: [],
     store_id: '', // 店铺id
     joinInfo: {},
-    storeClassList: []
+    entryIndex: [0, 0, 0],
+    entryName: '', // 店铺分类名称
+    entryId: null, // 店铺分类id
+    entryArr: [], // 带三级分类的条目
+    type: 1, // 第一次1 编辑2
   };
 
   computed = {
@@ -176,7 +207,7 @@ export default class Index extends wepy.page {
     }
   };
   onShow() {}
-  watch = {}
+  watch = { }
   methods = {
     submit(e) {
       var {admin, password, name, code, contacts, phone, address, remarks} = e.detail.value
@@ -229,6 +260,13 @@ export default class Index extends wepy.page {
         })
         return false
       }
+      if(!this.entryName) {
+        wx.showToast({
+          title: '请输入店铺条目',
+          icon: 'none'
+        })
+        return false
+      }
       if(!remarks) {
         wx.showToast({
           title: '请输入备注',
@@ -253,7 +291,10 @@ export default class Index extends wepy.page {
           sg_name: this.storeGrade[this.storeGradeIndex].sg_name, //'店铺等级名称',
           sg_info: this.storeGrade[this.storeGradeIndex].sg_price, //'店铺等级价格',
           seller_name: admin, //'卖家账号'
-          seller_psw: password, // 密码
+          seller_psw: password, // 密码,
+          store_class_ids: this.entryId,
+          store_class_names: this.entryName,
+          type: this.type
         }
       }).then(res => {
         wx.showToast({
@@ -273,28 +314,38 @@ export default class Index extends wepy.page {
     },
     storeClassChange(e) {
       this.storeClassIndex = e.detail.value
-
     },
     bindMultiPickerChange(e) {
+      var idxArr = e.detail.value
+      this.entryIndex = idxArr
+      var entryArr = this.entryArr
+      this.entryName = `${entryArr[0][idxArr[0]].gc_name},${entryArr[1][idxArr[1]].gc_name},${entryArr[2][idxArr[2]].gc_name}`
+      this.entryId = `${entryArr[0][idxArr[0]].gc_id},${entryArr[1][idxArr[1]].gc_id},${entryArr[2][idxArr[2]].gc_id}`
 
     },
     bindMultiPickerColumnChange(e){
-       console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
        this.setList(e.detail.column, e.detail.value)
     },
+    // 重新填写信息按钮
+    againInfo(e){
+      this.status = -10
+    },
+    // 入驻付钱
+    settledIn() {
+
+    }
 
   };
   setList(idx, val) {
-    if(val == 2) return
-    var storeClass = this.storeClass
+    var allArr = this.entryArr[0]
     if(idx == 0) {
-      this.storeClass[idx + 1] = storeClass[idx][val].two
+      this.entryArr[1] = allArr[val].two
+      this.entryArr[2] = allArr[val].two[0].three
+    } else if (idx == 1) {
+      this.entryArr[2] = this.entryArr[1][val].three
+    } else if (idx == 3) {
+      return false
     }
-    if(idx == 1) {
-      this.storeClass[idx + 1] = storeClass[idx][val].three || []
-    }
-    
-    this.$apply()
   }
 
   events = {};
@@ -307,15 +358,17 @@ export default class Index extends wepy.page {
       type: 'get',
     }).then(res => {
       this.status = res.datas.state
-      if(res.datas.state == 10 || res.datas.state == 40) {
+      if(res.datas.state != -10) {
+        this.type = 2
         this.joinInfo = res.datas.data
         var joinin_year = this.joinInfo.joinin_year
+        this.entryId = this.joinInfo.store_class_ids
+        this.entryName = this.joinInfo.store_class_names
         this.timeArr.forEach((item, index) => {
           if(item.num == joinin_year) {
             this.timeIndex = index
           }
         })
-
       }
       this.store_id = res.datas.store_id
       this.$apply()
@@ -333,17 +386,23 @@ export default class Index extends wepy.page {
       })
       this.$apply()
     })
-    // 店铺分类
+    // 店铺分类(一)
+    ajax({
+      url: api.getStoreClass
+    }).then(res => {
+      this.storeClass = res.datas.data || []
+      var sc_id = this.joinInfo.sc_id 
+      res.datas.data.forEach((item, index) => {
+        if(item.sc_id == sc_id) {
+          this.storeClassIndex = index
+        }
+      })
+      this.$apply()
+    })
+        // 店铺分类(二)
     ajax({
       url: api.oneGoodsClass
     }).then(res => {
-      // this.storeClassList = res.datas || []
-      // var sc_id = this.joinInfo.sc_id 
-      // res.datas.data.forEach((item, index) => {
-      //   if(item.sc_id == sc_id) {
-      //     this.storeClassIndex = index
-      //   }
-      // })
       var oneList = res.datas
       var twoList = oneList[0].two
       var threeList = twoList[0].three
@@ -351,13 +410,9 @@ export default class Index extends wepy.page {
       arr.push(oneList)
       arr.push(twoList)
       arr.push(threeList)
-      this.storeClass = arr
+      this.entryArr = arr
       this.$apply()
     })
-
-
-
-    
   }
 }
 </script>
@@ -424,6 +479,12 @@ export default class Index extends wepy.page {
 .examine {
   position: relative;
   height: 100vh;
+  .title {
+    font-weight: bold;
+    font-size: 32rpx;
+    color:#000;
+    padding: 30rpx;
+  }
   .examine-img {
     position: absolute;
     left: 50%;
@@ -431,6 +492,27 @@ export default class Index extends wepy.page {
     transform: translateX(-50%);
     width: 330rpx;
     height: 256rpx;
+  }
+  .success-img {
+    height: 170rpx;
+    width: 426rpx;
+  }
+  .again-info {
+    position: absolute;
+    text-align: center;
+    font-weight: bold;
+    font-size: 30rpx;
+    width: 690rpx;
+    height: 88rpx;
+    line-height: 88rpx;
+    color: #fff;
+    background: #ff2228;
+    bottom: 80rpx;
+    border-radius: 10rpx;
+    left: 50%;
+    transform: translateX(-50%);
+
+
   }
 }
 </style>

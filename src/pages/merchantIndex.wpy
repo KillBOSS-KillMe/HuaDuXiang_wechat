@@ -82,8 +82,8 @@ export default class ShopCart extends wepy.page {
       if(idx == this.navIdx) return false
       this.navIdx = idx
     },
-    navGoodsList(){
-      this.$navigate({ url: `goodsList` });
+    navGoodsList(pid, id){
+      this.$navigate({ url: `goodsList?g_id=${id}` });
     },
     back(){
       wx.navigateBack()

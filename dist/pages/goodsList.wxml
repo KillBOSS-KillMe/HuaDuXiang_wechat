@@ -2,19 +2,24 @@
   <view class="wrap">
     <!-- <image class="chooseImg" src="{{item.img}}" />
     <repeat for="{{ChooesData}}" item="item">-->
-    <image class="head-img" src="/assets/img/image.png"/>
+    <!-- <image class="head-img" src="/assets/img/image.png" /> -->
     <view class="goods-list">
-      <block wx:for="{{11}}" wx:for-index="index" wx:for-item="item" wx:key="key">
-        <navigator url="/pages/shopDetails" class="goods-item">
-          <image class="goods-img" src="/assets/img/image.png"/>
+      <block wx:for="{{goods_list}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+        <view bindtap="navShopDetails" class="goods-item" data-wpynavshopdetails-a="{{item.goods_id}}" data-wpynavshopdetails-b="{{item.sale_type}}">
+          <image class="goods-img" src="{{requestImgUrl + item.goods_image_url}}"/>
           <view class="goods-fot">
-            <view class="title overflow-one">新款冬季棉拖鞋新款冬季棉拖鞋新款冬季棉拖鞋</view>
+            <view class="title overflow-one">{{item.goods_name}}</view>
             <view class="price">
               ￥
-              <text>19</text>
+              <text>{{item.goods_price}}</text>
             </view>
           </view>
-        </navigator>
+        </view>
       </block>
+    </view>
+    
+    <view class="none-content"  wx:if="{{page_total == 0}}">
+      <image src="/assets/img/image48.png"/>
+      <navigator url="/pages/index" hover-class="none" open-type="reLaunch" class="go">去选购</navigator>
     </view>
   </view>

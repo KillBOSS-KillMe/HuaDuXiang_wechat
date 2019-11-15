@@ -82,7 +82,7 @@ export default class Index extends wepy.page {
   }
   methods = {
     navShopDetails(goods_id){
-      this.$navigate(`/pages/shopDetails?goods_id=${goods_id}`)
+      this.$navigate(`/pages/shopDetails?goods_id=${goods_id}&type=share`)
     }
   };
 

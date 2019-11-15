@@ -2,26 +2,33 @@
   <view class="wrap">
     <!-- <image class="chooseImg" src="{{item.img}}" />
     <repeat for="{{ChooesData}}" item="item">-->
-    <image class="head-img" src="/assets/img/image.png" />
+    <!-- <image class="head-img" src="/assets/img/image.png" /> -->
     <view class="goods-list">
-      <repeat for="{{11}}" item="item">
-        <navigator url="/pages/shopDetails" class="goods-item">
-          <image class="goods-img" src="/assets/img/image.png" />
+      <repeat for="{{goods_list}}" item="item">
+        <view @tap="navShopDetails({{item.goods_id}}, {{item.sale_type}})" class="goods-item">
+          <image class="goods-img" src="{{requestImgUrl + item.goods_image_url}}" />
           <view class="goods-fot">
-            <view class="title overflow-one">新款冬季棉拖鞋新款冬季棉拖鞋新款冬季棉拖鞋</view>
+            <view class="title overflow-one">{{item.goods_name}}</view>
             <view class="price">
               ￥
-              <text>19</text>
+              <text>{{item.goods_price}}</text>
             </view>
           </view>
-        </navigator>
+        </view>
       </repeat>
+    </view>
+    
+    <view class="none-content" wx:if="{{page_total == 0}}">
+      <image src="/assets/img/image48.png"/>
+      <navigator url="/pages/index" hover-class="none" open-type="reLaunch" class="go">去选购</navigator>
     </view>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 
 export default class Index extends wepy.page {
   config = {
@@ -32,17 +39,68 @@ export default class Index extends wepy.page {
   mixins = [];
 
   data = {
-    requestImgUrl: ''
+    requestImgUrl: '',
+    listData: {},
+    curpage: 1,
+    hasmore: false, // 是否有下一页
+    goods_list: [],
+    page_total: null  // 总页数
   };
 
   computed = {};
   onLoad(options) {
+    this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     console.log(options)
+    this.listData = options
+    this.$apply()
+    this.requestList()
+  }
+  requestList() {
+    ajax({
+      url: api.indexGoodsList,
+      data: {
+        page: 10,
+        curpage: this.curpage,
+        ...this.listData
+      }
+    }).then(res => {
+        var list = res.datas.goods_list || []
+        this.goods_list = this.goods_list.concat(list)
+        this.hasmore = res.hasmore
+        this.page_total = res.page_total
+        this.$apply();
+    })
   }
   onShow() {}
-  methods = {};
+  methods = {
+    navShopDetails(goods_id, sale_type) {
+      //common普通，rushsale秒杀，group团购，advsales预售，freesales砍价
+      if(sale_type == 'common') {
+        this.$navigate(`shopDetails?goods_id=${goods_id}&sale_type=${sale_type}`);
+      }
+      if(sale_type == 'rushsales') {
+        this.$navigate(`seckillShopDetails?goods_id=${goods_id}&sale_type=${sale_type}`);
+      }
+      if(sale_type == 'group') {
+        this.$navigate(`assembleShopDetails?goods_id=${goods_id}&sale_type=${sale_type}`);
+      }
+      if(sale_type == 'advsales') {
+        this.$navigate(`preShopDetails?goods_id=${goods_id}&sale_type=${sale_type}`);
+      }
+      // if(sale_type == 'freesales') {
+      //   this.$navigate(`shopDetails?goods_id=${goods_id}&sale_type=${sale_type}`);
+      // }
+      console.log(sale_type == 'freesales', sale_type)
+    }
+  };
 
   events = {};
+  onReachBottom () {
+    if(this.hasmore) {
+      this.curpage ++ 
+      this.requestList()
+    }
+  }
 }
 </script>
 
@@ -108,6 +166,23 @@ export default class Index extends wepy.page {
         }
       }
     }
+  }
+}
+.none-content {
+  text-align: center;
+  image {
+    width: 500rpx;
+    height: 500rpx;
+  }
+  .go{
+    height: 80rpx;
+    border-radius: 50rpx;
+    width: 300rpx;
+    line-height: 80rpx;
+    border: 1px solid #FF2228;
+    font-size: 30rpx;
+    color: #FF2228;
+    margin: 0 auto;
   }
 }
 </style>

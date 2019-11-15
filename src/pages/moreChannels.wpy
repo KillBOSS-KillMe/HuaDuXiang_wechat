@@ -13,7 +13,7 @@
     <view class="channels-cont" wx:if="{{navIdx == 0}}">
       <view class="brand-list">
         <repeat for="{{recommendList}}" item="item">
-          <navigator url="/pages/goodsList?brand_id={{item.brand_id}}" hover-class="none" class="brand-item">
+          <navigator url="/pages/goodsList?b_id={{item.brand_id}}" hover-class="none" class="brand-item">
             <image class="img" src="{{item.brand_pic}}" />
             <text>{{item.brand_name}}</text>
           </navigator>

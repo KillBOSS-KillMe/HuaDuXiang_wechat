@@ -105,6 +105,11 @@
       display: flex;
       flex-direction: column;
       justify-content: space-around;
+      .price {
+        color: #ff2228;
+        font-weight: bold;
+        font-size: 26rpx;
+      }
       .title {
         font-weight: bold;
         font-size: 30rpx;
@@ -161,14 +166,12 @@
     color: #fff;
     font-size: 28rpx;
     border-radius: 10rpx;
-    height: 68rpx;
-    width: 150rpx;
+    height: 80rpx;
+    width: 690rpx;
     text-align: center;
-    line-height: 68rpx;
+    line-height: 80rpx;
     background: #ff2228;
-    position: absolute;
-    bottom: 30rpx;
-    right: 30rpx;
+    margin-top: 50rpx;
   }
 }
 .shop-box {
@@ -232,12 +235,12 @@
     color: #fff;
     font-size: 28rpx;
     border-radius: 10rpx;
-    height: 68rpx;
-    width: 590rpx;
+    height: 80rpx;
+    width: 690rpx;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
-    line-height: 68rpx;
+    line-height: 80rpx;
     background: #ff2228;
     position: absolute;
     bottom: 12rpx;
@@ -310,15 +313,15 @@
               <text class="barginTitle overflow-one">{{item.goods_name}}</text>
               <progress
                 class="barginProgess"
-                percent="{{100 * item.num / item.stock}}"
+                percent="{{100 - 100 * item.goods_que / item.goods_nums}}"
                 font-size="14"
                 backgroundColor="#FFE0E1"
                 activeColor="#FF2228"
                 stroke-width="9"
                 border-radius="10"
               />
-              <text class="barginSurplus">已抢{{item.num}}件</text>
-              <text class="barginPriceNum">限量{{item.stock}}件</text>
+              <text class="barginSurplus">已抢{{item.goods_que}}件</text>
+              <text class="barginPriceNum">限量{{item.goods_nums}}件</text>
             </view>
             <button class="barginBtn">点击免费拿</button>
           </view>
@@ -332,6 +335,7 @@
           <image class="goods-img" src="{{requestImgUrl + image_list[0]._big}}" />
           <view class="goods-right">
             <view class="title overflow-one">{{goods_content.goods_name}}</view>
+            <view class="price">{{goods_content.goods_price}}</view>
             <view class="attr">
               <view>
                  <repeat for="{{goods_spec}}" wx:key="index">{{item}}</repeat>
@@ -352,20 +356,6 @@
           </repeat>
         </view>
 
-        <view>
-          <view class="goods-h">数量</view>
-          <view class="change-num">
-            <view class="i" @tap="reduNum">
-              <image class="img" src="/assets/img/image19.png" wx:if="{{goodsNum == 1}}" />
-              <image class="img" src="/assets/img/image20.png" wx:else />
-            </view>
-            <view class="i num">{{goodsNum}}</view>
-            <!-- <view class="i" @tap="addNum"> -->
-            <view class="i">
-              <image class="img" src="/assets/img/image21.png" />
-            </view>
-          </view>
-        </view>
         <view class="prop-btn" @tap="attrBtnSubmit">确定</view>
       </view>
     </attrsmask>
@@ -374,14 +364,13 @@
       <view class="shop-box">
         <view class="address">选择收货地址</view>
         <view class="userAddress">
-          <text>啦啦啦 12015230214</text>
-          <text>山西省近海尽可能看到你的小区</text>
-          <image src="{{requestImgUrl}}right.png" />
+          <text>{{address.true_name}}{{address.tel_phone}}</text>
+          <text>{{address.area_info}}{{address.address}}</text>
         </view>
-        <view class="newAddress">
+        <navigator  class="newAddress" hover-class="none" url="/pages/consignee">
           <text>新增地址</text>
-          <image src="{{requestImgUrl}}right.png" />
-        </view>
+          <image src="/assets/img/img25.png" />
+        </navigator>
         <view class="address-btn" @tap="addressBtnSubmit">确定</view>
       </view>
     </addressmask>
@@ -436,19 +425,20 @@ export default class Index extends wepy.page {
     attr: [{title: '大小', prop: {'31': '大','32': '小' } }],  // 商品总属性数组
     activeAttr: [], // 当前点击属性数组
     goods_spec: [], // 默认属性数组
-    spec_list: {} // 所有属性对应的商品goods_id
+    spec_list: {}, // 所有属性对应的商品goods_id
+    image_list: [], // 商品轮播图
+    goods_content: '',
+    address: ''
+
   };
 
   computed = {};
   onShow() {
-    // this.userInfo = this.$parent.globalData.userInfo
-    this.requestImgUrl = this.$parent.globalData.requestImgUrl;
-    ajax({
-      url: api.bargainGoodsList
-    }).then(res => {
-      this.barginData = res.datas.list
-      this.$apply()
-    })
+    var app = this.$parent;
+    var address = app.globalData.address
+    this.address = address
+    console.log(address)
+    
   }
   methods = {
     addressBtnSubmit() {
@@ -470,14 +460,22 @@ export default class Index extends wepy.page {
      * 跳转商品详情
      */
     jumpTimeDetails(goods_id, join) {
-      if(join == 0) {
+      // if(join == 0) {
         this.attrFlag = true;
         this.goods_id = goods_id
         this.$apply()
         this.getShopDetails()
-      }
+      // }
     },
-    hideMask() {}
+    hideMask() {},
+    changeAttr(index, idx, ele){
+      this.activeAttr[index] = idx
+      this.goods_spec[index] = ele
+      var goods_id = this.spec_list[this.activeAttr.join('|')]
+      this.goods_id = goods_id;
+      this.$apply()
+      this.getShopDetails()
+    },
   };
 
   getShopDetails() {
@@ -491,6 +489,8 @@ export default class Index extends wepy.page {
       }
     }).then(res => {
       if(res.code == 200) {
+        this.goods_content = res.datas.goods_content
+        this.image_list = res.datas.image_list || []
         // 商品属性
         var spec_name = Object.values(res.datas.goods_content.spec_name)
         var spec_value = Object.values(res.datas.goods_content.spec_value)
@@ -516,6 +516,12 @@ export default class Index extends wepy.page {
 
   onLoad() {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
+    ajax({
+      url: api.bargainGoodsList
+    }).then(res => {
+      this.barginData = res.datas.list
+      this.$apply()
+    })
 
     ajax({
       url: api.memberKj,
@@ -523,6 +529,8 @@ export default class Index extends wepy.page {
       this.topImg = res.datas.img_area
       this.$apply()
     })
+
+   
   }
 }
 </script>

@@ -1,6 +1,6 @@
 
   <view class="wrap">
-    <form bindsubmit="submit"  wx:if="{{status == -10 || status == 10|| status == 20}}">
+    <form bindsubmit="submit"  wx:if="{{status == -10}}">
       <view class="settle-list">
         <view class="com-item">
           <view class="title">商铺账号</view>
@@ -32,8 +32,14 @@
         </view>
         <view class="com-item">
           <view class="title">店铺分类</view>
-          <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range="{{storeClass}}" range-key="gc_name">
+          <picker bindchange="storeClassChange" range="{{storeClass}}" range-key="sc_name">
             <input type="text" placeholder="请选择店铺分类" value="{{storeClass[storeClassIndex].sc_name}}" disabled/>
+          </picker>
+        </view>
+        <view class="com-item">
+          <view class="title">店铺条目</view>
+          <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range="{{entryArr}}" range-key="gc_name" value="{{entryIndex}}">
+            <input type="text" placeholder="请选择店铺条目" value="{{entryName}}" disabled/>
           </picker>
         </view>
         <view class="com-item">
@@ -65,43 +71,61 @@
 
       <button class="settled-btn" form-type="submit">提交申请</button>
     </form>
-    <view class="examine"  wx:if="{{status == 11}}">
+    <view class="examine"  wx:if="{{status == 10}}">
+      <view class="title">信息提交审核:</view>
+      <image class="examine-img" src="/assets/img/image43.png"/>
+      <view class="again-info" bindtap="againInfo">重新填写信息</view>
+    </view>
+    <view class="examine" wx:if="{{status == 20}}">
+      <view class="title">信息提交审核:</view>
+      <image class="examine-img success-img" src="/assets/img/image56.png"/>
+      <view class="again-info" bindtap="settledIn">入驻</view>
+    </view>
+    <view class="examine" wx:if="{{status == 11}}">
+      <view class="title">付款审核请耐心等待:</view>
       <image class="examine-img" src="/assets/img/image43.png"/>
     </view>
-    <view wx:if="{{status == 40}}">
+
+    <form bindsubmit="submit" wx:if="{{status == 40}}">
       <view class="settle-list">
         <view class="com-item">
           <view class="title">商铺账号</view>
-          <input type="text" name="admin" placeholder="商铺账号(6-20位字母数字组合)" disabled value="{{joinInfo.seller_name}}"/>
+          <input type="text" name="admin" placeholder="商铺账号(6-20位字母数字组合)" value="{{joinInfo.seller_name}}" disabled/>
         </view>
         <view class="com-item">
           <view class="title">商铺密码</view>
-          <input type="text" name="password" placeholder="商铺密码(6-20位字母数字组合)" disabled value="{{joinInfo.seller_psw}}"/>
+          <input type="text" name="password" placeholder="商铺密码(6-20位字母数字组合)" value="******" disabled/>
         </view>
         <view class="com-item">
           <view class="title">商铺名称</view>
-          <input type="text" name="name" placeholder="请输入商铺名称" disabled value="{{joinInfo.store_name}}"/>
+          <input type="text" name="name" placeholder="请输入商铺名称" value="{{joinInfo.store_name}}" disabled/>
         </view>
         <view class="com-item">
           <view class="title">商铺编号</view>
-          <input type="text" name="code" placeholder="商铺编号(6-20位字母数字组合)" disabled value="{{joinInfo.store_code}}"/>
+          <input type="text" name="code" placeholder="商铺编号(6-20位字母数字组合)" value="{{joinInfo.store_code}}" disabled/>
         </view>
         <view class="com-item">
           <view class="title">联系人</view>
-          <input type="text" name="contacts" placeholder="请输入联系人姓名" disabled value="{{joinInfo.contacts_name}}"/>
+          <input type="text" name="contacts" placeholder="请输入联系人姓名" value="{{joinInfo.contacts_name}}" disabled/>
         </view>
         <view class="com-item">
           <view class="title">联系电话</view>
-          <input type="number" name="phone" placeholder="请输入联系电话" disabled value="{{joinInfo.contacts_phone}}"/>
+          <input type="number" name="phone" placeholder="请输入联系电话" value="{{joinInfo.contacts_phone}}" disabled/>
         </view>
         <view class="com-item">
           <view class="title">商铺地址</view>
-          <input type="text" name="address" placeholder="请输入商铺地址" disabled value="{{joinInfo.company_address_detail}}"/>
+          <input type="text" name="address" placeholder="请输入商铺地址" value="{{joinInfo.company_address_detail}}" disabled/>
         </view>
         <view class="com-item">
           <view class="title">店铺分类</view>
-          <picker bindchange="storeClassChange" range="{{storeClass}}" range-key="sc_name" disabled>
+          <picker bindchange="storeClassChange" range="{{storeClass}}" range-key="sc_name">
             <input type="text" placeholder="请选择店铺分类" value="{{storeClass[storeClassIndex].sc_name}}" disabled/>
+          </picker>
+        </view>
+        <view class="com-item">
+          <view class="title">店铺条目</view>
+          <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range="{{entryArr}}" range-key="gc_name" value="{{entryIndex}}" disabled>
+            <input type="text" placeholder="请选择店铺条目" value="{{entryName}}" disabled/>
           </picker>
         </view>
         <view class="com-item">
@@ -130,6 +154,8 @@
           <textarea placeholder="请输入备注" name="remarks" value="{{joinInfo.remark}}" disabled/>
         </view>
       </view>
-      <navigator hover-class="none" url="/pages/merchantIndex?store_id={{store_id}}" class="settled-btn" form-type="submit">前往店铺</navigator>
-    </view>
+
+      <navigator class="settled-btn" form-type="submit" hover-class="none" url="/pages/merchantIndex?store_id={{store_id}}">跳转店铺</navigator>
+    </form>
+
   </view>

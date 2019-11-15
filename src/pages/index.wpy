@@ -256,7 +256,7 @@
       </repeat>
     </view>
     <!-- 秒杀专区 -->
-    <view class="seckill">
+    <view class="seckill" wx:if="{{goods_list_miaosha.length}}">
       <view class="seckilltitle">
         <view>秒杀专区</view>
         <!-- <view class="beginTime">下一场{{beginTime}}开始</view> -->
@@ -298,7 +298,7 @@
       </view>
     </view>
     <!-- 预购商品 -->
-    <view class="seckill recommend">
+    <view class="seckill recommend"  wx:if="{{goods_list_yushou.length}}">
       <view class="seckilltitle">
         <view>预购商品</view>
       </view>
@@ -498,14 +498,7 @@ export default class Index extends wepy.page {
       this.$navigate({url: url})
     },
     jumpDetails(goods_id, goods_type) {
-      console.log(goods_id, goods_type)
-      switch (Number(goods_type)) {
-        case 0: 
-          this.$navigate(`/pages/shopDetails?goods_id=${goods_id}`);
-          break;
-        case 1:
-          this.$navigate(`/pages/seckillShopDetails?goods_id=${goods_id}`);
-      }
+      this.$navigate(`/pages/shopDetails?goods_id=${goods_id}`);
     },
     navSearch() {
       this.$navigate('/pages/search');

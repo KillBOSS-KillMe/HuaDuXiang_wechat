@@ -5,7 +5,10 @@
   color: #999999;
 }
 .settlement-wrap {
-  margin-bottom: 100rpx;
+  padding-bottom: 100rpx;
+  box-sizing: border-box;
+  min-height: 100vh;
+  position: relative;
 }
 .useraddress {
   padding: 20rpx;
@@ -88,7 +91,7 @@
   text-align: right;
 }
 .usergoods-wrap .usergoods .goods-right .goodprice .price {
-  font-size: 36rpx;
+  font-size: 32rpx;
   font-weight: bold;
 }
 .option-wrap {
@@ -131,6 +134,7 @@
   font-size: 36rpx;
 }
 .settlebottom {
+  border-top: 1px solid #f2f2f2;
   position: fixed;
   display: flex;
   justify-content: space-between;
@@ -187,4 +191,44 @@
   line-height: 90rpx;
   color: #999999;
   padding-left: 30rpx;
+}
+.price-type {
+  border-top: 20rpx solid #f2f2f2;
+  position: absolute;
+  bottom: 100rpx;
+  width: 100%;
+  background: #fff;
+}
+.price-type .type-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 90rpx;
+  line-height: 90rpx;
+  padding: 0 30rpx;
+}
+.price-type .type-item .type-img {
+  width: 44rpx;
+  height: 44rpx;
+}
+.price-type .type-item .active-img,
+.price-type .type-item .other-img {
+  width: 44rpx;
+  height: 44rpx;
+}
+.price-type .type-item .active-img {
+  display: none;
+}
+.price-type .type-item text {
+  flex: 1;
+  padding-left: 30rpx;
+  font-weight: bold;
+  color: #282828;
+  font-size: 30rpx;
+}
+.price-type .type-active .active-img {
+  display: block;
+}
+.price-type .type-active .other-img {
+  display: none;
 }

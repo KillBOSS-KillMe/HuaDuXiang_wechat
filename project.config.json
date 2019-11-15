@@ -58,7 +58,7 @@
 					"id": 1,
 					"name": "秒杀商品详情",
 					"pathName": "pages/seckillShopDetails",
-					"query": "goods_id=11",
+					"query": "goods_id=54",
 					"scene": null
 				},
 				{
@@ -156,6 +156,7 @@
 					"id": -1,
 					"name": "vip",
 					"pathName": "pages/vip",
+					"query": "",
 					"scene": null
 				}
 			]

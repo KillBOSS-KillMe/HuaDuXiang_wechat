@@ -75,9 +75,9 @@
         <!-- goods item -->
         <view class="saleShopWrap">
           <view class="saleShop">
-            <repeat for="{{hot_sales}}" item="item">
+            <repeat for="{{goods_commend_list}}" item="item">
               <view @tap="navGoodsDetails({{item.goods_id}})" class="shopview">
-                <image src="{{requestImgUrl + item.goods_image}}" />
+                <image src="{{item.goods_image_url}}" />
                 <view class="saleTag">
                   <text class="overflow-one">{{item.goods_name}}</text>
                 </view>
@@ -188,13 +188,14 @@ export default class Index extends wepy.page {
     requestImgUrl: null, //图片域名
     goods_content: null, // 商品内容
     store_info: null, // 店铺信息
-    hot_sales: [], //推荐商品列表
+    goods_commend_list: [], //推荐商品列表
     image_list: [], // 商品轮播图
     contractlist: {}, // 商品服务说明
     attr: [],  // 商品总属性数组
     activeAttr: [], // 当前点击属性数组
     goods_spec: [], // 默认属性数组
-    spec_list: {} // 所有属性对应的商品goods_id
+    spec_list: {}, // 所有属性对应的商品goods_id
+    type: null
   };
 
   computed = {};
@@ -241,9 +242,8 @@ export default class Index extends wepy.page {
       this.goods_spec[index] = ele
       var goods_id = this.spec_list[this.activeAttr.join('|')]
       this.goods_id = goods_id;
-      console.log(goods_id)
       this.$apply()
-      // this.getShopDetails()
+      this.getShopDetails()
     },
     addCart(){
       var that = this
@@ -274,12 +274,20 @@ export default class Index extends wepy.page {
   };
 
   events = {};
-  onShareAppMessage(){
-    console.log(999)
+  onShareAppMessage(e) {
+    if(this.type == "share") {
+      var user = wx.getStorageSync('user')
+      console.log(user)
+      return {
+        path: `/pages/shopDetails?goods_id=${this.goods_id}&userid=${user.userid}`
+      }
+    }
   }
   onLoad(t) {
+    console.log(t)
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     this.goods_id = t.goods_id;
+    this.type = t.type
     this.$apply()
     this.getShopDetails()
   }
@@ -299,7 +307,7 @@ export default class Index extends wepy.page {
         this.contractlist = res.datas.goods_content.contractlist || {}
         this.image_list = res.datas.image_list || []
         this.store_info = res.datas.store_info
-        this.hot_sales = res.datas.hot_sales
+        this.goods_commend_list = res.datas.goods_commend_list
         // 商品属性
         var spec_name = Object.values(res.datas.goods_content.spec_name)
         var spec_value = Object.values(res.datas.goods_content.spec_value)

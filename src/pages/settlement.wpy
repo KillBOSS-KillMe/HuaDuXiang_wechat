@@ -57,13 +57,24 @@
           <text>{{goodsPrice}}</text>
         </view>
       </view>
-      <view class="option-item" wx:if="{{false}}" >
+      <view class="option-item" >
         <view class="com-title">运费</view>
         <view class="price">
           ￥
-          <text>2</text>
+          <text>{{goods_freight}}100</text>
         </view>
       </view>
+    </view>
+
+    <view class="price-type">
+      <repeat for="{{priceArr}}" item="item">
+        <view class="type-item {{payment_type == index ? 'type-active' : ''}}" @tap="changePriceType({{index}})">
+          <image class="type-img" src="/assets/img/{{item.icon}}" />
+          <text>{{item.title}}<text wx:if="{{index == 1}}">({{member_points}}元)</text> </text>
+          <image class="active-img" src="/assets/img/image60.png" />
+          <image class="other-img" src="/assets/img/image59.png" />
+        </view>
+      </repeat>
     </view>
     <!-- 底部 订单提交 -->
     <view class="settlebottom">
@@ -92,6 +103,7 @@ export default class ShopCart extends wepy.page {
   mixins = [];
 
   data = {
+    priceArr: [{title: '微信支付',icon: 'image57.png', flag: 1},{title: '余额支付',icon: 'image58.png',flag: 0}],
     requestImgUrl: '',
     address: null, //地址信息
     goods_list: [], //下单商品信息
@@ -103,6 +115,9 @@ export default class ShopCart extends wepy.page {
     vat_hash: null, //发票信息hash
     cart_id: null, //商品id数量
     payment_list: [], // 支付方式
+    goods_freight: 0, //运费
+    payment_type: 0 , //付款类型 0微信 1余额
+    member_points: 0, //用户余额
   };
 
   computed = {};
@@ -142,6 +157,9 @@ export default class ShopCart extends wepy.page {
           }
         })
       } 
+    },
+    changePriceType(idx) {
+      this.payment_type = idx
     }
   };
 
@@ -191,6 +209,10 @@ export default class ShopCart extends wepy.page {
     this.vat_hash = orderInfo.vat_hash
     // 商品信息
     this.cart_id = orderInfo.cart_id
+    // 运费
+    this.goods_freight = orderInfo.goods_freight
+    // 余额
+    this.member_points = orderInfo.member_points
   }
 }
 </script>
@@ -203,7 +225,10 @@ export default class ShopCart extends wepy.page {
   color: #999999;
 }
 .settlement-wrap {
-  margin-bottom: 100rpx;
+  padding-bottom: 100rpx;
+  box-sizing: border-box;
+  min-height: 100vh;
+  position: relative;
 }
 // 用户地址 信息
 .useraddress {
@@ -283,7 +308,7 @@ export default class ShopCart extends wepy.page {
         color: #f92832;
         text-align: right;
         .price {
-          font-size: 36rpx;
+          font-size: 32rpx;
           font-weight: bold;
         }
       }
@@ -330,6 +355,7 @@ export default class ShopCart extends wepy.page {
   }
 }
 .settlebottom {
+  border-top: 1px solid #f2f2f2;
   position: fixed;
   display: flex;
   justify-content: space-between;
@@ -387,6 +413,49 @@ export default class ShopCart extends wepy.page {
     line-height: 90rpx;
     color: #999999;
     padding-left: 30rpx;
+  }
+}
+.price-type {
+  border-top: 20rpx solid #f2f2f2;
+  position: absolute;
+  bottom: 100rpx;
+  width: 100%;
+  background: #fff;
+  .type-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 90rpx;
+    line-height: 90rpx;
+    padding: 0 30rpx;
+    .type-img {
+      width: 44rpx;
+      height: 44rpx;
+    }
+    .active-img,
+    .other-img {
+      width: 44rpx;
+      height: 44rpx;
+    }
+    .active-img {
+      display: none;
+    }
+    text {
+      flex: 1;
+      padding-left: 30rpx;
+      font-weight: bold;
+      color: #282828;
+      font-size: 30rpx;
+    }
+  }
+  .type-active {
+    .active-img {
+      display: block;
+    }
+    .other-img {
+      display: none;
+    }
+
   }
 }
 </style>

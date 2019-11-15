@@ -56,6 +56,12 @@
   position: relative;
   height: 100vh;
 }
+.examine .title {
+  font-weight: bold;
+  font-size: 32rpx;
+  color: #000;
+  padding: 30rpx;
+}
 .examine .examine-img {
   position: absolute;
   left: 50%;
@@ -63,4 +69,23 @@
   transform: translateX(-50%);
   width: 330rpx;
   height: 256rpx;
+}
+.examine .success-img {
+  height: 170rpx;
+  width: 426rpx;
+}
+.examine .again-info {
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  font-size: 30rpx;
+  width: 690rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  color: #fff;
+  background: #ff2228;
+  bottom: 80rpx;
+  border-radius: 10rpx;
+  left: 50%;
+  transform: translateX(-50%);
 }

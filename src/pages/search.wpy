@@ -34,15 +34,7 @@ export default class Index extends wepy.page {
           icon: 'none'
         });
       } else {
-        wx.showLoading();
-        if (timer) return;
-        var timer = setTimeout(() => {
-          wx.showToast({
-            title: '暂无商品',
-            icon: 'loading'
-          });
-          clearTimeout(timer);
-        }, 1000);
+         this.$navigate({ url: `goodsList?keyword=${this.val}` });
       }
     },
     inputVal(e) {
