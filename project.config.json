@@ -165,6 +165,13 @@
 					"pathName": "pages/orderInfo",
 					"query": "order_id=32",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "售后",
+					"pathName": "pages/after-sale",
+					"query": "order_id=32",
+					"scene": null
 				}
 			]
 		}

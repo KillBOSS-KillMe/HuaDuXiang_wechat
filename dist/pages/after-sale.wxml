@@ -1,0 +1,56 @@
+
+  <view>
+    <view class="nav">
+      <block wx:for="{{['售后申请','申请记录']}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+        <view class="nav-i {{navIdx == index ? 'nav-active':''}}" bindtap="changeNav" data-wpychangenav-a="{{index}}">{{item}}</view>
+      </block>
+    </view>
+    <view class="goods-wrap">
+      <block wx:for="{{3}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+        <view class="goods-item">
+          <view class="goods-head">
+            <view class="contract-title">
+              <text>订单编号：{{item.order_id}}123465798</text>
+            </view>
+          </view>
+          <view class="goods-cont">
+            <view class="goods-list">
+              <block wx:for="{{1}}" wx:for-index="index" wx:for-item="ele" wx:key="key">
+                <view class="goods-info">
+                  <image src="//fc3tn.baidu.com/it/u=3025909226,1763324618&fm=202&src=bqdata"/>
+                  <view class="info-r">
+                    <view class="name">
+                      <view>{{ele.good_name}}名称</view>
+                      <text>×{{ele.number}}10</text>
+                    </view>
+                    <view class="spec">
+                      <view>规格</view>
+                    </view>
+                    <view class="price">
+                      <text>￥</text>
+                      <text>{{ele.good_price}}10</text>
+                    </view>
+                  </view>
+                </view>
+              </block>
+            </view>
+            <view class="goods-fot">
+              <view class="should-price"  wx:if="{{false}}">
+                <image src="/assets/images/img71.png" style="width:24rpx; height:24rpx;"/>
+                <view class="text">该商品已超过售后期</view>
+              </view>
+              <view class="goods-option"  wx:else>
+                <view class="goods-btn color-y">
+                  <navigator url="/pages/cancel-order/cancel-order?order_id={{item.order_id}}" hover-class="none">
+                    <block wx:if="{{item.obj_id != 1}}">退货</block>
+                    <block wx:elif="{{item.order_status == 2}}">退款</block>
+                    <block wx:else>退货</block>
+                  </navigator>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>

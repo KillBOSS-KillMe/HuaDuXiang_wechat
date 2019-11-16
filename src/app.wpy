@@ -60,6 +60,8 @@ export default class extends wepy.app {
       'pages/orderInfo', // 订单详情
       'pages/logistics', // 物流信息
       'pages/set-up', // 设置
+      'pages/after-sale', //售后
+      
       
     ],
     window: {
