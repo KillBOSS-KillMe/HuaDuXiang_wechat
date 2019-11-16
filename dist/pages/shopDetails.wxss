@@ -344,12 +344,14 @@ view {
   background: #fff2f2;
   color: #f2292d;
   font-size: 20rpx;
-  margin: 0 20rpx;
 }
 .goods-head .price .ear {
   color: #f2292d;
   font-size: 28rpx;
   font-weight: bold;
+}
+.goods-head .price .tail-price {
+  margin-left: 20rpx;
 }
 .goods-head .pay-time {
   padding-bottom: 20rpx;
@@ -602,10 +604,16 @@ view {
   justify-content: center;
   flex-direction: column;
   color: #fff;
-  font-size: 20rpx;
+  font-size: 30rpx;
   font-weight: bold;
   background: #ff6f73;
   height: 100%;
+}
+.goods-action .earnest-money text {
+  padding: 0 20rpx;
+}
+.goods-action .advsales {
+  font-size: 20rpx;
 }
 .goods-action .pay-deposit {
   width: 250rpx;
@@ -663,9 +671,11 @@ view {
   justify-content: space-around;
 }
 .attr-box .goods-t .goods-right .price {
-  color: #ff2228;
   font-weight: bold;
   font-size: 26rpx;
+}
+.attr-box .goods-t .goods-right .price text {
+  color: #ff2228;
 }
 .attr-box .goods-t .goods-right .title {
   font-weight: bold;
@@ -725,18 +735,16 @@ view {
   color: #fff;
   font-size: 28rpx;
   border-radius: 10rpx;
-  height: 68rpx;
-  width: 150rpx;
+  width: 690rpx;
+  height: 88rpx;
+  line-height: 88rpx;
   text-align: center;
-  line-height: 68rpx;
   background: #ff2228;
-  position: absolute;
-  bottom: 30rpx;
-  right: 30rpx;
+  margin-top: 50rpx;
 }
 .attr-box .prop-fot {
   display: flex;
-  height: 80rpx;
+  height: 88rpx;
   margin-top: 50rpx;
   justify-content: space-between;
 }
@@ -745,7 +753,7 @@ view {
   width: 330rpx;
   border-radius: 100rpx;
   text-align: center;
-  line-height: 80rpx;
+  line-height: 88rpx;
   color: #fff;
   font-weight: bold;
   font-size: 30rpx;
@@ -755,7 +763,7 @@ view {
   width: 330rpx;
   border-radius: 100rpx;
   text-align: center;
-  line-height: 80rpx;
+  line-height: 88rpx;
   color: #fff;
   font-weight: bold;
   font-size: 30rpx;

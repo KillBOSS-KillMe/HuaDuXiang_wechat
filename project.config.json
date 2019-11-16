@@ -79,14 +79,14 @@
 					"id": 4,
 					"name": "普通商品详情",
 					"pathName": "pages/shopDetails",
-					"query": "goods_id=42",
+					"query": "goods_id=55",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 5,
 					"name": "拼团商品详情",
 					"pathName": "pages/assembleShopDetails",
-					"query": "",
+					"query": "goods_id=45",
 					"scene": null
 				},
 				{
@@ -146,10 +146,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 14,
 					"name": "拼团",
 					"pathName": "pages/assemble",
-					"query": "",
+					"query": "goods_id=45",
 					"scene": null
 				},
 				{
@@ -157,6 +157,13 @@
 					"name": "vip",
 					"pathName": "pages/vip",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": 16,
+					"name": "订单详情",
+					"pathName": "pages/orderInfo",
+					"query": "order_id=32",
 					"scene": null
 				}
 			]

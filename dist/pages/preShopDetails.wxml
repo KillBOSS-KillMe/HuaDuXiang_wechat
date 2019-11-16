@@ -26,8 +26,7 @@
         <view class="desc overflow-two">家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货家居日用品生活实用小百货</view>
         <view class="price">
           <view class="present">
-            ￥
-            <text>19</text>
+            ￥<text>19</text>
           </view>
           <view class="pre">预购价</view>
           <view class="ear">定金￥200</view>

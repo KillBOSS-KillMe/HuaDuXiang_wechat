@@ -110,6 +110,7 @@ module.exports = {
   ysGoodsList: URL + "/api/mobile/index.php?w=goods&t=ysGoodsList",
   // 拼团商品列表数据展示。
   pingou: URL + "/api/mobile/index.php?w=pingou&t=index",
-
+  // 获取订单详情页面
+  orderInfo: URL + "/api/mobile/index.php?w=member_order&t=order_info"
 
 }

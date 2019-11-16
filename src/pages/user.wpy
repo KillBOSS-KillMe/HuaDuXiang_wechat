@@ -23,22 +23,22 @@
     </view>
 
     <!-- 我的订单 -->
-    <navigator hover-class="none" url="/pages/orderlist" class="my_order">
-      <view class="my_all">
+    <view class="my_order">
+      <navigator hover-class="none" url="/pages/orderlist"  class="my_all">
         <text>我的订单</text>
         <text class="my_text" bindtap="allOrder">查看全部订单</text>
         <image class="imgright" src="/assets/img/image25.png" />
-      </view>
+      </navigator>
       <!-- 功能区 -->
       <view class="icon_entry">
         <repeat for="{{funList}}" item="item">
-          <view class="iconFun">
+          <view class="iconFun" @tap="orderlist({{index}})">
             <text class="icon_num">{{ item.num }}</text>
             <text class="icon_text">{{ item.funtext }}</text>
           </view>
         </repeat>
       </view>
-    </navigator>
+    </view>
     <!-- 我的服务 -->
     <view class="personal_data">
       <text class="mainorder">我的服务</text>
@@ -133,6 +133,13 @@ export default class ShopCart extends wepy.page {
       wx.makePhoneCall({
         phoneNumber: this.member_serves_tel
       })
+    },
+    orderlist(idx) {
+      if(idx == 3) {
+
+      } else {
+        this.$navigate(`orderlist?idx=${idx+1}`);
+      }
     }
   };
 

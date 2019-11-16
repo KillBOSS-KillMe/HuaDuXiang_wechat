@@ -4,36 +4,41 @@
     <view class="order-top">
       <image src="/assets/img/image51.png">
       <view class="order-state">
-        <text>等待发货</text>
+        {{order_info.state_desc}}
+        <text class="state" wx:if="{{order_info.order_state == 0}}">已取消</text>
+        <text class="state" wx:elif="{{order_info.order_state == 10}}">待支付</text>
+        <text class="state" wx:elif="{{order_info.order_state == 20}}">待发货</text>
+        <text class="state" wx:elif="{{order_info.order_state == 30}}">待收货</text>
+        <text class="state" wx:elif="{{order_info.order_state == 40}}">交易完成</text>
       </view>
     </view>
     <view class="address-wrap">
       <image class="add-img" src="/assets/img/image33.png">
       <view class="address-info">
         <view class="top">
-          <text class="name">乐乐</text>
-          <text  class="phone">1801234567</text>
+          <text class="name">{{order_info.reciver_name}}</text>
+          <text  class="phone">{{order_info.reciver_phone}}</text>
         </view>
-        <view class="address overflow-two">广东省深圳市南山区科兴科学园</view>
+        <view class="address overflow-two">{{order_info.reciver_addr}}</view>
       </view>
       <image class="fot-img" src="/assets/img/image52.png">
     </view>
 
     <view class="goods-h">商品信息</view>
     <view class="goods-wrap">
-      <repeat for="{{2}}" item="item">
+      <repeat for="{{order_info.goods_list}}" item="item">
         <view class="goods-item">
-          <image src="/assets/img/0.jpg" />
+          <image src="{{item.image_url}}" />
           <view class="goods-right">
-            <view class="goods-title overflow-one">{{item.goods_name}}商品名称</view>
+            <view class="goods-title overflow-one">{{item.goods_name}}</view>
             <view class="goods-spec-wrap">
               <view class="goods-spec">
-                规格
+                {{item.goods_spec}}
               </view>
-              <view>×{{item.number}}10</view>
+              <view>×{{item.goods_num}}</view>
             </view>
             <view class="goods-price"> ￥
-              <text>{{item.good_price}}100</text> </view>
+              <text>{{item.goods_price}}</text> </view>
           </view>
         </view>
       </repeat>
@@ -44,11 +49,11 @@
 <view class="com-block">
   <view class="com-list">
     <view class="h">商品合计</view>
-    <view class="p r-color">￥{{order.order_price}}</view>
+    <view class="p r-color">￥{{goods_price}}</view>
   </view>
-  <view class="com-list" wx:if="{{false}}">
+  <view class="com-list">
     <view class="h">运费</view>
-    <view class="p">￥{{order.coupon_price}}</view>
+    <view class="p">￥{{order_info.shipping_fee}}</view>
   </view>
   <view class="com-list" wx:if="{{order.coupon_price}}">
     <view class="h">优惠券</view>
@@ -70,22 +75,22 @@
 <view class="com-block">
   <view class="com-list">
     <view class="h">订单编号</view>
-    <view class="p">{{order.order_id}}</view>
-    <view class="last" data-value="{{order.order_id}}" bindtap="setClipboardData">复制</view>
+    <view class="p">{{order_info.order_sn}}</view>
+    <view class="last" data-value="{{order_info.order_sn}}" bindtap="setClipboardData">复制</view>
   </view>
   <view class="com-list">
     <view class="h">提交时间</view>
-    <view class="p">{{order.create_time}}</view>
+    <view class="p">{{order_info.add_time}}</view>
   </view>
   <view class="com-list">
     <view class="h">支付方式</view>
-    <view class="p">在线支付</view>
+    <view class="p">{{order_info.payment_name}}</view>
   </view>
 </view>
 
 <view class="sub-foot">
   <view>
-    <text>金额￥</text>{{order.pay_price}}100
+    <text>金额￥</text>{{order_info.real_pay_amount}}
   </view>
   <!-- 1 待付款 -->
   <view class="goods-option" wx:if="{{true}}">
@@ -131,14 +136,33 @@ export default class Index extends wepy.page {
   mixins = [];
 
   data = {
-    requestImgUrl: ''
+    requestImgUrl: '',
+    order_info: '',
+    goods_price: 0,
   };
 
   computed = {};
 
   events = {};
 
-  onLoad(options) {}
+  onLoad(options) {
+    this.order_id = options.order_id
+    ajax({
+      url: api.orderInfo,
+      data: {
+        order_id: options.order_id
+      }
+    }).then(res => {
+      this.order_info = res.datas.order_info
+      var goods_price = res.datas.order_info.goods_list.reduce((prev, next) => {
+        var price = Number(next.goods_price)
+        var num = Number(next.goods_num)
+        return prev + price*num
+      }, 0)
+      this.goods_price = goods_price.toFixed(2)
+      this.$apply()
+    })
+  }
   onShow() {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
   }

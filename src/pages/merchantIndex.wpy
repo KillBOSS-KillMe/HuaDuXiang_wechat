@@ -37,10 +37,10 @@
     <view class="type-wrap" wx:if="{{navIdx == 1}}">
         <repeat for="{{store_goods_class}}" item="item">
           <view class="type-one-item">
-            <view class="type-h">{{item.name}}</view>
+            <view class="type-h"  @tap="navGoodsList({{item.id}})">{{item.name}}</view>
               <view class="type-list">  
                 <repeat for="{{item.sun}}" item="ele" index="idx">
-                    <view class="type-two-item" @tap="navGoodsList({{ele.pid}}, {{ele.id}})">{{ele.new_name}}</view>
+                    <view class="type-two-item" @tap="navGoodsList({{ele.id}})">{{ele.new_name}}</view>
                 </repeat>
               </view>
           </view>
@@ -69,7 +69,8 @@ export default class ShopCart extends wepy.page {
     store_info: null, // 店铺信息
     rec_goods_list: [], //商品列表
     navIdx: 0,
-    store_goods_class: [] //店铺分类
+    store_goods_class: [], //店铺分类
+    store_id: null
   };
 
   computed = {};
@@ -82,8 +83,8 @@ export default class ShopCart extends wepy.page {
       if(idx == this.navIdx) return false
       this.navIdx = idx
     },
-    navGoodsList(pid, id){
-      this.$navigate({ url: `goodsList?g_id=${id}` });
+    navGoodsList(id){
+      this.$navigate({ url: `goodsList?sid=${id}&store_id=${this.store_id}` });
     },
     back(){
       wx.navigateBack()
@@ -97,8 +98,8 @@ export default class ShopCart extends wepy.page {
 
   onLoad(t) {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
-
     console.log(t, '店铺id')
+    this.store_id = t.store_id
     // 店铺首页接口
     ajax({
       url: api.storeIndex,
@@ -107,7 +108,6 @@ export default class ShopCart extends wepy.page {
       }
     }).then(res => {
       if(res.code == 200) {
-        console.log(res.datas)
         this.store_info = res.datas.store_info
         this.rec_goods_list = res.datas.rec_goods_list || []
         this.$apply()

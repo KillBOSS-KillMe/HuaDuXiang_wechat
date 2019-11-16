@@ -37,10 +37,10 @@
     <view class="type-wrap"  wx:if="{{navIdx == 1}}">
         <block wx:for="{{store_goods_class}}" wx:for-index="index" wx:for-item="item" wx:key="key">
           <view class="type-one-item">
-            <view class="type-h">{{item.name}}</view>
+            <view class="type-h" bindtap="navGoodsList" data-wpynavgoodslist-a="{{item.id}}">{{item.name}}</view>
               <view class="type-list">  
                 <block wx:for="{{item.sun}}" wx:for-index="idx" wx:for-item="ele" wx:key="key">
-                    <view class="type-two-item" bindtap="navGoodsList" data-wpynavgoodslist-a="{{ele.pid}}" data-wpynavgoodslist-b="{{ele.id}}">{{ele.new_name}}</view>
+                    <view class="type-two-item" bindtap="navGoodsList" data-wpynavgoodslist-a="{{ele.id}}">{{ele.new_name}}</view>
                 </block>
               </view>
           </view>

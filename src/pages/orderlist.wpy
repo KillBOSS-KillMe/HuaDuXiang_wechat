@@ -3,8 +3,8 @@
     <view class="coupon-nav">
       <repeat for="{{navArr}}" item="item">
         <view
-          class="coupon-nav-item {{item.id == navIdx ? 'nav-active' : '' }}"
-          bindtap="changeNav"
+          class="coupon-nav-item {{index == navIdx ? 'nav-active' : '' }}"
+          bindtap="changeNav({{index}})"
         >{{item.title}}</view>
       </repeat>
     </view>
@@ -99,6 +99,11 @@
         </view>
       </repeat>
     </view>
+
+     <view class="none-content" wx:if="{{page_total == 0}}">
+      <image src="/assets/img/image48.png"/>
+      <navigator url="/pages/index" hover-class="none" open-type="reLaunch" class="go">去选购</navigator>
+    </view>
   </view>
 </template>
 
@@ -126,7 +131,11 @@ export default class ShopCart extends wepy.page {
       { title: '已完成' }
     ],
     navIdx: 0,
-    orderList: []
+    orderList: [],
+    state_arr:['','state_new','state_pay','state_send','state_noeval'] ,
+    curpage: 1,
+    hasmore: false,
+    page_total: '',
   };
 
   computed = {};
@@ -238,18 +247,29 @@ export default class ShopCart extends wepy.page {
           complete(d) {console.log(d)}
         })
       }
+    },
+    changeNav(idx) {
+      if(idx == this.navIdx) return
+      this.navIdx = idx
+      this.hasmore = false
+      this.curpage = 1
+      this.orderList = []
+      this.requestList()
     }
   };
-  onLoad() {}
-  onShow() {
+  onLoad(t) {
+    this.navIdx = t.idx || 0
     this.requestList()
+  }
+  onShow() {
   }
   requestList(){
     ajax({
       url: api.orderList,
       data: {
-        page: 3, // 
-        curpage: 1  // 当前页码
+        page: 10, // 
+        curpage: this.curpage,  // 当前页码
+        state_type: this.state_arr[this.navIdx]
       }
     }).then(res => {
       var order_group_list = res.datas.order_group_list || []
@@ -257,9 +277,18 @@ export default class ShopCart extends wepy.page {
       order_group_list.forEach(item => {
         order_list = order_list.concat(item.order_list)
       })
-      this.orderList = order_list
+      this.orderList = this.orderList.concat(order_list)
+
+      this.page_total = res.page_total
+      this.hasmore = res.hasmore
       this.$apply()
     })
+  }
+  onReachBottom () {
+    if(this.hasmore) {
+      this.curpage ++ 
+      this.requestList()
+    }
   }
 
   events = {};
@@ -443,5 +472,22 @@ export default class ShopCart extends wepy.page {
 .should-price .text {
   color: #f2292d;
   padding-left: 10rpx;
+}
+.none-content {
+  text-align: center;
+  image {
+    width: 500rpx;
+    height: 500rpx;
+  }
+  .go{
+    height: 80rpx;
+    border-radius: 50rpx;
+    width: 300rpx;
+    line-height: 80rpx;
+    border: 1px solid #FF2228;
+    font-size: 30rpx;
+    color: #FF2228;
+    margin: 0 auto;
+  }
 }
 </style>

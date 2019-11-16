@@ -2,7 +2,7 @@
   <view class="contract">
     <view class="coupon-nav">
       <block wx:for="{{navArr}}" wx:for-index="index" wx:for-item="item" wx:key="key">
-        <view class="coupon-nav-item {{item.id == navIdx ? 'nav-active' : '' }}" bindtap="changeNav">{{item.title}}</view>
+        <view class="coupon-nav-item {{index == navIdx ? 'nav-active' : '' }}" bindtap="changeNav" data-wpychangenav-a="{{index}}">{{item.title}}</view>
       </block>
     </view>
     <view class="goods-wrap">
@@ -79,5 +79,10 @@
           </view>
         </view>
       </block>
+    </view>
+
+     <view class="none-content" wx:if="{{page_total == 0}}">
+      <image src="/assets/img/image48.png"/>
+      <navigator url="/pages/index" hover-class="none" open-type="reLaunch" class="go">去选购</navigator>
     </view>
   </view>

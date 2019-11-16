@@ -25,13 +25,30 @@
           </button>
         </view>
         <view class="desc overflow-two">{{goods_content.goods_jingle}}</view>
-        <view class="price">
+        <!-- 普通 -->
+        <view class="price" wx:if="{{sale_type == 'common'}}">
           <view class="present">
-            ￥
-            <text>{{goods_content.goods_price}}</text>
+            ￥<text>{{goods_content.goods_price}}</text>
           </view>
-          <!-- <view class="pre">预购价</view>
-          <view class="ear">定金￥200</view>-->
+        </view>
+        <!-- 拼团 -->
+        <view class="price" wx:if="{{sale_type == 'group'}}">
+          <view class="present">
+            拼团价：￥<text>{{goods_content.pingou_price}}</text>
+          </view>
+        </view>
+        <!-- 预购 -->
+        <view class="price" wx:if="{{sale_type == 'advsales'}}">
+          <view class="pre" wx:if="{{goods_content.is_presell == 1}}">预购价</view>
+          <view class="present" wx:if="{{goods_content.is_presell == 1}}">
+            ￥<text>{{goods_content.goods_price}}</text>
+          </view>
+          <view class="ear" wx:if="{{goods_content.is_book == 1}}">定金￥{{goods_content.book_down_payment}}</view>
+          <view class="tail-price" wx:if="{{goods_content.is_book == 1}}">尾款￥{{goods_content.book_final_payment}}</view>
+        </view>
+        <view class="pay-time" wx:if="{{sale_type == 'advsales'}}">
+          <text wx:if="{{goods_content.is_book == 1}}">支付尾款时间：2019.08.22 00:00~2019.08.23 00:00</text>
+          <text wx:if="{{goods_content.is_presell == 1}}">支付后5天内发货</text>
         </view>
       </view>
 
@@ -94,8 +111,8 @@
        <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
       </view>
     </view>
-    <!-- 底部商品导航 -->
-    <view class="goods-action">
+    <!-- 普通底部商品导航 -->
+    <view class="goods-action" wx:if="{{sale_type == 'common'}}">
       <button open-type="contact" class="contact-btn">
         <image src="/assets/img/image28.png"/>
         <text>客服</text>
@@ -107,6 +124,41 @@
       <view class="add-cart" bindtap="showAttrMask">加入购物车</view>
       <view class="purchase" bindtap="showAttrMask">立即购买</view>
     </view>
+    <!-- 拼团底部商品导航 -->
+    <view class="goods-action" wx:if="{{sale_type == 'group'}}">
+      <button open-type="contact" class="contact-btn">
+        <image src="/assets/img/image28.png"/>
+        <text>客服</text>
+      </button>
+      <navigator class="cart-nav" url="/pages/shopCar">
+        <image src="/assets/img/image29.png"/>
+        <text>购物车</text>
+      </navigator>
+      <view class="buy" bindtap="showAttrMask">发起拼单({{goods_content.pingou_price}})</view>
+    </view>
+    <!-- 预购底部商品导航 -->
+    <view class="goods-action" wx:if="{{sale_type == 'advsales'}}">
+      <button open-type="contact" class="contact-btn">
+        <image src="/assets/img/image28.png"/>
+        <text>客服</text>
+      </button>
+      <navigator class="cart-nav" url="/pages/shopCar">
+        <image src="/assets/img/image29.png"/>
+        <text>购物车</text>
+      </navigator>
+      <view class="earnest-money advsales">
+        <text wx:if="{{goods_content.is_book == 1}}">支付尾款时间：2019.08.23 00:00</text>
+        <text wx:if="{{goods_content.is_presell == 1}}">支付后5天内发货</text>
+      </view>
+      <view class="pay-deposit" wx:if="{{goods_content.is_book == 1}}" bindtap="showAttrMask">
+        <text>立即付定金</text>
+        <text>￥{{goods_content.book_down_payment}}</text>
+      </view>
+      <view class="pay-deposit" wx:if="{{goods_content.is_presell == 1}}" bindtap="showAttrMask">
+        <text>立即付款</text>
+      </view>
+    </view>
+
     <!-- 选择商品弹框 -->
     
   <view class="list">
@@ -118,7 +170,12 @@
           <image class="goods-img" src="{{requestImgUrl + image_list[0]._big}}"/>
           <view class="goods-right">
             <view class="title overflow-one">{{goods_content.goods_name}}</view>
-            <view class="price">{{goods_content.goods_price}}</view>
+            <view class="price" wx:if="{{sale_type == 'common'}}"><text>{{goods_content.goods_price}}</text></view>
+            <view class="price" wx:if="{{sale_type == 'group'}}"> <text>{{goods_content.pingou_price}}</text>  </view>
+            <view class="price" wx:if="{{sale_type == 'advsales'}}">
+              <text wx:if="{{goods_content.is_book == 1}}">定金{{goods_content.book_down_payment}}</text>
+              <text wx:if="{{goods_content.is_presell == 1}}">{{goods_content.goods_price}}</text>
+            </view>
             <view class="attr">
               <view>
                  <block wx:key="key" wx:for="{{goods_spec}}" wx:for-index="index" wx:for-item="item">{{item}}</block>
@@ -150,10 +207,12 @@
             </view>
           </view>
         </view>
-        <view class="prop-fot">
+        <view class="prop-fot" wx:if="{{sale_type == 'common'}}">
           <view class="add-cart" catchtap="addCart">加入购物车</view>
           <view class="purchase" bindtap="attrBtnSubmit">立即购买</view>
         </view>
+        <view class="prop-btn" wx:if="{{sale_type == 'group'}}" bindtap="attrBtnSubmit">发起拼团({{goods_content.pingou_min_num}}人团)</view>
+        <view class="prop-btn" wx:if="{{sale_type == 'advsales'}}" bindtap="attrBtnSubmit">确定</view>
       </view>
     
     </view>
