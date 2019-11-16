@@ -70,7 +70,7 @@
             </view>
           </repeat>
         </view>
-        <view class="btn">充值</view>
+        <view class="btn" bindtap="recharge">充值</view>
       </view>
     </vipmask>
   </view>
@@ -127,7 +127,7 @@ export default class Index extends wepy.page {
     member_info: null,
     member_data: null,
     vipFlag: false,
-    priceArr: [10,50,100,200,500, 1000],
+    priceArr: [],
     price: '',
     priceActive: null,
   };
@@ -162,6 +162,7 @@ export default class Index extends wepy.page {
             this.bgImg = 'image34.png';
             break;
         }
+        this.priceArr = res.datas.pay_amount
         this.$apply()
       }
     })
@@ -181,6 +182,56 @@ export default class Index extends wepy.page {
     },
     showVipFlag(e) {
       this.vipFlag = true
+    },
+    async recharge() {
+      if(!this.price) {
+        wx.showToast({
+          title: '请输入充值金额',
+          icon: 'none'
+        })
+        return false
+      }
+      var resData =  await ajax({
+        url: api.recharge,
+        data: {
+          pdr_amount: this.price
+        }
+      }).then(res=> {
+        if(res.code == 200) {
+          return res.datas
+        } else if(res.code == 400) {
+          wx.showToast({
+            title: res.datas.error,
+            icon: 'none'
+          })
+        }
+      })
+      if(!resData) return
+      var payData = await ajax({
+        url: api.memberPaymentRecharge,
+        data: {
+          payment_code: 'mini_wxpay',
+          pay_sn: resData.pdinfo.pdr_sn
+        }
+      }).then(res => {
+        if(res.datas.state == 1) {
+          return res.datas
+        }else if(res.code == 400) {
+          wx.showToast({
+            title: res.datas.error,
+            icon: 'none'
+          })
+        }
+      })
+      if(payData) {
+        wx.requestPayment({
+          ...payData.api_pay,
+          success(res) {
+            console.log(res)
+          },
+          complete(d) {console.log(d)}
+        })
+      }
     }
   };
 }

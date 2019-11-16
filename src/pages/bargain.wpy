@@ -296,6 +296,23 @@
     }
   }
 }
+.none-content {
+  text-align: center;
+  image {
+    width: 500rpx;
+    height: 500rpx;
+  }
+  .go{
+    height: 80rpx;
+    border-radius: 50rpx;
+    width: 300rpx;
+    line-height: 80rpx;
+    border: 1px solid #FF2228;
+    font-size: 30rpx;
+    color: #FF2228;
+    margin: 0 auto;
+  }
+}
 </style>
 <template>
   <view class="wrap">
@@ -391,6 +408,11 @@
         </view>
       </view>
     </sharesmask>
+
+    <view class="none-content" wx:if="{{state == 0}}">
+      <image src="/assets/img/image48.png"/>
+      <navigator url="/pages/index" hover-class="none" open-type="reLaunch" class="go">去选购</navigator>
+    </view>
   </view>
 </template>
 
@@ -428,8 +450,10 @@ export default class Index extends wepy.page {
     spec_list: {}, // 所有属性对应的商品goods_id
     image_list: [], // 商品轮播图
     goods_content: '',
-    address: ''
-
+    address: '',
+    curpage: 1, //当前页数
+    hasmore: false, //是否有下一页
+    state: '', // 没有数据
   };
 
   computed = {};
@@ -437,8 +461,6 @@ export default class Index extends wepy.page {
     var app = this.$parent;
     var address = app.globalData.address
     this.address = address
-    console.log(address)
-    
   }
   methods = {
     addressBtnSubmit() {
@@ -516,12 +538,7 @@ export default class Index extends wepy.page {
 
   onLoad() {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
-    ajax({
-      url: api.bargainGoodsList
-    }).then(res => {
-      this.barginData = res.datas.list
-      this.$apply()
-    })
+    this.bargainGoodsList()
 
     ajax({
       url: api.memberKj,
@@ -529,8 +546,27 @@ export default class Index extends wepy.page {
       this.topImg = res.datas.img_area
       this.$apply()
     })
-
-   
   }
+  bargainGoodsList() {
+    ajax({
+      url: api.bargainGoodsList,
+      data: {
+        page: 10,
+        curpage: this.curpage
+      }
+    }).then(res => {
+      this.barginData = res.datas.list
+
+      this.hasmore = res.datas.hasmore
+      this.hasmore = res.datas.state
+      this.$apply()
+    })
+  }
+  onReachBottom () {
+    if(this.hasmore) {
+      this.curpage ++ 
+      this.requestIndexGoodsList()
+    }
+  }  
 }
 </script>

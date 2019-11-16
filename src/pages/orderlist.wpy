@@ -59,14 +59,14 @@
                   @tap="orderDelete({{item.order_id}}, {{index}})"
                 >删除订单</view>
               </view>
-              <!-- 1 待付款 -->
+              <!-- 10 待付款 -->
               <view class="goods-option" wx:if="{{item.order_state == 10}}">
                 <view class="goods-btn" @tap="orderCancel({{item.order_id}}, {{index}})">
                   取消订单
                 </view>
-                <view class="goods-btn color-y" data-order_id="{{item.order_id}}" @tap="pay({{item.order_id}}, {{index}})">立即付款</view>
+                <view class="goods-btn color-y" data-order_id="{{item.order_id}}" @tap="pay({{item.order_id}}, {{index}}, {{item.pay_sn}})">立即付款</view>
               </view>
-              <!-- 2 待发货   -->
+              <!-- 20 待发货   -->
               <view class="goods-option" wx:elif="{{item.order_state == 20}}">
                 <view class="goods-btn color-y">
                   <navigator
@@ -75,7 +75,7 @@
                   >申请退款</navigator>
                 </view>
               </view>
-              <!-- 3 已发货/待收货 -->
+              <!-- 30 已发货/待收货 -->
               <view class="goods-option" wx:elif="{{item.order_state == 30}}">
                 <view class="goods-btn">
                   <navigator
@@ -87,7 +87,7 @@
                 </view>
                 <view class="goods-btn" @tap="orderReceive({{item.order_id}},{{index}})">确认收货</view>
               </view>
-              <!-- 4 已完成 -->
+              <!-- 40 已完成 -->
               <view class="goods-option" wx:elif="{{item.order_state == 40}}">
                 <view
                   class="goods-btn"
@@ -100,7 +100,7 @@
       </repeat>
     </view>
 
-     <view class="none-content" wx:if="{{page_total == 0}}">
+    <view class="none-content" wx:if="{{page_total == 0}}">
       <image src="/assets/img/image48.png"/>
       <navigator url="/pages/index" hover-class="none" open-type="reLaunch" class="go">去选购</navigator>
     </view>
@@ -228,11 +228,11 @@ export default class ShopCart extends wepy.page {
         }
       })
     },
-    async pay(order_id, index) {
+    async pay(order_id, index, pay_sn) {
       var resData = await ajax({
         url: api.pay,
         data: {
-          pay_sn: '900626631146390007',
+          pay_sn: pay_sn,
           payment_code: 'mini_wxpay'
         }
       })

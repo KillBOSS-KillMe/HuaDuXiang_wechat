@@ -111,6 +111,10 @@ module.exports = {
   // 拼团商品列表数据展示。
   pingou: URL + "/api/mobile/index.php?w=pingou&t=index",
   // 获取订单详情页面
-  orderInfo: URL + "/api/mobile/index.php?w=member_order&t=order_info"
+  orderInfo: URL + "/api/mobile/index.php?w=member_order&t=order_info",
+  // 用户充值吊起支付信息
+  memberPaymentRecharge: URL + "/api/mobile/index.php?w=member_payment_recharge&t=pd_pay",
+  // 用户发起充值接口。
+  recharge: URL + "/api/mobile/index.php?w=recharge&t=index",
 
 }

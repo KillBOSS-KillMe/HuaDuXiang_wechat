@@ -49,20 +49,20 @@
               <view class="goods-option" wx:if="{{item.order_state == 0}}">
                  <view class="goods-btn" bindtap="orderDelete" data-wpyorderdelete-a="{{item.order_id}}" data-wpyorderdelete-b="{{index}}">删除订单</view>
               </view>
-              <!-- 1 待付款 -->
+              <!-- 10 待付款 -->
               <view class="goods-option" wx:if="{{item.order_state == 10}}">
                 <view class="goods-btn" bindtap="orderCancel" data-wpyordercancel-a="{{item.order_id}}" data-wpyordercancel-b="{{index}}">
                   取消订单
                 </view>
-                <view class="goods-btn color-y" data-order_id="{{item.order_id}}" bindtap="pay" data-wpypay-a="{{item.order_id}}" data-wpypay-b="{{index}}">立即付款</view>
+                <view class="goods-btn color-y" data-order_id="{{item.order_id}}" bindtap="pay" data-wpypay-a="{{item.order_id}}" data-wpypay-b="{{index}}" data-wpypay-c="{{item.pay_sn}}">立即付款</view>
               </view>
-              <!-- 2 待发货   -->
+              <!-- 20 待发货   -->
               <view class="goods-option" wx:elif="{{item.order_state == 20}}">
                 <view class="goods-btn color-y">
                   <navigator url="/pages/order-track/order-track?order_id={{item.order_id}}" hover-class="none">申请退款</navigator>
                 </view>
               </view>
-              <!-- 3 已发货/待收货 -->
+              <!-- 30 已发货/待收货 -->
               <view class="goods-option" wx:elif="{{item.order_state == 30}}">
                 <view class="goods-btn">
                   <navigator url="/pages/logistics?order_id={{item.order_id}}" hover-class="none">
@@ -71,7 +71,7 @@
                 </view>
                 <view class="goods-btn" bindtap="orderReceive" data-wpyorderreceive-a="{{item.order_id}}" data-wpyorderreceive-b="{{index}}">确认收货</view>
               </view>
-              <!-- 4 已完成 -->
+              <!-- 40 已完成 -->
               <view class="goods-option" wx:elif="{{item.order_state == 40}}">
                 <view class="goods-btn" bindtap="orderDelete" data-wpyorderdelete-a="{{item.order_id}}" data-wpyorderdelete-b="{{index}}">删除订单</view>
               </view>
@@ -81,7 +81,7 @@
       </block>
     </view>
 
-     <view class="none-content" wx:if="{{page_total == 0}}">
+    <view class="none-content" wx:if="{{page_total == 0}}">
       <image src="/assets/img/image48.png"/>
       <navigator url="/pages/index" hover-class="none" open-type="reLaunch" class="go">去选购</navigator>
     </view>

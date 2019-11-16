@@ -467,9 +467,7 @@ export default class Index extends wepy.page {
     });
   }
 
-  onShow() {
-    
-  }
+  onShow() {}
 
   methods = {
     // 余额支付密码回调

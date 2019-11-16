@@ -105,4 +105,9 @@
     </view>
   </view>
 
+
+    <view class="none-content"  wx:if="{{state == 0}}">
+      <image src="/assets/img/image48.png"/>
+      <navigator url="/pages/index" hover-class="none" open-type="reLaunch" class="go">去选购</navigator>
+    </view>
   </view>

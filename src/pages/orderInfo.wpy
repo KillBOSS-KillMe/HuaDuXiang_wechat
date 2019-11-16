@@ -76,7 +76,7 @@
   <view class="com-list">
     <view class="h">订单编号</view>
     <view class="p">{{order_info.order_sn}}</view>
-    <view class="last" data-value="{{order_info.order_sn}}" bindtap="setClipboardData">复制</view>
+    <view class="last" data-value="{{order_info.order_sn}}" bindtap="setClipboardData({{order_info.order_sn}})">复制</view>
   </view>
   <view class="com-list">
     <view class="h">提交时间</view>
@@ -92,30 +92,12 @@
   <view>
     <text>金额￥</text>{{order_info.real_pay_amount}}
   </view>
-  <!-- 1 待付款 -->
-  <view class="goods-option" wx:if="{{true}}">
-    <view bindtap="showBlock">取消订单</view>
-    <view bindtap="pay" data-order_id='{{order.order_id}}'>付款</view>
-  </view>
-  <!-- 2 待发货   -->
-  <!-- 3 已发货/待收货 -->
-  <view class="goods-option" wx:if="{{order.order_status == 3}}">
-    <view class="goods-btn">
-      <navigator url="/pages/order-track/order-track?order_id={{order.order_id}}" hover-class="none">查看物流</navigator>
-    </view>
-    <view class="goods-btn"  bindtap="myReceipt" data-order_id="{{order.order_id}}">确认收货</view>
-  </view>
-  <!-- 4 已完成/已评价 -->
-  <view class="goods-option" wx:if="{{order.order_status == 4}}">
-    <view class="goods-btn">
-      <navigator url="/pages/eval-details/eval-details" hover-class="none">查看评价</navigator>
-    </view>
-  </view>
-  <!-- 8 已收货/待评价 -->
-  <view class="goods-option" wx:if="{{order.order_status == 8}}">
-    <view class="goods-btn">
-      <navigator url="/pages/evaluation/evaluation" hover-class="none">评价商品</navigator>
-    </view>
+  <view class="goods-option">
+    <view wx:if="{{order_info.if_buyer_cancel}}" bindtap="orderCancel">取消订单</view>
+    <view wx:if="{{order_info.if_deliver}}">查看物流</view>
+    <view wx:if="{{order_info.if_refund_cancel}}">退款</view>
+    <view wx:if="{{order_info.if_receive}}">收货</view>
+    <view bindtap="pay">付款</view>
   </view>
 </view>
 
@@ -160,13 +142,134 @@ export default class Index extends wepy.page {
         return prev + price*num
       }, 0)
       this.goods_price = goods_price.toFixed(2)
+
+      console.log(res.datas.order_info.if_buyer_cancel)
       this.$apply()
     })
   }
   onShow() {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
   }
-  methods = {};
+  methods = {
+    orderCancel(){
+      var that = this
+      wx.showModal({
+        title: '确认取消订单?',
+        success(res) {
+          if(res.confirm) {
+            ajax({
+              url: api.orderCancel,
+              data: {
+                order_id: that.order_id
+              }
+            }).then(e => {
+              if(e.datas.state == 1) {
+                wx.showToast({
+                  title: e.datas.msg
+                })
+                var timer = setTimeout(() => {
+                  wx.navigateBack()
+                  clearTimeout(timer)
+                }, 2000)
+              } else {
+                wx.showToast({
+                  title: e.datas.error,
+                  icon: 'none'
+                })
+              }
+            })
+          }
+        }
+      })
+    },
+    orderDelete(){
+      var that = this
+      wx.showModal({
+        title: '确认删除订单?',
+        success(res) {
+          if(res.confirm) {
+            ajax({
+              url: api.orderDelete,
+              data: {
+                order_id: that.order_id
+              }
+            }).then(e => {
+              if(e.datas.state == 1) {
+                wx.showToast({
+                  title: e.datas.msg
+                })
+                var timer = setTimeout(() => {
+                  wx.navigateBack()
+                  clearTimeout(timer)
+                }, 2000)
+              } else {
+                wx.showToast({
+                  title: e.datas.error,
+                  icon: 'none'
+                })
+              }
+            })
+          }
+        }
+      })
+    },
+    orderReceive(){
+      var that = this
+      wx.showModal({
+        title: '确认收货?',
+        success(res) {
+          if(res.confirm) {
+            ajax({
+              url: api.orderReceive,
+              data: {
+                order_id: that.order_id
+              }
+            }).then(e => {
+              if(e.datas.state == 1) {
+                wx.showToast({
+                  title: e.datas.msg
+                })
+                var timer = setTimeout(() => {
+                  wx.navigateBack()
+                  clearTimeout(timer)
+                }, 2000)
+              } else {
+                wx.showToast({
+                  title: e.datas.error,
+                  icon: 'none'
+                })
+              }
+            })
+          }
+        }
+      })
+    },
+    async pay() {
+      var resData = await ajax({
+        url: api.pay,
+        data: {
+          pay_sn: '900626631146390007',
+          payment_code: 'mini_wxpay'
+        }
+      })
+
+      if(resData.datas.state == 1) {
+        var api_pay = resData.datas.api_pay
+        wx.requestPayment({
+          ...api_pay,
+          success(res) {
+            console.log(res)
+          },
+          complete(d) {console.log(d)}
+        })
+      }
+    },
+    setClipboardData(num) {
+      wx.setClipboardData({
+        data: num
+      })
+    }
+  };
 }
 </script>
 <style lang="less">
