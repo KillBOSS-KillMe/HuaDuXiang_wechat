@@ -305,7 +305,7 @@
       <view class="saleShopWrap">
         <view class="saleShop">
           <repeat for="{{goods_list_yushou}}" item="item">
-            <navigator url="/pages/preShopDetails?goods_id={{item.goods_id}}" hover-class="none" class="shopview">
+            <navigator url="/pages/shopDetails?goods_id={{item.goods_id}}" hover-class="none" class="shopview">
               <image src="{{requestImgUrl + item.goods_image_url}}" />
               <view class="saleTag">
                 <text class="overflow-one">{{item.goods_name}}</text>
@@ -330,7 +330,7 @@
       <view class="saleShopWrap">
         <view class="saleShop">
           <repeat for="{{goods_list}}" item="item">
-            <view class="shopview" @tap="jumpDetails({{item.goods_id}}, {{item.goods_sale_type}})">
+            <view class="shopview" @tap="jumpDetails({{item.goods_id}}, {{item.sale_type}})">
               <image src="{{requestImgUrl + item.goods_image_url}}" />
               <view class="saleTag">
                 <text class="overflow-one">{{item.goods_name}}</text>
@@ -495,8 +495,12 @@ export default class Index extends wepy.page {
       console.log(url)
       this.$navigate({url: url})
     },
-    jumpDetails(goods_id, goods_type) {
-      this.$navigate(`/pages/shopDetails?goods_id=${goods_id}`);
+    jumpDetails(goods_id, sale_type) {
+      if(sale_type == 'rushsales') {
+        this.$navigate(`/pages/seckillShopDetails?goods_id=${goods_id}`);
+      } else {
+        this.$navigate(`/pages/shopDetails?goods_id=${goods_id}`);
+      }
     },
     navSearch() {
       this.$navigate('/pages/search');

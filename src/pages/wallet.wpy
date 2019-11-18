@@ -1,0 +1,159 @@
+<style lang="less">
+.wallet-wrap {
+  .wallet-title {
+    font-size: 34rpx;
+    color: #333;
+    font-weight: bold;
+    padding: 30rpx;
+  }
+  .wallet-price {
+    display: flex;
+    justify-content: space-between;
+    padding: 20rpx 30rpx 80rpx;
+    .price {
+      font-weight: bold;
+      font-size: 50rpx;
+      text-align: center;
+      text {
+        font-size: 34rpx;
+      }
+    }
+    .btn {
+      width: 140rpx;
+      height: 66rpx;
+      line-height: 66rpx;
+      background: #ff2228;
+      border-radius: 10rpx;
+      text-align: center;
+      font-size: 30rpx;
+      color: #fff;
+      font-weight: bold;
+    }
+  }
+  .detailed {
+    border-top: 20rpx solid #f3f3f3;
+    .title {
+      height: 100rpx;
+      line-height: 100rpx;
+      text-align: center;
+      font-size: 30rpx;
+      color: #333;
+      font-weight: bold;
+    }
+    .deta-list {
+      border-top: 1px solid #ececec;
+      padding: 20rpx 30rpx;
+      .deta-item {
+        height: 118rpx;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .top {
+        display: flex;
+        justify-content: space-between;
+        .h {
+          font-weight: bold;
+          font-size: 32rpx;
+          color: #222;
+        }
+        .price {
+          font-weight: bold;
+          color: #ff2228;
+          font-size: 36rpx;
+        }
+      }
+      .fot {
+        display: flex;
+        justify-content: space-between;
+        font-size: 24rpx;
+        color: #898989;
+        padding-top: 10rpx;
+      }
+    }
+  }
+}
+.wallet-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 999;
+  transform: translate3d(-50%,-50%,0);
+  width: 690rpx;
+  height: 690rpx;
+  padding: 30rpx;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 10rpx;
+
+}
+</style>
+
+<template>
+  <view class="wallet-wrap">
+    <view class="wallet-title">余额</view>
+    <view class="wallet-price">
+      <view class="price">
+        <text>￥</text>5400
+      </view>
+      <view class="btn" @tap="showMask">提现</view>
+    </view>
+    <view class="detailed">
+      <view class="title">收支明细</view>
+      <view class="deta-list">
+        <repeat for="{{3}}" item="item">
+          <view class="deta-item">
+            <view class="top">
+              <view class="h">充值</view>
+              <view class="price">+￥60</view>
+            </view>
+            <view class="fot">
+              <view class="time">2019.12.21 12:23</view>
+              <view class="price">￥1200</view>
+            </view>
+          </view>
+        </repeat>
+      </view>
+    </view>
+
+    <mask :maskFlag.sync="maskFlag">
+      <view class="wallet-box">
+        提现金额
+        收款银行
+        收款账号
+        开户人姓名
+        支付密码
+      </view>
+    </mask>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import mask from '../components/mask';
+
+export default class ShopCart extends wepy.page {
+  config = {
+    navigationBarTitleText: '我的钱包'
+  };
+  components = { mask };
+  mixins = [];
+
+  data = {
+    maskFlag: true,
+    requestImgUrl: ''
+  };
+  computed = {};
+  methods = {
+    showMask() {
+      this.maskFlag = true
+    }
+  };
+  onLoad() {}
+  onShow() {
+    this.requestImgUrl = this.$parent.globalData.requestImgUrl;
+  }
+
+  events = {};
+}
+</script>

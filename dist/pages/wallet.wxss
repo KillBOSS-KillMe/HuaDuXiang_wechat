@@ -1,0 +1,86 @@
+@import "./../components/mask.wxss";
+.wallet-wrap .wallet-title {
+  font-size: 34rpx;
+  color: #333;
+  font-weight: bold;
+  padding: 30rpx;
+}
+.wallet-wrap .wallet-price {
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx 30rpx 80rpx;
+}
+.wallet-wrap .wallet-price .price {
+  font-weight: bold;
+  font-size: 50rpx;
+  text-align: center;
+}
+.wallet-wrap .wallet-price .price text {
+  font-size: 34rpx;
+}
+.wallet-wrap .wallet-price .btn {
+  width: 140rpx;
+  height: 66rpx;
+  line-height: 66rpx;
+  background: #ff2228;
+  border-radius: 10rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #fff;
+  font-weight: bold;
+}
+.wallet-wrap .detailed {
+  border-top: 20rpx solid #f3f3f3;
+}
+.wallet-wrap .detailed .title {
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #333;
+  font-weight: bold;
+}
+.wallet-wrap .detailed .deta-list {
+  border-top: 1px solid #ececec;
+  padding: 20rpx 30rpx;
+}
+.wallet-wrap .detailed .deta-list .deta-item {
+  height: 118rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.wallet-wrap .detailed .deta-list .top {
+  display: flex;
+  justify-content: space-between;
+}
+.wallet-wrap .detailed .deta-list .top .h {
+  font-weight: bold;
+  font-size: 32rpx;
+  color: #222;
+}
+.wallet-wrap .detailed .deta-list .top .price {
+  font-weight: bold;
+  color: #ff2228;
+  font-size: 36rpx;
+}
+.wallet-wrap .detailed .deta-list .fot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24rpx;
+  color: #898989;
+  padding-top: 10rpx;
+}
+.wallet-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 999;
+  transform: translate3d(-50%, -50%, 0);
+  width: 690rpx;
+  height: 690rpx;
+  padding: 30rpx;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 10rpx;
+}

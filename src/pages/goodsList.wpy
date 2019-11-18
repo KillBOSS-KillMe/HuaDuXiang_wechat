@@ -75,22 +75,11 @@ export default class Index extends wepy.page {
   methods = {
     navShopDetails(goods_id, sale_type) {
       //common普通，rushsale秒杀，group团购，advsales预售，freesales砍价
-      if(sale_type == 'common') {
-        this.$navigate(`shopDetails?goods_id=${goods_id}&sale_type=${sale_type}`);
-      }
       if(sale_type == 'rushsales') {
-        this.$navigate(`seckillShopDetails?goods_id=${goods_id}&sale_type=${sale_type}`);
+        this.$navigate(`/pages/seckillShopDetails?goods_id=${goods_id}`);
+      } else {
+        this.$navigate(`/pages/shopDetails?goods_id=${goods_id}`);
       }
-      if(sale_type == 'group') {
-        this.$navigate(`assembleShopDetails?goods_id=${goods_id}&sale_type=${sale_type}`);
-      }
-      if(sale_type == 'advsales') {
-        this.$navigate(`preShopDetails?goods_id=${goods_id}&sale_type=${sale_type}`);
-      }
-      // if(sale_type == 'freesales') {
-      //   this.$navigate(`shopDetails?goods_id=${goods_id}&sale_type=${sale_type}`);
-      // }
-      console.log(sale_type == 'freesales', sale_type)
     }
   };
 

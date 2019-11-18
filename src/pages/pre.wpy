@@ -182,8 +182,7 @@ export default class Index extends wepy.page {
          * 跳转商品详情
          */
         goPreDetails(goods_id){
-            console.log(goods_id)
-            this.$navigate(`/pages/preShopDetails?goods_id=${goods_id}`)
+            this.$navigate(`/pages/shopDetails?goods_id=${goods_id}`)
         }
     };
 }

@@ -1,0 +1,44 @@
+
+  <view class="wallet-wrap">
+    <view class="wallet-title">余额</view>
+    <view class="wallet-price">
+      <view class="price">
+        <text>￥</text>5400
+      </view>
+      <view class="btn" bindtap="showMask">提现</view>
+    </view>
+    <view class="detailed">
+      <view class="title">收支明细</view>
+      <view class="deta-list">
+        <block wx:for="{{3}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+          <view class="deta-item">
+            <view class="top">
+              <view class="h">充值</view>
+              <view class="price">+￥60</view>
+            </view>
+            <view class="fot">
+              <view class="time">2019.12.21 12:23</view>
+              <view class="price">￥1200</view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+
+    
+  <view class="list">
+    <view class="{{$mask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$mask$move">
+      <view class="mask" bindtap="$mask$hideMask"/>
+      
+      <view class="wallet-box">
+        提现金额
+        收款银行
+        收款账号
+        开户人姓名
+        支付密码
+      </view>
+    
+    </view>
+  </view>
+
+  </view>

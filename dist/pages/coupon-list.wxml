@@ -1,0 +1,26 @@
+
+  <view>
+    <view class="coupon-list">
+        <block wx:for="{{3}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+          <view class="coupon-item">
+            <image src="/assets/img/image62.png"/>
+            <view class="coupon-cont">
+              <view class="left">
+                <view class="price">
+                  ￥<text>10</text> 元
+                </view>
+                <text>适用于全场商品</text>
+              </view>
+              <view class="right">
+                <view class="txt">
+                  <text>优惠</text>
+                  <text>抵扣</text>
+                </view>
+                <view class="time">9月10日-11月10日</view>
+              </view>
+            </view>
+          </view>
+        </block>
+    </view>
+    
+  </view>

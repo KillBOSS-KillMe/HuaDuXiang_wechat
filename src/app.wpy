@@ -61,7 +61,8 @@ export default class extends wepy.app {
       'pages/logistics', // 物流信息
       'pages/set-up', // 设置
       'pages/after-sale', //售后
-      
+      'pages/wallet', //钱包
+      'pages/coupon-list', //优惠券列表
       
     ],
     window: {

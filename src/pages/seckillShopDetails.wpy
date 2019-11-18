@@ -92,7 +92,7 @@
         <view class="saleShopWrap">
           <view class="saleShop">
             <repeat for="{{goods_commend_list}}" item="item">
-              <view @tap="navGoodsDetails({{item.goods_id}})" class="shopview">
+              <view @tap="navGoodsDetails({{item.goods_id}}, {{item.sale_type}})" class="shopview">
                 <image src="{{item.goods_image_url}}" />
                 <view class="saleTag">
                   <text class="overflow-one">{{item.goods_name}}</text>
@@ -251,8 +251,13 @@ export default class Index extends wepy.page {
         }
       })
     },
-    navGoodsDetails(goods_id) {
-      this.$redirect({ url: `shopDetails?goods_id=${goods_id}` });
+    navGoodsDetails(goods_id, sale_type) {
+      // navigate
+      if(sale_type == 'rushsales') {
+        this.$redirect(`/pages/seckillShopDetails?goods_id=${goods_id}`);
+      } else {
+        this.$redirect(`/pages/shopDetails?goods_id=${goods_id}`);
+      }
     },
     changeAttr(index, idx, ele){
       this.activeAttr[index] = idx
@@ -314,8 +319,8 @@ export default class Index extends wepy.page {
         this.store_info = res.datas.store_info
         this.goods_commend_list = res.datas.goods_commend_list
         // 商品属性
-        var spec_name = Object.values(res.datas.goods_content.spec_name)
-        var spec_value = Object.values(res.datas.goods_content.spec_value)
+        var spec_name = Object.values(res.datas.goods_content.spec_name || {})
+        var spec_value = Object.values(res.datas.goods_content.spec_value || {})
         var attr = []
         spec_value.forEach((item, index) => {
           if(!attr[index]) {
@@ -325,8 +330,8 @@ export default class Index extends wepy.page {
           attr[index].prop = item
         })
         this.attr = attr
-        this.goods_spec = Object.values(res.datas.goods_content.goods_spec)
-        this.activeAttr = Object.keys(res.datas.goods_content.goods_spec)
+        this.goods_spec = Object.values(res.datas.goods_content.goods_spec || {})
+        this.activeAttr = Object.keys(res.datas.goods_content.goods_spec || {})
         this.spec_list = res.datas.spec_list
         // 倒计时
         var end_time = res.datas.goods_content.end_time || 0

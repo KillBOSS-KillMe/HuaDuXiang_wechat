@@ -136,14 +136,6 @@ export default class Index extends wepy.page {
     data = {
         topImg:'',
         requestImgUrl: '',
-        flowData:[
-            {id:'1',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
-            {id:'2',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
-            {id:'3',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
-            {id:'4',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
-            {id:'5',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'},
-            {id:'6',title:'萌分订书机',price:'5',exprice:'25',img:'indeximg.png',tag:'100+人已成团'}
-        ],
         goods_list: [],
         hasmore: false, // 是否有下一页
         curpage: 1, //当前页数
@@ -164,8 +156,8 @@ export default class Index extends wepy.page {
         this.requestImgUrl = this.$parent.globalData.requestImgUrl
     }
     methods = {
-        jumpTimeDetails(shopid){
-            this.$navigate(`/pages/assembleShopDetails?shopid=${shopid}&assembleId=${this.assembleId}`)
+        jumpTimeDetails(goods_id){
+            this.$navigate(`/pages/shopDetails?goods_id=${goods_id}`)
         },
     };
     requestList() {

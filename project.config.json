@@ -91,13 +91,6 @@
 				},
 				{
 					"id": -1,
-					"name": "pages/goodsList",
-					"pathName": "pages/goodsList",
-					"query": "store_id=1",
-					"scene": null
-				},
-				{
-					"id": -1,
 					"name": "店铺首页",
 					"pathName": "pages/merchantIndex",
 					"query": "store_id=1",
@@ -126,50 +119,22 @@
 				},
 				{
 					"id": -1,
-					"name": "我的",
-					"pathName": "pages/user",
-					"query": "goods_id=42",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "设置密码",
-					"pathName": "pages/set-up",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "砍价",
-					"pathName": "pages/bargain",
-					"query": "goods_id=42",
-					"scene": null
-				},
-				{
-					"id": 14,
-					"name": "拼团",
-					"pathName": "pages/assemble",
-					"query": "goods_id=45",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "vip",
-					"pathName": "pages/vip",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 16,
-					"name": "订单详情",
-					"pathName": "pages/orderInfo",
+					"name": "售后",
+					"pathName": "pages/after-sale",
 					"query": "order_id=32",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "售后",
-					"pathName": "pages/after-sale",
+					"name": "我的钱包",
+					"pathName": "pages/wallet",
+					"query": "order_id=32",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "优惠券列表",
+					"pathName": "pages/coupon-list",
 					"query": "order_id=32",
 					"scene": null
 				}

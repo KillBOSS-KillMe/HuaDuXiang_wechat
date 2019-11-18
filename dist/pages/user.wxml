@@ -42,9 +42,14 @@
     <view class="personal_data">
       <text class="mainorder">我的服务</text>
       <view class="order">
-        <navigator url="/pages/vip" hover-class="none" class="orderitem">
+        <navigator url="/pages/wallet" hover-class="none" class="orderitem">
           <image class="img" src="/assets/img/image32.png"/>
           <view>我的钱包</view>
+          <image class="imgright" src="/assets/img/image25.png"/>
+        </navigator>
+        <navigator url="/pages/coupon-list" hover-class="none" class="orderitem">
+          <image class="img" src="/assets/img/image61.png"/>
+          <view>我的优惠券</view>
           <image class="imgright" src="/assets/img/image25.png"/>
         </navigator>
         <view class="orderitem" bindtap="getUserAddress">

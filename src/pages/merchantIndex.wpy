@@ -20,7 +20,7 @@
     <view class="saleShopWrap" wx:if="{{navIdx == 0}}">
       <view class="saleShop">
         <repeat for="{{rec_goods_list}}" item="item">
-          <view class="shopview" @tap="navGoodsDetails({{item.goods_id}})">
+          <view class="shopview" @tap="navGoodsDetails({{item.goods_id}}, {{item.sale_type}})">
             <image src="{{item.goods_image_url}}" />
             <view class="saleTag">
               <text class="overflow-one">{{item.goods_name}}</text>
@@ -76,8 +76,13 @@ export default class ShopCart extends wepy.page {
   computed = {};
 
   methods = {
-    navGoodsDetails(goods_id) {
-      this.$navigate({ url: `shopDetails?goods_id=${goods_id}` });
+    navGoodsDetails(goods_id, sale_type) {
+      //common普通，rushsale秒杀，group团购，advsales预售，freesales砍价
+      if(sale_type == 'rushsales') {
+        this.$navigate(`/pages/seckillShopDetails?goods_id=${goods_id}`);
+      } else {
+        this.$navigate(`/pages/shopDetails?goods_id=${goods_id}`);
+      }
     },
     changeNav(idx) {
       if(idx == this.navIdx) return false

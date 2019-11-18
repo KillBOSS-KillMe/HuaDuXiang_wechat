@@ -5,7 +5,7 @@
     <image class="head-img" src="{{requestImgUrl + topImg}}" />
     <view class="goods-list">
       <repeat for="{{goods_list}}" item="item">
-        <view @tap="navShopDetails({{item.goods_id}})" class="goods-item">
+        <view @tap="navGoodsDetails({{item.goods_id}}, {{item.sale_type}})" class="goods-item">
           <image class="goods-img" src="{{requestImgUrl + item.goods_image_url}}" />
           <view class="goods-fot">
             <view class="title overflow-one">{{item.goods_name}}</view>
@@ -81,9 +81,14 @@ export default class Index extends wepy.page {
   onShow() {
   }
   methods = {
-    navShopDetails(goods_id){
-      this.$navigate(`/pages/shopDetails?goods_id=${goods_id}&type=share`)
-    }
+    navGoodsDetails(goods_id, sale_type) {
+      // navigate
+      if(sale_type == 'rushsales') {
+        this.$redirect(`/pages/seckillShopDetails?goods_id=${goods_id}`);
+      } else {
+        this.$redirect(`/pages/shopDetails?goods_id=${goods_id}`);
+      }
+    },
   };
 
   events = {};
