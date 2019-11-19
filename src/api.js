@@ -1,7 +1,10 @@
 
-// const URL = "http://www.mywdl.com"
-const URL = "http://www.shopdate.me"
+// D
+// const URL = "http://www.shopdate.me"
+// L
 // const URL = "http://www.hdx.cc"  
+// 线上
+const URL = "https://www.hdxsy.cn"
 
 module.exports = {
   // 小程序授权微信-返回用户 user_id—接口，用户信息接口。

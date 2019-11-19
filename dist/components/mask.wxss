@@ -1,6 +1,5 @@
 .mask-wrap {
   visibility: collapse;
-  transition: all 0.3s ease-in-out;
   opacity: 0;
 }
 .mask-wrap .mask {

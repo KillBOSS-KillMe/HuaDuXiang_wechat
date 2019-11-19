@@ -17,6 +17,9 @@
           </block>
         </swiper>
       </view>
+      <view class="coupon-tips">
+
+      </view>
       <view class="goods-head">
         <view class="title">
           <text class="overflow-one">{{goods_content.goods_name}}</text>
@@ -65,6 +68,10 @@
         </view>
         <view class="option-item" bindtap="showAttrMask">
           <view class="com-title">选择规格</view>
+          <image src="/assets/img/image25.png"/>
+        </view>
+        <view class="option-item" bindtap="showCouponMask">
+          <view class="com-title">领取优惠券</view>
           <image src="/assets/img/image25.png"/>
         </view>
       </view>
@@ -213,6 +220,34 @@
         </view>
         <view class="prop-btn" wx:if="{{sale_type == 'group'}}" bindtap="attrBtnSubmit">发起拼团({{goods_content.pingou_min_num}}人团)</view>
         <view class="prop-btn" wx:if="{{sale_type == 'advsales'}}" bindtap="attrBtnSubmit">确定</view>
+      </view>
+    
+    </view>
+  </view>
+
+    <!-- 选择优惠券弹框 -->
+    
+  <view class="list">
+    <view class="{{$couponmask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$couponmask$move">
+      <view class="mask" bindtap="$couponmask$hideMask"/>
+      
+      <view class="coupon-box">
+        <view class="coupon-t">暖心优惠</view>
+        <scroll-view scroll-y class="coupon-list">
+          <block wx:key="key" wx:for="{{20}}" wx:for-index="index" wx:for-item="item">
+            <view class="coupon-item">
+              <view class="price">
+                ￥<text>1000.00</text>
+              </view>
+              <view class="right">
+                <view class="txt">全场满400元可用</view>
+                <text>2019.10.18 - 2019.10.19</text>
+              </view>
+              <image src="/assets/img/image64.png" class="coupon-status"/>
+            </view>
+          </block>
+        </scroll-view>
+        <view class="coupon-btn">关闭</view>
       </view>
     
     </view>

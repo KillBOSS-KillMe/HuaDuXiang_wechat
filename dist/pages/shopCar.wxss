@@ -5,6 +5,9 @@ page {
   background: #F9F9F9;
 }
 .good-list {
+  margin-bottom: 120rpx;
+}
+.good-list .swiper-item-wrapper {
   height: 240rpx;
 }
 .good-list .swiper-item-wrapper .swiper-content {

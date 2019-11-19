@@ -40,7 +40,7 @@ export default class Mask extends wepy.component {
 <style lang="less">
 .mask-wrap {
   visibility: collapse;
-  transition: all 0.3s ease-in-out;
+  // transition: opacity 0.3s ease-in-out;
   opacity: 0;
   .mask {
     background: #000;

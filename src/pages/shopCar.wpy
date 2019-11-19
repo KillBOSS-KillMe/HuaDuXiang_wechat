@@ -3,8 +3,9 @@ page{
     background: #F9F9F9
 }
 .good-list {
-  height: 240rpx;
+  margin-bottom: 120rpx;
   .swiper-item-wrapper {
+    height: 240rpx;
     .swiper-content {
       border-bottom: 1rpx solid #F9F9F9;
       background: #fff;
@@ -237,7 +238,8 @@ export default class ShopCart extends wepy.page {
     requestImgUrl: '',
     allSelected: false,
     goodsList: [],
-    isAllSelected: false
+    isAllSelected: false,
+    cart_count: null,
   };
 
   computed = {
@@ -323,6 +325,7 @@ export default class ShopCart extends wepy.page {
         goodsList = goodsList.concat(item.goods)
       })
       this.goodsList = goodsList
+      this.cart_count = res.datas.cart_count
       this.$apply()
     })
   }

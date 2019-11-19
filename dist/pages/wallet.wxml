@@ -31,6 +31,7 @@
       <view class="mask" bindtap="$mask$hideMask"/>
       
       <view class="wallet-box">
+        
         提现金额
         收款银行
         收款账号

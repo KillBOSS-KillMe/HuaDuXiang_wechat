@@ -74,7 +74,7 @@ export default class extends wepy.app {
   };
   globalData = {
     userInfo: '',
-    requestImgUrl: 'http://www.shopdate.me/system/upfiles/'
+    requestImgUrl: 'https://www.hdxsy.cn/system/upfiles/'
   };
   onLaunch() {
     // 获取用户信息

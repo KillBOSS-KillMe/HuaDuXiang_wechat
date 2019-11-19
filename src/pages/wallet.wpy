@@ -118,6 +118,7 @@
 
     <mask :maskFlag.sync="maskFlag">
       <view class="wallet-box">
+        
         提现金额
         收款银行
         收款账号

@@ -23,6 +23,9 @@
           </repeat>
         </swiper>
       </view>
+      <view class="coupon-tips">
+
+      </view>
       <view class="goods-head">
         <view class="title">
           <text class="overflow-one">{{goods_content.goods_name}}</text>
@@ -73,6 +76,10 @@
         </view>
         <view class="option-item" @tap="showAttrMask">
           <view class="com-title">选择规格</view>
+          <image src="/assets/img/image25.png" />
+        </view>
+        <view class="option-item" @tap="showCouponMask">
+          <view class="com-title">领取优惠券</view>
           <image src="/assets/img/image25.png" />
         </view>
       </view>
@@ -219,6 +226,27 @@
         <view class="prop-btn" wx:if="{{sale_type == 'advsales'}}"  @tap="attrBtnSubmit">确定</view>
       </view>
     </attrsmask>
+    <!-- 选择优惠券弹框 -->
+    <couponmask :maskFlag.sync="couponFlag">
+      <view class="coupon-box">
+        <view class="coupon-t">暖心优惠</view>
+        <scroll-view scroll-y class="coupon-list">
+          <repeat for="{{20}}" wx:key="index">
+            <view class="coupon-item">
+              <view class="price">
+                ￥<text>1000.00</text>
+              </view>
+              <view class="right">
+                <view class="txt">全场满400元可用</view>
+                <text>2019.10.18 - 2019.10.19</text>
+              </view>
+              <image src="/assets/img/image64.png" class="coupon-status" />
+            </view>
+          </repeat>
+        </scroll-view>
+        <view class="coupon-btn">关闭</view>
+      </view>
+    </couponmask>
   </view>
 </template>
 
@@ -233,12 +261,14 @@ export default class Index extends wepy.page {
     navigationBarTitleText: '商品详情'
   };
   components = {
-    attrsmask: mask
+    attrsmask: mask,
+    couponmask: mask,
   };
 
   mixins = [];
 
   data = {
+    couponFlag: false,
     goodsNum: 1,
     attrFlag: false,
     tabList: [{ name: '商品介绍'}, { name: '图文详情' }], // 顶部选项卡
@@ -335,6 +365,9 @@ export default class Index extends wepy.page {
       } else {
         this.$redirect(`/pages/shopDetails?goods_id=${goods_id}`);
       }
+    },
+    showCouponMask() {
+      this.couponFlag = true
     }
   };
 
@@ -718,7 +751,7 @@ export default class Index extends wepy.page {
 .goods-action {
   position: fixed;
   bottom: 0;
-  z-index: 999;
+  z-index: 100;
   width: 100%;
   height: 98rpx;
   align-items: center;
@@ -928,6 +961,75 @@ export default class Index extends wepy.page {
   .prop-wrap {
     max-height: 390rpx;
     overflow: scroll;
+  }
+}
+.coupon-box {
+  position: fixed;
+  height: 800rpx;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  z-index: 999;
+  border-top-left-radius: 40rpx;
+  border-top-right-radius: 40rpx;
+  box-sizing: border-box;
+  padding: 30rpx 30rpx 20rpx 30rpx;
+  .coupon-t {
+    text-align: center;
+    font-weight: bold;
+    color:crimson;
+    font-size: 28rpx;
+  }
+  .coupon-list {
+    height: 550rpx;
+    padding: 30rpx 0;
+    .coupon-item {
+      position: relative;
+      height: 116rpx;
+      background:linear-gradient(-45deg,rgba(255,34,40,1) 0%,rgba(255,104,136,1) 100%);
+      margin-bottom: 30rpx;
+      border-radius: 20rpx;
+      display: flex;
+      align-items: center;
+      color: #fff;
+      .price {
+        width: 250rpx;
+        text-align: center;
+        font-size: 24rpx;
+        font-weight: bold;
+        text {
+          font-size: 46rpx;
+        }
+      }
+      .right {
+        .txt {
+          font-size: 28rpx;
+        }
+        text {
+          padding-top: 10rpx;
+          font-size: 24rpx;
+        }
+      }
+      .coupon-status {
+        position: absolute;
+        width: 90rpx;
+        height: 90rpx;
+        right: 0;
+        bottom: 0;
+      }
+    }
+  }
+  .coupon-btn {
+    width: 690rpx;
+    background: #f2292d;
+    height: 80rpx;
+    line-height: 80rpx;
+    margin: 0 auto;
+    border-radius: 50rpx;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 30rpx;
   }
 }
 </style>
