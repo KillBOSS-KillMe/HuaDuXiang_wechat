@@ -3,10 +3,10 @@ import wepy from 'wepy';
 
 module.exports = {
   ajax(e) {
-    var key = '7731b8f19c93a412ee7b84a478fa6f8d'
+    // var key = '7731b8f19c93a412ee7b84a478fa6f8d'
     // var key = 'e2aaa7a05d469eda23baaf42fb6f3baa'
     
-    // key = wx.getStorageSync('user').token
+    var key = wx.getStorageSync('user').token
     return new Promise(resolve => {
       e.icon !== 'none' && wepy.showLoading({
         title: "加载中"

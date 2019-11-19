@@ -114,7 +114,7 @@
                 <view>
                   <text class="salep">预购价</text>
                   <text class="salesmple">￥</text>
-                  <text class="saleprice">{{item.is_presell == '0' ? item.goods_sale_price : item.book_down_payment}}</text>
+                  <text class="saleprice">{{item.is_presell == 1 ? item.goods_sale_price : item.book_down_payment}}</text>
                 </view>
               </view>
             </navigator>
