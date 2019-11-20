@@ -73,20 +73,6 @@
     }
   }
 }
-.wallet-box {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  z-index: 999;
-  transform: translate3d(-50%,-50%,0);
-  width: 690rpx;
-  height: 690rpx;
-  padding: 30rpx;
-  box-sizing: border-box;
-  background: #fff;
-  border-radius: 10rpx;
-
-}
 </style>
 
 <template>
@@ -96,7 +82,7 @@
       <view class="price">
         <text>￥</text>5400
       </view>
-      <view class="btn" @tap="showMask">提现</view>
+      <navigator hover-class="none" url="/pages/wallet-input" class="btn">提现</navigator>
     </view>
     <view class="detailed">
       <view class="title">收支明细</view>
@@ -115,17 +101,6 @@
         </repeat>
       </view>
     </view>
-
-    <mask :maskFlag.sync="maskFlag">
-      <view class="wallet-box">
-        
-        提现金额
-        收款银行
-        收款账号
-        开户人姓名
-        支付密码
-      </view>
-    </mask>
   </view>
 </template>
 
@@ -141,14 +116,11 @@ export default class ShopCart extends wepy.page {
   mixins = [];
 
   data = {
-    maskFlag: true,
     requestImgUrl: ''
   };
   computed = {};
   methods = {
-    showMask() {
-      this.maskFlag = true
-    }
+    
   };
   onLoad() {}
   onShow() {

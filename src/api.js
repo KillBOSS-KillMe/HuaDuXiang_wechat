@@ -96,7 +96,7 @@ module.exports = {
   // 获取店铺等级
   getStoreGrade: URL + "/api/mobile/index.php?w=store_joinin&t=getStoreGrade",
   // 用户个人信息设置接口（获取微信用户头像，性别，昵称）
-  setUserinfo: URL + "/api/mobile/index.php?t=set_userinfo&w=member_index",
+  setUserinfo: URL + "/api/mobile/index.php?w=member_index&t=set_userinfo",
   // 店铺分类列表接口
   getStoreClass: URL + "/api/mobile/index.php?w=store_joinin&t=getStoreClass",
   // 平台首页秒杀商品4-8条数据

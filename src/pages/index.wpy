@@ -417,14 +417,17 @@ export default class Index extends wepy.page {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     this.getAppUserInfo();
     var data = await wepy.login();
-    ajax({
-      url: api.getToken,
-      data: {
-        code: data.code
-      }
-    }).then(res=> {
-      wx.setStorageSync('user', res.datas)
-    })
+    var user = wx.getStorageSync('user')
+    if(!user.token) {
+      ajax({
+        url: api.getToken,
+        data: {
+          code: data.code
+        }
+      }).then(res=> {
+        wx.setStorageSync('user', res.datas)
+      })
+    }
 
     // 首页-轮播图和areaArr菜单
     ajax({

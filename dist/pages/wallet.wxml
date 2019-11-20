@@ -5,7 +5,7 @@
       <view class="price">
         <text>￥</text>5400
       </view>
-      <view class="btn" bindtap="showMask">提现</view>
+      <navigator hover-class="none" url="/pages/wallet-input" class="btn">提现</navigator>
     </view>
     <view class="detailed">
       <view class="title">收支明细</view>
@@ -24,22 +24,4 @@
         </block>
       </view>
     </view>
-
-    
-  <view class="list">
-    <view class="{{$mask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$mask$move">
-      <view class="mask" bindtap="$mask$hideMask"/>
-      
-      <view class="wallet-box">
-        
-        提现金额
-        收款银行
-        收款账号
-        开户人姓名
-        支付密码
-      </view>
-    
-    </view>
-  </view>
-
   </view>

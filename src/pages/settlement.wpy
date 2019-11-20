@@ -143,7 +143,7 @@ export default class ShopCart extends wepy.page {
         url: api.pay,
         data: {
           pay_sn: resOrder.pay_sn,
-          payment_code: 'mini_wxpay',
+          payment_code: 'mini_wxpay'
         }
       }).then(res => res.datas)
       if(resPay.state == 1) {

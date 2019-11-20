@@ -1,0 +1,132 @@
+<style lang="less">
+.wallet-wrap {
+  .top-img {
+    width: 690rpx;
+    height: 268rpx;
+    border-radius: 10rpx;
+    margin: 0 auto;
+    display: block;
+  }
+  .explain {
+    padding: 30rpx;
+    .exp-h {
+      font-weight: bold;
+      font-size: 28rpx;
+      color: #333;
+      padding: 10rpx 0 30rpx 0;
+    }
+    .exp-p {
+      color: #999999;
+      font-size: 24rpx;
+      line-height: 1.5;
+    }
+  }
+  .input-wrap {
+    border-top: 20rpx solid #f3f3f3;
+    padding: 0 30rpx;
+    .com-input {
+      display: flex;
+      align-items: center;
+      margin-top: 40rpx;
+      input {
+        height: 60rpx;
+        border: 1px solid #c7c7c7;
+        border-radius: 10rpx;
+        flex: 1;
+      }
+      .com-title {
+        width: 140rpx;
+        color: #333;
+        font-size: 30rpx;
+        font-weight: bold;
+      }
+      .company {
+        margin-left: 30rpx;
+        color: #333;
+        font-size: 30rpx;
+        font-weight: bold;
+      }
+    }
+    .input-tisp {
+      margin-left: 140rpx;
+      color: #666666;
+      font-size: 24rpx;
+      padding-top: 10rpx;
+      display: block;
+    }
+  }
+  .wallet-btn {
+    width: 690rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    margin: 40rpx auto;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 10rpx;
+    background: #FF2228;
+    font-size: 30rpx;
+  }
+}
+</style>
+
+<template>
+  <view class="wallet-wrap">
+    <image class="top-img" src="/assets/img/image65.png">
+    <view class="explain">
+      <view class="exp-h">提现操作说明</view>
+      <view class="exp-p">1、单笔提现最小金额为20元</view>
+      <view class="exp-p">2、用户每月享受10次免费提现服务（若有变动根据页面显示为主）</view>
+      <view class="exp-p">3、超次数提现手续费为每笔2.0元，在提现金额中扣除；</view>
+    </view>
+    <view class="input-wrap">
+      <view class="com-input">
+        <view class="com-title">提现金额</view>
+        <input type="text" placeholder="">
+        <view class="company">元</view>
+      </view>
+      <view class="com-input">
+        <view class="com-title">收款银行</view>
+        <input type="text" placeholder="">
+      </view>
+      <text class="input-tisp">银行名称、支付宝或微信</text>
+      <view class="com-input">
+        <view class="com-title">收款账户</view>
+        <input type="text" placeholder="">
+      </view>
+      <view class="com-input">
+        <view class="com-title">开户姓名</view>
+        <input type="text" placeholder="">
+      </view>
+      <view class="com-input">
+        <view class="com-title">支付密码</view>
+        <input type="text" placeholder="">
+      </view>
+    </view>
+    <button class="wallet-btn">确认提交</button>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class ShopCart extends wepy.page {
+  config = {
+    navigationBarTitleText: '提现申请'
+  };
+  components = {};
+  mixins = [];
+
+  data = {
+    requestImgUrl: ''
+  };
+  computed = {};
+  methods = {};
+  onLoad() {}
+  onShow() {
+    this.requestImgUrl = this.$parent.globalData.requestImgUrl;
+  }
+
+  events = {};
+}
+</script>

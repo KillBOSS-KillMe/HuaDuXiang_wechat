@@ -3,9 +3,6 @@ import wepy from 'wepy';
 
 module.exports = {
   ajax(e) {
-    // var key = '7731b8f19c93a412ee7b84a478fa6f8d'
-    // var key = 'e2aaa7a05d469eda23baaf42fb6f3baa'
-    
     var key = wx.getStorageSync('user').token
     return new Promise(resolve => {
       e.icon !== 'none' && wepy.showLoading({
@@ -13,7 +10,9 @@ module.exports = {
       })
       wepy.request({
         url: e.url + '&key=' + key,
-        data: Object.assign({}, e.data),
+        data: Object.assign({
+          key: key
+        }, e.data),
         header: e.header || {
           'content-type': 'application/x-www-form-urlencoded'
         },

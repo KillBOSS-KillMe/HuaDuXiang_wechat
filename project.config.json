@@ -137,6 +137,12 @@
 					"pathName": "pages/coupon-list",
 					"query": "order_id=32",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "提现申请",
+					"pathName": "pages/wallet-input",
+					"scene": null
 				}
 			]
 		}
