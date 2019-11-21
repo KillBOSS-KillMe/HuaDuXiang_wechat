@@ -124,6 +124,14 @@ export default class ShopCart extends wepy.page {
 
   methods = {
     async getWXPayment() {
+      var that = this
+      if(!this.address.address_id) {
+        wx.showToast({
+          title: '请选择地址',
+          icon: 'none'
+        })
+        return false
+      }
       //async函数，避免异步函数嵌套 https://wepyjs.github.io/wepy-docs/1.x/#/?id=针对原生api进行优化
       var resOrder = await ajax({
         url: api.placeOrder,
@@ -143,17 +151,20 @@ export default class ShopCart extends wepy.page {
         url: api.pay,
         data: {
           pay_sn: resOrder.pay_sn,
-          payment_code: 'mini_wxpay'
+          payment_code:  this.payment_type == 0 ?  'mini_wxpay'  :  'predeposit'
         }
       }).then(res => res.datas)
       if(resPay.state == 1) {
         wx.requestPayment({
           ...resPay.api_pay,
           success (res) {
-            console.log(res, 'success')
+            wx.showToast({
+              title: '支付成功'
+            })
+            that.$redirect(`orderlist`);
           },
           fail (res) {
-            console.log(res,'fail')
+             that.$redirect(`orderlist`);
           }
         })
       } 
@@ -182,7 +193,7 @@ export default class ShopCart extends wepy.page {
     var orderInfo = app.globalData.orderInfo
     console.log(orderInfo)
     // 地址信息
-    this.address = orderInfo.address_info
+    this.address =  Object.prototype.toString.call(orderInfo.address_info)  == '[object Object]' ? orderInfo.address_info : ''
     // 多店铺信息
     this.store_cart_list = orderInfo.store_cart_list
     // 商品列表

@@ -5,7 +5,7 @@
       <image class="top_imgbg" src="/assets/img/image36.png"/>
       <view class="top_user">
         <image class="imgSrc" src="{{member_info.avatar}}"/>
-        <view class="username">{{member_info.user_name}}</view>
+        <view class="username">{{member_info.member_truename}}</view>
         <view class="vip-tap"  wx:if="{{member_info.level==0}}">普通会员</view>
         <view class="vip-tap"  wx:if="{{member_info.level==1}}">银卡会员</view>
         <view class="vip-tap" wx:if="{{member_info.level==2}}">金卡会员</view>

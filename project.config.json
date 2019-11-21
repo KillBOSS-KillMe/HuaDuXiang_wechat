@@ -79,7 +79,7 @@
 					"id": 4,
 					"name": "普通商品详情",
 					"pathName": "pages/shopDetails",
-					"query": "goods_id=55",
+					"query": "goods_id=42",
 					"scene": null
 				},
 				{
@@ -142,6 +142,7 @@
 					"id": -1,
 					"name": "提现申请",
 					"pathName": "pages/wallet-input",
+					"query": "",
 					"scene": null
 				}
 			]

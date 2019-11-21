@@ -234,13 +234,13 @@
       <view class="coupon-box">
         <view class="coupon-t">暖心优惠</view>
         <scroll-view scroll-y class="coupon-list">
-          <block wx:key="key" wx:for="{{20}}" wx:for-index="index" wx:for-item="item">
+          <block wx:key="key" wx:for="{{voucher_list}}" wx:for-index="index" wx:for-item="item">
             <view class="coupon-item">
               <view class="price">
-                ￥<text>1000.00</text>
+                ￥<text>{{item.voucher_t_price}}</text>
               </view>
               <view class="right">
-                <view class="txt">全场满400元可用</view>
+                <view class="txt">{{item.voucher_t_title}}(满{{item.voucher_t_limit}}可用)</view>
                 <text>2019.10.18 - 2019.10.19</text>
               </view>
               <image src="/assets/img/image64.png" class="coupon-status"/>

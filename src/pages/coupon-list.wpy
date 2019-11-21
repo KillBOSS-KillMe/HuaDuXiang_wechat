@@ -42,7 +42,13 @@ export default class Index extends wepy.page {
   methods = {
     
   };
-  onLoad(options) {}
+  onLoad(options) {
+    ajax({
+      url: api.voucherList,
+    }).then(res => {
+      console.log(res)
+    })
+  }
   onShow () {
     
   }

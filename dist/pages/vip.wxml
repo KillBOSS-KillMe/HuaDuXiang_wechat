@@ -8,7 +8,7 @@
           <view class="info">
             <image src="{{member_info.avatar}}"/>
             <view class="info-t">
-              <text class="name">{{member_info.user_name}}</text>
+              <text class="name">{{member_info.member_truename}}</text>
               <!-- <text>积分：{{member_data.member_points}}</text> -->
               <text>编号：{{member_data.member_id}}</text>
             </view>

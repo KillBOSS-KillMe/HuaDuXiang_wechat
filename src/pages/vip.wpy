@@ -9,7 +9,7 @@
           <view class="info">
             <image src="{{member_info.avatar}}" />
             <view class="info-t">
-              <text class="name">{{member_info.user_name}}</text>
+              <text class="name">{{member_info.member_truename}}</text>
               <!-- <text>积分：{{member_data.member_points}}</text> -->
               <text>编号：{{member_data.member_id}}</text>
             </view>
@@ -184,6 +184,7 @@ export default class Index extends wepy.page {
       this.vipFlag = true
     },
     async recharge() {
+      var that = this
       if(!this.price) {
         wx.showToast({
           title: '请输入充值金额',
@@ -227,9 +228,18 @@ export default class Index extends wepy.page {
         wx.requestPayment({
           ...payData.api_pay,
           success(res) {
-            console.log(res)
+            wx.showToast({
+              title: '充值成功'
+            })
+            that.vipFlag = false
           },
-          complete(d) {console.log(d)}
+          fail() {
+            wx.showToast({
+              title: '网络错误，请稍后再试',
+              icon: 'none'
+            })
+          }
+          
         })
       }
     }

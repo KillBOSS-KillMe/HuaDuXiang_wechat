@@ -1,10 +1,10 @@
 
 // D
-// const URL = "http://www.shopdate.me"
+const URL = "http://www.shopdate.me"
 // L
 // const URL = "http://www.hdx.cc"  
 // 线上
-const URL = "https://www.hdxsy.cn"
+// const URL = "https://www.hdxsy.cn"
 
 module.exports = {
   // 小程序授权微信-返回用户 user_id—接口，用户信息接口。
@@ -119,5 +119,8 @@ module.exports = {
   memberPaymentRecharge: URL + "/api/mobile/index.php?w=member_payment_recharge&t=pd_pay",
   // 用户发起充值接口。
   recharge: URL + "/api/mobile/index.php?w=recharge&t=index",
-
+  // 优惠券--获取用户优惠券列表
+  voucherList: URL + "/api/mobile/index.php?w=member_voucher&t=voucher_list",
+  // 获取店铺优惠券列表
+  voucherTplList: URL + "/api/mobile/index.php?w=voucher&t=voucher_tpl_list"
 }

@@ -20,7 +20,10 @@
       </block>
     </view>
 
-    <view class="empty"  wx:if="{{emptyFlag == 0}}">暂无地址</view>
+     <view class="no-content"  wx:if="{{emptyFlag == 0}}">
+      <image src="/assets/img/image48.png" style="height: 296rpx; width: 296rpx;"/>
+      <view>暂无地址</view>
+    </view>
 
     <navigator url="/pages/addAddress" hover-class="none" class="address-btn">添加收货地址</navigator>
   </view>
