@@ -37,7 +37,6 @@
 }
 .coupon-list .coupon-item .coupon-cont .left > text {
   font-size: 26rpx;
-  padding-top: 20rpx;
 }
 .coupon-list .coupon-item .coupon-cont .right {
   width: 254rpx;
@@ -57,4 +56,21 @@
   font-size: 20rpx;
   padding-top: 20rpx;
   color: #999999;
+}
+.none-content {
+  text-align: center;
+}
+.none-content image {
+  width: 500rpx;
+  height: 500rpx;
+}
+.none-content .go {
+  height: 80rpx;
+  border-radius: 50rpx;
+  width: 300rpx;
+  line-height: 80rpx;
+  border: 1px solid #FF2228;
+  font-size: 30rpx;
+  color: #FF2228;
+  margin: 0 auto;
 }

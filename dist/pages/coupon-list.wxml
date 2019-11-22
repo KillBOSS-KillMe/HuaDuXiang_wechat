@@ -1,26 +1,31 @@
 
   <view>
-    <view class="coupon-list">
-        <block wx:for="{{3}}" wx:for-index="index" wx:for-item="item" wx:key="key">
-          <view class="coupon-item">
+    <view class="coupon-list"  wx:if="{{page_total != 0}}">
+        <block wx:for="{{voucher_list}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+          <navigator url="/pages/merchantIndex?store_id={{item.store_id}}" hover-class="none" class="coupon-item">
             <image src="/assets/img/image62.png"/>
             <view class="coupon-cont">
               <view class="left">
                 <view class="price">
-                  ￥<text>10</text> 元
+                  ￥<text>{{item.voucher_price}}</text> 元
                 </view>
-                <text>适用于全场商品</text>
+                <text>适用{{item.store_name}}店铺</text>
+                <text>满{{item.voucher_limit}}可用</text>
               </view>
               <view class="right">
                 <view class="txt">
                   <text>优惠</text>
                   <text>抵扣</text>
                 </view>
-                <view class="time">9月10日-11月10日</view>
+                <view class="time">{{item.voucher_start_date_text}}至{{item.voucher_end_date_text}}</view>
               </view>
             </view>
-          </view>
+          </navigator>
         </block>
+    </view>
+    <view class="none-content"  wx:if="{{page_total == 0}}">
+      <image src="/assets/img/image48.png"/>
+      <navigator url="/pages/index" hover-class="none" open-type="reLaunch" class="go">去选购</navigator>
     </view>
     
   </view>

@@ -201,14 +201,14 @@ page{
             共计 ￥ <text style="color:#FF2228;font-size:34rpx;font-weight:bold">{{totalPrice}}</text>
           </view>
         </view>
-        <view class="pay-btn">去结算</view>
+        <view class="pay-btn" @tap="settlement">去结算</view>
       </view>
     </view>
     <view class="none-content" wx:else>
       <image src="/assets/img/image48.png"/>
       <navigator url="/pages/index" hover-class="none" open-type="reLaunch" class="go">去选购</navigator>
     </view>
-     <nav class="nav" @childFn.user="goPage"/>
+     <nav class="nav"/>
   </view>
 </template>
 
@@ -240,6 +240,7 @@ export default class ShopCart extends wepy.page {
     goodsList: [],
     isAllSelected: false,
     cart_count: null,
+    address_list: []
   };
 
   computed = {
@@ -298,13 +299,49 @@ export default class ShopCart extends wepy.page {
       })
 
     },
-    /**
-     * 底部导航跳转
-     */
-    goPage (url, evt) {
-    // 销毁当前页{跳转}
-      this.$redirect(url)
-    },
+    settlement() {
+      var app = this.$parent;
+      var that = this
+      var selectedCartList = this.goodsList.filter(item => item.selected).map(item => `${item.cart_id}|${item.goods_num}`)
+      if(selectedCartList.length == 0) {
+        wx.showToast({
+          title: '请选择商品',
+          icon: 'none'
+        })
+        return false
+      }
+      ajax({
+        url: api.memberBuyOne,
+        data: {
+          ifcart: 1,
+          cart_id: selectedCartList.join(',')
+        }
+      }).then(res => {
+        if(res.code == 200) {
+          res.datas.cart_id =  selectedCartList.join(',')
+          app.globalData.orderInfo = res.datas
+          if(that.address_list.length) {
+            this.$navigate({ url: '/pages/settlement' });
+          } else {
+            wx.showModal({
+              title: '提醒',
+              content: '暂无地址，添加新地址',
+              success(e) {
+                if(e.confirm) {
+                  that.$navigate({ url: 'consignee' });
+                }
+              }
+            })
+          }
+        } else {
+          wx.showToast({
+            title: res.datas.error,
+            icon: 'none'
+          })
+        }
+      })
+    }
+    
   }
 
   events = {}
@@ -330,6 +367,13 @@ export default class ShopCart extends wepy.page {
     })
   }
   onShow() {
+    // 用户收货地址列表
+    ajax({
+      url: api.addressList
+    }).then(res => {
+      this.address_list = res.datas.address_list || []
+      this.$apply()
+    })
   }
 }
 </script>

@@ -110,7 +110,7 @@
 <script>
 import wepy from 'wepy';
 
-export default class ShopCart extends wepy.page {
+export default class WalletInput extends wepy.page {
   config = {
     navigationBarTitleText: '提现申请'
   };

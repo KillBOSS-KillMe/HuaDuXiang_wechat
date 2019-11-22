@@ -66,6 +66,10 @@
           <view class="com-title">选择规格</view>
           <image src="/assets/img/image25.png"/>
         </view>
+        <view class="option-item" bindtap="showCouponMask">
+          <view class="com-title">领取优惠券</view>
+          <image src="/assets/img/image25.png"/>
+        </view>
       </view>
       <view class="textdetails">
         <view class="textdetails-h">图文详情</view>
@@ -166,6 +170,35 @@
           </view>
         </view>
         <view class="prop-btn" bindtap="attrBtnSubmit">确定</view>
+      </view>
+    
+    </view>
+  </view>
+
+
+        <!-- 选择优惠券弹框 -->
+    
+  <view class="list">
+    <view class="{{$couponmask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$couponmask$move">
+      <view class="mask" bindtap="$couponmask$hideMask"/>
+      
+      <view class="coupon-box">
+        <view class="coupon-t">暖心优惠</view>
+        <scroll-view scroll-y class="coupon-list">
+          <block wx:key="key" wx:for="{{voucher_list}}" wx:for-index="index" wx:for-item="item">
+            <view class="coupon-item" bindtap="choiceCoupon" data-wpychoicecoupon-a="{{item.exists}}" data-wpychoicecoupon-b="{{item.voucher_t_id}}" data-wpychoicecoupon-c="{{index}}">
+              <view class="price">
+                ￥<text>{{item.voucher_t_price}}</text>
+              </view>
+              <view class="right">
+                <view class="txt">{{item.voucher_t_title}}(满{{item.voucher_t_limit}}可用)</view>
+                <text>使用日期：{{item.couponTime}}</text>
+              </view>
+              <image wx:if="{{item.exists == 1}}" src="/assets/img/image64.png" class="coupon-status"/>
+            </view>
+          </block>
+        </scroll-view>
+        <view class="coupon-btn" bindtap="hideCoupon">关闭</view>
       </view>
     
     </view>

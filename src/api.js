@@ -122,5 +122,7 @@ module.exports = {
   // 优惠券--获取用户优惠券列表
   voucherList: URL + "/api/mobile/index.php?w=member_voucher&t=voucher_list",
   // 获取店铺优惠券列表
-  voucherTplList: URL + "/api/mobile/index.php?w=voucher&t=voucher_tpl_list"
+  voucherTplList: URL + "/api/mobile/index.php?w=voucher&t=voucher_tpl_list",
+  // 领取添加优惠卷
+  voucherFreeex: URL + "/api/mobile/index.php?w=member_voucher&t=voucher_freeex"
 }

@@ -232,19 +232,19 @@
         <view class="coupon-t">暖心优惠</view>
         <scroll-view scroll-y class="coupon-list">
           <repeat for="{{voucher_list}}" wx:key="index">
-            <view class="coupon-item">
+            <view class="coupon-item" @tap="choiceCoupon({{item.exists}}, {{item.voucher_t_id}}, {{index}})">
               <view class="price">
                 ￥<text>{{item.voucher_t_price}}</text>
               </view>
               <view class="right">
                 <view class="txt">{{item.voucher_t_title}}(满{{item.voucher_t_limit}}可用)</view>
-                <text>2019.10.18 - 2019.10.19</text>
+                <text>使用日期：{{item.couponTime}}</text>
               </view>
-              <image src="/assets/img/image64.png" class="coupon-status" />
+              <image wx:if="{{item.exists == 1}}" src="/assets/img/image64.png" class="coupon-status" />
             </view>
           </repeat>
         </scroll-view>
-        <view class="coupon-btn">关闭</view>
+        <view class="coupon-btn" @tap="hideCoupon">关闭</view>
       </view>
     </couponmask>
   </view>
@@ -288,10 +288,19 @@ export default class Index extends wepy.page {
     type: null,
     sale_type: '', // 商品类型
     voucher_list: [], //优惠券列表
+    address_list: []
   };
 
   computed = {};
-  onShow() {}
+  onShow() {
+    // 用户收货地址列表
+    ajax({
+      url: api.addressList
+    }).then(res => {
+      this.address_list = res.datas.address_list || []
+      this.$apply()
+    })
+  }
   methods = {
     // 切换顶部导航
     switchNav(idx) {
@@ -302,6 +311,7 @@ export default class Index extends wepy.page {
       this.attrFlag = true;
     },
     attrBtnSubmit() {
+      var that = this
       var app = this.$parent;
       var goods_id = this.goods_id
       var goodsNum = this.goodsNum
@@ -310,12 +320,25 @@ export default class Index extends wepy.page {
         url: api.memberBuyOne,
         data: {
           cart_id,
+          address_id: ''
         }
       }).then(res => {
         if(res.code == 200) {
           res.datas.cart_id = cart_id
           app.globalData.orderInfo = res.datas
-          this.$navigate({ url: '/pages/settlement' });
+          if(that.address_list.length) {
+            this.$navigate({ url: '/pages/settlement' });
+          } else {
+            wx.showModal({
+              title: '提醒',
+              content: '暂无地址，添加新地址',
+              success(e) {
+                if(e.confirm) {
+                  that.$navigate({ url: 'consignee' });
+                }
+              }
+            })
+          }
         }
       })
     },
@@ -369,7 +392,40 @@ export default class Index extends wepy.page {
       }
     },
     showCouponMask() {
+      if(this.voucher_list.length == 0) {
+        wx.showToast({
+          title: '暂无优惠券发送',
+          icon: 'none'
+        })
+        return false
+      }
       this.couponFlag = true
+    },
+    choiceCoupon(exists, tid, idx) {
+      if(exists == 0) {
+        ajax({
+          url: api.voucherFreeex,
+          data: {
+            tid
+          }
+        }).then(res => {
+          if(res.datas == 1) {
+            wx.showToast({
+              title: '领取成功'
+            })
+            this.voucher_list[idx].exists  =  1
+            this.$apply()
+          } else {
+            wx.showToast({
+              title: res.datas.error,
+              icon: 'none'
+            })
+          }
+        })
+      }
+    },
+    hideCoupon() {
+      this.couponFlag = false
     }
   };
 
@@ -399,7 +455,7 @@ export default class Index extends wepy.page {
     }).then(res => {
       var list = res.datas.voucher_list || []
       list.forEach(item => {
-        item.couponTime = `${ formatDate(10000000000)}`
+        item.couponTime = `${formatDate(item.voucher_t_start_date)} 至 ${formatDate(item.voucher_t_end_date)}`
       })
       this.voucher_list = list
       this.$apply()
@@ -1004,7 +1060,7 @@ export default class Index extends wepy.page {
     padding: 30rpx 0;
     .coupon-item {
       position: relative;
-      height: 116rpx;
+      height: 160rpx;
       background:linear-gradient(-45deg,rgba(255,34,40,1) 0%,rgba(255,104,136,1) 100%);
       margin-bottom: 30rpx;
       border-radius: 20rpx;
@@ -1027,6 +1083,8 @@ export default class Index extends wepy.page {
         text {
           padding-top: 10rpx;
           font-size: 24rpx;
+          display: block;
+          width: 380rpx;
         }
       }
       .coupon-status {

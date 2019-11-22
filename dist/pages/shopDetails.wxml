@@ -235,19 +235,19 @@
         <view class="coupon-t">暖心优惠</view>
         <scroll-view scroll-y class="coupon-list">
           <block wx:key="key" wx:for="{{voucher_list}}" wx:for-index="index" wx:for-item="item">
-            <view class="coupon-item">
+            <view class="coupon-item" bindtap="choiceCoupon" data-wpychoicecoupon-a="{{item.exists}}" data-wpychoicecoupon-b="{{item.voucher_t_id}}" data-wpychoicecoupon-c="{{index}}">
               <view class="price">
                 ￥<text>{{item.voucher_t_price}}</text>
               </view>
               <view class="right">
                 <view class="txt">{{item.voucher_t_title}}(满{{item.voucher_t_limit}}可用)</view>
-                <text>2019.10.18 - 2019.10.19</text>
+                <text>使用日期：{{item.couponTime}}</text>
               </view>
-              <image src="/assets/img/image64.png" class="coupon-status"/>
+              <image wx:if="{{item.exists == 1}}" src="/assets/img/image64.png" class="coupon-status"/>
             </view>
           </block>
         </scroll-view>
-        <view class="coupon-btn">关闭</view>
+        <view class="coupon-btn" bindtap="hideCoupon">关闭</view>
       </view>
     
     </view>

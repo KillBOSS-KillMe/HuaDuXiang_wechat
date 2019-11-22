@@ -1,4 +1,3 @@
-@import "./../components/pas_popup.wxss";
 @import "./../components/nav.wxss";
 .wrap {
   background: #f9f9f9;
@@ -203,7 +202,7 @@
   z-index: 999;
 }
 .logo-wrap {
-  margin-bottom: 160rpx;
+  margin-bottom: 50rpx;
   text-align: center;
 }
 .logo-wrap .logo-img {

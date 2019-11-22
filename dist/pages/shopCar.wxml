@@ -52,7 +52,7 @@
             共计 ￥ <text style="color:#FF2228;font-size:34rpx;font-weight:bold">{{totalPrice}}</text>
           </view>
         </view>
-        <view class="pay-btn">去结算</view>
+        <view class="pay-btn" bindtap="settlement">去结算</view>
       </view>
     </view>
     <view class="none-content"  wx:else>

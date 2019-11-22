@@ -3,7 +3,7 @@
     <view  wx:if="{{emptyFlag == 1}}" class="address-top">
       <block wx:for="{{address_list}}" wx:for-index="index" wx:for-item="item" wx:key="key">
         <view class="address-wrap {{index == idx ? 'address-active':''}}">
-          <image src="/assets/img/image47.png" style="width: 44rpx;height:44rpx;"/>
+          <image src="/assets/img/image47.png" style="width: 44rpx;height:44rpx;" bindtap="changeAddress" data-wpychangeaddress-a="{{item}}"/>
           <image src="/assets/img/image48.png" style="width: 44rpx;height:44rpx;" bindtap="changeAddress" data-wpychangeaddress-a="{{item}}"/>
           <view class="address-cent" bindtap="changeAddress" data-wpychangeaddress-a="{{item}}">
             <view class="address-cent-top">

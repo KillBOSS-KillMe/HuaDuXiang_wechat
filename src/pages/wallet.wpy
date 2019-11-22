@@ -108,7 +108,7 @@
 import wepy from 'wepy';
 import mask from '../components/mask';
 
-export default class ShopCart extends wepy.page {
+export default class Wallet extends wepy.page {
   config = {
     navigationBarTitleText: '我的钱包'
   };

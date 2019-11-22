@@ -40,9 +40,9 @@
     padding: 40rpx 20rpx 0;
   }
   .input-hide {
-    // width: 0rpx;
-    // height: 0rpx;
-    // overflow: hidden;
+    width: 0rpx;
+    height: 0rpx;
+    overflow: hidden;
   }
   .pas-input {
     display: flex;
@@ -115,6 +115,7 @@ export default class Panel extends wepy.component {
   };
   watch = {
     pasFlag (newValue, oldValue) {
+      console.log(newValue, oldValue)
       if(newValue) {
         this.focus = true
       } else {
@@ -122,6 +123,7 @@ export default class Panel extends wepy.component {
       }
       this.pasArr = ['','','','','','']
       this.pasvalue = ''
+      this.$apply()
     }
   }
   methods = {

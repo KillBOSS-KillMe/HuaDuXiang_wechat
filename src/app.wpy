@@ -64,7 +64,7 @@ export default class extends wepy.app {
       'pages/wallet', //钱包
       'pages/coupon-list', //优惠券列表
       'pages/wallet-input', //钱包提现输入
-      
+      'pages/bargain-list', //钱包提现输入
     ],
     window: {
       backgroundTextStyle: 'light',

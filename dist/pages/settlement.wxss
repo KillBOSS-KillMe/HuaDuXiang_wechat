@@ -1,3 +1,4 @@
+@import "./../components/pas_popup.wxss";
 .red-color {
   color: #ff2228;
 }
@@ -5,6 +6,7 @@
   color: #999999;
 }
 .settlement-wrap {
+  background: #eee;
   padding-bottom: 100rpx;
   box-sizing: border-box;
   min-height: 100vh;
@@ -42,38 +44,44 @@
   height: 44rpx;
 }
 .usergoods-wrap {
-  border-top: 10rpx solid #f9f9f9;
+  padding-top: 40rpx;
 }
-.usergoods-wrap .usergoods {
+.usergoods-wrap .shop-list {
+  background: #fff;
+  width: 700rpx;
+  margin: 0 auto 40rpx;
+  border-radius: 20rpx;
+}
+.usergoods-wrap .shop-list .usergoods {
   padding: 30rpx;
   display: flex;
   align-items: center;
 }
-.usergoods-wrap .usergoods .goodsimg {
+.usergoods-wrap .shop-list .usergoods .goodsimg {
   width: 156rpx;
   height: 156rpx;
   border-radius: 10rpx;
   margin-right: 26rpx;
 }
-.usergoods-wrap .usergoods .goods-right {
+.usergoods-wrap .shop-list .usergoods .goods-right {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 160rpx;
 }
-.usergoods-wrap .usergoods .goods-right .goodsname {
+.usergoods-wrap .shop-list .usergoods .goods-right .goodsname {
   font-weight: bold;
-  width: 500rpx;
+  width: 450rpx;
   font-size: 30rpx;
 }
-.usergoods-wrap .usergoods .goods-right .goodstag {
+.usergoods-wrap .shop-list .usergoods .goods-right .goodstag {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.usergoods-wrap .usergoods .goods-right .goodstag text {
+.usergoods-wrap .shop-list .usergoods .goods-right .goodstag text {
   display: block;
   padding: 0 20rpx;
   background: #fbfbfb;
@@ -83,63 +91,56 @@
   color: #a3a3a3;
   font-size: 26rpx;
 }
-.usergoods-wrap .usergoods .goods-right .goodstag .goodnum {
+.usergoods-wrap .shop-list .usergoods .goods-right .goodstag .goodnum {
   color: #999;
 }
-.usergoods-wrap .usergoods .goods-right .goodprice {
+.usergoods-wrap .shop-list .usergoods .goods-right .goodprice {
   color: #f92832;
   text-align: right;
 }
-.usergoods-wrap .usergoods .goods-right .goodprice .price {
-  font-size: 32rpx;
+.usergoods-wrap .shop-list .usergoods .goods-right .goodprice .price {
+  font-size: 28rpx;
   font-weight: bold;
 }
-.option-wrap {
-  border-top: 10rpx solid #f2f2f2;
+.usergoods-wrap .shop-list .goods-service {
+  padding: 30rpx;
+  box-sizing: border-box;
 }
-.option-wrap .option-item {
-  height: 90rpx;
+.usergoods-wrap .shop-list .goods-service .com-list {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
-  padding: 0 30rpx;
-  border-bottom: 1px solid #f2f2f2;
+  height: 70rpx;
 }
-.option-wrap .option-item .com-title {
+.usergoods-wrap .shop-list .goods-service .com-list .imgright {
+  width: 44rpx;
+  height: 44rpx;
+}
+.usergoods-wrap .shop-list .goods-service .com-list .title {
   font-weight: bold;
 }
-.option-wrap .option-item .description {
-  display: flex;
-  align-items: center;
+.usergoods-wrap .shop-list .goods-service .com-list .price {
   flex: 1;
-  justify-content: flex-end;
+  text-align: right;
 }
-.option-wrap .option-item .description > image {
-  width: 24rpx;
-  height: 24rpx;
+.usergoods-wrap .shop-list .goods-service .merchandise-subtotal {
+  text-align: right;
+  height: 88rpx;
+  line-height: 88rpx;
+  font-weight: bold;
+  font-size: 30rpx;
 }
-.option-wrap .option-item .description text {
-  font-size: 24rpx;
-  padding: 0 20rpx 0 10rpx;
-}
-.option-wrap .option-item > image {
-  width: 48rpx;
-  height: 48rpx;
-}
-.option-wrap .option-item .price {
+.usergoods-wrap .shop-list .goods-service .merchandise-subtotal > text {
   color: #f92832;
 }
-.option-wrap .option-item .price text {
-  font-weight: bold;
-  font-size: 36rpx;
-}
 .settlebottom {
+  background: #fff;
   border-top: 1px solid #f2f2f2;
   position: fixed;
   display: flex;
+  bottom: 0;
   justify-content: space-between;
   align-items: center;
-  bottom: 0;
   z-index: 999;
   height: 100rpx;
   line-height: 100rpx;
@@ -193,11 +194,12 @@
   padding-left: 30rpx;
 }
 .price-type {
-  border-top: 20rpx solid #f2f2f2;
-  position: absolute;
-  bottom: 100rpx;
-  width: 100%;
+  margin: 0 auto;
+  width: 700rpx;
+  box-sizing: border-box;
+  padding: 20rpx;
   background: #fff;
+  border-radius: 10rpx;
 }
 .price-type .type-item {
   display: flex;
@@ -224,7 +226,7 @@
   padding-left: 30rpx;
   font-weight: bold;
   color: #282828;
-  font-size: 30rpx;
+  font-size: 28rpx;
 }
 .price-type .type-active .active-img {
   display: block;

@@ -405,3 +405,72 @@
   background: #ff2228;
   margin-top: 50rpx;
 }
+.coupon-box {
+  position: fixed;
+  height: 800rpx;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  z-index: 999;
+  border-top-left-radius: 40rpx;
+  border-top-right-radius: 40rpx;
+  box-sizing: border-box;
+  padding: 30rpx 30rpx 20rpx 30rpx;
+}
+.coupon-box .coupon-t {
+  text-align: center;
+  font-weight: bold;
+  color: crimson;
+  font-size: 28rpx;
+}
+.coupon-box .coupon-list {
+  height: 550rpx;
+  padding: 30rpx 0;
+}
+.coupon-box .coupon-list .coupon-item {
+  position: relative;
+  height: 160rpx;
+  background: linear-gradient(-45deg, #ff2228 0%, #ff6888 100%);
+  margin-bottom: 30rpx;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+.coupon-box .coupon-list .coupon-item .price {
+  width: 250rpx;
+  text-align: center;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+.coupon-box .coupon-list .coupon-item .price text {
+  font-size: 46rpx;
+}
+.coupon-box .coupon-list .coupon-item .right .txt {
+  font-size: 28rpx;
+}
+.coupon-box .coupon-list .coupon-item .right text {
+  padding-top: 10rpx;
+  font-size: 24rpx;
+  display: block;
+  width: 380rpx;
+}
+.coupon-box .coupon-list .coupon-item .coupon-status {
+  position: absolute;
+  width: 90rpx;
+  height: 90rpx;
+  right: 0;
+  bottom: 0;
+}
+.coupon-box .coupon-btn {
+  width: 690rpx;
+  background: #f2292d;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin: 0 auto;
+  border-radius: 50rpx;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  font-size: 30rpx;
+}

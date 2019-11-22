@@ -3,7 +3,7 @@
     <view wx:if="{{emptyFlag == 1}}" class="address-top">
       <repeat for="{{address_list}}" item="item">
         <view class="address-wrap {{index == idx ? 'address-active':''}}">
-          <image src="/assets/img/image47.png" style="width: 44rpx;height:44rpx;" />
+          <image src="/assets/img/image47.png" style="width: 44rpx;height:44rpx;"  @tap="changeAddress({{item}})" />
           <image src="/assets/img/image48.png" style="width: 44rpx;height:44rpx;" @tap="changeAddress({{item}})" />
           <view class="address-cent" @tap="changeAddress({{item}})">
             <view class="address-cent-top">
@@ -53,15 +53,33 @@ export default class Index extends wepy.page {
   methods = {
     changeAddress(item) {
       var app = this.$parent;
-      app.globalData.address = item
-      if(app.globalData.orderInfo) {
-        app.globalData.orderInfo.address_info = item
-      }
-      wx.navigateBack()
+      var cart_id = app.globalData.orderInfo.cart_id
+      ajax({
+        url: api.memberBuyOne,
+        data: {
+          cart_id,
+          address_id: item.address_id
+        }
+      }).then(res => {
+        if(res.code == 200) {
+          res.datas.cart_id = cart_id
+          app.globalData.orderInfo = res.datas
+          var page = this.getCurrentPages()
+          var route = page[page.length - 2].route
+          if(route == 'pages/settlement') {
+            wx.navigateBack()
+          } else {
+            wx.redirectTo({
+              url: '/pages/settlement'
+            })
+          }
+        }
+      })
     }
   };
   onLoad(options) {}
   onShow () {
+    
     // 用户收货地址列表
     ajax({
       url: api.addressList

@@ -74,6 +74,10 @@
           <view class="com-title">选择规格</view>
           <image src="/assets/img/image25.png" />
         </view>
+        <view class="option-item" @tap="showCouponMask">
+          <view class="com-title">领取优惠券</view>
+          <image src="/assets/img/image25.png" />
+        </view>
       </view>
       <view class="textdetails">
         <view class="textdetails-h">图文详情</view>
@@ -172,6 +176,28 @@
         <view class="prop-btn" @tap="attrBtnSubmit">确定</view>
       </view>
     </attrsmask>
+
+        <!-- 选择优惠券弹框 -->
+    <couponmask :maskFlag.sync="couponFlag">
+      <view class="coupon-box">
+        <view class="coupon-t">暖心优惠</view>
+        <scroll-view scroll-y class="coupon-list">
+          <repeat for="{{voucher_list}}" wx:key="index">
+            <view class="coupon-item" @tap="choiceCoupon({{item.exists}}, {{item.voucher_t_id}}, {{index}})">
+              <view class="price">
+                ￥<text>{{item.voucher_t_price}}</text>
+              </view>
+              <view class="right">
+                <view class="txt">{{item.voucher_t_title}}(满{{item.voucher_t_limit}}可用)</view>
+                <text>使用日期：{{item.couponTime}}</text>
+              </view>
+              <image wx:if="{{item.exists == 1}}" src="/assets/img/image64.png" class="coupon-status" />
+            </view>
+          </repeat>
+        </scroll-view>
+        <view class="coupon-btn" @tap="hideCoupon">关闭</view>
+      </view>
+    </couponmask>
   </view>
 </template>
 
@@ -189,12 +215,16 @@ export default class Index extends wepy.page {
     navigationBarTitleText: '商品详情'
   };
   components = {
+    couponmask: mask,
     attrsmask: mask
+
   };
 
   mixins = [];
 
   data = {
+    couponFlag: false,
+    voucher_list: [], //优惠券列表
     goodsNum: 1,
     attrFlag: false,
     tabList: [{ name: '商品介绍', dotNum: 2 }, { name: '图文详情', dotNum: 3 }], // 顶部选项卡
@@ -288,22 +318,72 @@ export default class Index extends wepy.page {
         return false
       }
       this.goodsNum--
+    },
+    showCouponMask() {
+      if(this.voucher_list.length == 0) {
+        wx.showToast({
+          title: '暂无优惠券发送',
+          icon: 'none'
+        })
+        return false
+      }
+      this.couponFlag = true
+    },
+    choiceCoupon(exists, tid, idx) {
+      if(exists == 0) {
+        ajax({
+          url: api.voucherFreeex,
+          data: {
+            tid
+          }
+        }).then(res => {
+          if(res.datas == 1) {
+            wx.showToast({
+              title: '领取成功'
+            })
+            this.voucher_list[idx].exists  =  1
+            this.$apply()
+          } else {
+            wx.showToast({
+              title: res.datas.error,
+              icon: 'none'
+            })
+          }
+        })
+      }
+    },
+    hideCoupon() {
+      this.couponFlag = false
     }
   };
 
   events = {};
 
-  onLoad(t) {
+  async onLoad(t) {
     this.goods_id = t.goods_id;
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     this.$apply()
-    this.getShopDetails()
+    await this.getShopDetails()
+    ajax({
+      url: api.voucherTplList,
+      data: {
+        store_id: this.store_info.store_id,
+        gettype: 'free'
+      }
+    }).then(res => {
+      var list = res.datas.voucher_list || []
+      list.forEach(item => {
+        item.couponTime = `${formatDate(item.voucher_t_start_date)} 至 ${formatDate(item.voucher_t_end_date)}`
+      })
+      this.voucher_list = list
+      this.$apply()
+    })
   }
 
-  getShopDetails() {
+  async getShopDetails() {
     var that = this;
     // 秒杀商品详情
-    ajax({
+    await ajax({
       url: api.ordinaryGoodsDtail,
       type: 'get',
       data: {
@@ -765,6 +845,77 @@ export default class Index extends wepy.page {
     text-align: center;
     background: #ff2228;
     margin-top: 50rpx;
+  }
+}
+.coupon-box {
+  position: fixed;
+  height: 800rpx;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  z-index: 999;
+  border-top-left-radius: 40rpx;
+  border-top-right-radius: 40rpx;
+  box-sizing: border-box;
+  padding: 30rpx 30rpx 20rpx 30rpx;
+  .coupon-t {
+    text-align: center;
+    font-weight: bold;
+    color:crimson;
+    font-size: 28rpx;
+  }
+  .coupon-list {
+    height: 550rpx;
+    padding: 30rpx 0;
+    .coupon-item {
+      position: relative;
+      height: 160rpx;
+      background:linear-gradient(-45deg,rgba(255,34,40,1) 0%,rgba(255,104,136,1) 100%);
+      margin-bottom: 30rpx;
+      border-radius: 20rpx;
+      display: flex;
+      align-items: center;
+      color: #fff;
+      .price {
+        width: 250rpx;
+        text-align: center;
+        font-size: 24rpx;
+        font-weight: bold;
+        text {
+          font-size: 46rpx;
+        }
+      }
+      .right {
+        .txt {
+          font-size: 28rpx;
+        }
+        text {
+          padding-top: 10rpx;
+          font-size: 24rpx;
+          display: block;
+          width: 380rpx;
+        }
+      }
+      .coupon-status {
+        position: absolute;
+        width: 90rpx;
+        height: 90rpx;
+        right: 0;
+        bottom: 0;
+      }
+    }
+  }
+  .coupon-btn {
+    width: 690rpx;
+    background: #f2292d;
+    height: 80rpx;
+    line-height: 80rpx;
+    margin: 0 auto;
+    border-radius: 50rpx;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 30rpx;
   }
 }
 </style>

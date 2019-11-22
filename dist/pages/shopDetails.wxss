@@ -796,7 +796,7 @@ view {
 }
 .coupon-box .coupon-list .coupon-item {
   position: relative;
-  height: 116rpx;
+  height: 160rpx;
   background: linear-gradient(-45deg, #ff2228 0%, #ff6888 100%);
   margin-bottom: 30rpx;
   border-radius: 20rpx;
@@ -819,6 +819,8 @@ view {
 .coupon-box .coupon-list .coupon-item .right text {
   padding-top: 10rpx;
   font-size: 24rpx;
+  display: block;
+  width: 380rpx;
 }
 .coupon-box .coupon-list .coupon-item .coupon-status {
   position: absolute;

@@ -260,36 +260,7 @@ export default class Index extends wepy.page {
     goodsNum: 1, // 商品数量
     tabList: [{ name: '商品介绍', dotNum: 2 }, { name: '图文详情', dotNum: 3 }], // 顶部选项卡
     currentTab: 0, // 顶部选项卡索引
-    flowData: [
-      {
-        id: '1',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: '/assets/img/image.png'
-      },
-      {
-        id: '2',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: '/assets/img/image.png'
-      },
-      {
-        id: '3',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: '/assets/img/image.png'
-      },
-      {
-        id: '3',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: '/assets/img/image.png'
-      }
-    ], // 店铺
+    flowData: [], // 店铺
     waitForArr: [{ time: 100 }, { time: 200 }, { time: 300 }, { time: 400 }], // 等待拼团列表
     wxTimerList: {}, // 倒计时
     attrFlag: false, // 选择属性列表锁

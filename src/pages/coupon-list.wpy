@@ -1,26 +1,31 @@
 <template>
   <view>
-    <view class="coupon-list">
-        <repeat for="{{3}}" item="item">
-          <view class="coupon-item">
+    <view class="coupon-list" wx:if="{{page_total != 0}}">
+        <repeat for="{{voucher_list}}" item="item">
+          <navigator url="/pages/merchantIndex?store_id={{item.store_id}}" hover-class="none" class="coupon-item">
             <image src="/assets/img/image62.png"></image>
             <view class="coupon-cont">
               <view class="left">
                 <view class="price">
-                  ￥<text>10</text> 元
+                  ￥<text>{{item.voucher_price}}</text> 元
                 </view>
-                <text>适用于全场商品</text>
+                <text>适用{{item.store_name}}店铺</text>
+                <text>满{{item.voucher_limit}}可用</text>
               </view>
               <view  class="right">
                 <view class="txt">
                   <text>优惠</text>
                   <text>抵扣</text>
                 </view>
-                <view class="time">9月10日-11月10日</view>
+                <view class="time">{{item.voucher_start_date_text}}至{{item.voucher_end_date_text}}</view>
               </view>
             </view>
-          </view>
+          </navigator>
         </repeat>
+    </view>
+    <view class="none-content" wx:if="{{page_total == 0}}">
+      <image src="/assets/img/image48.png"/>
+      <navigator url="/pages/index" hover-class="none" open-type="reLaunch" class="go">去选购</navigator>
     </view>
     
   </view>
@@ -30,12 +35,17 @@
 import wepy from 'wepy';
 var api = require('../api.js');
 import { ajax } from '../ajax.js';
+import {formatDate} from '../utils/base.js'
 
 export default class Index extends wepy.page {
   config = {
     navigationBarTitleText: '优惠券列表'
   };
   data = {
+      hasmore: false, // 是否有下一页
+      curpage: 1, //当前页数
+      page_total: '', // 总页数
+      voucher_list: []
   };
   components = {};
   computed = {};
@@ -43,14 +53,36 @@ export default class Index extends wepy.page {
     
   };
   onLoad(options) {
-    ajax({
-      url: api.voucherList,
-    }).then(res => {
-      console.log(res)
-    })
+    this.requestCouponList()
   }
   onShow () {
     
+  }
+  requestCouponList() {
+    ajax({
+      url: api.voucherList,
+      data: {
+        page: 10,
+        curpage: this.curpage
+      },
+    }).then(res => {
+      if (res.code == 200) {
+        var list = res.datas.voucher_list || []
+        list.forEach(item => {
+          item.couponTime = `${formatDate(item.voucher_start_date)} 至 ${formatDate(item.voucher_end_date)}`
+        })
+        this.voucher_list = this.voucher_list.concat(list)
+        this.hasmore = res.hasmore
+        this.page_total = res.page_total
+        this.$apply();
+      }
+    });
+  }
+  onReachBottom () {
+    if(this.hasmore) {
+      this.curpage ++ 
+      this.requestCouponList()
+    }
   }
 }
 </script>
@@ -91,7 +123,6 @@ export default class Index extends wepy.page {
         }
         > text {
           font-size: 26rpx;
-          padding-top: 20rpx;
         }
       }
       .right {
@@ -115,6 +146,23 @@ export default class Index extends wepy.page {
         }
       }
     }
+  }
+}
+.none-content {
+  text-align: center;
+  image {
+    width: 500rpx;
+    height: 500rpx;
+  }
+  .go{
+    height: 80rpx;
+    border-radius: 50rpx;
+    width: 300rpx;
+    line-height: 80rpx;
+    border: 1px solid #FF2228;
+    font-size: 30rpx;
+    color: #FF2228;
+    margin: 0 auto;
   }
 }
 </style>

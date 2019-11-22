@@ -43,7 +43,8 @@
     "pages/after-sale",
     "pages/wallet",
     "pages/coupon-list",
-    "pages/wallet-input"
+    "pages/wallet-input",
+    "pages/bargain-list"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -51,5 +52,5 @@
     "navigationBarTitleText": "华都详",
     "navigationBarTextStyle": "black"
   },
-  "sitemapLocation": "sitemap18.json"
+  "sitemapLocation": "sitemap99.json"
 }

@@ -1,0 +1,92 @@
+.sale-shop .shopview {
+  display: flex;
+  align-items: center;
+  padding: 0 30rpx;
+  height: 200rpx;
+  margin-bottom: 30rpx;
+}
+.sale-shop .shopview .goods-img {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 10rpx;
+}
+.sale-shop .shopview .right {
+  height: 190rpx;
+  flex: 1;
+  margin-left: 26rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.sale-shop .shopview .right .bargin-title {
+  font-weight: bold;
+  font-size: 28rpx;
+  width: 480rpx;
+}
+.sale-shop .shopview .right .price {
+  color: #333;
+  font-size: 26rpx;
+}
+.sale-shop .shopview .right .price text {
+  color: #FF2228;
+}
+.sale-shop .shopview .right .bargin-btn {
+  width: 160rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  background: #FF2228;
+  border-radius: 10rpx;
+  color: #fff;
+  font-weight: bold;
+  font-size: 26rpx;
+  text-align: center;
+  margin: 0 0 0 auto;
+}
+.sale-shop .shopview .right .err {
+  background: #999;
+}
+.sale-shop .shopview .right .time-status {
+  display: flex;
+  align-items: center;
+}
+.sale-shop .shopview .right .time-status > text {
+  display: block;
+  margin-left: 20rpx;
+}
+.none-content {
+  text-align: center;
+}
+.none-content image {
+  width: 500rpx;
+  height: 500rpx;
+}
+.none-content .go {
+  height: 80rpx;
+  border-radius: 50rpx;
+  width: 300rpx;
+  line-height: 80rpx;
+  border: 1px solid #FF2228;
+  font-size: 30rpx;
+  color: #FF2228;
+  margin: 0 auto;
+}
+.count-down-wrap {
+  display: flex;
+  align-items: center;
+  height: 38rpx;
+}
+.count-down-wrap > text {
+  width: 38rpx;
+  height: 38rpx;
+  text-align: center;
+  background: #525252;
+  border-radius: 2rpx;
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: 500;
+  line-height: 38rpx;
+}
+.count-down-wrap > view {
+  font-size: 18rpx;
+  margin: 0 8rpx;
+}

@@ -40,6 +40,11 @@
   color: #666;
   padding: 40rpx 20rpx 0;
 }
+.pas-box .input-hide {
+  width: 0rpx;
+  height: 0rpx;
+  overflow: hidden;
+}
 .pas-box .pas-input {
   display: flex;
   align-items: center;

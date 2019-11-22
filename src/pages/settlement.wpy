@@ -13,19 +13,35 @@
       <image class="imgright" src="/assets/img/image25.png" />
     </navigator>
     <view class="usergoods-wrap">
-      <repeat for="{{goods_list}}">
-        <view class="usergoods">
-          <image class="goodsimg" src="{{item.goods_image_url}}" />
-          <view class="goods-right">
-            <view class="goodsname overflow-one">{{item.goods_name}}</view>
-            <view class="goodstag">
-              <text>{{item.goods_spec}}</text>
-              <view class="goodnum">×{{item.goods_num}}</view>
+      <repeat for="{{store_cart_list}}">
+        <view class="shop-list">
+          <repeat for="{{item.goods_list}}" item="ele" index="idx">
+            <view class="usergoods">
+              <image class="goodsimg" src="{{ele.goods_image_url}}" />
+              <view class="goods-right">
+                <view class="goodsname overflow-one">{{ele.goods_name}}</view>
+                <view class="goodstag">
+                  <text>{{ele.goods_spec}}</text>
+                  <view class="goodnum">×{{ele.goods_num}}</view>
+                </view>
+                <view class="goodprice">
+                  ￥
+                  <text class="price">{{ele.goods_price}}</text>
+                </view>
+              </view>
             </view>
-            <view class="goodprice">
-              ￥
-              <text class="price">{{item.goods_price}}</text>
+          </repeat>
+          <view class="goods-service">
+            <view class="com-list" wx:if="{{item.freight == 1}}">
+              <view class="title">运费</view>
+              <view class="price">￥{{postage[index]}}</view>
             </view>
+            <view class="com-list" wx:if="{{item.store_voucher_info.voucher_price}}">
+              <view  class="title">优惠券</view>
+              <view  class="price">-{{item.store_voucher_info.voucher_price}}</view>
+              <!-- <image class="imgright" src="/assets/img/image25.png" /> -->
+            </view>
+            <view class="merchandise-subtotal">小计：<text>￥{{item.store_goods_total}}</text></view>
           </view>
         </view>
       </repeat>
@@ -49,25 +65,8 @@
       <text>08月22日 00:0000开始支付尾款</text>
     </view>
 
-    <view class="option-wrap">
-      <view class="option-item">
-        <view class="com-title">商品</view>
-        <view class="price">
-          ￥
-          <text>{{goodsPrice}}</text>
-        </view>
-      </view>
-      <view class="option-item" >
-        <view class="com-title">运费</view>
-        <view class="price">
-          ￥
-          <text>{{goods_freight}}100</text>
-        </view>
-      </view>
-    </view>
-
     <view class="price-type">
-      <repeat for="{{priceArr}}" item="item">
+      <repeat for="{{priceArr}}" item="item"  wx:if="{{index == 0 || member_points > 0}}">
         <view class="type-item {{payment_type == index ? 'type-active' : ''}}" @tap="changePriceType({{index}})">
           <image class="type-img" src="/assets/img/{{item.icon}}" />
           <text>{{item.title}}<text wx:if="{{index == 1}}">({{member_points}}元)</text> </text>
@@ -85,6 +84,8 @@
       </view>
       <button class="sub-btn" @tap="getWXPayment">提交订单</button>
     </view>
+
+    <paspopup @pasHanld.user="pasHanld" :pasFlag.sync="pasFlag" :pasPrice.sync="pasPrice"></paspopup>
   </view>
 </template>
 
@@ -92,24 +93,28 @@
 var api = require('../api.js');
 import { ajax } from '../ajax.js';
 import wepy from 'wepy';
+import paspopup from '../components/pas_popup'; 
 
-export default class ShopCart extends wepy.page {
+export default class Settlement extends wepy.page {
   config = {
     navigationBarTitleText: '提交订单'
   };
 
-  components = {};
+  components = {
+    paspopup
+  };
 
   mixins = [];
 
   data = {
+    pasFlag: false,  // 余额支付
+    pasPrice: '1000', // 余额支付
     priceArr: [{title: '微信支付',icon: 'image57.png', flag: 1},{title: '余额支付',icon: 'image58.png',flag: 0}],
     requestImgUrl: '',
     address: null, //地址信息
     goods_list: [], //下单商品信息
     store_cart_list: [], //下单店铺列表
     allPrice: 0, //订单总价格
-    goodsPrice: 0, // 商品总价格
     goodsAllNum: 0, //总共件数
     address_api: null, // 地址信息hash
     vat_hash: null, //发票信息hash
@@ -118,12 +123,21 @@ export default class ShopCart extends wepy.page {
     goods_freight: 0, //运费
     payment_type: 0 , //付款类型 0微信 1余额
     member_points: 0, //用户余额
+    password: '', // 用户余额密码
+    postage: {}, //邮费
+
   };
 
   computed = {};
 
   methods = {
-    async getWXPayment() {
+     // 余额支付密码回调
+    pasHanld(e){
+      console.log(e)
+      this.pasFlag = false
+      this.establishOrder()
+    },
+    getWXPayment() {
       var that = this
       if(!this.address.address_id) {
         wx.showToast({
@@ -132,47 +146,59 @@ export default class ShopCart extends wepy.page {
         })
         return false
       }
-      //async函数，避免异步函数嵌套 https://wepyjs.github.io/wepy-docs/1.x/#/?id=针对原生api进行优化
-      var resOrder = await ajax({
-        url: api.placeOrder,
-        data: {
-          cart_id: this.cart_id,
-          ifcart: 0,  // 1=是购物车，0=不是购物车
-          address_id: this.address.address_id,  // 地址id
-          vat_hash: this.vat_hash,  //发票信息hash，
-          offpay_hash: this.address_api.offpay_hash,    // 是否支持货到付款，
-          offpay_hash_batch: this.address_api.offpay_hash_batch,   //店铺是否支持货到付款hash
-          pay_name: 'online',
-          invoice_id: 0,
-        }
-      }).then(res => res.datas)
-
-      var resPay = await ajax({
-        url: api.pay,
-        data: {
-          pay_sn: resOrder.pay_sn,
-          payment_code:  this.payment_type == 0 ?  'mini_wxpay'  :  'predeposit'
-        }
-      }).then(res => res.datas)
-      if(resPay.state == 1) {
-        wx.requestPayment({
-          ...resPay.api_pay,
-          success (res) {
-            wx.showToast({
-              title: '支付成功'
-            })
-            that.$redirect(`orderlist`);
-          },
-          fail (res) {
-             that.$redirect(`orderlist`);
-          }
-        })
-      } 
+      // 余额支付跳框输入密码
+      if(this.payment_type == 1) {
+        this.pasFlag = true
+        return false
+      }
+      this.establishOrder()
     },
     changePriceType(idx) {
       this.payment_type = idx
     }
   };
+  async establishOrder() {
+    //async函数，避免异步函数嵌套 https://wepyjs.github.io/wepy-docs/1.x/#/?id=针对原生api进行优化
+    var resOrder = await ajax({
+      url: api.placeOrder,
+      data: {
+        cart_id: this.cart_id,
+        ifcart: 0,  // 1=是购物车，0=不是购物车
+        address_id: this.address.address_id,  // 地址id
+        vat_hash: this.vat_hash,  //发票信息hash，
+        offpay_hash: this.address_api.offpay_hash,    // 是否支持货到付款，
+        offpay_hash_batch: this.address_api.offpay_hash_batch,   //店铺是否支持货到付款hash
+        pay_name: 'online',
+        invoice_id: 0,   // 发票
+        pd_pay: this.payment_type,  // 支付方式
+        password: '666',  // 支付密码
+        voucher: null,  // 优惠券
+      }
+    }).then(res => res.datas)
+
+    var resPay = await ajax({
+      url: api.pay,
+      data: {
+        pay_sn: resOrder.pay_sn,
+        payment_code:  this.payment_type == 0 ?  'mini_wxpay'  :  'predeposit'
+      }
+    }).then(res => res.datas)
+    
+    if(resPay.state == 1) {
+      wx.requestPayment({
+        ...resPay.api_pay,
+        success (res) {
+          wx.showToast({
+            title: '支付成功'
+          })
+          that.$redirect(`orderlist`);
+        },
+        fail (res) {
+            that.$redirect(`orderlist`);
+        }
+      })
+    } 
+  }
 
   events = {};
   onLoad(options) {
@@ -191,7 +217,8 @@ export default class ShopCart extends wepy.page {
     var app = this.$parent;
     // 全局订单信息
     var orderInfo = app.globalData.orderInfo
-    console.log(orderInfo)
+    // 邮费信息
+    this.postage =orderInfo.address_api.content || {}
     // 地址信息
     this.address =  Object.prototype.toString.call(orderInfo.address_info)  == '[object Object]' ? orderInfo.address_info : ''
     // 多店铺信息
@@ -199,13 +226,9 @@ export default class ShopCart extends wepy.page {
     // 商品列表
     var goods_list = []
     // 商品总价格
-    var goodsPrice = 0
     Object.values(orderInfo.store_cart_list).forEach(item => {
       goods_list = goods_list.concat(item.goods_list)
-      goodsPrice += Number(item.store_goods_total)
     })
-    this.goodsPrice = goodsPrice.toFixed(2)
-    this.goods_list = goods_list
     // 商品总数量
     var goodsAllNum = 0
     goods_list.forEach(item => {
@@ -223,7 +246,7 @@ export default class ShopCart extends wepy.page {
     // 运费
     this.goods_freight = orderInfo.goods_freight
     // 余额
-    this.member_points = orderInfo.member_points
+    this.member_points = Number(orderInfo.member_points)
   }
 }
 </script>
@@ -236,6 +259,7 @@ export default class ShopCart extends wepy.page {
   color: #999999;
 }
 .settlement-wrap {
+  background: #eee;
   padding-bottom: 100rpx;
   box-sizing: border-box;
   min-height: 100vh;
@@ -274,104 +298,104 @@ export default class ShopCart extends wepy.page {
   }
 }
 .usergoods-wrap {
-  border-top: 10rpx solid #f9f9f9;
-  .usergoods {
-    padding: 30rpx;
-    display: flex;
-    align-items: center;
-    .goodsimg {
-      width: 156rpx;
-      height: 156rpx;
-      border-radius: 10rpx;
-      margin-right: 26rpx;
-    }
-    .goods-right {
-      flex: 1;
+  padding-top: 40rpx;
+  .shop-list {
+    background: #fff;
+    width: 700rpx;
+    margin: 0 auto 40rpx;
+    border-radius: 20rpx;
+    .usergoods {
+      padding: 30rpx;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 160rpx;
-      .goodsname {
-        font-weight: bold;
-        width: 500rpx;
-        font-size: 30rpx;
+      align-items: center;
+      .goodsimg {
+        width: 156rpx;
+        height: 156rpx;
+        border-radius: 10rpx;
+        margin-right: 26rpx;
       }
-      .goodstag {
+      .goods-right {
         flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 160rpx;
+        .goodsname {
+          font-weight: bold;
+          width: 450rpx;
+          font-size: 30rpx;
+        }
+        .goodstag {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          text {
+            display: block;
+            padding: 0 20rpx;
+            background: #fbfbfb;
+            border-radius: 6rpx;
+            height: 42rpx;
+            line-height: 42rpx;
+            color: #a3a3a3;
+            font-size: 26rpx;
+          }
+          .goodnum {
+            color: #999;
+          }
+        }
+        .goodprice {
+          color: #f92832;
+          text-align: right;
+          .price {
+            font-size: 28rpx;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+    .goods-service {
+      padding: 30rpx;
+      box-sizing: border-box;
+      .com-list {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        text {
-          display: block;
-          padding: 0 20rpx;
-          background: #fbfbfb;
-          border-radius: 6rpx;
-          height: 42rpx;
-          line-height: 42rpx;
-          color: #a3a3a3;
-          font-size: 26rpx;
+        height: 70rpx;
+        .imgright {
+          width: 44rpx;
+          height: 44rpx;
         }
-        .goodnum {
-          color: #999;
-        }
-      }
-      .goodprice {
-        color: #f92832;
-        text-align: right;
-        .price {
-          font-size: 32rpx;
+        .title {
           font-weight: bold;
         }
+        .price {
+          flex: 1;
+          text-align: right;
+        }
       }
-    }
-  }
-}
-.option-wrap {
-  border-top: 10rpx solid #f2f2f2;
-  .option-item {
-    height: 90rpx;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 30rpx;
-    border-bottom: 1px solid #f2f2f2;
-    .com-title {
-      font-weight: bold;
-    }
-    .description {
-      display: flex;
-      align-items: center;
-      flex: 1;
-      justify-content: flex-end;
-      > image {
-        width: 24rpx;
-        height: 24rpx;
-      }
-      text {
-        font-size: 24rpx;
-        padding: 0 20rpx 0 10rpx;
-      }
-    }
-    > image {
-      width: 48rpx;
-      height: 48rpx;
-    }
-    .price {
-      color: #f92832;
-      text {
+      .merchandise-subtotal {
+        text-align: right;
+        height: 88rpx;
+        line-height: 88rpx;
         font-weight: bold;
-        font-size: 36rpx;
+        font-size: 30rpx;
+        > text {
+          color: #f92832;
+        }
       }
     }
   }
 }
+
 .settlebottom {
+  background: #fff;
   border-top: 1px solid #f2f2f2;
   position: fixed;
   display: flex;
+  bottom: 0;
   justify-content: space-between;
   align-items: center;
-  bottom: 0;
   z-index: 999;
   height: 100rpx;
   line-height: 100rpx;
@@ -427,11 +451,12 @@ export default class ShopCart extends wepy.page {
   }
 }
 .price-type {
-  border-top: 20rpx solid #f2f2f2;
-  position: absolute;
-  bottom: 100rpx;
-  width: 100%;
+  margin: 0 auto;
+  width: 700rpx;
+  box-sizing: border-box;
+  padding: 20rpx;
   background: #fff;
+  border-radius: 10rpx;
   .type-item {
     display: flex;
     justify-content: space-between;
@@ -456,7 +481,7 @@ export default class ShopCart extends wepy.page {
       padding-left: 30rpx;
       font-weight: bold;
       color: #282828;
-      font-size: 30rpx;
+      font-size: 28rpx;
     }
   }
   .type-active {

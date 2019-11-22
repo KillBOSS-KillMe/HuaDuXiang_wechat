@@ -219,7 +219,7 @@
   z-index: 999;
 }
 .logo-wrap {
-  margin-bottom: 160rpx;
+  margin-bottom: 50rpx;
   text-align: center;
   .logo-img {
     width: 250rpx;
@@ -229,7 +229,6 @@
 </style>
 <template>
   <view class="wrap">
-    <paspopup @pasHanld.user="pasHanld" :pasFlag.sync="pasFlag" :pasPrice.sync="pasPrice"></paspopup>
     <view class="search-wrap" @tap="navSearch">
       <view class="search">
         <image class="search-img" src="/assets/img/image10.png" />
@@ -367,7 +366,6 @@ var timer = require('../utils/wxTimer.js'); // 倒计时
 var api = require('../api.js');
 import { ajax } from '../ajax.js';
 
-import paspopup from '../components/pas_popup'; // 底部导航
 
 
 export default class Index extends wepy.page {
@@ -375,15 +373,13 @@ export default class Index extends wepy.page {
     navigationBarTitleText: '首页'
   };
   components = {
-    nav: nav,
-    paspopup
+    nav: nav
   };
 
   mixins = [];
 
   data = {
-    pasFlag: false,  // 余额支付
-    pasPrice: '1000', // 余额支付
+    
     chooesId: '',
     hasUserInfo: false,
     userInfo: {},
@@ -473,11 +469,7 @@ export default class Index extends wepy.page {
   onShow() {}
 
   methods = {
-    // 余额支付密码回调
-    pasHanld(e){
-      console.log(e)
-      this.pasFlag = false
-    },
+   
     async tapName(url, id) {
       var that = this
       if(url == 'discount') {
