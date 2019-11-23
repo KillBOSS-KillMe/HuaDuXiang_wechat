@@ -64,15 +64,21 @@
       <text>08月22日 00:0000开始支付尾款</text>
     </view>
 
-    <view class="price-type">
-      <block wx:if="{{index == 0 || member_points > 0}}" wx:for="{{priceArr}}" wx:for-index="index" wx:for-item="item" wx:key="key">
-        <view class="type-item {{payment_type == index ? 'type-active' : ''}}" bindtap="changePriceType" data-wpychangepricetype-a="{{index}}">
-          <image class="type-img" src="/assets/img/{{item.icon}}"/>
-          <text>{{item.title}}<text wx:if="{{index == 1}}">({{member_points}}元)</text> </text>
-          <image class="active-img" src="/assets/img/image60.png"/>
-          <image class="other-img" src="/assets/img/image59.png"/>
+    <view class="price-type" wx:if="{{member_points>0}}">
+      <view class="type">
+        <view class="left">
+          <text>使用余额支付</text>
+          <switch color="#48CFAE" checked="{{payment_type == 1}}" bindchange="changePayment"/>
         </view>
-      </block>
+        <view class="price">
+          <text>可用余额</text>
+          <view>￥{{member_points}}</view>
+        </view>
+      </view>
+      <view class="input-wrap" wx:if="{{payment_type == 1}}">
+        <text>输入支付密码</text>
+        <input type="password" bindinput="inputPassword" value="{{password}}" maxlength="6"/>
+      </view>
     </view>
     <!-- 底部 订单提交 -->
     <view class="settlebottom">
@@ -83,35 +89,4 @@
       </view>
       <button class="sub-btn" bindtap="getWXPayment">提交订单</button>
     </view>
-
-    
-  
-  <view class="list">
-    <view class="{{$paspopup$pas$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$paspopup$pas$move">
-      <view class="mask" bindtap="$paspopup$pas$hideMask"/>
-      
-    <view class="pas-box">
-      <view class="title">
-        <view class="close" bindtap="$paspopup$hideMask">X</view>
-        <text>请输入支付密码</text>
-      </view>
-      <view class="price">￥{{$paspopup$pasPrice}}</view>
-      <view class="pay-type">
-        <view>支付方式</view>
-        <view>余额</view>
-      </view>
-      <view class="input-hide"> 
-        <input type="number" focus="{{$paspopup$focus}}" maxlength="6" bindblur="$paspopup$bindblur" value="{{$paspopup$pasvalue}}" bindinput="$paspopup$bindinput"/>
-      </view>
-      <view bindtap="$paspopup$onFocus" class="pas-input">
-           <block wx:for="{{$paspopup$pasArr}}" wx:for-index="$paspopup$index" wx:for-item="$paspopup$item" wx:key="$paspopup$key">
-             <view>{{$paspopup$item}}</view>
-           </block>
-      </view>
-    </view>
-  
-    </view>
-  </view>
-
-
   </view>

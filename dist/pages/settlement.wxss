@@ -1,4 +1,3 @@
-@import "./../components/pas_popup.wxss";
 .red-color {
   color: #ff2228;
 }
@@ -194,43 +193,50 @@
   padding-left: 30rpx;
 }
 .price-type {
-  margin: 0 auto;
-  width: 700rpx;
-  box-sizing: border-box;
-  padding: 20rpx;
   background: #fff;
+  width: 690rpx;
   border-radius: 10rpx;
+  margin: 0 auto;
+  color: #333;
+  padding: 20rpx;
+  box-sizing: border-box;
 }
-.price-type .type-item {
+.price-type .type {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 90rpx;
-  line-height: 90rpx;
-  padding: 0 30rpx;
+  height: 80rpx;
 }
-.price-type .type-item .type-img {
-  width: 44rpx;
-  height: 44rpx;
-}
-.price-type .type-item .active-img,
-.price-type .type-item .other-img {
-  width: 44rpx;
-  height: 44rpx;
-}
-.price-type .type-item .active-img {
-  display: none;
-}
-.price-type .type-item text {
-  flex: 1;
-  padding-left: 30rpx;
-  font-weight: bold;
-  color: #282828;
+.price-type .type .left {
   font-size: 28rpx;
 }
-.price-type .type-active .active-img {
-  display: block;
+.price-type .type .left switch {
+  transform: scale(0.7);
 }
-.price-type .type-active .other-img {
-  display: none;
+.price-type .type .left text {
+  color: #666;
+}
+.price-type .type .price {
+  display: flex;
+  align-items: center;
+}
+.price-type .type .price > view {
+  color: #f92832;
+  margin-left: 10rpx;
+  font-weight: bold;
+}
+.price-type .type .price text {
+  color: #666;
+}
+.price-type .input-wrap {
+  display: flex;
+  align-items: center;
+  height: 80rpx;
+}
+.price-type .input-wrap > input {
+  flex: 1;
+  margin-left: 20rpx;
+}
+.price-type .input-wrap text {
+  color: #666;
 }
