@@ -65,7 +65,7 @@
       <text>08月22日 00:0000开始支付尾款</text>
     </view>
 
-    <view class="price-type" wx:if="{{member_points>0}}">
+    <view class="price-type" wx:if="{{available_predeposit>0}}">
       <view class="type">
         <view class="left">
           <text>使用余额支付</text>
@@ -73,7 +73,7 @@
         </view>
         <view class="price">
           <text>可用余额</text>
-          <view>￥{{member_points}}</view>
+          <view>￥{{available_predeposit}}</view>
         </view>
       </view>
       <view class="input-wrap" wx:if="{{payment_type == 1}}">
@@ -123,7 +123,7 @@ export default class Settlement extends wepy.page {
     payment_list: [], // 支付方式
     goods_freight: 0, //运费
     payment_type: 0 , //付款类型 0微信 1余额
-    member_points: 0, //用户余额
+    available_predeposit: 0, //用户余额
     password: '', // 用户余额密码
     postage: {}, //邮费
 
@@ -186,7 +186,8 @@ export default class Settlement extends wepy.page {
       url: api.pay,
       data: {
         pay_sn: resOrder.pay_sn,
-        payment_code:  this.payment_type == 0 ?  'mini_wxpay'  :  'predeposit'
+        payment_code:  this.payment_type == 0 ?  'mini_wxpay'  :  'predeposit',
+        password: this.password,  // 支付密码
       }
     }).then(res => res.datas)
     
@@ -252,7 +253,7 @@ export default class Settlement extends wepy.page {
     // 运费
     this.goods_freight = orderInfo.goods_freight
     // 余额
-    this.member_points = Number(orderInfo.member_points)
+    this.available_predeposit = Number(orderInfo.available_predeposit)
   }
 }
 </script>
@@ -496,8 +497,10 @@ export default class Settlement extends wepy.page {
     align-items: center;
     height: 80rpx;
     > input {
-      flex: 1;
       margin-left: 20rpx;
+      border-bottom: 1px solid #ccc;
+      width: 400rpx;
+      height: 70rpx;
     }
     text {
         color: #666;

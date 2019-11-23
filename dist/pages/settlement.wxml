@@ -64,7 +64,7 @@
       <text>08月22日 00:0000开始支付尾款</text>
     </view>
 
-    <view class="price-type" wx:if="{{member_points>0}}">
+    <view class="price-type" wx:if="{{available_predeposit>0}}">
       <view class="type">
         <view class="left">
           <text>使用余额支付</text>
@@ -72,7 +72,7 @@
         </view>
         <view class="price">
           <text>可用余额</text>
-          <view>￥{{member_points}}</view>
+          <view>￥{{available_predeposit}}</view>
         </view>
       </view>
       <view class="input-wrap" wx:if="{{payment_type == 1}}">

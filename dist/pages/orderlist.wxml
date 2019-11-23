@@ -29,7 +29,7 @@
                       <text>×{{ele.goods_num}}</text>
                     </view>
                     <view class="spec">
-                      <view>规格</view>
+                      <view>{{ele.goods_spec}}</view>
                     </view>
                     <view class="price">
                       <text/>
@@ -85,4 +85,30 @@
       <image src="/assets/img/image48.png"/>
       <navigator url="/pages/index" hover-class="none" open-type="reLaunch" class="go">去选购</navigator>
     </view>
+    
+  <view class="list">
+    <view class="{{$paymask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$paymask$move">
+      <view class="mask" bindtap="$paymask$hideMask"/>
+      
+      <view class="price-type">
+        <view class="type">
+          <view class="left">
+            <text>使用余额支付</text>
+            <switch color="#48CFAE" checked="{{payment_type == 1}}" bindchange="changePayment"/>
+          </view>
+          <view class="price">
+            <text>可用余额</text>
+            <view>￥{{member_points}}</view>
+          </view>
+        </view>
+        <view class="input-wrap" wx:if="{{payment_type == 1}}">
+          <text>输入支付密码</text>
+          <input type="password" bindinput="inputPassword" value="{{password}}" maxlength="6"/>
+        </view>
+        <button class="btn">确认支付</button>
+      </view>
+    
+    </view>
+  </view>
+
   </view>

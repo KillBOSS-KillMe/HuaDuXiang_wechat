@@ -1,3 +1,4 @@
+@import "./../components/mask.wxss";
 .contract {
   background: #f9f9f9;
   margin-top: 88rpx;
@@ -186,4 +187,69 @@
   font-size: 30rpx;
   color: #FF2228;
   margin: 0 auto;
+}
+.price-type {
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+  background: #fff;
+  width: 750rpx;
+  border-radius: 10rpx;
+  margin: 0 auto;
+  color: #333;
+  padding: 50rpx 30rpx;
+  box-sizing: border-box;
+}
+.price-type .type {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80rpx;
+}
+.price-type .type .left {
+  font-size: 28rpx;
+}
+.price-type .type .left switch {
+  transform: scale(0.7);
+}
+.price-type .type .left text {
+  color: #666;
+}
+.price-type .type .price {
+  display: flex;
+  align-items: center;
+}
+.price-type .type .price > view {
+  color: #f92832;
+  margin-left: 10rpx;
+  font-weight: bold;
+}
+.price-type .type .price text {
+  color: #666;
+}
+.price-type .input-wrap {
+  display: flex;
+  align-items: center;
+  height: 80rpx;
+}
+.price-type .input-wrap > input {
+  margin-left: 20rpx;
+  border-bottom: 1px solid #ccc;
+  width: 400rpx;
+  height: 70rpx;
+}
+.price-type .input-wrap text {
+  color: #666;
+}
+.price-type .btn {
+  width: 670rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  font-weight: bold;
+  font-size: 28rpx;
+  color: #fff;
+  background: #f2292d;
+  border-radius: 10rpx;
+  margin: 50rpx auto 0;
 }

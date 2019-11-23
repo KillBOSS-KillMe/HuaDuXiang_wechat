@@ -204,7 +204,7 @@ page{
         <view class="pay-btn" @tap="settlement">去结算</view>
       </view>
     </view>
-    <view class="none-content" wx:else>
+    <view class="none-content" wx:if="{{cart_count == 0}}">
       <image src="/assets/img/image48.png"/>
       <navigator url="/pages/index" hover-class="none" open-type="reLaunch" class="go">去选购</navigator>
     </view>
@@ -240,7 +240,7 @@ export default class ShopCart extends wepy.page {
     goodsList: [],
     isAllSelected: false,
     cart_count: null,
-    address_list: []
+    address_list: [],
   };
 
   computed = {
@@ -288,8 +288,9 @@ export default class ShopCart extends wepy.page {
           wx.showToast({
             title: res.datas.msg
           })
-          this.goodsList.splice(idx,1)
-          this.$apply()
+          this.requestGoodsList()
+          // this.goodsList.splice(idx,1)
+          // this.$apply()
         } else {
            wx.showToast({
             title: res.datas.msg,
@@ -349,13 +350,11 @@ export default class ShopCart extends wepy.page {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     let that = this
   
-    this.requestGoodsList()
   }
   requestGoodsList () {
     ajax({
       url: api.cartList
     }).then(res => {
-      console.log(res)
       var cart_list = res.datas.cart_list
       var goodsList = []
       cart_list.forEach(item => {
@@ -367,6 +366,7 @@ export default class ShopCart extends wepy.page {
     })
   }
   onShow() {
+    this.requestGoodsList()
     // 用户收货地址列表
     ajax({
       url: api.addressList
