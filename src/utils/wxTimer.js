@@ -9,7 +9,6 @@ var wxTimer = function (initObj) {
 	this.complete = initObj.complete;					//结束任务
 	this.intervalFn = initObj.intervalFn;				//间隔任务
 	this.name = initObj.name;							//当前计时器在计时器数组对象中的名字
-
 	this.intervarID;									//计时ID
 	this.endTime;										//结束时间
 	this.endSystemTime;									//结束的系统时间
@@ -32,7 +31,6 @@ wxTimer.prototype = {
 			// var m = formatNumber(parseInt((wxTimerSecond % 3600) / 60)) 
 			// var s = formatNumber(parseInt(wxTimerSecond % 60)) 
 			var wxTimerSecond = that.beginTime --
-			// console.log(wxTimerSecond)
 			var h = formatNumber(parseInt(wxTimerSecond / 3600))
 			var m = formatNumber(parseInt((wxTimerSecond % 3600) / 60))
 			var s = formatNumber(parseInt(wxTimerSecond % 60))

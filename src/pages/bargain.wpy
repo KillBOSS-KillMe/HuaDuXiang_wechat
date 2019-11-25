@@ -398,7 +398,7 @@
         <view class="share-content">
           <view class="title">
             您已砍了
-            <text>200</text>元
+            <text>{{kanjia_price}}</text>元
           </view>
           <view class="p">分享给好友，可以多砍一刀哦！</view>
           <button open-type="share" class="share-btn">
@@ -444,7 +444,7 @@ export default class Index extends wepy.page {
     barginData: [],
     topImg: '',
     goods_id: '', //当前商品id
-    attr: [{title: '大小', prop: {'31': '大','32': '小' } }],  // 商品总属性数组
+    attr: [],  // 商品总属性数组
     activeAttr: [], // 当前点击属性数组
     goods_spec: [], // 默认属性数组
     spec_list: {}, // 所有属性对应的商品goods_id
@@ -454,6 +454,7 @@ export default class Index extends wepy.page {
     curpage: 1, //当前页数
     hasmore: false, //是否有下一页
     allpage: null, // 没有数据
+    kanjia_price: 0, //砍价金钱
   };
 
   computed = {};
@@ -464,8 +465,37 @@ export default class Index extends wepy.page {
   }
   methods = {
     addressBtnSubmit() {
-      this.addressFlag = false;
-      this.shareFlag = true;
+      if(!this.address) {
+        wx.showToast({
+          title: '请选择地址',
+          icon: 'none'
+        })
+        return false
+      }
+      ajax({
+        url: api.memberKanjia,
+        data: {
+          goods_id: this.goods_id,
+          address_id: this.address.address_id
+        }
+      }).then(res => {
+        if(res.code == 200) {
+          if(res.datas.state == 0) {
+            wx.showToast({
+              title: res.datas.msg,
+              icon: 'none'
+            })
+          } else {
+            this.kanjia_price = res.datas.kanjia_price
+            this.addressFlag = false;
+            this.shareFlag = true;
+            this.$apply()
+          }
+        } 
+      })
+
+
+      
     },
     attrBtnSubmit() {
       this.attrFlag = false;
@@ -478,16 +508,11 @@ export default class Index extends wepy.page {
     addNum() {
       this.goodsNum++;
     },
-    /**
-     * 跳转商品详情
-     */
     jumpTimeDetails(goods_id, join) {
-      // if(join == 0) {
         this.attrFlag = true;
         this.goods_id = goods_id
         this.$apply()
         this.getShopDetails()
-      // }
     },
     hideMask() {},
     changeAttr(index, idx, ele){
@@ -514,8 +539,8 @@ export default class Index extends wepy.page {
         this.goods_content = res.datas.goods_content
         this.image_list = res.datas.image_list || []
         // 商品属性
-        var spec_name = Object.values(res.datas.goods_content.spec_name)
-        var spec_value = Object.values(res.datas.goods_content.spec_value)
+        var spec_name = Object.values(res.datas.goods_content.spec_name  || {})
+        var spec_value = Object.values(res.datas.goods_content.spec_value  || {})
         var attr = []
         spec_value.forEach((item, index) => {
           if(!attr[index]) {
@@ -525,9 +550,8 @@ export default class Index extends wepy.page {
           attr[index].prop = item
         })
         this.attr = attr
-        console.log(attr)
-        this.goods_spec = Object.values(res.datas.goods_content.goods_spec)
-        this.activeAttr = Object.keys(res.datas.goods_content.goods_spec)
+        this.goods_spec = Object.values(res.datas.goods_content.goods_spec || {})
+        this.activeAttr = Object.keys(res.datas.goods_content.goods_spec  || {})
         this.spec_list = res.datas.spec_list
         this.$apply()
       }
@@ -547,6 +571,14 @@ export default class Index extends wepy.page {
       this.$apply()
     })
   }
+  onShareAppMessage(e) {
+    if(e.from == "button") {
+      var user = wx.getStorageSync('user')
+      return {
+        path: `/pages/barginInfo?goods_id=${this.goods_id}&userid=${user.userid}`
+      }
+    }
+  }
   bargainGoodsList() {
     ajax({
       url: api.bargainGoodsList,
@@ -556,7 +588,6 @@ export default class Index extends wepy.page {
       }
     }).then(res => {
       this.barginData = res.datas.list
-
       this.hasmore = res.datas.hasmore
       this.allpage = res.datas.allpage || 0
       this.$apply()

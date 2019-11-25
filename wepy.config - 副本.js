@@ -22,7 +22,7 @@ module.exports = {
   },
   compilers: {
     less: {
-      compress: true
+      compress: prod
     },
     /*sass: {
       outputStyle: 'compressed'
@@ -47,7 +47,7 @@ module.exports = {
   }
 }
 
-if (prod || true) {
+if (prod) {
 
   // 压缩sass
   // module.exports.compilers['sass'] = {outputStyle: 'compressed'}

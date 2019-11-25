@@ -130,6 +130,11 @@ module.exports = {
   // 用户选择支付方式—
   payInfo: URL + "/api/mobile/index.php?w=member_buy&t=pay",
   // 检测用户二级密码是否输入正确
-  checkPassword: URL + "/api/mobile/index.php?w=member_index&t=check_password"
+  checkPassword: URL + "/api/mobile/index.php?w=member_index&t=check_password",
+  // 分销员明细
+  fxBill: URL + "/api/mobile/index.php?w=member_fx&t=fx_bill",
+  // 砍价第一刀接口
+  memberKanjia: URL + "/api/mobile/index.php?w=member_buy&t=member_kanjia",
+
 
 }

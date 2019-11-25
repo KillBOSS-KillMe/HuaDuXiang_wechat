@@ -1,6 +1,8 @@
 <script>
 import wepy from 'wepy';
 import 'wepy-async-function';
+var api = require('./api.js');
+import { ajax } from './ajax.js';
 
 export default class extends wepy.app {
   constructor() {
@@ -77,7 +79,7 @@ export default class extends wepy.app {
     userInfo: '',
     requestImgUrl: 'https://www.hdxsy.cn/system/upfiles/'
   };
-  onLaunch() {
+  async onLaunch() {
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -93,6 +95,19 @@ export default class extends wepy.app {
         }
       }
     });
+
+    var data = await wepy.login();
+    var user = wx.getStorageSync('user')
+    if(!user.token) {
+      ajax({
+        url: api.getToken,
+        data: {
+          code: data.code
+        }
+      }).then(res=> {
+        wx.setStorageSync('user', res.datas)
+      })
+    }
   }
 }
 </script>

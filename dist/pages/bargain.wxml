@@ -92,7 +92,7 @@
         <view class="share-content">
           <view class="title">
             您已砍了
-            <text>200</text>元
+            <text>{{kanjia_price}}</text>元
           </view>
           <view class="p">分享给好友，可以多砍一刀哦！</view>
           <button open-type="share" class="share-btn">

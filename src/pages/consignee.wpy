@@ -53,6 +53,14 @@ export default class Index extends wepy.page {
   methods = {
     changeAddress(item) {
       var app = this.$parent;
+      var page = this.getCurrentPages()
+      var route = page[page.length - 2].route
+      app.globalData.address = item
+      if(route == "pages/bargain") {
+        wx.navigateBack()
+        return false
+      }
+
       var cart_id = app.globalData.orderInfo.cart_id
       ajax({
         url: api.memberBuyOne,
@@ -64,8 +72,6 @@ export default class Index extends wepy.page {
         if(res.code == 200) {
           res.datas.cart_id = cart_id
           app.globalData.orderInfo = res.datas
-          var page = this.getCurrentPages()
-          var route = page[page.length - 2].route
           if(route == 'pages/settlement') {
             wx.navigateBack()
           } else {

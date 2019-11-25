@@ -431,9 +431,9 @@ export default class Index extends wepy.page {
 
   events = {};
   onShareAppMessage(e) {
-    if(this.type == "share") {
+    if(this.lei == "fenxiao") {
       var user = wx.getStorageSync('user')
-      console.log(user)
+      console.log( `/pages/shopDetails?goods_id=${this.goods_id}&userid=${user.userid}`)
       return {
         path: `/pages/shopDetails?goods_id=${this.goods_id}&userid=${user.userid}`
       }
@@ -443,7 +443,7 @@ export default class Index extends wepy.page {
     console.log(t)
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     this.goods_id = t.goods_id;
-    this.type = t.type
+    this.lei = t.lei
     this.$apply()
     await this.getShopDetails()
     ajax({

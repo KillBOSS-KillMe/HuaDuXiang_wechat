@@ -7,30 +7,30 @@
       <view>
         <view class="income-title">我的收入</view>
         <view class="income-price">
-          <text>￥</text>5200
+          <text>￥</text>{{total}}
         </view>
       </view>
       <view class="{{scrollFlag ? 'nav-top-active' : ''}}">
         <view class="nav-wrap">
           <repeat for="{{bannerArr}}" item="item">
             <view
-              class="nav-item {{navIdx == index ? 'nav-active' : ''}}"
+              class="nav-item {{navIdx == index ? '' : ''}}"
               @tap="changeNav({{index}})"
             >{{item}}</view>
           </repeat>
         </view>
         <view class="details-list" wx:if="{{navIdx == 0}}">
-          <repeat for="{{9}}" item="item">
+          <repeat for="{{bill_list}}" item="item">
             <view class="details-item">
               <view class="title">
                 <view>分销收入</view>
                 <view class="price">
-                  <text>+</text>￥60
+                  <text>+</text>￥{{item.fx_pay_amount}}
                 </view>
               </view>
               <view class="fot">
-                <view>张三</view>
-                <view>2018.9.1</view>
+                <view>{{item.buyer_name}}</view>
+                <view>{{item.time}}</view>
               </view>
             </view>
           </repeat>
@@ -62,13 +62,17 @@ export default class Index extends wepy.page {
 
   data = {
     requestImgUrl: '',
-    bannerArr: ['收入明细', '我的推荐'],
+    bannerArr: ['收入明细'],
     navIdx: 0,
     topHeight: null, // 吸顶距离
     scrollFlag: false, // 吸顶flag
     isDist: true, // 是否分销员
     state: null,
-    txt: ''
+    txt: '',
+    hasmore: false, // 是否有下一页
+    curpage: 1, //当前页数
+    bill_list: [],
+    total: 0
   };
 
   computed = {};
@@ -88,13 +92,16 @@ export default class Index extends wepy.page {
       this.state = res.datas.state;
       switch (res.datas.state) {
         case 0:
-          this.txt = '申请成为分销员'
+          this.txt = '申请成为分销员';
           break;
         default:
-          this.txt = '重新申请成为分销员'
+          this.txt = '重新申请成为分销员';
           break;
       }
-      this.$apply()
+      if (res.datas.state == 2) {
+        this.requestList();
+      }
+      this.$apply();
     });
   }
   fxMemberApply() {
@@ -111,13 +118,13 @@ export default class Index extends wepy.page {
         });
         var timer = setTimeout(() => {
           wx.navigateBack();
-          clearTimeout(timer)
+          clearTimeout(timer);
         }, 2000);
       } else {
         wx.showToast({
           msg: res.datas.state,
           icon: 'none'
-        })
+        });
       }
     });
   }
@@ -128,16 +135,33 @@ export default class Index extends wepy.page {
       this.navIdx = idx;
     },
     distHanld() {
-      if(this.state == 1) {
+      if (this.state == 1) {
         wx.showToast({
           title: '正在审核中，请勿重复',
           icon: 'none'
-        })
-        return false
-      } 
+        });
+        return false;
+      }
       this.fxMemberApply();
     }
   };
+  requestList() {
+    ajax({
+      url: api.fxBill,
+      data: {
+        page: 10,
+        curpage: this.curpage
+      }
+    }).then(res => {
+      if (res.code == 200) {
+        var list = res.datas.bill_list || [];
+        this.bill_list = this.bill_list.concat(list);
+        this.hasmore = res.hasmore;
+        this.total = res.datas.total
+        this.$apply();
+      }
+    });
+  }
   onPageScroll(e) {
     var isSatisfy = e.scrollTop >= this.topHeight ? true : false;
     if (this.scrollFlag == isSatisfy) {
@@ -148,6 +172,12 @@ export default class Index extends wepy.page {
   }
 
   events = {};
+  onReachBottom() {
+    if (this.hasmore) {
+      this.curpage++;
+      this.requestIndexGoodsList();
+    }
+  }
 }
 </script>
 
