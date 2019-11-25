@@ -200,6 +200,16 @@
   padding: 50rpx 30rpx;
   box-sizing: border-box;
 }
+.price-type .price-all {
+  text-align: center;
+  font-size: 32rpx;
+  color: #333;
+  padding: 20rpx 0;
+  font-weight: bold;
+}
+.price-type .price-all text {
+  color: #f2292d;
+}
 .price-type .type {
   display: flex;
   justify-content: space-between;
@@ -241,6 +251,12 @@
 .price-type .input-wrap text {
   color: #666;
 }
+.price-type .price-type-title {
+  text-align: center;
+  font-size: 26rpx;
+  color: #ccc;
+  padding: 30rpx 0 0 0;
+}
 .price-type .btn {
   width: 670rpx;
   height: 80rpx;
@@ -251,5 +267,5 @@
   color: #fff;
   background: #f2292d;
   border-radius: 10rpx;
-  margin: 50rpx auto 0;
+  margin: 30rpx auto 0;
 }

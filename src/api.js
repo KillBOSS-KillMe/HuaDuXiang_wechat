@@ -1,10 +1,10 @@
 
 // D
-// const URL = "http://www.shopdate.me"
+var URL = "http://www.shopdate.me"
 // L
-// const URL = "http://www.hdx.cc"  
+// var URL = "http://www.hdx.cc"  
 // 线上
-const URL = "https://www.hdxsy.cn"
+// var URL = "https://www.hdxsy.cn"
 
 module.exports = {
   // 小程序授权微信-返回用户 user_id—接口，用户信息接口。
@@ -124,5 +124,12 @@ module.exports = {
   // 获取店铺优惠券列表
   voucherTplList: URL + "/api/mobile/index.php?w=voucher&t=voucher_tpl_list",
   // 领取添加优惠卷
-  voucherFreeex: URL + "/api/mobile/index.php?w=member_voucher&t=voucher_freeex"
+  voucherFreeex: URL + "/api/mobile/index.php?w=member_voucher&t=voucher_freeex",
+  // 用户选择支付方式—
+  payInfo: URL + "/api/mobile/index.php?w=member_buy&t=pay",
+  // 用户选择支付方式—
+  payInfo: URL + "/api/mobile/index.php?w=member_buy&t=pay",
+  // 检测用户二级密码是否输入正确
+  checkPassword: URL + "/api/mobile/index.php?w=member_index&t=check_password"
+
 }

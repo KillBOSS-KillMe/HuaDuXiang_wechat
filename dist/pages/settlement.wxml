@@ -64,11 +64,11 @@
       <text>08月22日 00:0000开始支付尾款</text>
     </view>
 
-    <view class="price-type" wx:if="{{available_predeposit>0}}">
+    <!-- <view class="price-type" wx:if="{{available_predeposit>0}}">
       <view class="type">
         <view class="left">
           <text>使用余额支付</text>
-          <switch color="#48CFAE" checked="{{payment_type == 1}}" bindchange="changePayment"/>
+          <switch color="#48CFAE" checked="{{payment_type == 1}}" bindchange="changePayment"></switch>
         </view>
         <view class="price">
           <text>可用余额</text>
@@ -77,9 +77,9 @@
       </view>
       <view class="input-wrap" wx:if="{{payment_type == 1}}">
         <text>输入支付密码</text>
-        <input type="password" bindinput="inputPassword" value="{{password}}" maxlength="6"/>
+        <input type="password" bindinput="inputPassword" value="{{password}}" maxlength="6">
       </view>
-    </view>
+    </view> -->
     <!-- 底部 订单提交 -->
     <view class="settlebottom">
       <view class="num">共{{goodsAllNum}}件</view>
@@ -89,4 +89,33 @@
       </view>
       <button class="sub-btn" bindtap="getWXPayment">提交订单</button>
     </view>
+
+    
+  <view class="list">
+    <view class="{{$paymask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$paymask$move">
+      <view class="mask" bindtap="$paymask$hideMask"/>
+      
+      <view class="price-type">
+        <view class="price-all">支付金额：<text>￥{{allPrice}}</text></view>
+        <view class="type">
+          <view class="left">
+            <text>使用余额支付</text>
+            <switch color="#48CFAE" checked="{{payment_type == 1}}" disabled="{{disabledSwitch}}" bindchange="changePayment" bindtap="clickSwitch"/>
+          </view>
+          <view class="price">
+            <text>可用余额</text>
+            <view>￥{{available_predeposit}}</view>
+          </view>
+        </view>
+        <view class="input-wrap" wx:if="{{payment_type == 1}}">
+          <text>输入支付密码</text>
+          <input type="password" bindinput="inputPassword" value="{{password}}" maxlength="6"/>
+        </view>
+        <view class="price-type-title">支付方式：{{payment_type == 0 ? '微信支付':'余额支付'}}</view>
+        <button class="btn" bindtap="pay">确认支付</button>
+      </view>
+    
+    </view>
+  </view>
+
   </view>

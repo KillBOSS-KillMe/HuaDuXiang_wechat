@@ -64,7 +64,7 @@
                 <view class="goods-btn" @tap="orderCancel({{item.order_id}}, {{index}})">
                   取消订单
                 </view>
-                <view class="goods-btn color-y" data-order_id="{{item.order_id}}" @tap="pay({{item.order_id}}, {{index}}, {{item.pay_sn}})">立即付款</view>
+                <view class="goods-btn color-y" data-order_id="{{item.order_id}}" @tap="getWXPayment({{item.order_id}}, {{item.pay_sn}}, {{item.order_amount}})">立即付款</view>
               </view>
               <!-- 20 待发货   -->
               <view class="goods-option" wx:elif="{{item.order_state == 20}}">
@@ -106,21 +106,23 @@
     </view>
     <paymask :maskFlag.sync="payFlag">
       <view class="price-type">
+        <view class="price-all">支付金额：<text>￥{{allPrice}}</text></view>
         <view class="type">
           <view class="left">
             <text>使用余额支付</text>
-            <switch color="#48CFAE" checked="{{payment_type == 1}}" bindchange="changePayment"></switch>
+            <switch color="#48CFAE" checked="{{payment_type == 1}}" bindchange="changePayment"  disabled="{{disabledSwitch}}" bindtap="clickSwitch"></switch>
           </view>
           <view class="price">
             <text>可用余额</text>
-            <view>￥{{member_points}}</view>
+            <view>￥{{available_predeposit}}</view>
           </view>
         </view>
         <view class="input-wrap" wx:if="{{payment_type == 1}}">
           <text>输入支付密码</text>
           <input type="password" @input="inputPassword" value="{{password}}" maxlength="6">
         </view>
-        <button class="btn">确认支付</button>
+        <view class="price-type-title">支付方式：{{payment_type == 0 ? '微信支付':'余额支付'}}</view>
+        <button class="btn" @tap="pay">确认支付</button>
       </view>
     </paymask>
   </view>
@@ -146,8 +148,6 @@ export default class ShopCart extends wepy.page {
   mixins = [];
 
   data = {
-    payment_type: 0 , //付款类型 0微信 1余额
-    payFlag: true,
     navArr: [
       { title: '全部', id: 0 },
       { title: '待付款' },
@@ -161,11 +161,46 @@ export default class ShopCart extends wepy.page {
     curpage: 1,
     hasmore: false,
     page_total: '',
+    disabledSwitch: false,
+    allPrice: 0, // 订单金额
+    available_predeposit: 0, //用户余额
+    payment_type: 0 , //付款类型 0微信 1余额
+    payFlag: false,
+    predepositFlag: true, // 余额支付是否开启
+    mini_wxpayFlag: true, // 微信支付是否开启
+    order_id: '',
+    pay_sn: ''
   };
 
-  computed = {};
+  computed = {
+    disabledSwitch() {
+      return this.available_predeposit < this.allPrice || !this.predepositFlag
+    }
+  };
 
   methods = {
+    clickSwitch() {
+      var that = this
+      if(!this.predepositFlag) {
+        wx.showToast({
+          title: '余额支付暂未开启，请使用微信支付',
+          icon: 'none'
+        })
+        return false
+      }
+      if(this.available_predeposit < this.allPrice) {
+        this.payment_type = 0
+        wx.showModal({
+          title: "提醒",
+          content: "余额不足，是否前往充值？",
+          success(res) {
+            if(res.confirm) {
+              that.$redirect(`vip`);
+            }
+          }
+        })
+      }
+    },
     inputPassword(e) {
       this.password = e.detail.value
     },
@@ -259,29 +294,86 @@ export default class ShopCart extends wepy.page {
         }
       })
     },
-    async pay(order_id, index, pay_sn) {
+    getWXPayment(order_id, pay_sn, order_amount) {
       this.payFlag = true
-      var resData = await ajax({
+      this.allPrice = Number(order_amount)
+      this.order_id = order_id
+      this.pay_sn = pay_sn
+      this.requestPayType()
+
+
+    },
+    async pay() {
+      var that = this
+      // 余额支付跳框输入密码
+      if(this.payment_type == 1) {
+        if(!this.password) {
+          wx.showToast({
+            title: '请输入密码',
+            icon: 'none'
+          })
+          return false
+        }
+        var passwordData = await ajax({
+          url: api.checkPassword,
+          data: {
+            password: this.password
+          }
+        })
+        if(passwordData.datas.state == 0) {
+          wx.showToast({
+            title: '密码错误，请重新输入',
+            icon: 'none'
+          })
+          return false
+        }
+      }
+      var resPay = await ajax({
         url: api.pay,
         data: {
-          pay_sn: pay_sn,
-          payment_code: 'mini_wxpay'
+          pay_sn: this.pay_sn,
+          payment_code:  this.payment_type == 0 ?  'mini_wxpay'  :  'predeposit',
+          password: this.password,  // 支付密码
+          pd_pay: this.payment_type,  // 支付方式
         }
-      })
-
-      if(resData.datas.state == 1) {
-        var api_pay = resData.datas.api_pay
-        wx.requestPayment({
-          ...api_pay,
-          success(res) {
-            console.log(res)
-          },
-          complete(d) {console.log(d)}
+      }).then(res => res.datas)
+      if(resPay.state == 0) {
+        wx.showToast({
+          title: resPay.msg,
+          icon: 'none'
         })
       }
-    },
-    truePay() {
-
+      if(resPay.state == 1) {
+        if(this.payment_type == 0) {
+          wx.requestPayment({
+            ...resPay.api_pay,
+            success (res) {
+              wx.showToast({
+                title: '支付成功'
+              })
+            },
+            fail (res) {
+              wx.showToast({
+                title: '支付失败'
+              })
+            },
+            complete() {
+              var timer = setTimeout(() => {
+                that.$redirect(`orderlist`);
+                clearTimeout(timer)
+              }, 1000)
+            }
+          })
+        } else {
+          wx.showToast({
+            title: '支付成功'
+          })
+          var timer = setTimeout(() => {
+            that.$redirect(`orderlist`);
+            clearTimeout(timer)
+          }, 1000)
+        }
+      } 
     },
     changeNav(idx) {
       if(idx == this.navIdx) return
@@ -292,8 +384,32 @@ export default class ShopCart extends wepy.page {
       this.requestList()
     }
   };
+  requestPayType() {
+    // 用户选择支付方式—
+    ajax({
+      url: api.payInfo,
+      data: {
+        pay_sn: this.pay_sn
+      }
+    }).then(res => {
+      if(res.code == 200) {
+        this.mini_wxpayFlag = res.datas.pay_info.mini_wxpay
+        this.predepositFlag = res.datas.pay_info.predeposit
+        this.$apply()
+      }
+    })
+  }
   onLoad(t) {
     this.navIdx = t.idx || 0
+    // 用户个人中心数据接口
+    ajax({
+      url: api.memberInfo,
+    }).then(res => {
+      if(res.code == 200) {
+        this.available_predeposit = Number(res.datas.member_data.available_predeposit)
+        this.$apply()
+      }
+    })
     this.requestList()
   }
   onShow() {
@@ -536,6 +652,16 @@ export default class ShopCart extends wepy.page {
   color: #333;
   padding:50rpx 30rpx;
   box-sizing: border-box;
+  .price-all {
+    text-align: center;
+    font-size: 32rpx;
+    color: #333;
+    padding: 20rpx 0;
+      font-weight: bold;
+    text {
+      color:#f2292d;
+    }
+  }
   .type {
     display: flex;
     justify-content: space-between;
@@ -577,6 +703,12 @@ export default class ShopCart extends wepy.page {
         color: #666;
     }
   }
+  .price-type-title {
+    text-align: center;
+    font-size: 26rpx;
+    color: #ccc;
+    padding: 30rpx 0 0 0;
+  }
   .btn {
     width: 670rpx;
     height: 80rpx;
@@ -587,7 +719,7 @@ export default class ShopCart extends wepy.page {
     color: #fff;
     background: #f2292d;
     border-radius: 10rpx;
-    margin: 50rpx auto 0;
+    margin: 30rpx auto 0;
   }
 }
 </style>

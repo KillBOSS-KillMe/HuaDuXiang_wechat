@@ -1,3 +1,4 @@
+@import "./../components/mask.wxss";
 .red-color {
   color: #ff2228;
 }
@@ -201,6 +202,16 @@
   padding: 20rpx;
   box-sizing: border-box;
 }
+.price-type .price-all {
+  text-align: center;
+  font-size: 32rpx;
+  color: #333;
+  padding: 20rpx 0;
+  font-weight: bold;
+}
+.price-type .price-all text {
+  color: #f2292d;
+}
 .price-type .type {
   display: flex;
   justify-content: space-between;
@@ -241,4 +252,75 @@
 }
 .price-type .input-wrap text {
   color: #666;
+}
+.price-type {
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+  background: #fff;
+  width: 750rpx;
+  border-radius: 10rpx;
+  margin: 0 auto;
+  color: #333;
+  padding: 50rpx 30rpx;
+  box-sizing: border-box;
+}
+.price-type .type {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80rpx;
+}
+.price-type .type .left {
+  font-size: 28rpx;
+}
+.price-type .type .left switch {
+  transform: scale(0.7);
+}
+.price-type .type .left text {
+  color: #666;
+}
+.price-type .type .price {
+  display: flex;
+  align-items: center;
+}
+.price-type .type .price > view {
+  color: #f92832;
+  margin-left: 10rpx;
+  font-weight: bold;
+}
+.price-type .type .price text {
+  color: #666;
+}
+.price-type .input-wrap {
+  display: flex;
+  align-items: center;
+  height: 80rpx;
+}
+.price-type .input-wrap > input {
+  margin-left: 20rpx;
+  border-bottom: 1px solid #ccc;
+  width: 400rpx;
+  height: 70rpx;
+}
+.price-type .input-wrap text {
+  color: #666;
+}
+.price-type .price-type-title {
+  text-align: center;
+  font-size: 26rpx;
+  color: #ccc;
+  padding: 30rpx 0 0 0;
+}
+.price-type .btn {
+  width: 670rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  font-weight: bold;
+  font-size: 28rpx;
+  color: #fff;
+  background: #f2292d;
+  border-radius: 10rpx;
+  margin: 30rpx auto 0;
 }
