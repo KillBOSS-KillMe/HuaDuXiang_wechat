@@ -33,6 +33,7 @@
         border: 1px solid #c7c7c7;
         border-radius: 10rpx;
         flex: 1;
+        padding-left: 10rpx;
       }
       .com-title {
         width: 140rpx;
@@ -79,36 +80,41 @@
       <view class="exp-p">2、用户每月享受10次免费提现服务（若有变动根据页面显示为主）</view>
       <view class="exp-p">3、超次数提现手续费为每笔2.0元，在提现金额中扣除；</view>
     </view>
-    <view class="input-wrap">
-      <view class="com-input">
-        <view class="com-title">提现金额</view>
-        <input type="text" placeholder="">
-        <view class="company">元</view>
+    <form bindsubmit="submit">
+      <view class="input-wrap">
+        <view class="com-input">
+          <view class="com-title">提现金额</view>
+          <input type="number" name="pdc_amount" placeholder="">
+          <view class="company">元</view>
+        </view>
+        <view class="com-input">
+          <view class="com-title">收款银行</view>
+          <input type="text" name="pdc_bank_name" placeholder="">
+        </view>
+        <text class="input-tisp">银行名称、支付宝或微信</text>
+        <view class="com-input">
+          <view class="com-title">收款账户</view>
+          <input type="text" name="pdc_bank_no" placeholder="">
+        </view>
+        <view class="com-input">
+          <view class="com-title">开户姓名</view>
+          <input type="text" name="pdc_bank_user" placeholder="">
+        </view>
+        <view class="com-input">
+          <view class="com-title">支付密码</view>
+          <input type="password" name="password" maxlength="6" placeholder="">
+        </view>
       </view>
-      <view class="com-input">
-        <view class="com-title">收款银行</view>
-        <input type="text" placeholder="">
-      </view>
-      <text class="input-tisp">银行名称、支付宝或微信</text>
-      <view class="com-input">
-        <view class="com-title">收款账户</view>
-        <input type="text" placeholder="">
-      </view>
-      <view class="com-input">
-        <view class="com-title">开户姓名</view>
-        <input type="text" placeholder="">
-      </view>
-      <view class="com-input">
-        <view class="com-title">支付密码</view>
-        <input type="text" placeholder="">
-      </view>
-    </view>
-    <button class="wallet-btn">确认提交</button>
+      <button class="wallet-btn" formType="submit">确认提交</button>
+    </form>
+
   </view>
 </template>
 
 <script>
 import wepy from 'wepy';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 
 export default class WalletInput extends wepy.page {
   config = {
@@ -121,7 +127,76 @@ export default class WalletInput extends wepy.page {
     requestImgUrl: ''
   };
   computed = {};
-  methods = {};
+  methods = {
+    submit(e) {
+      var {pdc_amount, pdc_bank_name, pdc_bank_no, pdc_bank_user, password} = e.detail.value
+      if(!pdc_amount) {
+        wx.showToast({
+          title: '请输入提现金额',
+          icon: 'none'
+        })
+        return false
+      }
+       if(!pdc_bank_name) {
+        wx.showToast({
+          title: '请输入银行名',
+          icon: 'none'
+        })
+        return false
+      }
+       if(!pdc_bank_no) {
+        wx.showToast({
+          title: '请输入银行账户',
+          icon: 'none'
+        })
+        return false
+      }
+       if(!pdc_bank_user) {
+        wx.showToast({
+          title: '请输入收款人',
+          icon: 'none'
+        })
+        return false
+      }
+       if(!password) {
+        wx.showToast({
+          title: '请输入支付密码',
+          icon: 'none'
+        })
+        return false
+      }
+
+      ajax({
+        url: api.pdCashAdd,
+        data: {
+          form_submit: 'ok',
+          pdc_amount,
+          pdc_bank_name,
+          pdc_bank_no,
+          pdc_bank_user,
+          password
+        }
+      }).then(res => {
+        if(res.code == 400) {
+          wx.showToast({
+            title: res.datas.error,
+            icon:'none',
+            duration: 2000
+          })
+        } else {
+           wx.showToast({
+            title: res.datas.success,
+            icon:'none',
+            duration: 2000
+          })
+        }
+        var timer = setTimeout(() => {
+          clearTimeout(timer)
+          wx.navigateBack()
+        }, 2000)
+      })
+    }
+  };
   onLoad() {}
   onShow() {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;

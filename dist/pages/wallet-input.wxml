@@ -7,29 +7,32 @@
       <view class="exp-p">2、用户每月享受10次免费提现服务（若有变动根据页面显示为主）</view>
       <view class="exp-p">3、超次数提现手续费为每笔2.0元，在提现金额中扣除；</view>
     </view>
-    <view class="input-wrap">
-      <view class="com-input">
-        <view class="com-title">提现金额</view>
-        <input type="text" placeholder=""/>
-        <view class="company">元</view>
+    <form bindsubmit="submit">
+      <view class="input-wrap">
+        <view class="com-input">
+          <view class="com-title">提现金额</view>
+          <input type="number" name="pdc_amount" placeholder=""/>
+          <view class="company">元</view>
+        </view>
+        <view class="com-input">
+          <view class="com-title">收款银行</view>
+          <input type="text" name="pdc_bank_name" placeholder=""/>
+        </view>
+        <text class="input-tisp">银行名称、支付宝或微信</text>
+        <view class="com-input">
+          <view class="com-title">收款账户</view>
+          <input type="text" name="pdc_bank_no" placeholder=""/>
+        </view>
+        <view class="com-input">
+          <view class="com-title">开户姓名</view>
+          <input type="text" name="pdc_bank_user" placeholder=""/>
+        </view>
+        <view class="com-input">
+          <view class="com-title">支付密码</view>
+          <input type="password" name="password" maxlength="6" placeholder=""/>
+        </view>
       </view>
-      <view class="com-input">
-        <view class="com-title">收款银行</view>
-        <input type="text" placeholder=""/>
-      </view>
-      <text class="input-tisp">银行名称、支付宝或微信</text>
-      <view class="com-input">
-        <view class="com-title">收款账户</view>
-        <input type="text" placeholder=""/>
-      </view>
-      <view class="com-input">
-        <view class="com-title">开户姓名</view>
-        <input type="text" placeholder=""/>
-      </view>
-      <view class="com-input">
-        <view class="com-title">支付密码</view>
-        <input type="text" placeholder=""/>
-      </view>
-    </view>
-    <button class="wallet-btn">确认提交</button>
+      <button class="wallet-btn" formType="submit">确认提交</button>
+    </form>
+
   </view>

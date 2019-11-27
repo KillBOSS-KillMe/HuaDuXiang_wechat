@@ -109,7 +109,7 @@
         </view>
         <view class="input-wrap" wx:if="{{payment_type == 1}}">
           <text>输入支付密码</text>
-          <input type="password" bindinput="inputPassword" value="{{password}}" maxlength="6"/>
+          <input type="password" bindinput="inputpassword" value="{{password}}" maxlength="6"/>
         </view>
         <view class="price-type-title">支付方式：{{payment_type == 0 ? '微信支付':'余额支付'}}</view>
         <button class="btn" bindtap="pay">确认支付</button>

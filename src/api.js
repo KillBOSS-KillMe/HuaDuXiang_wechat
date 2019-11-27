@@ -134,7 +134,17 @@ module.exports = {
   // 分销员明细
   fxBill: URL + "/api/mobile/index.php?w=member_fx&t=fx_bill",
   // 砍价第一刀接口
-  memberKanjia: URL + "/api/mobile/index.php?w=member_buy&t=member_kanjia",
+  memberKanjia: URL + "/api/mobile/index.php?w=member_kanjia&t=member_kanjia",
+  // 分享后好友砍价
+  userKanjia: URL + "/api/mobile/index.php?w=member_kanjia&t=user_kanjia",
+  // 商品砍价明细表
+  kanjiaLists: URL + "/api/mobile/index.php?w=member_kanjia&t=kanjia_lists",
+  // 砍价--04砍价商品详情--页面
+  goodsKanjiaDetail: URL + "/api/mobile/index.php?w=member_kanjia&t=goods_kanjia_detail",
+  // 用户提现
+  pdCashAdd: URL + "/api/mobile/index.php?w=member_cash&t=pd_cash_add",
+
+
 
 
 }

@@ -3,25 +3,24 @@
     <!-- -------------------砍价-------------------- -->
     <view class="bargain-box">
       <view class="topwrap">
-        <!-- <image src="{{requestImgUrl}}bargin-top.png" /> -->
         <view class="topview">
           <!-- 砍价商品 -->
-          <repeat for="{{assembleData}}">
+          <repeat for="{{1}}">
             <view class="barginGoods">
-              <image src="{{item.img}}" />
-              <text class="goodstitle overflow-one">啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊{{item.title}}</text>
+              <image src="{{requestImgUrl + goods_content.goods_images_1}}" />
+              <text class="goodstitle overflow-one">{{goods_content.goods_name}}</text>
               <!-- 剩余进度条 -->
               <view class="prolist">
                 <view class="countwrap">
                   <progress
-                    percent="20"
+                    percent="{{goods_que/goods_nums*100}}"
                     border-radius="10"
                     stroke-width="11"
                     activeColor="#FF2228"
                     backgroundColor="#FFDADB"
                   ></progress>
                 </view>
-                <text class="siglenum">已砍{{siglenum}}/{{countall}}件</text>
+                <text class="siglenum">已砍{{goods_que}}/{{goods_nums}}件</text>
               </view>
               <text class="goodsprice">砍到0元拿</text>
             </view>
@@ -30,12 +29,12 @@
             <view class="barginProgess">
               <view class="progessTittle">
                 已砍
-                <text>{{BargainingRecord}}</text>元, 还差
-                <text>{{BargainingSpreads}}</text>
+                <text>{{already}}</text>元, 还差
+                <text>{{saleprice}}</text>元
               </view>
               <view class="countwrap">
                 <progress
-                  percent="50"
+                  percent="{{per*100}}"
                   border-radius="10"
                   stroke-width="11"
                   activeColor="#FF2228"
@@ -44,27 +43,29 @@
               </view>
             </view>
             <!-- 分享按钮 -->
-            <view class="sharbtn">分享给朋友, 多砍一刀</view>
+            <button open-type="share" class="sharbtn" wx:if="{{sharFlag == true}}">分享给朋友, 多砍一刀</button>
+            <view class="sharbtn" wx:if="{{sharFlag == false}}" @tap="helpClick">帮助好友砍一刀</view>
             <!-- 过期时间 -->
-            <view class="goodsTime">还剩{{item.time}}过期, 快来坎价吧~</view>
+            <view class="goodsTime" wx:if="{{wxTimerList.firstTimer.wxTimerSecond !== 0}}">还剩{{wxTimerList.firstTimer.wxTimer}}过期, 快来砍价吧~</view>
+            <view class="goodsTime">砍价已经结束，请选择其它商品</view>
             <!-- 砍价记录 -->
             <view class="record">
               <view class="recordtext">砍价记录</view>
 
               <swiper class="swiper-box" autoplay="{{true}}" duration="{{2000}}" vertical="true">
-                <repeat for="{{bargindata}}">
-                  <swiper-item bindtap="{{item.swiperBind}}">
+                <repeat for="{{kanjiaLists}}">
+                  <swiper-item>
                     <view class="swiper_item">
-                      <image src="{{item.img}}" />
+                      <image src="{{item.member_avatar}}" />
                       <view class="cent">
-                        <text class="item-name">{{item.name}}</text>
-                        <text class="item-num">来一起砍价{{item.tag}}元拿</text>
+                        <text class="item-name">{{item.member_truename}}</text>
+                        <text class="item-num">来一起砍价0元拿</text>
                       </view>
                       <view class="right">
                         <image class="barimg" src="{{requestImgUrl}}bargin.png" />
                         <view class="item-price">
                           砍掉
-                          <text>{{item.barginprice}}</text>元
+                          <text>{{item.kanprice}}</text>元
                         </view>
                       </view>
                     </view>
@@ -75,26 +76,28 @@
           </repeat>
         </view>
       </view>
-      <!-- 商品 -->
-      <view class="saleShopWrap">
-        <view class="saleShop">
-          <repeat for="{{flowData}}" item="item">
-            <view class="shopview" @tap="jumpTimeDetails('{{item.id}}')">
-              <image src="{{item.img}}" />
-              <view class="saleTag">
-                <text>{{item.title}}</text>
-              </view>
-              <view>
+
+      <view class="store">
+        <view class="saleShopWrap">
+          <view class="saleShop">
+            <repeat for="{{hot_sales}}" item="item">
+              <view @tap="navGoodsDetails({{item.goods_id}}, {{item.sale_type}})" class="shopview">
+                <image src="{{requestImgUrl + item.goods_image}}" />
+                <view class="saleTag">
+                  <text class="overflow-one">{{item.goods_name}}</text>
+                </view>
                 <view>
-                  <text class="salep">秒杀价</text>
-                  <text class="salesmple">￥</text>
-                  <text class="saleprice">{{item.price}}</text>
-                  <text class="saleexprice">原价￥ {{item.exprice}}</text>
+                  <view>
+                    <text class="salep">价格</text>
+                    <text class="salesmple">￥</text>
+                    <text class="saleprice">{{item.goods_price}}</text>
+                  </view>
                 </view>
               </view>
-            </view>
-          </repeat>
+            </repeat>
+          </view>
         </view>
+        <!--  -->
       </view>
     </view>
   </view>
@@ -102,14 +105,15 @@
 
 <script>
 import wepy from 'wepy';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
+var timer = require('../utils/wxTimer.js'); // 倒计时
+
 export default class Index extends wepy.page {
   config = {
     navigationBarTitleText: '砍价'
   };
-  components = {
-    // middlePopup
-    // cartCount
-  };
+  components = {};
 
   mixins = [];
 
@@ -125,107 +129,96 @@ export default class Index extends wepy.page {
         peo: '1'
       }
     ],
-    // 砍价记录
-    bargindata: [
-      {
-        img: '/assets/img/image.png',
-        name: '李白1',
-        tag: '0',
-        barginprice: '2550.00'
-      },
-      {
-        img: '/assets/img/image.png',
-        name: '李白1',
-        tag: '0',
-        barginprice: '2550.00'
-      }
-    ],
-    goSpellData: {},
-    // 差价进度条
-    BargainingCount: 600, //总共
-    BargainingRecord: 200, //已砍
-    BargainingSpreads: 400, //差价
-    row1: '',
-    // 数量进度条
-    countall: 5, //总共
-    siglenum: 1, // 单个
-    surplus: 0, // 剩余%
-    row2: '',
-    //商品
-    flowData: [
-      {
-        id: '1',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: '/assets/img/image.png'
-      },
-      {
-        id: '2',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: '/assets/img/image.png'
-      },
-      {
-        id: '3',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: '/assets/img/image.png'
-      },
-      {
-        id: '4',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: '/assets/img/image.png'
-      },
-      {
-        id: '5',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: '/assets/img/image.png'
-      },
-      {
-        id: '6',
-        title: '萌分订书机',
-        price: '5',
-        exprice: '25',
-        img: '/assets/img/image.png'
-      }
-    ]
+    newUser: '', // 分享进来后的砍价商品id和userid
+    sharFlag: '', // 是否显示砍价按钮
+    kanjiaLists: [],
+    hot_sales: [],
+    goods_content: '',
+    saleprice: 0,
+    already: 0,
+    per: 0,
+    wxTimerList: {}, // 倒计时
+    end_time: 0, // 倒计时
+    goods_nums: 0,
+    goods_que: 0,
   };
 
   computed = {};
   onLoad(options) {
-    this.shareWXshow = false;
-    console.log('this.goSpellData', this.goSpellData);
-    // 差价进度条ttttttttttttttttttt
-    var barginlist = [
-      this.BargainingRecord,
-      this.BargainingSpreads,
-      this.BargainingCount
-    ];
-    var max = Math.max.apply(null, barginlist); // 找出最大值
-    console.log('max', max);
-    var unit = 650 / max;
-    console.log(unit);
-    this.row1 = barginlist[0] * unit;
-    // 数量进度条
-    let num = this.siglenum;
-    let total = this.countall;
-    if (isNaN(num) || isNaN(total)) {
-      return '-';
+    this.newUser = options
+    var user = wx.getStorageSync('user')
+    this.sharFlag = user.userid == options.userid
+
+    ajax({
+      url: api.goodsKanjiaDetail,
+      data: {
+        goods_id: this.newUser.goods_id,
+        user_id: options.userid
+      }
+    }).then(res => {
+      this.kanjiaLists = res.datas.user_list || []
+      this.hot_sales = res.datas.hot_sales || []
+      this.goods_content = res.datas.goods_content
+      this.saleprice = Number(res.datas.saleprice).toFixed(2)
+      this.already =  (Number(res.datas.price) - Number(res.datas.saleprice)).toFixed(2)
+      this.per = res.datas.per
+      this.goods_nums = res.datas.goods_nums
+      this.goods_que = res.datas.goods_que
+      this.end_time = res.datas.end_time || 0
+      this.wxTimer = new timer({
+        beginTime: this.end_time,
+        name: 'firstTimer',
+        complete() {}
+      });
+      this.wxTimer.start(this);
+      this.$apply()
+    })
+
+  }
+  onShareAppMessage(e) {
+    if(e.from == "button") {
+      var user = wx.getStorageSync('user')
+      return {
+        path: `/pages/barginInfo?goods_id=${this.goods_id}&userid=${user.userid}`
+      }
     }
-    this.row2 = (Math.round((num / total) * 10000) / 100.0) * 1;
-    this.surplus = Math.round((num / total) * 10000) / 100.0 + '%';
   }
   onShow() {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
   }
-  methods = {};
+  methods = {
+    helpClick() {
+      if(this.wxTimerList.firstTimer.wxTimerSecond == 0) {
+        wx.showToast({
+          title: '砍价已经结束，请选择其它商品',
+          icon: 'none',
+        })
+        return false
+      }
+      ajax({
+        url: api.userKanjia,
+        data: {
+          goods_id: this.newUser.goods_id,
+          user_id: this.newUser.userid
+        }
+      }).then(res => {
+        if(res.code == 200) {
+          wx.showToast({
+            title: res.datas.msg,
+            icon: 'none'
+          })
+        }
+      })
+    },
+    navGoodsDetails(goods_id, sale_type) {
+      // navigate
+      if(sale_type == 'rushsales') {
+        this.$navigate(`/pages/seckillShopDetails?goods_id=${goods_id}`);
+      } else {
+        this.$navigate(`/pages/shopDetails?goods_id=${goods_id}`);
+      }
+    },
+  };
 
   events = {};
 }
@@ -303,7 +296,7 @@ page {
           .progessTittle {
             font-size: 26rpx;
             color: #333;
-            padding-left: 200rpx;
+            text-align: center;
             padding-top: 20rpx;
             font-weight: bold;
             text {
@@ -349,7 +342,7 @@ page {
         .progessTittle {
           font-size: 26rpx;
           color: #333;
-          padding-left: 200rpx;
+          text-align: center;
           padding-top: 20rpx;
           font-weight: bold;
           text {
@@ -459,82 +452,121 @@ page {
       }
     }
   }
-  // 商品
-  .saleShopWrap {
-    width: 100%;
-    height: 100%;
-    background: #f9f9f9;
-    .saleShop {
-      width: 92%;
-      height: 100%;
-      margin: 20rpx auto;
-      margin-bottom: 2%;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      // item商品
-      .shopview {
+  // 店铺
+  .store {
+    margin-top: 30rpx;
+    .shop {
+      width: 100%;
+      background: #fff;
+      .shopStore {
+        width: 100%;
+        height: 200rpx;
         background: #fff;
-        width: 335rpx;
-        height: 488rpx;
-        display: inline-block;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-        padding: 20rpx 0rpx;
-        margin-bottom: 19rpx;
-        border-radius: 20rpx;
+        position: relative;
+        font-size: 32rpx;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
         image {
-          width: 327rpx;
-          height: 327rpx;
-        }
-        .saleTag {
-          font-size: 30rpx;
-          font-weight: bold;
-          color: #333;
-          padding: 30rpx;
-        }
-        .salep {
-          font-size: 28rpx;
-          color: red;
-          font-weight: bold;
-          padding-left: 30rpx;
-        }
-        .salesmple {
-          font-size: 24rpx;
-          color: red;
-          font-weight: normal;
-        }
-        .saleprice {
-          font-weight: bolder;
-          color: red;
-          font-size: 42rpx;
-        }
-        .saleexprice {
-          color: #666;
-          font-size: 24rpx;
-          font-weight: normal;
-          padding-left: 25rpx;
-          text-decoration: line-through;
-        }
-        .saletag {
-          width: 60rpx;
-          background: red;
-          text-align: center;
-          line-height: 20rpx;
-          font-size: 10px;
-          padding: 8rpx;
-          color: white;
+          width: 120rpx;
+          height: 120rpx;
           border-radius: 10rpx;
-          margin-left: 3%;
-          margin-top: -2%;
+          padding: 40rpx 30rpx;
+        }
+        .shopname {
+          padding: 80rpx 20rpx 0;
+        }
+        .gostore {
+          width: 120rpx;
+          height: 56rpx;
+          text-align: center;
+          line-height: 56rpx;
+          border: solid 1px #f92832;
+          border-radius: 10rpx;
+          position: absolute;
+          right: 4%;
+          top: 35%;
+          font-size: 32rpx;
+          color: #f92832;
+          font-weight: bold;
         }
       }
     }
-  }
-  .shopview :nth-last-child(1) {
-    margin-bottom: 160rpx;
-  }
+    // goods item
+    .saleShopWrap {
+      height: 100%;
+      padding: 0 30rpx;
+      background: #F9F9F9;
+      .saleShop {
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        // item商品
+        .shopview {
+          background: #fff;
+          width: 340rpx;
+          height: 488rpx;
+          justify-content: center;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 20rpx;
+          border-radius: 10rpx;
+          overflow: hidden;
+          image {
+            width: 340rpx;
+            height: 340rpx;
+            display: block;
+          }
+          .saleTag {
+            font-size: 30rpx;
+            font-weight: bold;
+            color: #333;
+            padding:20rpx 30rpx 20rpx 30rpx;
+            text {
+              width: 260rpx;
+              display: block;
+            }
+          }
+          .salep {
+            font-size: 28rpx;
+            color: red;
+            font-weight: bold;
+            padding-left: 30rpx;
+          }
+          .salesmple {
+            font-size: 24rpx;
+            color: red;
+            font-weight: normal;
+          }
+          .saleprice {
+            font-weight: bolder;
+            color: red;
+            font-size: 30rpx;
+          }
+          .saleexprice {
+            color: #666;
+            font-size: 24rpx;
+            font-weight: normal;
+            padding-left: 25rpx;
+            text-decoration: line-through;
+          }
+          .saletag {
+            width: 60rpx;
+            background: red;
+            text-align: center;
+            line-height: 20rpx;
+            font-size: 10px;
+            padding: 8rpx;
+            color: white;
+            border-radius: 10rpx;
+            margin-left: 3%;
+            margin-top: -2%;
+          }
+        }
+      }
+    }
+  } 
+
 }
 </style>

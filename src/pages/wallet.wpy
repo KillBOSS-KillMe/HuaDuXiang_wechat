@@ -80,7 +80,7 @@
     <view class="wallet-title">余额</view>
     <view class="wallet-price">
       <view class="price">
-        <text>￥</text>5400
+        <text>￥</text>{{member_data.available_predeposit}}
       </view>
       <navigator hover-class="none" url="/pages/wallet-input" class="btn">提现</navigator>
     </view>
@@ -107,6 +107,8 @@
 <script>
 import wepy from 'wepy';
 import mask from '../components/mask';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
 
 export default class Wallet extends wepy.page {
   config = {
@@ -116,13 +118,25 @@ export default class Wallet extends wepy.page {
   mixins = [];
 
   data = {
-    requestImgUrl: ''
+    requestImgUrl: '',
+    member_data: ''
   };
   computed = {};
   methods = {
     
   };
-  onLoad() {}
+  onLoad() {
+         // 用户个人中心数据接口
+    ajax({
+      url: api.memberInfo,
+    }).then(res => {
+      if(res.code == 200) {
+        this.member_info = res.datas.member_info
+        this.member_data = res.datas.member_data
+        this.$apply()
+      }
+    })
+  }
   onShow() {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
   }

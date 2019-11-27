@@ -3,7 +3,7 @@
     <view class="wallet-title">余额</view>
     <view class="wallet-price">
       <view class="price">
-        <text>￥</text>5400
+        <text>￥</text>{{member_data.available_predeposit}}
       </view>
       <navigator hover-class="none" url="/pages/wallet-input" class="btn">提现</navigator>
     </view>

@@ -320,7 +320,8 @@ export default class Index extends wepy.page {
         url: api.memberBuyOne,
         data: {
           cart_id,
-          address_id: ''
+          address_id: '',
+          pingou: this.sale_type == 'group' ? 1 : 0
         }
       }).then(res => {
         if(res.code == 200) {

@@ -23,7 +23,7 @@
 	"miniprogramRoot": "dist/",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
-	"libVersion": "2.8.3",
+	"libVersion": "2.9.2",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -51,7 +51,7 @@
 					"id": 0,
 					"name": "砍价分享进入小程序",
 					"pathName": "pages/barginInfo",
-					"query": "",
+					"query": "goods_id=8&userid=7",
 					"scene": null
 				},
 				{
@@ -121,13 +121,6 @@
 					"id": -1,
 					"name": "售后",
 					"pathName": "pages/after-sale",
-					"query": "order_id=32",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "我的钱包",
-					"pathName": "pages/wallet",
 					"query": "order_id=32",
 					"scene": null
 				},

@@ -230,6 +230,7 @@ export default class Index extends wepy.page {
     tabList: [{ name: '商品介绍', dotNum: 2 }, { name: '图文详情', dotNum: 3 }], // 顶部选项卡
     currentTab: 0, // 顶部选项卡索引
     wxTimerList: {}, // 倒计时
+    end_time: 0, // 倒计时
     goods_id: null, //商品goods_id
     requestImgUrl: null, //图片域名
     goods_content: null, // 商品内容
@@ -241,7 +242,6 @@ export default class Index extends wepy.page {
     activeAttr: [], // 当前点击属性数组
     goods_spec: [], // 默认属性数组
     spec_list: {}, // 所有属性对应的商品goods_id
-    end_time: 0, // 倒计时
 
   };
 
@@ -360,6 +360,8 @@ export default class Index extends wepy.page {
   events = {};
 
   async onLoad(t) {
+    this.wxTimer && this.wxTimer.stop()
+
     this.goods_id = t.goods_id;
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     this.$apply()
@@ -415,18 +417,21 @@ export default class Index extends wepy.page {
         this.spec_list = res.datas.spec_list
         // 倒计时
         var end_time = res.datas.goods_content.end_time || 0
-        var wxTimer = new timer({
+        this.wxTimer = new timer({
           beginTime: end_time,
           name: 'firstTimer',
           complete() {}
         });
-        wxTimer.start(this);
+        this.wxTimer.start(this);
         this.$apply()
         var article = res.datas.goods_content.goods_body
         // article = article.replace(/src="/g, `src="${that.requestImgUrl}`);
         WxParse.wxParse('article', 'html', article, that, 5);
       }
     });
+  }
+  onHide() {
+    this.attrFlag = false
   }
 }
 </script>

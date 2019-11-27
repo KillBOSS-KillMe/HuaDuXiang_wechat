@@ -574,6 +574,7 @@ export default class Index extends wepy.page {
   onShareAppMessage(e) {
     if(e.from == "button") {
       var user = wx.getStorageSync('user')
+      console.log(`goods_id=${this.goods_id}&userid=${user.userid}`)
       return {
         path: `/pages/barginInfo?goods_id=${this.goods_id}&userid=${user.userid}`
       }
