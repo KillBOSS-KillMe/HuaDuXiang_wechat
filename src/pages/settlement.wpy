@@ -366,7 +366,7 @@ export default class Settlement extends wepy.page {
     // 发票信息hash
     this.vat_hash = orderInfo.vat_hash
     // 商品信息
-    this.cart_id = orderInfo.cart_id
+    this.cart_id = orderInfo.submitData.cart_id
     // 运费
     this.goods_freight = orderInfo.goods_freight
     // 余额

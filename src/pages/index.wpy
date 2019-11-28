@@ -475,7 +475,6 @@ export default class Index extends wepy.page {
           return false
         }
       }
-      console.log(url)
       this.$navigate({url: url})
     },
     jumpDetails(goods_id, sale_type) {

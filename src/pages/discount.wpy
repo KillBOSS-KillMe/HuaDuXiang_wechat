@@ -82,7 +82,11 @@ export default class Index extends wepy.page {
   }
   methods = {
     navGoodsDetails(goods_id, sale_type) {
-      this.$navigate(`shopDetails?goods_id=${goods_id}&lei=fenxiao`)
+      if(sale_type == 'rushsales') {
+        this.$navigate(`/pages/seckillShopDetails?goods_id=${goods_id}`);
+      } else {
+        this.$navigate(`/pages/shopDetails?goods_id=${goods_id}`);
+      }
     },
   };
 

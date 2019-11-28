@@ -311,15 +311,16 @@ export default class ShopCart extends wepy.page {
         })
         return false
       }
-      ajax({
-        url: api.memberBuyOne,
-        data: {
+      var data = {
           ifcart: 1,
           cart_id: selectedCartList.join(',')
         }
+      ajax({
+        url: api.memberBuyOne,
+        data
       }).then(res => {
         if(res.code == 200) {
-          res.datas.cart_id =  selectedCartList.join(',')
+          res.datas.submitData =  data
           app.globalData.orderInfo = res.datas
           if(that.address_list.length) {
             this.$navigate({ url: '/pages/settlement' });

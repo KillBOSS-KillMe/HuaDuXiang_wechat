@@ -3,12 +3,14 @@
     <!-- 商品 -->
     <view class="sale-shop">
       <block wx:for="{{barginData}}" wx:for-index="index" wx:for-item="item" wx:key="key">
-        <view class="shopview" bindtap="jumpTimeDetails" data-wpyjumptimedetails-a="{{item.goods_id}}" data-wpyjumptimedetails-b="{{item.is_join}}">
-          <image class="goods-img" src="{{requestImgUrl + item.goods_img}}"/>
+        <view class="shopview" bindtap="navBarginInfo" data-wpynavbargininfo-a="{{item.goods_id}}" data-wpynavbargininfo-b="{{item.is_success}}">
+          <image class="goods-img" src="{{requestImgUrl + item.goods_images}}"/>
           <view class="right">
             <view class="bargin-title overflow-one">{{item.goods_name}}</view>
-            <view class="price">已砍<text>100</text>元，还差<text>100</text>元</view>
-            <view class="time-status"  wx:if="{{wxTimerList['timer' + index].wxTimerSecond > 0}}">
+            <view class="price">已砍<text>{{item.priceed}}</text>元，还差<text>{{item.misprice}}</text>元</view>
+            <view class="time-status">到期时间：{{item.end_time_ed}}</view>
+
+            <!-- <view class="time-status"  wx:if="{{wxTimerList['timer' + index].wxTimerSecond > 0}}">
               <view class="count-down-wrap">
                 <text>{{wxTimerList['timer' + index].h}}</text>
                 <view>:</view>
@@ -18,18 +20,18 @@
               </view>
               <text>后结束</text>
             </view>
-            <view class="time-status"  wx:else>砍价已结束</view>
-            
-            <button class="bargin-btn" wx:if="{{index == 0}}">继续砍价</button>
-            <button class="bargin-btn err" wx:if="{{index == 1}}">砍价失败</button>
-            <button class="bargin-btn " wx:if="{{index == 2}}">砍价失败</button>
+            <view  class="time-status"  wx:else>砍价已结束</view> -->
+            <view class="bargin-btn-wrap">
+              <button class="bargin-btn"  wx:if="{{item.is_success == 1}}" catchtap="generateOrder">生成订单</button>
+              <button class="bargin-btn {{item.is_success == -1 ? 'err':''}}">{{item.goods_state}}</button>
+            </view>
           </view>
         </view>
       </block>
     </view>
 
 
-    <view class="none-content" wx:if="{{allpage == 0}}">
+    <view class="none-content"  wx:if="{{barginData.length == 0}}">
       <image src="/assets/img/image48.png"/>
       <navigator url="/pages/index" hover-class="none" open-type="reLaunch" class="go">去选购</navigator>
     </view>

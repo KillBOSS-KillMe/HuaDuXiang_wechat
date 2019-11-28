@@ -1,2 +1,13 @@
 console.log('WePY开启错误监控');
-console.warn("CLI报错：WARNING IN : src\pages\shopDetails.wpy\n[xmldom warning]	unclosed xml attribute\n@#[line:212,col:15]");
+console.warn("CLI报错：WARNING IN : src\pages\settledIn.wpy\n[xmldom warning]	unclosed xml attribute\n@#[line:36,col:13]");
+console.warn("CLI报错：WARNING IN : src\pages\settledIn.wpy\n[xmldom warning]	unclosed xml attribute\n@#[line:42,col:13]");
+console.warn("CLI报错：WARNING IN : src\pages\settledIn.wpy\n[xmldom warning]	unclosed xml attribute\n@#[line:48,col:13]");
+console.warn("CLI报错：WARNING IN : src\pages\settledIn.wpy\n[xmldom warning]	unclosed xml attribute\n@#[line:54,col:13]");
+console.warn("CLI报错：WARNING IN : src\pages\settledIn.wpy\n[xmldom warning]	unclosed xml attribute\n@#[line:60,col:11]");
+console.warn("CLI报错：WARNING IN : src\pages\settledIn.wpy\n[xmldom warning]	unclosed xml attribute\n@#[line:64,col:11]");
+console.warn("CLI报错：WARNING IN : src\pages\settledIn.wpy\n[xmldom warning]	unclosed xml attribute\n@#[line:120,col:13]");
+console.warn("CLI报错：WARNING IN : src\pages\settledIn.wpy\n[xmldom warning]	unclosed xml attribute\n@#[line:126,col:13]");
+console.warn("CLI报错：WARNING IN : src\pages\settledIn.wpy\n[xmldom warning]	unclosed xml attribute\n@#[line:132,col:13]");
+console.warn("CLI报错：WARNING IN : src\pages\settledIn.wpy\n[xmldom warning]	unclosed xml attribute\n@#[line:138,col:13]");
+console.warn("CLI报错：WARNING IN : src\pages\settledIn.wpy\n[xmldom warning]	unclosed xml attribute\n@#[line:144,col:11]");
+console.warn("CLI报错：WARNING IN : src\pages\settledIn.wpy\n[xmldom warning]	unclosed xml attribute\n@#[line:148,col:11]");

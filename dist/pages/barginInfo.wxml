@@ -31,8 +31,8 @@
               </view>
             </view>
             <!-- 分享按钮 -->
-            <button open-type="share" class="sharbtn"  wx:if="{{sharFlag == true}}">分享给朋友, 多砍一刀</button>
-            <view class="sharbtn"  wx:if="{{sharFlag == false}}" bindtap="helpClick">帮助好友砍一刀</view>
+            <button open-type="share" class="sharbtn"  wx:if="{{sharFlag == false}}">分享给朋友, 多砍一刀</button>
+            <view class="sharbtn"  wx:if="{{sharFlag == true}}" bindtap="helpClick">帮助好友砍一刀</view>
             <!-- 过期时间 -->
             <view class="goodsTime" wx:if="{{wxTimerList.firstTimer.wxTimerSecond !== 0}}">还剩{{wxTimerList.firstTimer.wxTimer}}过期, 快来砍价吧~</view>
             <view class="goodsTime">砍价已经结束，请选择其它商品</view>

@@ -285,10 +285,11 @@ export default class Index extends wepy.page {
     activeAttr: [], // 当前点击属性数组
     goods_spec: [], // 默认属性数组
     spec_list: {}, // 所有属性对应的商品goods_id
-    type: null,
     sale_type: '', // 商品类型
     voucher_list: [], //优惠券列表
-    address_list: []
+    address_list: [],
+    distState: 0, // 2分销员  其他不是
+    userid: null, // 点击链接进来的userid
   };
 
   computed = {};
@@ -316,16 +317,18 @@ export default class Index extends wepy.page {
       var goods_id = this.goods_id
       var goodsNum = this.goodsNum
       var cart_id = `${goods_id}|${goodsNum}`
-      ajax({
-        url: api.memberBuyOne,
-        data: {
+      var data = {
           cart_id,
           address_id: '',
-          pingou: this.sale_type == 'group' ? 1 : 0
-        }
+          pingou: this.sale_type == 'group' ? 1 : 0,
+          fx_id: this.userid ? 1 : 0
+      }
+      ajax({
+        url: api.memberBuyOne,
+        data
       }).then(res => {
         if(res.code == 200) {
-          res.datas.cart_id = cart_id
+          res.datas.submitData = data
           app.globalData.orderInfo = res.datas
           if(that.address_list.length) {
             this.$navigate({ url: '/pages/settlement' });
@@ -340,6 +343,11 @@ export default class Index extends wepy.page {
               }
             })
           }
+        } else if (res.code == 400){
+          wx.showToast({
+            title: res.datas.error,
+            icon: 'none'
+          })
         }
       })
     },
@@ -432,19 +440,17 @@ export default class Index extends wepy.page {
 
   events = {};
   onShareAppMessage(e) {
-    if(this.lei == "fenxiao") {
+    if(this.distState == 2) {
       var user = wx.getStorageSync('user')
-      console.log( `/pages/shopDetails?goods_id=${this.goods_id}&userid=${user.userid}`)
       return {
         path: `/pages/shopDetails?goods_id=${this.goods_id}&userid=${user.userid}`
       }
     }
   }
   async onLoad(t) {
-    console.log(t)
+    this.userid = t.userid
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     this.goods_id = t.goods_id;
-    this.lei = t.lei
     this.$apply()
     await this.getShopDetails()
     ajax({
@@ -461,6 +467,14 @@ export default class Index extends wepy.page {
       this.voucher_list = list
       this.$apply()
     })
+    // 用户是否分销员
+    ajax({
+      url: api.fxMemberApply
+    }).then(res => {
+      this.distState = res.datas.state
+      this.$apply()
+    });
+
   }
 
   async getShopDetails() {
@@ -728,7 +742,7 @@ export default class Index extends wepy.page {
         width: 120rpx;
         height: 120rpx;
         border-radius: 10rpx;
-        padding: 40rpx 30rpx;
+        margin: 40rpx 30rpx;
       }
       .shopname {
         padding: 80rpx 20rpx 0;

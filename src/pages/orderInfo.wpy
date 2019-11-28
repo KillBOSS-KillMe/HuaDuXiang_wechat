@@ -97,7 +97,7 @@
     <view wx:if="{{order_info.if_deliver}}">查看物流</view>
     <view wx:if="{{order_info.if_refund_cancel}}">退款</view>
     <view wx:if="{{order_info.if_receive}}">收货</view>
-    <view bindtap="pay">付款</view>
+    <!-- <view bindtap="pay">付款</view> -->
   </view>
 </view>
 

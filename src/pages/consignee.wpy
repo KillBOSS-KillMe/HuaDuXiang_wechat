@@ -61,16 +61,13 @@ export default class Index extends wepy.page {
         return false
       }
 
-      var cart_id = app.globalData.orderInfo.cart_id
+      var data = Object.assign(app.globalData.orderInfo.submitData, {address_id: item.address_id}) 
       ajax({
         url: api.memberBuyOne,
-        data: {
-          cart_id,
-          address_id: item.address_id
-        }
+        data
       }).then(res => {
         if(res.code == 200) {
-          res.datas.cart_id = cart_id
+          res.datas.submitData = data
           app.globalData.orderInfo = res.datas
           if(route == 'pages/settlement') {
             wx.navigateBack()

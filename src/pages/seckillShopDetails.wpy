@@ -242,11 +242,21 @@ export default class Index extends wepy.page {
     activeAttr: [], // 当前点击属性数组
     goods_spec: [], // 默认属性数组
     spec_list: {}, // 所有属性对应的商品goods_id
-
+    address_list: [],
+    distState: 0, // 2分销员  其他不是
+    userid: null, // 点击链接进来的userid
   };
 
   computed = {};
-  onShow() {}
+  onShow() {
+    // 用户收货地址列表
+    ajax({
+      url: api.addressList
+    }).then(res => {
+      this.address_list = res.datas.address_list || []
+      this.$apply()
+    })
+  }
   methods = {
     // 切换顶部导航
     switchNav(idx) {
@@ -257,6 +267,7 @@ export default class Index extends wepy.page {
       this.attrFlag = true
     },
     attrBtnSubmit(){
+      var that = this
       if(this.wxTimerList.firstTimer.wxTimerSecond <= 0) {
         wx.showToast({
           title: '本场已结束，请等待下场活动',
@@ -268,16 +279,37 @@ export default class Index extends wepy.page {
       var goods_id = this.goods_id
       var goodsNum = this.goodsNum
       var cart_id = `${goods_id}|${goodsNum}`
+      var data = {
+          cart_id,
+          address_id: '',
+          pingou: this.sale_type == 'group' ? 1 : 0,
+          fx_id: this.userid ? 1 : 0
+      }
       ajax({
         url: api.memberBuyOne,
-        data: {
-          cart_id,
-        }
+        data
       }).then(res => {
         if(res.code == 200) {
-          res.datas.cart_id = cart_id
+          res.datas.submitData = data
           app.globalData.orderInfo = res.datas
-          this.$navigate({ url: '/pages/settlement' });
+          if(that.address_list.length) {
+            this.$navigate({ url: '/pages/settlement' });
+          } else {
+            wx.showModal({
+              title: '提醒',
+              content: '暂无地址，添加新地址',
+              success(e) {
+                if(e.confirm) {
+                  that.$navigate({ url: 'consignee' });
+                }
+              }
+            })
+          }
+        } else if (res.code == 400){
+          wx.showToast({
+            title: res.datas.error,
+            icon: 'none'
+          })
         }
       })
     },
@@ -361,7 +393,7 @@ export default class Index extends wepy.page {
 
   async onLoad(t) {
     this.wxTimer && this.wxTimer.stop()
-
+    this.userid = t.userid
     this.goods_id = t.goods_id;
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     this.$apply()
@@ -432,6 +464,14 @@ export default class Index extends wepy.page {
   }
   onHide() {
     this.attrFlag = false
+  }
+  onShareAppMessage(e) {
+    if(this.distState == 2) {
+      var user = wx.getStorageSync('user')
+      return {
+        path: `/pages/seckillShopDetails?goods_id=${this.goods_id}&userid=${user.userid}`
+      }
+    }
   }
 }
 </script>
@@ -629,7 +669,7 @@ export default class Index extends wepy.page {
         width: 120rpx;
         height: 120rpx;
         border-radius: 10rpx;
-        padding: 40rpx 30rpx;
+        margin: 40rpx 30rpx;
       }
       .shopname {
         padding: 80rpx 20rpx 0;

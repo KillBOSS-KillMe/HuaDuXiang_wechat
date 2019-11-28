@@ -43,8 +43,8 @@
               </view>
             </view>
             <!-- 分享按钮 -->
-            <button open-type="share" class="sharbtn" wx:if="{{sharFlag == true}}">分享给朋友, 多砍一刀</button>
-            <view class="sharbtn" wx:if="{{sharFlag == false}}" @tap="helpClick">帮助好友砍一刀</view>
+            <button open-type="share" class="sharbtn" wx:if="{{sharFlag == false}}">分享给朋友, 多砍一刀</button>
+            <view class="sharbtn" wx:if="{{sharFlag == true}}" @tap="helpClick">帮助好友砍一刀</view>
             <!-- 过期时间 -->
             <view class="goodsTime" wx:if="{{wxTimerList.firstTimer.wxTimerSecond !== 0}}">还剩{{wxTimerList.firstTimer.wxTimer}}过期, 快来砍价吧~</view>
             <view class="goodsTime">砍价已经结束，请选择其它商品</view>
@@ -147,7 +147,7 @@ export default class Index extends wepy.page {
   onLoad(options) {
     this.newUser = options
     var user = wx.getStorageSync('user')
-    this.sharFlag = user.userid == options.userid
+    this.sharFlag = options.userid && user.userid != options.userid
 
     ajax({
       url: api.goodsKanjiaDetail,
@@ -188,13 +188,13 @@ export default class Index extends wepy.page {
   }
   methods = {
     helpClick() {
-      if(this.wxTimerList.firstTimer.wxTimerSecond == 0) {
-        wx.showToast({
-          title: '砍价已经结束，请选择其它商品',
-          icon: 'none',
-        })
-        return false
-      }
+      // if(this.wxTimerList.firstTimer.wxTimerSecond == 0) {
+      //   wx.showToast({
+      //     title: '砍价已经结束，请选择其它商品',
+      //     icon: 'none',
+      //   })
+      //   return false
+      // }
       ajax({
         url: api.userKanjia,
         data: {

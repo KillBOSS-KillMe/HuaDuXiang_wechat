@@ -30,20 +30,25 @@
           color:#FF2228;
         }
       }
-      .bargin-btn {
-        width: 160rpx;
-        height: 50rpx;
-        line-height: 50rpx;
-        background: #FF2228;
-        border-radius: 10rpx;
-        color: #fff;
-        font-weight: bold;
-        font-size: 26rpx;
-        text-align: center;
-        margin: 0 0 0 auto;
-      }
-      .err {
-        background: #999;
+      .bargin-btn-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        .bargin-btn {
+          width: 160rpx;
+          height: 50rpx;
+          line-height: 50rpx;
+          background: #FF2228;
+          border-radius: 10rpx;
+          color: #fff;
+          font-weight: bold;
+          font-size: 26rpx;
+          text-align: center;
+          margin-left: 50rpx;
+        }
+        .err {
+          background: #999;
+        }
       }
       .time-status {
         display: flex;
@@ -100,12 +105,14 @@
     <!-- 商品 -->
     <view class="sale-shop">
       <repeat for="{{barginData}}" item="item">
-        <view class="shopview" @tap="jumpTimeDetails({{item.goods_id}},{{item.is_join}})">
-          <image class="goods-img" src="{{requestImgUrl + item.goods_img}}" />
+        <view class="shopview" @tap="navBarginInfo({{item.goods_id}},{{item.is_success}})">
+          <image class="goods-img" src="{{requestImgUrl + item.goods_images}}" />
           <view class="right">
             <view class="bargin-title overflow-one">{{item.goods_name}}</view>
-            <view class="price">已砍<text>100</text>元，还差<text>100</text>元</view>
-            <view class="time-status"  wx:if="{{wxTimerList['timer' + index].wxTimerSecond > 0}}">
+            <view class="price">已砍<text>{{item.priceed}}</text>元，还差<text>{{item.misprice}}</text>元</view>
+            <view  class="time-status">到期时间：{{item.end_time_ed}}</view>
+
+            <!-- <view class="time-status"  wx:if="{{wxTimerList['timer' + index].wxTimerSecond > 0}}">
               <view class="count-down-wrap">
                 <text>{{wxTimerList['timer' + index].h}}</text>
                 <view>:</view>
@@ -115,18 +122,18 @@
               </view>
               <text>后结束</text>
             </view>
-            <view  class="time-status"  wx:else>砍价已结束</view>
-            
-            <button class="bargin-btn" wx:if="{{index == 0}}">继续砍价</button>
-            <button class="bargin-btn err" wx:if="{{index == 1}}">砍价失败</button>
-            <button class="bargin-btn " wx:if="{{index == 2}}">砍价失败</button>
+            <view  class="time-status"  wx:else>砍价已结束</view> -->
+            <view class="bargin-btn-wrap">
+              <button class="bargin-btn" wx:if="{{item.is_success == 1}}" @tap.stop="generateOrder">生成订单</button>
+              <button class="bargin-btn {{item.is_success == -1 ? 'err':''}}">{{item.goods_state}}</button>
+            </view>
           </view>
         </view>
       </repeat>
     </view>
 
 
-    <view class="none-content" wx:if="{{allpage == 0}}">
+    <view class="none-content" wx:if="{{barginData.length == 0}}">
       <image src="/assets/img/image48.png"/>
       <navigator url="/pages/index" hover-class="none" open-type="reLaunch" class="go">去选购</navigator>
     </view>
@@ -139,7 +146,7 @@ import mask from '../components/mask';
 var api = require('../api.js');
 import { ajax } from '../ajax.js';
 var timer = require('../utils/wxTimer.js'); // 倒计时
-
+import { formatDate } from '../utils/base.js';
 
 export default class BargainList extends wepy.page {
   config = {
@@ -167,41 +174,16 @@ export default class BargainList extends wepy.page {
     this.address = address
   }
   methods = {
-    addressBtnSubmit() {
-      this.addressFlag = false;
-      this.shareFlag = true;
-    },
-    attrBtnSubmit() {
-      this.attrFlag = false;
-      this.addressFlag = true;
-    },
-    reduNum() {
-      if (this.goodsNum == 1) return;
-      this.goodsNum--;
-    },
-    addNum() {
-      this.goodsNum++;
-    },
-    /**
-     * 跳转商品详情
-     */
-    jumpTimeDetails(goods_id, join) {
-      // if(join == 0) {
-        this.attrFlag = true;
-        this.goods_id = goods_id
-        this.$apply()
-        this.getShopDetails()
-      // }
-    },
-    hideMask() {},
-    changeAttr(index, idx, ele){
-      this.activeAttr[index] = idx
-      this.goods_spec[index] = ele
-      var goods_id = this.spec_list[this.activeAttr.join('|')]
-      this.goods_id = goods_id;
-      this.$apply()
-      this.getShopDetails()
-    },
+   navBarginInfo(goods_id,is_success) {
+     if(is_success == 1) {
+       console.log('生成订单')
+     } else {
+       this.$navigate(`barginInfo?goods_id=${goods_id}`)
+     }
+   },
+   generateOrder() {
+     console.log('生成订单')
+   }
   };
 
   events = {};
@@ -211,38 +193,42 @@ export default class BargainList extends wepy.page {
     this.bargainGoodsList()
 
     // 倒计时s
-    var that = this;
-    var waitForArr = this.waitForArr;
-    waitForArr.forEach((item, idx) => {
-      item.timer = new timer({
-        beginTime: item.time,
-        name: `timer${idx}`
-      })
-      item.timer.start(that);
-    });
+    // var that = this;
+    // var waitForArr = this.waitForArr;
+    // waitForArr.forEach((item, idx) => {
+    //   item.timer = new timer({
+    //     beginTime: item.time,
+    //     name: `timer${idx}`
+    //   })
+    //   item.timer.start(that);
+    // });
 
     // 倒计时e
   }
   bargainGoodsList() {
     ajax({
-      url: api.bargainGoodsList,
+      url: api.kanjiaLists,
       data: {
         page: 10,
         curpage: this.curpage
       }
     }).then(res => {
-      this.barginData = res.datas.list
-
+      var list =  res.datas.data || []
+      list.forEach(item => {
+        item.priceed = (Number(item.price) - Number(item.misprice)).toFixed(2)
+        item.end_time_ed = formatDate(item.end_time)
+      })
+      this.barginData = this.barginData.concat(list)
       this.hasmore = res.datas.hasmore
       this.allpage = res.datas.allpage || 0
       this.$apply()
     })
   }
   onReachBottom () {
-    if(this.hasmore) {
-      this.curpage ++ 
-      this.requestIndexGoodsList()
-    }
+    // if(this.hasmore) {
+    //   this.curpage ++ 
+    //   this.requestIndexGoodsList()
+    // }
   }  
   onUnload() {
     this.waitForArr.forEach(item => item.timer.stop())

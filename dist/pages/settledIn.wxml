@@ -68,7 +68,6 @@
           <textarea placeholder="请输入备注" name="remarks" value="{{joinInfo.remark}}"/>
         </view>
       </view>
-
       <button class="settled-btn" form-type="submit">提交申请</button>
     </form>
     <view class="examine"  wx:if="{{status == 10}}">
@@ -82,10 +81,9 @@
       <view class="again-info" bindtap="settledIn">入驻</view>
     </view>
     <view class="examine" wx:if="{{status == 11}}">
-      <view class="title">付款审核请耐心等待:</view>
+      <view class="title">付款成功待后台开通:</view>
       <image class="examine-img" src="/assets/img/image43.png"/>
     </view>
-
     <form bindsubmit="submit" wx:if="{{status == 40}}">
       <view class="settle-list">
         <view class="com-item">
@@ -154,8 +152,6 @@
           <textarea placeholder="请输入备注" name="remarks" value="{{joinInfo.remark}}" disabled/>
         </view>
       </view>
-
       <navigator class="settled-btn" form-type="submit" hover-class="none" url="/pages/merchantIndex?store_id={{store_id}}">跳转店铺</navigator>
     </form>
-
   </view>
