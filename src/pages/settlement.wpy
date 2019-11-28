@@ -164,6 +164,7 @@ export default class Settlement extends wepy.page {
     disabledSwitch: false,
     predepositFlag: true, // 余额支付是否开启
     mini_wxpayFlag: true, // 微信支付是否开启
+    pingou: '', // 拼购信息状态
 
   };
 
@@ -227,9 +228,8 @@ export default class Settlement extends wepy.page {
           offpay_hash_batch: this.address_api.offpay_hash_batch,   //店铺是否支持货到付款hash
           pay_name: 'online',
           invoice_id: 0,   // 发票
-          // pd_pay: this.payment_type,  // 支付方式
-          // password: this.password,  // 支付密码
           voucher: null,  // 优惠券
+          pingou: this.pingou  // 拼购
 
         }
       }).then(res => {
@@ -367,6 +367,8 @@ export default class Settlement extends wepy.page {
     this.vat_hash = orderInfo.vat_hash
     // 商品信息
     this.cart_id = orderInfo.submitData.cart_id
+    // 拼购信息状态
+    this.pingou	 = orderInfo.submitData.pingou	
     // 运费
     this.goods_freight = orderInfo.goods_freight
     // 余额

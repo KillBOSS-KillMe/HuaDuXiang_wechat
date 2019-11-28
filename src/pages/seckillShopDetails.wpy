@@ -466,12 +466,12 @@ export default class Index extends wepy.page {
     this.attrFlag = false
   }
   onShareAppMessage(e) {
-    if(this.distState == 2) {
+    // if(this.distState == 2) {
       var user = wx.getStorageSync('user')
       return {
         path: `/pages/seckillShopDetails?goods_id=${this.goods_id}&userid=${user.userid}`
       }
-    }
+    // }
   }
 }
 </script>

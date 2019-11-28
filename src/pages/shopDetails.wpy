@@ -440,12 +440,12 @@ export default class Index extends wepy.page {
 
   events = {};
   onShareAppMessage(e) {
-    if(this.distState == 2) {
+    // if(this.distState == 2) {
       var user = wx.getStorageSync('user')
       return {
         path: `/pages/shopDetails?goods_id=${this.goods_id}&userid=${user.userid}`
       }
-    }
+    // }
   }
   async onLoad(t) {
     this.userid = t.userid
@@ -468,12 +468,12 @@ export default class Index extends wepy.page {
       this.$apply()
     })
     // 用户是否分销员
-    ajax({
-      url: api.fxMemberApply
-    }).then(res => {
-      this.distState = res.datas.state
-      this.$apply()
-    });
+    // ajax({
+    //   url: api.fxMemberApply
+    // }).then(res => {
+    //   this.distState = res.datas.state
+    //   this.$apply()
+    // });
 
   }
 
