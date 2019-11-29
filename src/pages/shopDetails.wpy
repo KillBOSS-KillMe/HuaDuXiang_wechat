@@ -83,6 +83,36 @@
           <image src="/assets/img/image25.png" />
         </view>
       </view>
+
+      <view class="assemble-block" wx:if="{{waitForArr.length && sale_type == 'group'}}">
+        <view class="head" @tap="showAsslistMask">
+          <view class="title">{{waitForArr.length}}人在拼团，可直接参与</view>
+          <view class="more">
+            <text>查看更多</text>
+            <image src="/assets/img/image25.png" />
+          </view>
+        </view>
+        <vew class="list">
+          <swiper vertical autoplay interval="2000">
+            <repeat for="{{waitForArr}}" wx:key="index">
+              <swiper-item>
+                <view class="item" @tap="showParticipateMask({{index}})">
+                  <image src="{{item.member_avatar}}" />
+                  <view class="name">{{item.member_truename}}</view>
+                  <view class="last">
+                    <view class="other">
+                      <view>还差{{item.number}}人拼成</view>
+                      <view>剩余{{wxTimerList['timer' + index].wxTimer}}</view>
+                    </view>
+                    <view class="btn">去拼单</view>
+                  </view>
+                </view>
+              </swiper-item>
+            </repeat>
+          </swiper>
+        </vew>
+      </view>
+
       <view class="textdetails">
         <view class="textdetails-h">图文详情</view>
         <template is="wxParse" data="{{wxParseData:article.nodes}}" />
@@ -247,6 +277,55 @@
         <view class="coupon-btn" @tap="hideCoupon">关闭</view>
       </view>
     </couponmask>
+        <!-- 全部拼团列表弹框 -->
+    <asslistmask :maskFlag.sync="asslistFlag">
+      <view class="asslist-box">
+        <image class="close" src="/assets/img/image30.png" @tap="hideAsslistMask" />
+        <view class="head">正在拼单</view>
+        <view class="asslist-cont">
+          <scroll-view scroll-y="true">
+            <repeat for="{{waitForArr}}" wx:key="index">
+              <view class="scroll-view-item" @tap="showParticipateMask({{index}})">
+                <image src="{{item.member_avatar}}" />
+                <view class="last">
+                  <view class="t">
+                    <view class="name">{{item.member_truename}}</view>
+                    <view class="other">
+                      还差
+                      <text>{{item.number}}</text>人拼成
+                    </view>
+                  </view>
+                  <view>剩余{{wxTimerList['timer' + index].wxTimer}}</view>
+                </view>
+                <view class="btn">去拼单</view>
+              </view>
+            </repeat>
+          </scroll-view>
+        </view>
+      </view>
+    </asslistmask>
+    <!-- 参与拼团列表弹框 -->
+    <participatemask :maskFlag.sync="participateFlag">
+      <view class="participate-box">
+        <image class="close" src="/assets/img/image30.png" @tap="hideParticipateMask" />
+        <view class="head">参与拼单</view>
+        <view class="time-out">
+          仅剩
+          <text>{{currentAssembleData.number}}</text>
+          个名额，{{wxTimerList['timer' + currentAssembleIdx].wxTimer}}后结束
+        </view>
+        <view class="head-img-wrap">
+          <image class="head-img-item" src="{{currentAssembleData.member_avatar}}" />
+          <repeat for="{{currentAssembleData.list}}" wx:key="index">
+            <image class="head-img-item" src="{{item.member_avatar}}" />
+          </repeat>
+          <repeat for="{{currentAssembleData.number}}" wx:key="index">
+            <image class="head-img-item" src="/assets/img/image31.png" />
+          </repeat>
+        </view>
+        <view class="btn" @tap="navAssembleShopDetails">去拼单</view>
+      </view>
+    </participatemask>
   </view>
 </template>
 
@@ -257,13 +336,18 @@ var api = require('../api.js');
 import { ajax } from '../ajax.js';
 import {formatDate} from '../utils/base.js'
 var WxParse = require('../utils/wxParse/wxParse.js');
+var timer = require('../utils/wxTimer.js'); // 倒计时
+
+
 export default class Index extends wepy.page {
   config = {
     navigationBarTitleText: '商品详情'
   };
   components = {
     attrsmask: mask,
-    couponmask: mask,
+    asslistmask: mask,
+    participatemask: mask,
+    couponmask: mask
   };
 
   mixins = [];
@@ -290,9 +374,23 @@ export default class Index extends wepy.page {
     address_list: [],
     distState: 0, // 2分销员  其他不是
     userid: null, // 点击链接进来的userid
+    waitForArr: [], // 等待拼团列表
+    wxTimerList: {}, // 倒计时
+    asslistFlag: false, // 全部拼团列表锁
+    participateFlag: false, // 参与拼团列表锁
+    currentAssembleIdx: null, //当前选择参团的索引
+    currentAssembleData: null // 当前选择参团的数据
   };
 
   computed = {};
+  watch = {
+    currentAssembleIdx(newValue, oldValue) {
+      this.currentAssembleData = this.waitForArr.filter(
+        (item, index) => index == newValue
+      )[0];
+      console.log(this.currentAssembleData)
+    }
+  };
   onShow() {
     // 用户收货地址列表
     ajax({
@@ -309,47 +407,11 @@ export default class Index extends wepy.page {
     },
     // 显示选择商品框
     showAttrMask() {
+      this.currentAssembleData = null
       this.attrFlag = true;
     },
     attrBtnSubmit() {
-      var that = this
-      var app = this.$parent;
-      var goods_id = this.goods_id
-      var goodsNum = this.goodsNum
-      var cart_id = `${goods_id}|${goodsNum}`
-      var data = {
-          cart_id,
-          address_id: '',
-          pingou: this.sale_type == 'group' ? 1 : 0,
-          fx_id: this.userid ? 1 : 0
-      }
-      ajax({
-        url: api.memberBuyOne,
-        data
-      }).then(res => {
-        if(res.code == 200) {
-          res.datas.submitData = data
-          app.globalData.orderInfo = res.datas
-          if(that.address_list.length) {
-            this.$navigate({ url: '/pages/settlement' });
-          } else {
-            wx.showModal({
-              title: '提醒',
-              content: '暂无地址，添加新地址',
-              success(e) {
-                if(e.confirm) {
-                  that.$navigate({ url: 'consignee' });
-                }
-              }
-            })
-          }
-        } else if (res.code == 400){
-          wx.showToast({
-            title: res.datas.error,
-            icon: 'none'
-          })
-        }
-      })
+      this.submit()
     },
     addNum() {
       this.goodsNum ++
@@ -435,9 +497,75 @@ export default class Index extends wepy.page {
     },
     hideCoupon() {
       this.couponFlag = false
+    },
+    // 关闭拼团列表框
+    hideAsslistMask() {
+      this.asslistFlag = false;
+    },
+    // 显示拼团列表框
+    showAsslistMask() {
+      this.asslistFlag = true;
+    },
+    // 选择去拼单
+    showParticipateMask(idx) {
+      this.currentAssembleIdx = idx;
+      this.participateFlag = true;
+      this.asslistFlag = false;
+    },
+    // 关闭参与拼团列表弹框
+    hideParticipateMask(idx) {
+      this.participateFlag = false;
+    },
+    // 提交拼团
+    navAssembleShopDetails() {
+      this.goodsNum = 1
+      this.submit()
+      this.participateFlag = false;
     }
   };
-
+  // 提交订单
+  submit() {
+      var that = this
+      var app = this.$parent;
+      var goods_id = this.goods_id
+      var goodsNum = this.goodsNum
+      var cart_id = `${goods_id}|${goodsNum}`
+      var data = {
+          cart_id,
+          address_id: '',
+          pingou: this.sale_type == 'group' ? 1 : 0,
+          fx_id: this.userid ? 1 : 0,
+          log_id: this.currentAssembleData ? this.currentAssembleData.log_id : null,
+          buyer_id: this.currentAssembleData ? this.currentAssembleData.buyer_id : null
+      }
+      ajax({
+        url: api.memberBuyOne,
+        data
+      }).then(res => {
+        if(res.code == 200) {
+          res.datas.submitData = data
+          app.globalData.orderInfo = res.datas
+          if(that.address_list.length) {
+            this.$navigate({ url: '/pages/settlement' });
+          } else {
+            wx.showModal({
+              title: '提醒',
+              content: '暂无地址，添加新地址',
+              success(e) {
+                if(e.confirm) {
+                  that.$navigate({ url: 'consignee' });
+                }
+              }
+            })
+          }
+        } else if (res.code == 400){
+          wx.showToast({
+            title: res.datas.error,
+            icon: 'none'
+          })
+        }
+      })
+  }
   events = {};
   onShareAppMessage(e) {
     // if(this.distState == 2) {
@@ -448,6 +576,7 @@ export default class Index extends wepy.page {
     // }
   }
   async onLoad(t) {
+    var that = this
     this.userid = t.userid
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     this.goods_id = t.goods_id;
@@ -465,6 +594,24 @@ export default class Index extends wepy.page {
         item.couponTime = `${formatDate(item.voucher_t_start_date)} 至 ${formatDate(item.voucher_t_end_date)}`
       })
       this.voucher_list = list
+      this.$apply()
+    })
+
+    ajax({
+      url: api.getpingoulist,
+      data: {
+        goods_id: t.goods_id
+      }
+    }).then(res => {
+      var list = res.datas || []
+      list.forEach((item, idx) => {
+        item.timer = new timer({
+          beginTime: item.over_time,
+          name: `timer${idx}`
+        });
+        item.timer.start(that)
+      })
+      this.waitForArr = list
       this.$apply()
     })
     // 用户是否分销员
@@ -1122,6 +1269,200 @@ export default class Index extends wepy.page {
     color: #fff;
     font-weight: bold;
     font-size: 30rpx;
+  }
+}
+.assemble-block {
+  .head {
+    height: 90rpx;
+    display: flex;
+    align-items: center;
+    padding: 0 30rpx;
+    justify-content: space-between;
+    .title {
+      color: #000000;
+    }
+    .more {
+      color: #999999;
+      display: flex;
+      align-items: center;
+      image {
+        margin: 0 0;
+        width: 48rpx;
+        height: 48rpx;
+      }
+    }
+  }
+  .list {
+    padding: 30rpx 0;
+    swiper {
+      height: 100rpx;
+      width: 100%;
+      .item {
+        height: 100rpx;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 30rpx;
+        box-sizing: border-box;
+        > image {
+          width: 60rpx;
+          height: 60rpx;
+          border-radius: 50%;
+        }
+        .name {
+          color: #000;
+          flex: 1;
+          margin-left: 20rpx;
+        }
+        .last {
+          display: flex;
+          align-items: center;
+          .other {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          }
+          .btn {
+            width: 130rpx;
+            height: 60rpx;
+            line-height: 60rpx;
+            text-align: center;
+            color: #fff;
+            border-radius: 10rpx;
+            background: #ff2228;
+            margin-left: 20rpx;
+          }
+        }
+      }
+    }
+  }
+}
+.asslist-box {
+  width: 630rpx;
+  height: 622rpx;
+  z-index: 999;
+  border-radius: 20rpx;
+  background: #fff;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  .close {
+    width: 48rpx;
+    height: 48rpx;
+    position: absolute;
+    right: 30rpx;
+    top: 30rpx;
+  }
+  .head {
+    font-size: 32rpx;
+    text-align: center;
+    padding: 60rpx 0;
+    font-weight: bold;
+  }
+  .asslist-cont {
+    scroll-view {
+      height: 320rpx;
+      .scroll-view-item {
+        padding: 20rpx 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        > image {
+          width: 60rpx;
+          height: 60rpx;
+          border-radius: 50%;
+          margin-right: 30rpx;
+        }
+        .last {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          color: #999999;
+          font-size: 24rpx;
+          .t {
+            display: flex;
+            align-items: flex-end;
+            .name {
+              color: #000;
+              font-size: 28rpx;
+              margin-right: 12rpx;
+            }
+            .other text {
+              color: #ff2228;
+            }
+          }
+        }
+        .btn {
+          width: 130rpx;
+          height: 60rpx;
+          line-height: 60rpx;
+          text-align: center;
+          color: #fff;
+          border-radius: 10rpx;
+          background: #ff2228;
+          margin-left: 20rpx;
+        }
+      }
+    }
+  }
+}
+.participate-box {
+  width: 630rpx;
+  height: 528rpx;
+  z-index: 999;
+  border-radius: 20rpx;
+  background: #fff;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  .close {
+    width: 48rpx;
+    height: 48rpx;
+    position: absolute;
+    right: 30rpx;
+    top: 30rpx;
+  }
+  .head {
+    font-size: 32rpx;
+    text-align: center;
+    padding: 60rpx 0;
+    font-weight: bold;
+  }
+  .time-out {
+    text-align: center;
+    text {
+      color: #ff2228;
+    }
+  }
+  .head-img-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 30rpx 0 60rpx 0;
+    .head-img-item {
+      margin: 0 10rpx;
+      width: 92rpx;
+      height: 92rpx;
+      border-radius: 50%;
+    }
+  }
+  .btn {
+    width: 524rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    border-radius: 10rpx;
+    background: #ff2228;
+    font-size: 32rpx;
+    color: #fff;
+    font-weight: bold;
+    margin: 0 auto;
   }
 }
 </style>

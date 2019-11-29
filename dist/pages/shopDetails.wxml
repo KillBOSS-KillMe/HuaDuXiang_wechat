@@ -75,6 +75,36 @@
           <image src="/assets/img/image25.png"/>
         </view>
       </view>
+
+      <view class="assemble-block" wx:if="{{waitForArr.length && sale_type == 'group'}}">
+        <view class="head" bindtap="showAsslistMask">
+          <view class="title">{{waitForArr.length}}人在拼团，可直接参与</view>
+          <view class="more">
+            <text>查看更多</text>
+            <image src="/assets/img/image25.png"/>
+          </view>
+        </view>
+        <vew class="list">
+          <swiper vertical="vertical" autoplay interval="2000">
+            <block wx:key="key" wx:for="{{waitForArr}}" wx:for-index="index" wx:for-item="item">
+              <swiper-item>
+                <view class="item" bindtap="showParticipateMask" data-wpyshowparticipatemask-a="{{index}}">
+                  <image src="{{item.member_avatar}}"/>
+                  <view class="name">{{item.member_truename}}</view>
+                  <view class="last">
+                    <view class="other">
+                      <view>还差{{item.number}}人拼成</view>
+                      <view>剩余{{wxTimerList['timer' + index].wxTimer}}</view>
+                    </view>
+                    <view class="btn">去拼单</view>
+                  </view>
+                </view>
+              </swiper-item>
+            </block>
+          </swiper>
+        </vew>
+      </view>
+
       <view class="textdetails">
         <view class="textdetails-h">图文详情</view>
         <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
@@ -248,6 +278,69 @@
           </block>
         </scroll-view>
         <view class="coupon-btn" bindtap="hideCoupon">关闭</view>
+      </view>
+    
+    </view>
+  </view>
+
+        <!-- 全部拼团列表弹框 -->
+    
+  <view class="list">
+    <view class="{{$asslistmask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$asslistmask$move">
+      <view class="mask" bindtap="$asslistmask$hideMask"/>
+      
+      <view class="asslist-box">
+        <image class="close" src="/assets/img/image30.png" bindtap="hideAsslistMask"/>
+        <view class="head">正在拼单</view>
+        <view class="asslist-cont">
+          <scroll-view scroll-y="true">
+            <block wx:key="key" wx:for="{{waitForArr}}" wx:for-index="index" wx:for-item="item">
+              <view class="scroll-view-item" bindtap="showParticipateMask" data-wpyshowparticipatemask-a="{{index}}">
+                <image src="{{item.member_avatar}}"/>
+                <view class="last">
+                  <view class="t">
+                    <view class="name">{{item.member_truename}}</view>
+                    <view class="other">
+                      还差
+                      <text>{{item.number}}</text>人拼成
+                    </view>
+                  </view>
+                  <view>剩余{{wxTimerList['timer' + index].wxTimer}}</view>
+                </view>
+                <view class="btn">去拼单</view>
+              </view>
+            </block>
+          </scroll-view>
+        </view>
+      </view>
+    
+    </view>
+  </view>
+
+    <!-- 参与拼团列表弹框 -->
+    
+  <view class="list">
+    <view class="{{$participatemask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$participatemask$move">
+      <view class="mask" bindtap="$participatemask$hideMask"/>
+      
+      <view class="participate-box">
+        <image class="close" src="/assets/img/image30.png" bindtap="hideParticipateMask"/>
+        <view class="head">参与拼单</view>
+        <view class="time-out">
+          仅剩
+          <text>{{currentAssembleData.number}}</text>
+          个名额，{{wxTimerList['timer' + currentAssembleIdx].wxTimer}}后结束
+        </view>
+        <view class="head-img-wrap">
+          <image class="head-img-item" src="{{currentAssembleData.member_avatar}}"/>
+          <block wx:key="key" wx:for="{{currentAssembleData.list}}" wx:for-index="index" wx:for-item="item">
+            <image class="head-img-item" src="{{item.member_avatar}}"/>
+          </block>
+          <block wx:key="key" wx:for="{{currentAssembleData.number}}" wx:for-index="index" wx:for-item="item">
+            <image class="head-img-item" src="/assets/img/image31.png"/>
+          </block>
+        </view>
+        <view class="btn" bindtap="navAssembleShopDetails">去拼单</view>
       </view>
     
     </view>

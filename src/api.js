@@ -143,8 +143,7 @@ module.exports = {
   goodsKanjiaDetail: URL + "/api/mobile/index.php?w=member_kanjia&t=goods_kanjia_detail",
   // 用户提现
   pdCashAdd: URL + "/api/mobile/index.php?w=member_cash&t=pd_cash_add",
-
-
-
+  // 未成团列表显示
+  getpingoulist: URL + "/api/mobile/index.php?w=pingou&t=getpingoulist",
 
 }

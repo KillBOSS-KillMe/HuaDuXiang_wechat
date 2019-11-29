@@ -49,7 +49,7 @@
             </repeat>
             <view class="goods-fot">
               <view class="should-price">
-                应付金额
+                实付金额
                 <view class="text">￥{{item.order_amount}}</view>
               </view>
                <!-- 0 已取消 -->

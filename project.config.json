@@ -79,7 +79,7 @@
 					"id": 4,
 					"name": "普通商品详情",
 					"pathName": "pages/shopDetails",
-					"query": "goods_id=42&userid=7",
+					"query": "goods_id=45&userid=7",
 					"scene": 1007
 				},
 				{
