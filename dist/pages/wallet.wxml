@@ -10,15 +10,16 @@
     <view class="detailed">
       <view class="title">收支明细</view>
       <view class="deta-list">
-        <block wx:for="{{3}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+        <block wx:for="{{list}}" wx:for-index="index" wx:for-item="item" wx:key="key">
           <view class="deta-item">
             <view class="top">
-              <view class="h">充值</view>
-              <view class="price">+￥60</view>
+              <view class="h">{{item.lg_desc}}</view>
+              <view class="price">{{item.lg_av_amount}}</view>
+
             </view>
             <view class="fot">
-              <view class="time">2019.12.21 12:23</view>
-              <view class="price">￥1200</view>
+              <view class="time">{{item.lg_add_time}}</view>
+              <!-- <view class="price">{{item.lg_freeze_amount}}</view> -->
             </view>
           </view>
         </block>

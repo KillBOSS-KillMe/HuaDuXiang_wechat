@@ -57,11 +57,14 @@
                 <view class="goods-btn color-y" data-order_id="{{item.order_id}}" bindtap="getWXPayment" data-wpygetwxpayment-a="{{item.order_id}}" data-wpygetwxpayment-b="{{item.pay_sn}}" data-wpygetwxpayment-c="{{item.order_amount}}">立即付款</view>
               </view>
               <!-- 20 待发货   -->
-              <view class="goods-option" wx:elif="{{item.order_state == 20}}">
+              <!-- <view class="goods-option" wx:elif="{{item.order_state == 20}}">
                 <view class="goods-btn color-y">
-                  <navigator url="/pages/order-track/order-track?order_id={{item.order_id}}" hover-class="none">申请退款</navigator>
+                  <navigator
+                    url="/pages/order-track/order-track?order_id={{item.order_id}}"
+                    hover-class="none"
+                  >申请退款</navigator>
                 </view>
-              </view>
+              </view> -->
               <!-- 30 已发货/待收货 -->
               <view class="goods-option" wx:elif="{{item.order_state == 30}}">
                 <view class="goods-btn">

@@ -108,7 +108,7 @@ export default class ShopCart extends wepy.page {
       { funtext: '待付款', state: 1, num: 0 },
       { funtext: '待发货', state: 2, num: 0 },
       { funtext: '待收货', state: 3, num: 0 },
-      { funtext: '退款 / 售后', state: 4, num: 0 }
+      { funtext: '售后', state: 4, num: 0 }
     ], // 功能入口
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     userInfo: {},
@@ -324,33 +324,20 @@ page {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    line-height: 106rpx;
     .iconFun {
       width: 25%;
       display: flex;
       justify-content: center;
       position: relative;
-      .icon_num {
-        position: absolute;
-        top: -15%;
-        left: 45%;
-      }
+      flex-direction: column;
+      align-items: center;
       .icon_text {
         width: 170rpx;
-        position: absolute;
-        top: 28%;
-        left: 27%;
-
+        text-align: center;
+        padding-top: 10rpx;
         font-size: 26rpx;
         color: #333;
       }
-    }
-  }
-  .iconFun:nth-last-child(1) {
-    .icon_text:nth-last-child(1) {
-      position: absolute;
-      top: 28%;
-      left: 10%;
     }
   }
 }

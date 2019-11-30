@@ -154,6 +154,28 @@
       </view>
       <navigator class="settled-btn" form-type="submit" hover-class="none" url="/pages/merchantIndex?store_id={{store_id}}">跳转店铺</navigator>
     </form>
+
+    <paymask :maskFlag.sync="payFlag">
+      <view class="price-type">
+        <view class="price-all">支付金额：<text>￥{{paying_amount}}</text></view>
+        <view class="type">
+          <view class="left">
+            <text>使用余额支付</text>
+            <!-- <switch color="#48CFAE" checked="{{payment_type == 1}}" disabled></switch> -->
+          </view>
+          <view class="price">
+            <text>可用余额</text>
+            <view>￥{{available_predeposit}}</view>
+          </view>
+        </view>
+        <view class="input-wrap" wx:if="{{payment_type == 1}}">
+          <text>输入支付密码</text>
+          <input type="password" @input="inputPassword" value="{{password}}" maxlength="6">
+        </view>
+        <view class="price-type-title">支付方式：{{payment_type == 0 ? '微信支付':'余额支付'}}</view>
+        <button class="btn" @tap="pay">确认支付</button>
+      </view>
+    </paymask>
   </view>
 </template>
 
@@ -161,17 +183,21 @@
 import wepy from 'wepy';
 var api = require('../api.js');
 import { ajax } from '../ajax.js';
+import mask from '../components/mask';
 
 
 export default class Index extends wepy.page {
   config = {
     navigationBarTitleText: '商家入驻'
   };
-  components = {};
+  components = {
+    paymask: mask
+  };
 
   mixins = [];
 
   data = {
+    payFlag: false,
     status: null, // -10没入驻  10填完信息待审核   11交完钱审核中   20填完信息审核成功  30填完信息审核失败  31交钱审核失败    40入驻成功
     storeGrade: [],  // 入驻店铺等级
     timeArr: [{num: 1},{num: 2},{num: 3}],
@@ -179,6 +205,7 @@ export default class Index extends wepy.page {
     timeIndex: 0,
     useCostPrice: 0, // 平台使用费用
     bondPrice: 0, // 商家保证金
+    paying_amount: 0, // 总费用
     storeClass: [], // 店铺分类
     storeClassIndex: 0, //店铺分类索引
     storeClassList: [],
@@ -189,6 +216,9 @@ export default class Index extends wepy.page {
     entryId: null, // 店铺分类id
     entryArr: [], // 带三级分类的条目
     type: 1, // 第一次1 编辑2
+    payment_type: 1 , //付款类型 0微信 1余额
+    available_predeposit: 0, //用户余额
+    password: '',
   };
 
   computed = {
@@ -202,7 +232,17 @@ export default class Index extends wepy.page {
       return Number(price).toFixed(2)
     }
   };
-  onShow() {}
+  onShow() {
+    // 用户个人中心数据接口
+    ajax({
+      url: api.memberInfo,
+    }).then(res => {
+      if(res.code == 200) {
+        this.available_predeposit = Number(res.datas.member_data.available_predeposit)
+        this.$apply()
+      }
+    })
+  }
   watch = { }
   methods = {
     submit(e) {
@@ -298,12 +338,10 @@ export default class Index extends wepy.page {
           icon: 'none'
         })
       })
-      // this.$navigate({ url: 'settledInPay' });
     },
     storeGradeChange(e) {
       var value = e.detail.value
       this.storeGradeIndex = value
-
     },
     timeChange(e){
       this.timeIndex = e.detail.value
@@ -317,7 +355,6 @@ export default class Index extends wepy.page {
       var entryArr = this.entryArr
       this.entryName = `${entryArr[0][idxArr[0]].gc_name},${entryArr[1][idxArr[1]].gc_name},${entryArr[2][idxArr[2]].gc_name}`
       this.entryId = `${entryArr[0][idxArr[0]].gc_id},${entryArr[1][idxArr[1]].gc_id},${entryArr[2][idxArr[2]].gc_id}`
-
     },
     bindMultiPickerColumnChange(e){
        this.setList(e.detail.column, e.detail.value)
@@ -327,10 +364,54 @@ export default class Index extends wepy.page {
       this.status = -10
     },
     // 入驻付钱
+    pay() {
+      var that = this
+      if(!this.password) {
+        wx.showToast({
+          title: '请输入密码',
+          icon: 'none'
+        })
+        return false
+      }
+      ajax({
+        url: api.joinPay,
+        data: {
+          password: this.password
+        }
+      }).then(res => {
+        if(res.code == 200) {
+          if(res.datas.state == 1) {
+            wx.showToast({
+              title: res.datas.msg,
+            })
+            var timer = setTimeout(() => {
+              this.$navigate('settledIn')
+            }, 1000)
+          } else if (res.datas.state == -4) {
+            wx.showModal({
+              title: "提醒",
+              content: "余额不足，是否前往充值？",
+              success(res) {
+                if(res.confirm) {
+                  that.$redirect(`vip`);
+                }
+              }
+            })
+          } else {
+            wx.showToast({
+              title: res.datas.msg,
+              icon: 'none',
+            })
+          }
+        }
+      })
+    },
+    inputPassword(e) {
+      this.password = e.detail.value
+    },
     settledIn() {
-
+      this.payFlag = true
     }
-
   };
   setList(idx, val) {
     var allArr = this.entryArr[0]
@@ -353,6 +434,7 @@ export default class Index extends wepy.page {
       url: api.isJoin,
       type: 'get',
     }).then(res => {
+      // -10没入驻  10填完信息待审核   11交完钱审核中   20填完信息审核成功  30填完信息审核失败  31交钱审核失败    40入驻成功
       this.status = res.datas.state
       if(res.datas.state != -10) {
         this.type = 2
@@ -360,6 +442,7 @@ export default class Index extends wepy.page {
         var joinin_year = this.joinInfo.joinin_year
         this.entryId = this.joinInfo.store_class_ids
         this.entryName = this.joinInfo.store_class_names
+        this.paying_amount = this.joinInfo.paying_amount
         this.timeArr.forEach((item, index) => {
           if(item.num == joinin_year) {
             this.timeIndex = index
@@ -507,8 +590,77 @@ export default class Index extends wepy.page {
     border-radius: 10rpx;
     left: 50%;
     transform: translateX(-50%);
-
-
+  }
+}
+.price-type {
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+  background: #fff;
+  width: 750rpx;
+  border-radius: 10rpx;
+  margin: 0 auto;
+  color: #333;
+  padding:50rpx 30rpx;
+  box-sizing: border-box;
+  .type {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80rpx;
+    .left {
+      font-size: 28rpx;
+      switch {
+        transform: scale(0.7);
+      }
+      text {
+        color: #666;
+      }
+    }
+    .price {
+      display: flex;
+      align-items: center;
+      > view {
+        color:#f92832;
+        margin-left: 10rpx;
+        font-weight: bold;
+      }
+      text {
+        color: #666;
+      }
+    }
+  }
+  .input-wrap {
+    display: flex;
+    align-items: center;
+    height: 80rpx;
+    > input {
+      margin-left: 20rpx;
+      border-bottom: 1px solid #ccc;
+      width: 400rpx;
+      height: 70rpx;
+    }
+    text {
+        color: #666;
+    }
+  }
+  .price-type-title {
+    text-align: center;
+    font-size: 26rpx;
+    color: #ccc;
+    padding: 30rpx 0 0 0;
+  }
+  .btn {
+    width: 670rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    font-weight: bold;
+    font-size: 28rpx;
+    color: #fff;
+    background: #f2292d;
+    border-radius: 10rpx;
+    margin: 30rpx auto 0;
   }
 }
 </style>

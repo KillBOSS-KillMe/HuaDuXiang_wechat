@@ -1,22 +1,25 @@
 <template>
   <view>
     <view class="record-info-head">
-      <view>快递名称：顺丰速运</view>
-      <view>快递单号：198014266</view>
+      <view>快递名称：{{express_name}}</view>
+      <view>快递单号：{{shipping_code}}</view>
     </view>
     <!-- <view class="address-wrap">
        <image class="add-img" src="/assets/img/image33.png">
        <view class="address-info">收货地址：陕西省西安市高新区科技四路高新软件园 科技大厦</view>
     </view>-->
     <view class="log">
-      <view class="log-wrap">
+      <view class="log-wrap" wx:if="{{logistics.length}}">
         <view class="log-i {{index == 0 ? 'log-active' : '' }}" wx:for="{{logistics}}">
           <view class="spot"></view>
           <view class="log-right">
-            <view>{{item.title}}</view>
+            <view>{{item.context}}</view>
             <view>{{item.time}}</view>
           </view>
         </view>
+      </view>
+      <view class="log-wrap" wx:else>
+        商家已发货，暂未更新物流信息
       </view>
     </view>
   </view>
@@ -64,7 +67,9 @@ export default class ShopCart extends wepy.page {
         time: '2017-04-01 12:00:00  ',
         flag: 1
       }
-    ]
+    ],
+    express_name: '',
+    shipping_code: ''
   };
 
   computed = {};
@@ -78,7 +83,12 @@ export default class ShopCart extends wepy.page {
       data: {
         order_id: t.order_id
       }
-    }).then(res => console.log(res));
+    }).then(res => {
+      this.logistics = res.datas.deliver_info.reverse() || []
+      this.express_name = res.datas.express_name
+      this.shipping_code = res.datas.shipping_code
+      this.$apply()
+    });
   }
 }
 </script>

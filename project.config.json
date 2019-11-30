@@ -3,6 +3,7 @@
 	"setting": {
 		"urlCheck": false,
 		"es6": false,
+		"enhance": false,
 		"postcss": false,
 		"minified": false,
 		"newFeature": true,
@@ -91,30 +92,16 @@
 				},
 				{
 					"id": -1,
-					"name": "店铺首页",
-					"pathName": "pages/merchantIndex",
-					"query": "store_id=1",
-					"scene": null
-				},
-				{
-					"id": -1,
 					"name": "订单列表",
 					"pathName": "pages/orderlist",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 8,
 					"name": "物流信息",
 					"pathName": "pages/logistics",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "入驻",
-					"pathName": "pages/settledIn",
-					"query": "",
+					"query": "order_id=226",
 					"scene": null
 				},
 				{
@@ -125,31 +112,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "提现申请",
-					"pathName": "pages/wallet-input",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "我的砍价列表",
-					"pathName": "pages/bargain-list",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "购物车",
-					"pathName": "pages/shopCar",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "砍价",
-					"pathName": "pages/bargain",
-					"query": "goods_id=42&lei=fenxiao&userid=7",
+					"id": 9,
+					"name": "订单详情",
+					"pathName": "pages/orderInfo",
+					"query": "order_id=273",
 					"scene": null
 				}
 			]

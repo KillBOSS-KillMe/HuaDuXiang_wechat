@@ -44,7 +44,7 @@
       border-top: 1px solid #ececec;
       padding: 20rpx 30rpx;
       .deta-item {
-        height: 118rpx;
+        height: 180rpx;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -54,13 +54,14 @@
         justify-content: space-between;
         .h {
           font-weight: bold;
-          font-size: 32rpx;
+          font-size: 28rpx;
           color: #222;
+          width: 540rpx;
         }
         .price {
           font-weight: bold;
           color: #ff2228;
-          font-size: 36rpx;
+          font-size: 34rpx;
         }
       }
       .fot {
@@ -87,15 +88,16 @@
     <view class="detailed">
       <view class="title">收支明细</view>
       <view class="deta-list">
-        <repeat for="{{3}}" item="item">
+        <repeat for="{{list}}" item="item">
           <view class="deta-item">
             <view class="top">
-              <view class="h">充值</view>
-              <view class="price">+￥60</view>
+              <view class="h">{{item.lg_desc}}</view>
+              <view class="price">{{item.lg_av_amount}}</view>
+
             </view>
             <view class="fot">
-              <view class="time">2019.12.21 12:23</view>
-              <view class="price">￥1200</view>
+              <view class="time">{{item.lg_add_time}}</view>
+              <!-- <view class="price">{{item.lg_freeze_amount}}</view> -->
             </view>
           </view>
         </repeat>
@@ -119,7 +121,8 @@ export default class Wallet extends wepy.page {
 
   data = {
     requestImgUrl: '',
-    member_data: ''
+    member_data: '',
+    list: []
   };
   computed = {};
   methods = {
@@ -139,6 +142,15 @@ export default class Wallet extends wepy.page {
   }
   onShow() {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
+    ajax({
+      url: api.cashDetails,
+      type: 'get'
+    }).then(res => {
+      if(res.code == 200) {
+        this.list = res.datas.data || []
+        this.$apply()
+      }
+    })
   }
 
   events = {};

@@ -39,6 +39,7 @@
             </view>
             <view class="goods-price"> ￥
               <text>{{item.goods_price}}</text> </view>
+            <!-- <view class="tui-btn"  @tap="showInputFlag" wx:if="{{item.refund == 1}}">申请售后</view> -->
           </view>
         </view>
       </repeat>
@@ -46,61 +47,82 @@
 
 
     <view class="goods-h">订单信息</view>
-<view class="com-block">
-  <view class="com-list">
-    <view class="h">商品合计</view>
-    <view class="p r-color">￥{{goods_price}}</view>
-  </view>
-  <view class="com-list">
-    <view class="h">运费</view>
-    <view class="p">￥{{order_info.shipping_fee}}</view>
-  </view>
-  <view class="com-list" wx:if="{{order.coupon_price}}">
-    <view class="h">优惠券</view>
-    <view class="p">￥{{order.coupon_price}}</view>
-  </view>
-  <view class="com-list" wx:if="{{order.coin_to_amount}}">
-    <view class="h">积分抵扣</view>
-    <view class="p">￥{{order.coin_to_amount}}</view>
-  </view>
-  <view class="com-list" wx:if="{{order.activity_price}}">
-    <view class="h">活动优惠</view>
-    <view class="p">￥{{order.activity_price}}</view>
-  </view>
-  <view class="com-list" wx:if="{{order.discount}}">
-    <view class="h">折扣金额</view>
-    <view class="p">￥{{order.discount}}</view>
-  </view>
-</view>
-<view class="com-block">
-  <view class="com-list">
-    <view class="h">订单编号</view>
-    <view class="p">{{order_info.order_sn}}</view>
-    <view class="last" data-value="{{order_info.order_sn}}" bindtap="setClipboardData({{order_info.order_sn}})">复制</view>
-  </view>
-  <view class="com-list">
-    <view class="h">提交时间</view>
-    <view class="p">{{order_info.add_time}}</view>
-  </view>
-  <view class="com-list">
-    <view class="h">支付方式</view>
-    <view class="p">{{order_info.payment_name}}</view>
-  </view>
-</view>
+    <view class="com-block">
+      <view class="com-list">
+        <view class="h">商品合计</view>
+        <view class="p r-color">￥{{goods_price}}</view>
+      </view>
+      <view class="com-list">
+        <view class="h">运费</view>
+        <view class="p">￥{{order_info.shipping_fee}}</view>
+      </view>
+      <view class="com-list" wx:if="{{order.coupon_price}}">
+        <view class="h">优惠券</view>
+        <view class="p">￥{{order.coupon_price}}</view>
+      </view>
+      <view class="com-list" wx:if="{{order.coin_to_amount}}">
+        <view class="h">积分抵扣</view>
+        <view class="p">￥{{order.coin_to_amount}}</view>
+      </view>
+      <view class="com-list" wx:if="{{order.activity_price}}">
+        <view class="h">活动优惠</view>
+        <view class="p">￥{{order.activity_price}}</view>
+      </view>
+      <view class="com-list" wx:if="{{order.discount}}">
+        <view class="h">折扣金额</view>
+        <view class="p">￥{{order.discount}}</view>
+      </view>
+    </view>
+    <view class="com-block">
+      <view class="com-list">
+        <view class="h">订单编号</view>
+        <view class="p">{{order_info.order_sn}}</view>
+        <view class="last" data-value="{{order_info.order_sn}}" bindtap="setClipboardData({{order_info.order_sn}})">复制</view>
+      </view>
+      <view class="com-list">
+        <view class="h">提交时间</view>
+        <view class="p">{{order_info.add_time}}</view>
+      </view>
+      <view class="com-list">
+        <view class="h">支付方式</view>
+        <view class="p">{{order_info.payment_name}}</view>
+      </view>
+    </view>
 
-<view class="sub-foot">
-  <view>
-    <text>金额￥</text>{{order_info.real_pay_amount}}
-  </view>
-  <view class="goods-option">
-    <view wx:if="{{order_info.if_buyer_cancel}}" bindtap="orderCancel">取消订单</view>
-    <view wx:if="{{order_info.if_deliver}}">查看物流</view>
-    <view wx:if="{{order_info.if_refund_cancel}}">退款</view>
-    <view wx:if="{{order_info.if_receive}}">收货</view>
-    <!-- <view bindtap="pay">付款</view> -->
-  </view>
-</view>
+    <view class="sub-foot">
+      <view>
+        <text>金额￥</text>{{order_info.real_pay_amount}}
+      </view>
+      <view class="goods-option">
+        <!-- <view wx:if="{{order_info.if_buyer_cancel}}" bindtap="orderCancel">取消订单</view>
+        <view wx:if="{{order_info.if_deliver}}">查看物流</view>
+        <view wx:if="{{order_info.if_refund_cancel}}">退款</view>
+        <view wx:if="{{order_info.if_receive}}">收货</view> -->
+        <!-- <view bindtap="pay">付款</view> -->
+      </view>
+    </view>
 
+    <mask :maskFlag.sync="inputFlag">
+      <view class="input-box">
+        <view class="com-item">
+          <view class="title">退款原因</view>
+          <view>不能按时发货</view>
+        </view>
+        <view class="com-item">
+          <view class="title">退款金额</view>
+          <view>100元</view>
+        </view>
+        <view class="com-item">
+          <view class="title">退款数量</view>
+          <view>1</view>
+        </view>
+        <view class="com-item">
+          <view class="title">退款说明</view>
+          <input type="text" placeholder="输入您要退款的说明文字">
+        </view>
+        <view class="btn">提交</view>
+      </view>
+    </mask>
   </view>
 </template>
 
@@ -108,16 +130,21 @@
 import wepy from 'wepy';
 var api = require('../api.js');
 import { ajax } from '../ajax.js';
+import mask from '../components/mask';
 
-export default class Index extends wepy.page {
+
+export default class OrderInfo extends wepy.page {
   config = {
     navigationBarTitleText: '订单详情'
   };
-  components = {};
+  components = {
+    mask: mask
+  };
 
   mixins = [];
 
   data = {
+    inputFlag: false,
     requestImgUrl: '',
     order_info: '',
     goods_price: 0,
@@ -142,8 +169,6 @@ export default class Index extends wepy.page {
         return prev + price*num
       }, 0)
       this.goods_price = goods_price.toFixed(2)
-
-      console.log(res.datas.order_info.if_buyer_cancel)
       this.$apply()
     })
   }
@@ -170,7 +195,7 @@ export default class Index extends wepy.page {
                 var timer = setTimeout(() => {
                   wx.navigateBack()
                   clearTimeout(timer)
-                }, 2000)
+                }, 1000)
               } else {
                 wx.showToast({
                   title: e.datas.error,
@@ -201,7 +226,7 @@ export default class Index extends wepy.page {
                 var timer = setTimeout(() => {
                   wx.navigateBack()
                   clearTimeout(timer)
-                }, 2000)
+                }, 1000)
               } else {
                 wx.showToast({
                   title: e.datas.error,
@@ -268,6 +293,9 @@ export default class Index extends wepy.page {
       wx.setClipboardData({
         data: num
       })
+    },
+    showInputFlag() {
+      this.inputFlag = true
     }
   };
 }
@@ -361,6 +389,16 @@ export default class Index extends wepy.page {
   flex: 1;
   display: flex;
   flex-direction: column;
+  position: relative;
+  .tui-btn {
+    position: absolute;
+    right: 0rpx;
+    bottom: 0rpx;
+    background: #F2292D;
+    color: #fff;
+    padding: 10rpx 20rpx;
+    border-radius: 10rpx;
+  }
 }
 .goods-title {
   font-weight: bold;
@@ -459,5 +497,38 @@ export default class Index extends wepy.page {
 .sub-foot .goods-option > view:nth-of-type(1) {
   background: #C1C1C1;
   margin-right: 20rpx;
+}
+.input-box {
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+  background: #fff;
+  width: 750rpx;
+  height: 600rpx;
+  box-sizing: border-box;
+  padding: 30rpx;
+  .com-item {
+    display: flex;
+    height: 90rpx;
+    line-height: 90rpx;
+    .title {
+      margin-right: 10rpx;
+    }
+    > input {
+      height: 100%;
+    }
+  }
+  .btn {
+    width: 690rpx;
+    margin: 40rpx auto 0;
+    background: #F2292D;
+    font-size: 28rpx;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 10rpx;
+    text-align: center;
+    height: 88rpx;
+    line-height: 88rpx;
+  }
 }
 </style>

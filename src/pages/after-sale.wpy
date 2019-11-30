@@ -14,6 +14,7 @@
           <view class="goods-head">
             <view class="contract-title">
               <text>订单编号：{{item.order_id}}123465798</text>
+              <text>待审核</text>
             </view>
           </view>
           <view class="goods-cont">

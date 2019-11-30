@@ -145,5 +145,8 @@ module.exports = {
   pdCashAdd: URL + "/api/mobile/index.php?w=member_cash&t=pd_cash_add",
   // 未成团列表显示
   getpingoulist: URL + "/api/mobile/index.php?w=pingou&t=getpingoulist",
-
+  // 商家入驻付费
+  joinPay: URL + "/api/mobile/index.php?w=member_payment&t=joinPay",
+  // 我的钱包明细
+  cashDetails: URL + "/api/mobile/index.php?w=member_index&t=cashDetails",
 }

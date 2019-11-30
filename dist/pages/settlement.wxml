@@ -30,10 +30,28 @@
               </view>
             </view>
           </block>
+          <!-- 定金 -->
+          <view class="earnest-money">
+            <view class="item  red-color">
+              <view class="title">定金</view>
+              <view class="price">
+                ￥
+                <text>2</text>
+              </view>
+            </view>
+            <view class="item  gray-color">
+              <view class="title">尾款</view>
+              <view class="price">
+                ￥
+                <text>2000</text>
+              </view>
+            </view>
+            <text>08月22日 00:0000开始支付尾款</text>
+          </view>          
           <view class="goods-service">
             <view class="com-list" wx:if="{{item.freight == 1}}">
               <view class="title">运费</view>
-              <view class="price">￥{{postage[index]}}</view>
+              <view class="price red-color">￥{{postage[index]}}</view>
             </view>
             <view class="com-list" wx:if="{{item.store_voucher_info.voucher_price}}">
               <view class="title">优惠券</view>
@@ -45,24 +63,7 @@
         </view>
       </block>
     </view>
-    <!-- 定金 -->
-    <view class="earnest-money" hidden>
-      <view class="item  red-color">
-        <view class="title">定金</view>
-        <view class="price">
-          ￥
-          <text>2</text>
-        </view>
-      </view>
-      <view class="item  gray-color">
-        <view class="title">尾款</view>
-        <view class="price">
-          ￥
-          <text>2000</text>
-        </view>
-      </view>
-      <text>08月22日 00:0000开始支付尾款</text>
-    </view>
+
 
     <!-- <view class="price-type" wx:if="{{available_predeposit>0}}">
       <view class="type">

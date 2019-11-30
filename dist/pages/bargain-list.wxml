@@ -22,7 +22,6 @@
             </view>
             <view  class="time-status"  wx:else>砍价已结束</view> -->
             <view class="bargin-btn-wrap">
-              <button class="bargin-btn"  wx:if="{{item.is_success == 1}}" catchtap="generateOrder">生成订单</button>
               <button class="bargin-btn {{item.is_success == -1 ? 'err':''}}">{{item.goods_state}}</button>
             </view>
           </view>
