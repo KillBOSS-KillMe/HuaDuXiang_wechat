@@ -50,7 +50,7 @@
           <view class="tail-price" wx:if="{{goods_content.is_book == 1}}">尾款￥{{goods_content.book_final_payment}}</view>
         </view>
         <view class="pay-time" wx:if="{{sale_type == 'advsales'}}">
-          <text wx:if="{{goods_content.is_book == 1}}">支付尾款时间：2019.08.22 00:00~2019.08.23 00:00</text>
+          <!-- <text wx:if="{{goods_content.is_book == 1}}">支付尾款时间：2019.08.22 00:00~2019.08.23 00:00</text> -->
           <text wx:if="{{goods_content.is_presell == 1}}">支付后5天内发货</text>
         </view>
       </view>
@@ -184,7 +184,7 @@
         <text>购物车</text>
       </navigator>
       <view class="earnest-money advsales">
-        <text wx:if="{{goods_content.is_book == 1}}">支付尾款时间：2019.08.23 00:00</text>
+        <text wx:if="{{goods_content.is_book == 1}}">支付尾款时间：生成订单5天内</text>
         <text wx:if="{{goods_content.is_presell == 1}}">支付后5天内发货</text>
       </view>
       <view class="pay-deposit" wx:if="{{goods_content.is_book == 1}}" bindtap="showAttrMask">

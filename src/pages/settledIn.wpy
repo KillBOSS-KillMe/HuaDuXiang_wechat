@@ -78,7 +78,7 @@
     <view class="examine" wx:if="{{status == 20}}">
       <view class="title">信息提交审核:</view>
       <image class="examine-img success-img" src="/assets/img/image56.png" />
-      <view class="again-info" @tap="settledIn">入驻</view>
+      <view class="again-info" @tap="settledIn">入驻支付</view>
     </view>
     <view class="examine" wx:if="{{status == 11}}">
       <view class="title">付款成功待后台开通:</view>
@@ -337,6 +337,12 @@ export default class Index extends wepy.page {
           title: res.datas.msg,
           icon: 'none'
         })
+        var timer = setTimeout(() => {
+          wx.reLaunch({
+            url: '/pages/settledIn'
+          })
+          clearTimeout(timer)
+        }, 1000)
       })
     },
     storeGradeChange(e) {
@@ -385,7 +391,10 @@ export default class Index extends wepy.page {
               title: res.datas.msg,
             })
             var timer = setTimeout(() => {
-              this.$navigate('settledIn')
+              wx.reLaunch({
+                url: '/pages/settledIn'
+              })
+              clearTimeout(timer)
             }, 1000)
           } else if (res.datas.state == -4) {
             wx.showModal({

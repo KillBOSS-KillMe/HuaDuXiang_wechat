@@ -18,7 +18,7 @@
                     {{item.goods_name}}
                   </view>
                 <view class="goods-tag">
-                  {{item.goods_spec}}
+                  {{item.goods_spec || ''}}
                   </view>          
                     <view class="price">￥{{item.goods_price}}</view>
                     <view class="shop-count">

@@ -20,7 +20,7 @@
               <view class="goods-right">
                 <view class="goodsname overflow-one">{{ele.goods_name}}</view>
                 <view class="goodstag">
-                  <text>{{ele.goods_spec}}</text>
+                  <text>{{ele.goods_spec || ''}}</text>
                   <view class="goodnum">×{{ele.goods_num}}</view>
                 </view>
                 <view class="goodprice">
@@ -29,25 +29,25 @@
                 </view>
               </view>
             </view>
+            <!-- 定金 -->
+            <view class="earnest-money" wx:if="{{is_book == '1'}}">
+              <view class="item  red-color">
+                <view class="title">定金</view>
+                <view class="price">
+                  ￥
+                  <text>{{ele.book_down_payment}}</text>
+                </view>
+              </view>
+              <view class="item  gray-color">
+                <view class="title">尾款</view>
+                <view class="price">
+                  ￥
+                  <text>{{ele.book_final_payment}}</text>
+                </view>
+              </view>
+              <text>{{ele.endtime}}开始支付尾款</text>
+            </view>          
           </block>
-          <!-- 定金 -->
-          <view class="earnest-money">
-            <view class="item  red-color">
-              <view class="title">定金</view>
-              <view class="price">
-                ￥
-                <text>2</text>
-              </view>
-            </view>
-            <view class="item  gray-color">
-              <view class="title">尾款</view>
-              <view class="price">
-                ￥
-                <text>2000</text>
-              </view>
-            </view>
-            <text>08月22日 00:0000开始支付尾款</text>
-          </view>          
           <view class="goods-service">
             <view class="com-list" wx:if="{{item.freight == 1}}">
               <view class="title">运费</view>
@@ -58,13 +58,11 @@
               <view class="price">-{{item.store_voucher_info.voucher_price}}</view>
               <!-- <image class="imgright" src="/assets/img/image25.png" /> -->
             </view>
-            <view class="merchandise-subtotal">小计：<text>￥{{item.store_goods_total}}</text></view>
+            <view class="merchandise-subtotal">小计：<text>￥{{is_book ==  '1' ? book_down_payment : item.store_goods_total }}</text></view>
           </view>
         </view>
       </block>
     </view>
-
-
     <!-- <view class="price-type" wx:if="{{available_predeposit>0}}">
       <view class="type">
         <view class="left">
@@ -86,7 +84,7 @@
       <view class="num">共{{goodsAllNum}}件</view>
       <view class="priceall">
         共计 ￥
-        <text class="allprice">{{allPrice}}</text>元
+        <text class="allprice">{{ allPrice }}</text>元
       </view>
       <button class="sub-btn" bindtap="getWXPayment">提交订单</button>
     </view>

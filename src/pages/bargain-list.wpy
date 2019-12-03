@@ -176,6 +176,8 @@ export default class BargainList extends wepy.page {
    navBarginInfo(goods_id,is_success) {
      if(is_success == 1) {
        this.$navigate(`orderlist`)
+     } else if ( is_success == -1) {
+       return false  
      } else {
        this.$navigate(`barginInfo?goods_id=${goods_id}`)
      }
@@ -227,7 +229,7 @@ export default class BargainList extends wepy.page {
     // }
   }  
   onUnload() {
-    this.waitForArr.forEach(item => item.timer.stop())
+    // this.waitForArr.forEach(item => item.timer.stop())
   }
 }
 </script>

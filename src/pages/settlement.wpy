@@ -13,7 +13,7 @@
       <image class="imgright" src="/assets/img/image25.png" />
     </navigator>
     <view class="usergoods-wrap">
-      <repeat for="{{store_cart_list}}">
+      <repeat for="{{store_cart_list}}" index="index">
         <view class="shop-list">
           <repeat for="{{item.goods_list}}" item="ele" index="idx">
             <view class="usergoods">
@@ -21,7 +21,7 @@
               <view class="goods-right">
                 <view class="goodsname overflow-one">{{ele.goods_name}}</view>
                 <view class="goodstag">
-                  <text>{{ele.goods_spec}}</text>
+                  <text>{{ele.goods_spec || ''}}</text>
                   <view class="goodnum">×{{ele.goods_num}}</view>
                 </view>
                 <view class="goodprice">
@@ -30,25 +30,25 @@
                 </view>
               </view>
             </view>
+            <!-- 定金 -->
+            <view class="earnest-money" wx:if="{{is_book == '1'}}">
+              <view class="item  red-color">
+                <view class="title">定金</view>
+                <view class="price">
+                  ￥
+                  <text>{{ele.book_down_payment}}</text>
+                </view>
+              </view>
+              <view class="item  gray-color">
+                <view class="title">尾款</view>
+                <view class="price">
+                  ￥
+                  <text>{{ele.book_final_payment}}</text>
+                </view>
+              </view>
+              <text>{{ele.endtime}}开始支付尾款</text>
+            </view>          
           </repeat>
-          <!-- 定金 -->
-          <view class="earnest-money">
-            <view class="item  red-color">
-              <view class="title">定金</view>
-              <view class="price">
-                ￥
-                <text>2</text>
-              </view>
-            </view>
-            <view class="item  gray-color">
-              <view class="title">尾款</view>
-              <view class="price">
-                ￥
-                <text>2000</text>
-              </view>
-            </view>
-            <text>08月22日 00:0000开始支付尾款</text>
-          </view>          
           <view class="goods-service">
             <view class="com-list" wx:if="{{item.freight == 1}}">
               <view class="title">运费</view>
@@ -59,13 +59,11 @@
               <view  class="price">-{{item.store_voucher_info.voucher_price}}</view>
               <!-- <image class="imgright" src="/assets/img/image25.png" /> -->
             </view>
-            <view class="merchandise-subtotal">小计：<text>￥{{item.store_goods_total}}</text></view>
+            <view class="merchandise-subtotal">小计：<text>￥{{is_book ==  '1' ? book_down_payment : item.store_goods_total }}</text></view>
           </view>
         </view>
       </repeat>
     </view>
-
-
     <!-- <view class="price-type" wx:if="{{available_predeposit>0}}">
       <view class="type">
         <view class="left">
@@ -87,7 +85,7 @@
       <view class="num">共{{goodsAllNum}}件</view>
       <view class="priceall">
         共计 ￥
-        <text class="allprice">{{allPrice}}</text>元
+        <text class="allprice">{{ allPrice }}</text>元
       </view>
       <button class="sub-btn" @tap="getWXPayment">提交订单</button>
     </view>
@@ -121,6 +119,7 @@ var api = require('../api.js');
 import { ajax } from '../ajax.js';
 import wepy from 'wepy';
 import mask from '../components/mask';
+import {formatDate} from '../utils/base.js'
 
 // 支付流程
 // 1.立即购买(选择规格数量) w=member_buy&t=buy_step1
@@ -166,7 +165,8 @@ export default class Settlement extends wepy.page {
     predepositFlag: true, // 余额支付是否开启
     mini_wxpayFlag: true, // 微信支付是否开启
     pingou: '', // 拼购信息状态
-
+    is_book: '', // 订单类型
+    book_down_payment: 0 , //预购金额
   };
 
   computed = {
@@ -298,7 +298,8 @@ export default class Settlement extends wepy.page {
             },
             fail (res) {
               wx.showToast({
-                title: '支付失败'
+                title: '支付失败',
+                icon: 'none'
               })
             },
             complete() {
@@ -347,7 +348,14 @@ export default class Settlement extends wepy.page {
     // 地址信息
     this.address =  Object.prototype.toString.call(orderInfo.address_info)  == '[object Object]' ? orderInfo.address_info : ''
     // 多店铺信息
-    this.store_cart_list = orderInfo.store_cart_list
+    var store_cart_list = Object.values(orderInfo.store_cart_list || {})
+    store_cart_list.forEach(item => {
+      item.goods_list.forEach(ele => {
+        ele.endtime = formatDate(ele.book_down_time)
+        this.book_down_payment = ele.book_down_payment
+      })
+    })
+    this.store_cart_list = orderInfo.store_cart_list 
     // 商品列表
     var goods_list = []
     // 商品总价格
@@ -374,7 +382,8 @@ export default class Settlement extends wepy.page {
     this.goods_freight = orderInfo.goods_freight
     // 余额
     this.available_predeposit = Number(orderInfo.available_predeposit)
-
+    // 订单类型
+    this.is_book = orderInfo.submitData.is_book
 
   }
 }

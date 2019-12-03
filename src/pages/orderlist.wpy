@@ -26,7 +26,7 @@
               <navigator
                 class="goods-list"
                 hover-class="none"
-                url="/pages/orderInfo?order_id={{item.order_id}}"
+                url="/pages/orderInfo?order_id={{item.order_id}}&order_type={{item.order_type}}"
               >
                 <view class="goods-info">
                   <image src="{{ele.goods_image_url}}" />
@@ -36,9 +36,14 @@
                       <text>×{{ele.goods_num}}</text>
                     </view>
                     <view class="spec">
-                      <view>{{ele.goods_spec}}</view>
+                      <view wx:if="{{ele.goods_spec}}">{{ele.goods_spec || ''}}</view>
                     </view>
-                    <view class="price">
+                    <view  wx:if="{{item.order_type == 2}}" class="price">
+                      <text>定金：</text>
+                      <text>￥</text>
+                      <text>{{ele.goods_price}}</text>
+                    </view>
+                    <view  wx:else class="price">
                       <text></text>
                       <text>￥</text>
                       <text>{{ele.goods_price}}</text>
@@ -49,7 +54,8 @@
             </repeat>
             <view class="goods-fot">
               <view class="should-price">
-                实付金额
+                <text wx:if="{{item.order_type == 2}}">尾款金额</text>
+                <text wx:else>实付金额</text>
                 <view class="text">￥{{item.order_amount}}</view>
               </view>
                <!-- 0 已取消 -->
@@ -60,11 +66,11 @@
                 >删除订单</view>
               </view>
               <!-- 10 待付款 -->
-              <view class="goods-option" wx:if="{{item.order_state == 10}}">
-                <view class="goods-btn" @tap="orderCancel({{item.order_id}}, {{index}})">
+              <view class="goods-option" wx:if="{{item.order_state == 10 }}">
+                <view class="goods-btn" wx:if="{{item.order_type != 2 }}" @tap="orderCancel({{item.order_id}}, {{index}})">
                   取消订单
                 </view>
-                <view class="goods-btn color-y" data-order_id="{{item.order_id}}" @tap="getWXPayment({{item.order_id}}, {{item.pay_sn}}, {{item.order_amount}})">立即付款</view>
+                <view class="goods-btn color-y" data-order_id="{{item.order_id}}" @tap="getWXPayment({{item.order_id}}, {{item.pay_sn}}, {{item.order_amount}})">{{item.order_type == 2 ? '支付尾款' : '立即付款' }} </view>
               </view>
               <!-- 20 待发货   -->
               <!-- <view class="goods-option" wx:elif="{{item.order_state == 20}}">
@@ -578,7 +584,7 @@ export default class ShopCart extends wepy.page {
   color: #f2292d;
 }
 .info-r .price > text:nth-of-type(3) {
-  font-size: 38rpx;
+  font-size: 32rpx;
   color: #f2292d;
   font-weight: bold;
 }
@@ -624,6 +630,7 @@ export default class ShopCart extends wepy.page {
 .should-price .text {
   color: #f2292d;
   padding-left: 10rpx;
+  font-weight: bold;
 }
 .none-content {
   text-align: center;

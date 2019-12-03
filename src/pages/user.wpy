@@ -59,17 +59,17 @@
           <image class="imgright" src="/assets/img/image25.png" />
         </navigator>
         <navigator url="/pages/distribution" hover-class="none" class="orderitem">
-          <image class="img" src="/assets/img/image32.png" />
+          <image class="img" src="/assets/img/image66.png" />
           <view>我的分销</view>
           <image class="imgright" src="/assets/img/image25.png" />
         </navigator>
         <navigator url="/pages/bargain-list" hover-class="none" class="orderitem">
-          <image class="img" src="/assets/img/image32.png" />
+          <image class="img" src="/assets/img/image67.png" />
           <view>我的砍价</view>
           <image class="imgright" src="/assets/img/image25.png" />
         </navigator>
         <navigator url="/pages/set-up" hover-class="none" class="orderitem">
-          <image class="img" src="/assets/img/image32.png" />
+          <image class="img" src="/assets/img/image68.png" />
           <view>设置</view>
           <image class="imgright" src="/assets/img/image25.png" />
         </navigator>

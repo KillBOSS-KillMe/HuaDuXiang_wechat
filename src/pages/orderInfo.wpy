@@ -32,14 +32,14 @@
           <view class="goods-right">
             <view class="goods-title overflow-one">{{item.goods_name}}</view>
             <view class="goods-spec-wrap">
-              <view class="goods-spec">
-                {{item.goods_spec}}
+              <view class="goods-spec"  wx:if="{{item.goods_spec}}">
+                {{item.goods_spec || ''}}
               </view>
               <view>×{{item.goods_num}}</view>
             </view>
             <view class="goods-price"> ￥
               <text>{{item.goods_price}}</text> </view>
-            <!-- <view class="tui-btn"  @tap="showInputFlag" wx:if="{{item.refund == 1}}">申请售后</view> -->
+            <view class="tui-btn"  @tap="showInputFlag" wx:if="{{item.refund == 1}}">申请退款</view>
           </view>
         </view>
       </repeat>
@@ -47,6 +47,25 @@
 
 
     <view class="goods-h">订单信息</view>
+
+     <!-- 定金 -->
+    <view class="earnest-money" wx:if="{{order_type == 2}}">
+      <view class="item  red-color">
+        <view class="title">定金</view>
+        <view class="price">
+          ￥
+          <text>{{ele.book_down_payment}}100</text>
+        </view>
+      </view>
+      <view class="item  gray-color">
+        <view class="title">尾款</view>
+        <view class="price">
+          ￥
+          <text>{{ele.book_final_payment}}1000</text>
+        </view>
+      </view>
+      <text>{{ele.endtime}}开始支付尾款</text>
+    </view>  
     <view class="com-block">
       <view class="com-list">
         <view class="h">商品合计</view>
@@ -148,6 +167,7 @@ export default class OrderInfo extends wepy.page {
     requestImgUrl: '',
     order_info: '',
     goods_price: 0,
+    order_type: '', // 订单类型
   };
 
   computed = {};
@@ -155,6 +175,7 @@ export default class OrderInfo extends wepy.page {
   events = {};
 
   onLoad(options) {
+    this.order_type = options.order_type
     this.order_id = options.order_id
     ajax({
       url: api.orderInfo,
@@ -530,5 +551,38 @@ export default class OrderInfo extends wepy.page {
     height: 88rpx;
     line-height: 88rpx;
   }
+}
+.earnest-money {
+  position: relative;
+  .item{
+    display: flex;
+    height: 90rpx;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30rpx 30rpx 0;
+    &:nth-of-type(1) {
+      padding-top: 0;
+    }
+    .title {
+      position: relative;
+    }
+    .price {
+      text {
+        font-weight: bold;
+      }
+    }
+  }
+  > text {
+    height: 90rpx;
+    line-height: 90rpx;
+    color: #999999;
+    padding-left: 30rpx;
+  }
+}
+.red-color {
+  color: #ff2228;
+}
+.gray-color {
+  color: #999999;
 }
 </style>

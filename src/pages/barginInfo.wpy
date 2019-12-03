@@ -46,8 +46,8 @@
             <button open-type="share" class="sharbtn" wx:if="{{sharFlag == false}}">分享给朋友, 多砍一刀</button>
             <view class="sharbtn" wx:if="{{sharFlag == true}}" @tap="helpClick">帮助好友砍一刀</view>
             <!-- 过期时间 -->
-            <view class="goodsTime" wx:if="{{wxTimerList.firstTimer.wxTimerSecond !== 0}}">还剩{{wxTimerList.firstTimer.wxTimer}}过期, 快来砍价吧~</view>
-            <view class="goodsTime">砍价已经结束，请选择其它商品</view>
+            <!-- <view class="goodsTime" wx:if="{{wxTimerList.firstTimer.wxTimerSecond !== 0}}">还剩{{wxTimerList.firstTimer.wxTimer}}过期, 快来砍价吧~</view>
+            <view class="goodsTime">砍价已经结束，请选择其它商品</view> -->
             <!-- 砍价记录 -->
             <view class="record">
               <view class="recordtext">砍价记录</view>
@@ -159,29 +159,29 @@ export default class Index extends wepy.page {
       this.kanjiaLists = res.datas.user_list || []
       this.hot_sales = res.datas.hot_sales || []
       this.goods_content = res.datas.goods_content
-      this.saleprice = Number(res.datas.saleprice).toFixed(2)
-      this.already =  (Number(res.datas.price) - Number(res.datas.saleprice)).toFixed(2)
+      this.saleprice = Number(res.datas.saleprice).toFixed(2) || 0
+      this.already =  (Number(res.datas.price) - Number(res.datas.saleprice)).toFixed(2) || 0
       this.per = res.datas.per
       this.goods_nums = res.datas.goods_nums
       this.goods_que = res.datas.goods_que
       this.end_time = res.datas.end_time || 0
-      this.wxTimer = new timer({
-        beginTime: this.end_time,
-        name: 'firstTimer',
-        complete() {}
-      });
-      this.wxTimer.start(this);
+      // this.wxTimer = new timer({
+      //   beginTime: this.end_time,
+      //   name: 'firstTimer',
+      //   complete() {}
+      // });
+      // this.wxTimer.start(this);
       this.$apply()
     })
 
   }
   onShareAppMessage(e) {
-    if(e.from == "button") {
+    // if(e.from == "button") {
       var user = wx.getStorageSync('user')
       return {
         path: `/pages/barginInfo?goods_id=${this.goods_id}&userid=${user.userid}`
       }
-    }
+    // }
   }
   onShow() {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;

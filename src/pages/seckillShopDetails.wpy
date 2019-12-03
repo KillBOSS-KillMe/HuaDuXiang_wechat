@@ -256,6 +256,7 @@ export default class Index extends wepy.page {
       this.address_list = res.datas.address_list || []
       this.$apply()
     })
+    this.wxTimer && this.getShopDetails()
   }
   methods = {
     // 切换顶部导航
@@ -449,6 +450,9 @@ export default class Index extends wepy.page {
         this.spec_list = res.datas.spec_list
         // 倒计时
         var end_time = res.datas.goods_content.end_time || 0
+        if(this.wxTimer) {
+          this.wxTimer.stop()
+        }
         this.wxTimer = new timer({
           beginTime: end_time,
           name: 'firstTimer',
@@ -464,6 +468,7 @@ export default class Index extends wepy.page {
   }
   onHide() {
     this.attrFlag = false
+    this.wxTimer.stop()
   }
   onShareAppMessage(e) {
     // if(this.distState == 2) {
