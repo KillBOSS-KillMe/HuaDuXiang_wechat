@@ -38,7 +38,7 @@
             </view>
             <view class="goods-price"> ￥
               <text>{{item.goods_price}}</text> </view>
-            <view class="tui-btn" bindtap="showInputFlag" wx:if="{{item.refund == 1}}">申请退款</view>
+            <view class="tui-btn" bindtap="showInputFlag" wx:if="{{item.refund !== 1}}" data-wpyshowinputflag-a="{{item.rec_id}}">申请退款</view>
           </view>
         </view>
       </block>
@@ -126,23 +126,31 @@
       <view class="mask" bindtap="$mask$hideMask"/>
       
       <view class="input-box">
-        <view class="com-item">
-          <view class="title">退款原因</view>
-          <view>不能按时发货</view>
-        </view>
-        <view class="com-item">
-          <view class="title">退款金额</view>
-          <view>100元</view>
-        </view>
-        <view class="com-item">
-          <view class="title">退款数量</view>
-          <view>1</view>
-        </view>
-        <view class="com-item">
-          <view class="title">退款说明</view>
-          <input type="text" placeholder="输入您要退款的说明文字"/>
-        </view>
-        <view class="btn">提交</view>
+        <form bindsubmit="submit">
+          <view class="com-item">
+            <view class="title">类型</view>
+            <view class="last" bindtap="changeRefType">{{refArr[tapIndex]}}</view>
+          </view>
+          <view class="com-item">
+            <view class="title">退款原因</view>
+            <picker bindchange="bindPickerChange" value="{{index}}" range="{{reason_list}}" range-key="reason_info">
+              {{reason_list[index].reason_info}}
+            </picker>
+          </view>
+          <view class="com-item">
+            <view class="title">退款金额</view>
+            <view>{{recGoods.goods_pay_price}}元</view>
+          </view>
+          <view class="com-item">
+            <view class="title">退款数量</view>
+            <view>{{recGoods.goods_num}}</view>
+          </view>
+          <view class="com-item">
+            <view class="title">退款说明</view>
+            <input type="text" placeholder="输入您要退款的说明文字" name="message"/>
+          </view>
+          <button class="btn" formType="submit">提交</button>
+        </form>
       </view>
     
     </view>

@@ -146,7 +146,7 @@ export default class ShopCart extends wepy.page {
     },
     orderlist(idx) {
       if(idx == 3) {
-
+        this.$navigate(`after-sale`);
       } else {
         this.$navigate(`orderlist?idx=${idx+1}`);
       }

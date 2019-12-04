@@ -115,7 +115,7 @@
 					"id": 9,
 					"name": "订单详情",
 					"pathName": "pages/orderInfo",
-					"query": "order_id=302",
+					"query": "order_id=273&pay_sn=700628457719128007",
 					"scene": null
 				}
 			]

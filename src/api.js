@@ -149,4 +149,12 @@ module.exports = {
   joinPay: URL + "/api/mobile/index.php?w=member_payment&t=joinPay",
   // 我的钱包明细
   cashDetails: URL + "/api/mobile/index.php?w=member_index&t=cashDetails",
+  // 用户发起退款第一步01
+  memberRefundOne: URL + "/api/mobile/index.php?w=member_refund&t=refund_form",
+  // 申请退款后—提交02接口
+  memberRefundTwo: URL + "/api/mobile/index.php?w=member_refund&t=refund_post",
+  // 退货记录列表
+  getReturnList: URL + "/api/mobile/index.php?w=member_return&t=get_return_list",
+  // 退款记录列表
+  getRefundList: URL + "/api/mobile/index.php?w=member_refund&t=get_refund_list"
 }

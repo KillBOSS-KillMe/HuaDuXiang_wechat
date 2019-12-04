@@ -39,7 +39,7 @@
             </view>
             <view class="goods-price"> ￥
               <text>{{item.goods_price}}</text> </view>
-            <view class="tui-btn"  @tap="showInputFlag" wx:if="{{item.refund == 1}}">申请退款</view>
+            <view class="tui-btn"  @tap="showInputFlag({{item.rec_id}})" wx:if="{{item.refund !== 1}}">申请退款</view>
           </view>
         </view>
       </repeat>
@@ -123,23 +123,31 @@
 
     <mask :maskFlag.sync="inputFlag">
       <view class="input-box">
-        <view class="com-item">
-          <view class="title">退款原因</view>
-          <view>不能按时发货</view>
-        </view>
-        <view class="com-item">
-          <view class="title">退款金额</view>
-          <view>100元</view>
-        </view>
-        <view class="com-item">
-          <view class="title">退款数量</view>
-          <view>1</view>
-        </view>
-        <view class="com-item">
-          <view class="title">退款说明</view>
-          <input type="text" placeholder="输入您要退款的说明文字">
-        </view>
-        <view class="btn">提交</view>
+        <form bindsubmit="submit">
+          <view class="com-item">
+            <view class="title">类型</view>
+            <view class="last" @tap="changeRefType">{{refArr[tapIndex]}}</view>
+          </view>
+          <view class="com-item">
+            <view class="title">退款原因</view>
+            <picker bindchange="bindPickerChange" value="{{index}}" range="{{reason_list}}" range-key="reason_info" >
+              {{reason_list[index].reason_info}}
+            </picker>
+          </view>
+          <view class="com-item">
+            <view class="title">退款金额</view>
+            <view>{{recGoods.goods_pay_price}}元</view>
+          </view>
+          <view class="com-item">
+            <view class="title">退款数量</view>
+            <view>{{recGoods.goods_num}}</view>
+          </view>
+          <view class="com-item">
+            <view class="title">退款说明</view>
+            <input type="text" placeholder="输入您要退款的说明文字" name="message">
+          </view>
+          <button class="btn" formType="submit">提交</button>
+        </form>
       </view>
     </mask>
   </view>
@@ -168,6 +176,12 @@ export default class OrderInfo extends wepy.page {
     order_info: '',
     goods_price: 0,
     order_type: '', // 订单类型
+    index: 0,
+    reason_list: [],
+    order_goods_id: '',
+    recGoods: '',
+    tapIndex: 0,
+    refArr: ['退款', '退货']
   };
 
   computed = {};
@@ -192,6 +206,8 @@ export default class OrderInfo extends wepy.page {
       this.goods_price = goods_price.toFixed(2)
       this.$apply()
     })
+
+   
   }
   onShow() {
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
@@ -315,8 +331,74 @@ export default class OrderInfo extends wepy.page {
         data: num
       })
     },
-    showInputFlag() {
+    showInputFlag(rec_id) {
       this.inputFlag = true
+      this.order_goods_id = rec_id
+      ajax({
+        url: api.memberRefundOne,
+        data: {
+          order_id: this.order_id,
+          order_goods_id: rec_id
+        }
+      }).then(res => {
+        if(res.code == 200) {
+          this.reason_list = res.datas.reason_list || []
+          this.recGoods = res.datas.goods
+          this.$apply()
+        }
+      })
+    },
+    bindPickerChange(e) {
+      this.index = e.detail. value
+    },
+    submit(e) {
+      console.log(e)
+      var message = e.detail.value.message
+      if(!message) {
+        wx.showToast({
+          title: '请填写退款说明',
+          icon: 'none'
+        })
+        return false
+      }
+      ajax({
+        url: api.memberRefundTwo,
+        data: {
+          order_id: this.order_id,
+          order_goods_id: this.order_goods_id,
+          refund_amount: this.recGoods.goods_pay_price,
+          refund_type: this.tapIndex + 1,
+          reason_id: this.reason_list[this.index].reason_id,
+          buyer_message: message,
+          goods_num: this.recGoods.goods_num
+        }
+      }).then(res => {
+        if(res.code == 200) {
+          wx.showToast({
+            title: res.datas.msg,
+            icon: 'none'
+          })
+          var timer = setTimeout(() => {
+            wx.navigateBack()
+            clearTimeout(timer)
+          }, 1000)
+        } else {
+          wx.showToast({
+            title: res.datas.error,
+            icon: 'none'
+          })
+        }
+      })
+    },
+    changeRefType() {
+      var that = this
+      wx.showActionSheet({
+        itemList: ['退款', '退货'],
+        success(res) {
+          that.tapIndex = res.tapIndex
+          that.$apply()
+        }
+      })
     }
   };
 }
@@ -525,7 +607,7 @@ export default class OrderInfo extends wepy.page {
   z-index: 999;
   background: #fff;
   width: 750rpx;
-  height: 600rpx;
+  height: 650rpx;
   box-sizing: border-box;
   padding: 30rpx;
   .com-item {
@@ -537,6 +619,12 @@ export default class OrderInfo extends wepy.page {
     }
     > input {
       height: 100%;
+    }
+    picker {
+      flex: 1;
+    }
+    .last {
+      flex: 1;
     }
   }
   .btn {
