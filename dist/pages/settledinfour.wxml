@@ -10,41 +10,42 @@
     </block>
   </view>
 
-    <form bindsubmit="submit"  wx:if="{{true}}">
+    <!-- state -10没入驻 10填完信息待审核 11交完钱审核中 20填完信息审核成功 30填完信息审核失败 31交钱审核失败 40入驻成功 -->
+    <form bindsubmit="submit"  wx:if="{{options.state == ''}}">
       <view class="agreement-wrap">
         <view class="agreement-title">店铺信息注册</view>
         <view>
           <view class="com-item">
             <view class="title">店铺行业</view>
             <picker bindchange="storeClassChange" range="{{storeClass}}" range-key="sc_name">
-              <input type="text" placeholder="请选择店铺行业" disabled/>
+              <input placeholder="请选择店铺行业" value="{{storeClass[storeClassIndex].sc_name}}" disabled/>
             </picker>
           </view>
           <view class="com-item">
             <view class="title">店铺类目</view>
-            <picker bindchange="storeClassChange" range="{{storeClass}}" range-key="sc_name">
-              <input type="text" placeholder="请选择店铺类目" disabled/>
+            <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range="{{entryArr}}" value="{{entryIndex}}" range-key="gc_name">
+              <input type="text" placeholder="请选择店铺条目" value="{{entryName}}" disabled/>
             </picker>
           </view>
           <view class="com-item">
             <view class="title">开店时长</view>
-            <picker bindchange="storeClassChange" range="{{storeClass}}" range-key="sc_name">
-              <input type="text" placeholder="请选择开店时长" disabled/>
+            <picker bindchange="timeChange" range="{{timeArr}}" range-key="num">
+              <input placeholder="请选择开店时间" value="{{timeArr[timeIndex].num}}" disabled/>
             </picker>
           </view>
           <view class="com-item">
             <view class="title">店铺等级</view>
-            <picker bindchange="storeClassChange" range="{{storeClass}}" range-key="sc_name">
-              <input type="text" placeholder="请选择店铺等级" disabled/>
+            <picker bindchange="storeGradeChange" range="{{storeGrade}}" range-key="sg_name">
+              <input type="text" placeholder="请选择店铺等级" value="{{storeGrade[storeGradeIndex].sg_name}}" disabled/>
             </picker>
           </view>
         </view>
         <view class="upload-title">合计费用</view>
         <view class="settled-price">平台使用费
-          <text>1168元</text>
+          <text>{{useCostPrice}}元</text>
         </view>
         <view class="settled-price">店铺保证金
-          <text>1168元</text>
+          <text>{{bondPrice}}元</text>
         </view>
       </view>
       <view class="nav-wrap">
@@ -52,56 +53,67 @@
         <button form-type="submit" class="item nav">提交审核</button>
       </view>
     </form>
-    <view  wx:if="{{false}}">
+    <view class="examine"  wx:if="{{options.state == 10}}">
+      <view class="title">信息提交审核:</view>
+      <image class="examine-img" src="/assets/img/image43.png"/>
+      <!-- <view class="again-info" bindtap="againInfo">重新填写信息</view> -->
+    </view>
+    <view class="error-wrap" wx:if="{{options.state == 30}}">
+        <view class="error-box">
+          <view class="error-title">审核失败</view>
+          <navigator hover-class="none" open-type="redirect" url="/pages/settledinone">去重新申请</navigator>
+        </view>
+    </view>
+    <view wx:if="{{options.state == 20}}">
       <view class="agreement-wrap">
         <view class="agreement-title">审核通过确认信息</view>
         <view class="settle-list">
           <view class="com-item">
             <view class="title">商铺账号</view>
-            <input type="text" value="123456" disabled/>
+            <input type="text" value="{{join_info.seller_name}}" disabled/>
           </view>
           <view class="com-item">
             <view class="title">商铺名称</view>
-            <input type="text" value="商铺名称" disabled/>
+            <input type="text" value="{{join_info.store_name}}" disabled/>
           </view>
           <view class="com-item">
             <view class="title">联系人</view>
-            <input type="text" value="联系人" disabled/>
+            <input type="text" value="{{join_info.contacts_name}}" disabled/>
           </view>
           <view class="com-item">
             <view class="title">联系电话</view>
-            <input type="text" value="联系电话" disabled/>
+            <input type="text" value="{{join_info.contacts_phone}}" disabled/>
           </view>
           <view class="com-item">
             <view class="title">商铺地址</view>
-            <input type="text" value="商铺地址" disabled/>
+            <input type="text" value="{{join_info.company_address_detail}}" disabled/>
           </view>
           <view class="com-item">
             <view class="title">商铺行业</view>
-            <input type="text" value="商铺行业" disabled/>
+            <input type="text" value="{{join_info.sc_name}}" disabled/>
           </view>
           <view class="com-item">
             <view class="title">商铺类目</view>
-            <input type="text" value="商铺类目" disabled/>
+            <input type="text" value="{{join_info.store_class_names}}" disabled/>
           </view>
           <view class="com-item">
             <view class="title">开店时长</view>
-            <input type="text" name="admin" value="开店时长" disabled/>
+            <input type="text" value="{{join_info.joinin_year}}年" disabled/>
           </view>
           <view class="com-item">
             <view class="title">店铺等级</view>
-            <input type="text" name="admin" value="店铺等级" disabled/>
+            <input type="text" value="{{join_info.sg_name}}" disabled/>
           </view>
           <view class="com-item">
             <view class="title">合计费用</view>
             <view class="price">
-              <text>2168</text>元
+              <text>{{join_info.paying_amount}}</text>元
             </view>
           </view>
         </view>
       </view>
       <view class="nav-wrap">
-        <!-- <navigator url="/pages/settledinthree" class="item">重新编辑</navigator> -->
+        <navigator url="/pages/settledinone" class="item">重新申请</navigator>
         <button form-type="submit" class="item nav" bindtap="showPriceType">去支付</button>
       </view>
     </view>
@@ -112,7 +124,7 @@
       
       <view class="price-type">
         <view class="price-all">支付金额：
-          <text>￥{{paying_amount}}</text>
+          <text>￥{{join_info.paying_amount}}</text>
         </view>
         <view class="type">
           <view class="left">
@@ -121,7 +133,7 @@
           </view>
           <view class="price">
             <text>可用余额</text>
-            <view>￥{{available_predeposit}}</view>
+            <view>￥{{member_data.available_predeposit || 0}}</view>
           </view>
         </view>
         <view class="input-wrap" wx:if="{{payment_type == 1}}">

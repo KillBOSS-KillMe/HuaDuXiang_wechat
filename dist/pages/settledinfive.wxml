@@ -10,12 +10,20 @@
     </block>
   </view>
 
-    <view class="agreement-wrap">
-      <view class="agreement-title">店铺资料提交</view>
-      <view/>
+    <view class="examine"  wx:if="{{options.state == 11}}">
+      <view class="title">付款成功待后台开通:</view>
+      <image class="examine-img" src="/assets/img/image43.png"/>
     </view>
-    <view class="nav-wrap">
-      <navigator url="/pages/merchantIndex" class="item">去店铺</navigator>
-      <navigator url="/pages/index" class="item nav">去首页</navigator>
+    <view  wx:if="{{options.state == 40}}">
+      <image class="success-img" src="/assets/img/image56.png"/>
+      <view class="jump">
+        <view class="title">提示</view>
+        <view class="txt">恭喜您，店铺已经开通，请去电脑端完善基本信息。</view>
+        <view class="url"> 访问地址：<text bindtap="setClipboardData">https://www.baidu.com/log/asdasdasd</text> </view>
+      </view>
+      <view class="nav-wrap">
+        <navigator url="/pages/index" class="item">去首页</navigator>
+        <navigator url="/pages/merchantIndex" class="item nav">去店铺</navigator>
+      </view>
     </view>
   </view>

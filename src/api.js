@@ -1,8 +1,8 @@
 
 // D
-var URL = "http://www.shopdate.me"
+// var URL = "http://www.shopdate.me"
 // L
-// var URL = "http://www.hdx.cc"  
+var URL = "http://www.hdx.cc"  
 // 线上
 // var URL = "https://www.hdxsy.cn"
 
@@ -168,6 +168,12 @@ module.exports = {
   // 获取店铺第二步信息回显接口
   getJoinStep2: URL + "/api/mobile/index.php?w=store_joinin&t=getJoinStep2",
   // 新商家入驻第二步接口
-  joinStep2: URL + "/api/mobile/index.php?w=store_joinin&t=joinStep2"
+  joinStep2: URL + "/api/mobile/index.php?w=store_joinin&t=joinStep2",
+  // 新—店铺入驻第三步接口
+  joinStep3: URL + "/api/mobile/index.php?w=store_joinin&t=joinStep3",
+  // 获取店铺入驻申请进度接口
+  getStep: URL + "/api/mobile/index.php?w=store_joinin&t=getStep",
+  // 查询店铺入驻总信息接口
+  getJoinInfo: URL + "/api/mobile/index.php?w=store_joinin&t=getJoinInfo"
 
 }

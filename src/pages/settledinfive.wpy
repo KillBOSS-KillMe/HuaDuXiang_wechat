@@ -1,13 +1,21 @@
 <template>
   <view class="wrap">
     <step :state.sync="state"></step>
-    <view class="agreement-wrap">
-      <view class="agreement-title">店铺资料提交</view>
-      <view></view>
+    <view class="examine" wx:if="{{options.state == 11}}">
+      <view class="title">付款成功待后台开通:</view>
+      <image class="examine-img" src="/assets/img/image43.png" />
     </view>
-    <view class="nav-wrap">
-      <navigator url="/pages/merchantIndex" class="item">去店铺</navigator>
-      <navigator url="/pages/index" class="item nav">去首页</navigator>
+    <view wx:if="{{options.state == 40}}">
+      <image class="success-img" src="/assets/img/image56.png" />
+      <view class="jump">
+        <view class="title">提示</view>
+        <view class="txt">恭喜您，店铺已经开通，请去电脑端完善基本信息。</view>
+        <view class="url"> 访问地址：<text @tap="setClipboardData">https://www.baidu.com/log/asdasdasd</text> </view>
+      </view>
+      <view class="nav-wrap">
+        <navigator url="/pages/index" class="item">去首页</navigator>
+        <navigator url="/pages/merchantIndex" class="item nav">去店铺</navigator>
+      </view>
     </view>
   </view>
 </template>
@@ -27,16 +35,33 @@ export default class Settledinfive extends wepy.page {
   mixins = [];
 
   data = {
-    state: 5
+    state: 5,
+    options: {}
   };
 
   computed = {};
   onShow() {}
-  methods = {};
+  methods = {
+    setClipboardData() {
+      wx.setClipboardData({
+        data: 'sadfasfaf'
+      })
+    }
+  };
 
   events = {};
 
-  onLoad() {}
+  onLoad(options) {
+    this.options = options
+
+    ajax({
+      url: api.isJoin,
+      icon: 'none'
+    }).then(res => {
+      this.options.state = res.datas.state && 40
+      this.$apply()
+    })
+  }
 }
 </script>
 
@@ -69,6 +94,54 @@ export default class Settledinfive extends wepy.page {
     color: #fff;
     background: #ff2228;
     border: none;
+  }
+}
+.examine {
+  position: relative;
+  height: 100vh;
+  .title {
+    font-weight: bold;
+    font-size: 32rpx;
+    color:#000;
+    padding: 30rpx;
+  }
+  .examine-img {
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    transform: translateX(-50%);
+    width: 330rpx;
+    height: 256rpx;
+  }
+  .again-info {
+    position: absolute;
+    text-align: center;
+    font-weight: bold;
+    font-size: 30rpx;
+    width: 690rpx;
+    height: 88rpx;
+    line-height: 88rpx;
+    color: #fff;
+    background: #ff2228;
+    bottom: 80rpx;
+    border-radius: 10rpx;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+.success-img {
+  height: 170rpx;
+  width: 426rpx;
+  margin: 200rpx auto;
+  display: block;
+}
+.jump {
+  padding: 30rpx;
+  line-height: 2;
+  color: #333333;
+  font-size: 24rpx;
+  .url{
+    text{}
   }
 }
 </style>

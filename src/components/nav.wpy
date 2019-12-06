@@ -62,25 +62,63 @@
 </template>
 <script>
 import wepy from 'wepy';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
+
 export default class Nav extends wepy.component {
   data = {
     navList: [
       { title: '首页', icon: 'iconshouye-copy', url: 'pages/index' },
       { title: '分类', icon: 'iconfenlei', url: 'pages/class' },
-      { title: '入驻', icon: 'iconshezhi', url: 'pages/settledIn' },
+      { title: '入驻', icon: 'iconshezhi', url: 'pages/settledinone' },
       { title: '购物车', icon: 'icongouwuche-copy', url: 'pages/shopCar' },
       { title: '我的', icon: 'iconwode', url: 'pages/user' }
     ]
   };
   props = {};
   methods = {
-    navPage(url) {
+    async navPage(url) {
+      var page = this.$parent;
       var route = this.$parent.$parent['__route__'];
-      if (url != route) {
-        wx.redirectTo({
-          url: `/${url}`
-        });
+      if (url == route) {
+        return false;
       }
+      if (url == 'pages/settledinone') {
+        var isJoinData = await ajax({
+          url: api.isJoin,
+          icon: 'none'
+        });
+        var state = isJoinData.datas.state;
+        // state -10没入驻 10填完信息待审核 11交完钱审核中 20填完信息审核成功 30填完信息审核失败 31交钱审核失败 40入驻成功
+        ajax({
+          url: api.getStep,
+          icon: 'none'
+        }).then(res => {
+          if (res.code == 200) {
+            switch (res.datas.step) {
+              case 0:
+                page.$navigate('settledinone');
+                break;
+              case 1:
+                page.$navigate('settledintwo');
+                break;
+              case 2:
+                page.$navigate('settledinthree');
+                break;
+              case 3:
+                page.$navigate(`settledinfour?state=${state}`);
+                break;
+              case 4:
+                page.$navigate(`settledinfive`);
+                break;
+            }
+          }
+        });
+        return false;
+      }
+      wx.redirectTo({
+        url: `/${url}`
+      });
     }
   };
   onLoad() {

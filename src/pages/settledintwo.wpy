@@ -12,23 +12,29 @@
             </view>
             <view class="com-item">
               <view class="title">商铺名称</view>
-              <input type="text" name="name"  value="{{name}}" placeholder="请输入商铺名称">
+              <input type="text" name="name" value="{{name}}" placeholder="请输入商铺名称">
             </view>
             <view class="com-item">
               <view class="title">登录密码</view>
-              <input type="text" name="password"   placeholder="商铺密码(6-20位字母数字组合)">
+              <input type="text" name="password" placeholder="商铺密码(6-20位字母数字组合)">
             </view>
             <view class="com-item">
               <view class="title">联系人</view>
-              <input type="text" name="contacts"  value="{{contacts}}" placeholder="请输入联系人姓名">
+              <input type="text" name="contacts" value="{{contacts}}" placeholder="请输入联系人姓名">
             </view>
             <view class="com-item">
               <view class="title">联系电话</view>
-              <input type="number" maxlength="11"  value="{{phone}}" name="phone" placeholder="请输入联系电话">
+              <input
+                type="number"
+                maxlength="11"
+                value="{{phone}}"
+                name="phone"
+                placeholder="请输入联系电话"
+              >
             </view>
             <view class="com-item">
               <view class="title">商铺地址</view>
-              <input type="text" name="address"  value="{{address}}" placeholder="请输入商铺地址">
+              <input type="text" name="address" value="{{address}}" placeholder="请输入商铺地址">
             </view>
           </view>
         </view>
@@ -169,11 +175,11 @@ export default class Settledintwo extends wepy.page {
       }
     }).then(res => {
       if (res.code == 200) {
+        wx.showToast({
+          title: res.datas.msg,
+          icon: 'none'
+        });
         if (res.datas.state == 1) {
-          wx.showToast({
-            title: res.datas.msg,
-            icon: 'none'
-          });
           var timer = setTimeout(() => {
             this.$redirect('settledinthree');
             clearTimeout(timer);

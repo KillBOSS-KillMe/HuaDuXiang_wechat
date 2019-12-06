@@ -140,16 +140,17 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 13,
 					"name": "入驻审核4",
 					"pathName": "pages/settledinfour",
-					"query": "",
+					"query": "state=20",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 14,
 					"name": "入驻审核5",
 					"pathName": "pages/settledinfive",
+					"query": "state=40",
 					"scene": null
 				}
 			]

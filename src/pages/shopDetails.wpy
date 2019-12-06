@@ -554,6 +554,13 @@ export default class Index extends wepy.page {
         data
       }).then(res => {
         if(res.code == 200) {
+          if(res.datas.state == 0) {
+            wx.showToast({
+              title: res.datas.msg,
+              icon: 'none'
+            })
+            return false
+          }
           res.datas.submitData = data
           app.globalData.orderInfo = res.datas
           if(that.address_list.length) {

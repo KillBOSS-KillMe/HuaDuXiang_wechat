@@ -19,7 +19,7 @@
               <text>上传营业执照</text>(2MB以内)
             </view>
             <view class="img-wrap" bindtap="uploadBusiness">
-              <image src="{{business || '/assets/img/image69.png'}}"/>
+              <image src="{{business.allname || '/assets/img/image69.png'}}"/>
             </view>
           </view>
           <view class="upload-title">上传法人身份证资料</view>
@@ -28,7 +28,7 @@
               <text>上传身份证正面</text>(2MB以内)
             </view>
             <view class="img-wrap" bindtap="uploadCardFront">
-              <image src="{{card_front ||'/assets/img/image70.png'}}"/>
+              <image src="{{card_front.allname ||'/assets/img/image70.png'}}"/>
             </view>
           </view>
           <view class="upload">
@@ -36,7 +36,7 @@
               <text>上传身份证反面</text>(2MB以内)
             </view>
             <view class="img-wrap" bindtap="uploadCardBack">
-              <image src="{{card_back ||'/assets/img/image71.png'}}"/>
+              <image src="{{card_back.allname ||'/assets/img/image71.png'}}"/>
             </view>
           </view>
           <view class="upload-title">法人联系方式</view>

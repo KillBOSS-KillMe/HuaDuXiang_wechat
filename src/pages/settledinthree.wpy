@@ -10,7 +10,7 @@
               <text>上传营业执照</text>(2MB以内)
             </view>
             <view class="img-wrap" @tap="uploadBusiness">
-              <image src="{{business || '/assets/img/image69.png'}}">
+              <image src="{{business.allname || '/assets/img/image69.png'}}">
             </view>
           </view>
           <view class="upload-title">上传法人身份证资料</view>
@@ -19,7 +19,7 @@
               <text>上传身份证正面</text>(2MB以内)
             </view>
             <view class="img-wrap" @tap="uploadCardFront">
-              <image src="{{card_front ||'/assets/img/image70.png'}}">
+              <image src="{{card_front.allname ||'/assets/img/image70.png'}}">
             </view>
           </view>
           <view class="upload">
@@ -27,7 +27,7 @@
               <text>上传身份证反面</text>(2MB以内)
             </view>
             <view class="img-wrap" @tap="uploadCardBack">
-              <image src="{{card_back ||'/assets/img/image71.png'}}">
+              <image src="{{card_back.allname ||'/assets/img/image71.png'}}">
             </view>
           </view>
           <view class="upload-title">法人联系方式</view>
@@ -70,14 +70,15 @@ export default class Settledinthree extends wepy.page {
 
   data = {
     state: 3,
-    business:'',
-    card_front: '',
-    card_back: '',
+    business:{},
+    card_front: {},
+    card_back: {},
     business_licence_number_elc: '',
     id_card_back_image: '',
     id_card_front_image: '',
     name: '',
-    mobile: ''
+    mobile: '',
+    path: ''
   };
 
   computed = {};
@@ -110,9 +111,6 @@ export default class Settledinthree extends wepy.page {
             'file': 'test'
           },
           success (res){
-            that[name] = 'https://api.reindata.net' + JSON.parse(res.data).data
-            that.$apply()
-            return false
             if(res.code == 1) {
               if(res.datas.state == 1) {
                 that[name] = res.datas
@@ -145,12 +143,17 @@ export default class Settledinthree extends wepy.page {
           business_licence_number_elc,
           id_card_back_image,
           id_card_front_image,
+          path,
           name,
           mobile
         } = res.datas.data;
-        this.business_licence_number_elc = business_licence_number_elc;
-        this.id_card_back_image = id_card_back_image;
-        this.id_card_front_image = id_card_front_image;
+        this.business.name = business_licence_number_elc;
+        this.business.allname = path + business_licence_number_elc
+        this.card_front.name = id_card_back_image;
+        this.card_front.allname = path + id_card_back_image
+        this.card_back.name = id_card_front_image;
+        this.card_back.allname = path + id_card_front_image
+        this.path = path
         this.name = name;
         this.mobile = mobile;
         this.$apply();
@@ -159,6 +162,27 @@ export default class Settledinthree extends wepy.page {
   }
   submit(e) {
     var { name, mobile } = e.detail.value;
+    // if(!this.business.name) {
+    //   wx.showToast({
+    //     title: '请上传营业执照',
+    //     icon: 'none'
+    //   })
+    //   return false
+    // }
+    // if(!this.card_front.name) {
+    //   wx.showToast({
+    //     title: '请上传身份证正面',
+    //     icon: 'none'
+    //   })
+    //   return false
+    // }
+    // if(!this.card_back.name) {
+    //   wx.showToast({
+    //     title: '请上传身份证反面',
+    //     icon: 'none'
+    //   })
+    //   return false
+    // }
     if (!name) {
       wx.showToast({
         title: '请输入法人姓名',
@@ -176,13 +200,26 @@ export default class Settledinthree extends wepy.page {
     ajax({
       url: api.joinStep2,
       data: {
-        business_licence_number_elc: this.business_licence_number_elc,
-        id_card_front_image: this.id_card_front_image,
-        id_card_back_image: this.id_card_back_image,
-        name: this.name,
-        mobile: this.mobile,
+        business_licence_number_elc: this.business.name || 'tupian',
+        id_card_front_image: this.card_front.name || 'tupian',
+        id_card_back_image: this.card_back.name  || 'tupian',
+        name,
+        mobile,
       }
-    })     
+    }).then(res => {
+      if (res.code == 200) {
+        wx.showToast({
+          title: res.datas.msg,
+          icon: 'none'
+        });
+        if (res.datas.state == 1) {
+          var timer = setTimeout(() => {
+            this.$redirect('settledinfour');
+            clearTimeout(timer);
+          }, 1000);
+        }
+      }
+    });  
   }
 }
 </script>

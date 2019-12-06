@@ -1,105 +1,129 @@
 <template>
   <view class="wrap">
     <step :state.sync="state"></step>
-    <form @submit="submit" wx:if="{{true}}">
+    <!-- state -10没入驻 10填完信息待审核 11交完钱审核中 20填完信息审核成功 30填完信息审核失败 31交钱审核失败 40入驻成功 -->
+    <form @submit="submit" wx:if="{{options.state == ''}}">
       <view class="agreement-wrap">
         <view class="agreement-title">店铺信息注册</view>
         <view>
           <view class="com-item">
             <view class="title">店铺行业</view>
             <picker bindchange="storeClassChange" range="{{storeClass}}" range-key="sc_name">
-              <input type="text" placeholder="请选择店铺行业" disabled>
+              <input placeholder="请选择店铺行业" value="{{storeClass[storeClassIndex].sc_name}}" disabled>
             </picker>
           </view>
           <view class="com-item">
             <view class="title">店铺类目</view>
-            <picker bindchange="storeClassChange" range="{{storeClass}}" range-key="sc_name">
-              <input type="text" placeholder="请选择店铺类目" disabled>
+            <picker
+              mode="multiSelector"
+              bindchange="bindMultiPickerChange"
+              bindcolumnchange="bindMultiPickerColumnChange"
+              range="{{entryArr}}"
+              value="{{entryIndex}}"
+              range-key="gc_name"
+            >
+              <input type="text" placeholder="请选择店铺条目" value="{{entryName}}" disabled>
             </picker>
           </view>
           <view class="com-item">
             <view class="title">开店时长</view>
-            <picker bindchange="storeClassChange" range="{{storeClass}}" range-key="sc_name">
-              <input type="text" placeholder="请选择开店时长" disabled>
+            <picker bindchange="timeChange" range="{{timeArr}}" range-key="num">
+              <input placeholder="请选择开店时间" value="{{timeArr[timeIndex].num}}" disabled>
             </picker>
           </view>
           <view class="com-item">
             <view class="title">店铺等级</view>
-            <picker bindchange="storeClassChange" range="{{storeClass}}" range-key="sc_name">
-              <input type="text" placeholder="请选择店铺等级" disabled>
+            <picker bindchange="storeGradeChange" range="{{storeGrade}}" range-key="sg_name">
+              <input
+                type="text"
+                placeholder="请选择店铺等级"
+                value="{{storeGrade[storeGradeIndex].sg_name}}"
+                disabled
+              >
             </picker>
           </view>
         </view>
         <view class="upload-title">合计费用</view>
         <view class="settled-price">平台使用费
-          <text>1168元</text>
+          <text>{{useCostPrice}}元</text>
         </view>
         <view class="settled-price">店铺保证金
-          <text>1168元</text>
+          <text>{{bondPrice}}元</text>
         </view>
       </view>
       <view class="nav-wrap">
-        <navigator open-type="redirect"  url="/pages/settledinthree" class="item">上一步</navigator>
+        <navigator open-type="redirect" url="/pages/settledinthree" class="item">上一步</navigator>
         <button form-type="submit" class="item nav">提交审核</button>
       </view>
     </form>
-    <view wx:if="{{false}}">
+    <view class="examine"  wx:if="{{options.state == 10}}">
+      <view class="title">信息提交审核:</view>
+      <image class="examine-img" src="/assets/img/image43.png" />
+      <!-- <view class="again-info" @tap="againInfo">重新填写信息</view> -->
+    </view>
+    <view class="error-wrap" wx:if="{{options.state == 30}}">
+        <view class="error-box">
+          <view class="error-title">审核失败</view>
+          <navigator hover-class="none" open-type="redirect" url="/pages/settledinone" >去重新申请</navigator>
+        </view>
+    </view>
+    <view wx:if="{{options.state == 20}}">
       <view class="agreement-wrap">
         <view class="agreement-title">审核通过确认信息</view>
         <view class="settle-list">
           <view class="com-item">
             <view class="title">商铺账号</view>
-            <input type="text" value="123456" disabled>
+            <input type="text" value="{{join_info.seller_name}}" disabled>
           </view>
           <view class="com-item">
             <view class="title">商铺名称</view>
-            <input type="text" value="商铺名称" disabled>
+            <input type="text" value="{{join_info.store_name}}" disabled>
           </view>
           <view class="com-item">
             <view class="title">联系人</view>
-            <input type="text" value="联系人" disabled>
+            <input type="text" value="{{join_info.contacts_name}}" disabled>
           </view>
           <view class="com-item">
             <view class="title">联系电话</view>
-            <input type="text" value="联系电话" disabled>
+            <input type="text" value="{{join_info.contacts_phone}}" disabled>
           </view>
           <view class="com-item">
             <view class="title">商铺地址</view>
-            <input type="text" value="商铺地址" disabled>
+            <input type="text" value="{{join_info.company_address_detail}}" disabled>
           </view>
           <view class="com-item">
             <view class="title">商铺行业</view>
-            <input type="text" value="商铺行业" disabled>
+            <input type="text" value="{{join_info.sc_name}}" disabled>
           </view>
           <view class="com-item">
             <view class="title">商铺类目</view>
-            <input type="text" value="商铺类目" disabled>
+            <input type="text" value="{{join_info.store_class_names}}" disabled>
           </view>
           <view class="com-item">
             <view class="title">开店时长</view>
-            <input type="text" name="admin" value="开店时长" disabled>
+            <input type="text" value="{{join_info.joinin_year}}年" disabled>
           </view>
           <view class="com-item">
             <view class="title">店铺等级</view>
-            <input type="text" name="admin" value="店铺等级" disabled>
+            <input type="text" value="{{join_info.sg_name}}" disabled>
           </view>
           <view class="com-item">
             <view class="title">合计费用</view>
             <view class="price">
-              <text>2168</text>元
+              <text>{{join_info.paying_amount}}</text>元
             </view>
           </view>
         </view>
       </view>
       <view class="nav-wrap">
-        <!-- <navigator url="/pages/settledinthree" class="item">重新编辑</navigator> -->
+        <navigator url="/pages/settledinone" class="item">重新申请</navigator>
         <button form-type="submit" class="item nav" bindtap="showPriceType">去支付</button>
       </view>
     </view>
     <paymask :maskFlag.sync="payFlag">
       <view class="price-type">
         <view class="price-all">支付金额：
-          <text>￥{{paying_amount}}</text>
+          <text>￥{{join_info.paying_amount}}</text>
         </view>
         <view class="type">
           <view class="left">
@@ -108,7 +132,7 @@
           </view>
           <view class="price">
             <text>可用余额</text>
-            <view>￥{{available_predeposit}}</view>
+            <view>￥{{member_data.available_predeposit || 0}}</view>
           </view>
         </view>
         <view class="input-wrap" wx:if="{{payment_type == 1}}">
@@ -128,6 +152,7 @@ import step from '../components/step';
 var api = require('../api.js');
 import { ajax } from '../ajax.js';
 import mask from '../components/mask';
+var _ = require('../utils/underscore.js');
 
 export default class Settledinfour extends wepy.page {
   config = {
@@ -140,10 +165,42 @@ export default class Settledinfour extends wepy.page {
 
   data = {
     state: 4,
-    payFlag: false
+    options: {},
+    payFlag: false,
+    storeGradeIndex: 0,
+    storeGrade: [],
+    timeArr: [{ num: 1 }, { num: 2 }, { num: 3 }],
+    timeIndex: 0,
+    storeClass: [], // 店铺分类
+    storeClassIndex: 0, //店铺分类索引
+    entryArr: [], // 带三级分类的条目
+    entryName: '', // 店铺三级分类名称
+    entryId: null, // 店铺三级分类id
+    useCostPrice: 0, // 平台使用费用
+    bondPrice: 0, // 商家保证金
+    member_data: {}, //用户余额信息
+    paying_amount: 0, //支付总金额
+    join_info: {}, //审核成功信息显示
+    password: '',
+    payment_type: 1 , //付款类型 0微信 1余额
+
   };
 
-  computed = {};
+  computed = {
+    useCostPrice() {
+      var num = this.timeArr[this.timeIndex].num;
+      var price =
+        this.storeGrade[this.storeGradeIndex] &&
+        this.storeGrade[this.storeGradeIndex].sg_price;
+      return (Number(num) * Number(price)).toFixed(2);
+    },
+    bondPrice() {
+      var price =
+        this.storeClass[this.storeClassIndex] &&
+        this.storeClass[this.storeClassIndex].sc_bail;
+      return Number(price).toFixed(2);
+    }
+  };
   onShow() {}
   methods = {
     showPriceType() {
@@ -151,12 +208,198 @@ export default class Settledinfour extends wepy.page {
     },
     pay() {
       this.$redirect('settledinfive');
-    }
+    },
+    storeGradeChange(e) {
+      var value = e.detail.value;
+      this.storeGradeIndex = value;
+    },
+    timeChange(e) {
+      this.timeIndex = e.detail.value;
+    },
+    storeClassChange(e) {
+      this.storeClassIndex = e.detail.value;
+    },
+    bindMultiPickerChange(e) {
+      var idxArr = e.detail.value;
+      this.entryIndex = idxArr;
+      var entryArr = this.entryArr;
+      this.entryName = `${entryArr[0][idxArr[0]].gc_name},${
+        entryArr[1][idxArr[1]].gc_name
+      },${entryArr[2][idxArr[2]].gc_name}`;
+      this.entryId = `${entryArr[0][idxArr[0]].gc_id},${
+        entryArr[1][idxArr[1]].gc_id
+      },${entryArr[2][idxArr[2]].gc_id}`;
+    },
+    bindMultiPickerColumnChange(e) {
+      this.setList(e.detail.column, e.detail.value);
+    },
+    submit(e) {
+      this.debounce(e);
+    },
+    inputPassword(e) {
+      this.password = e.detail.value
+    },
+    // 入驻付钱
+    pay() {
+      var that = this
+      if(!this.password) {
+        wx.showToast({
+          title: '请输入密码',
+          icon: 'none'
+        })
+        return false
+      }
+      ajax({
+        url: api.joinPay,
+        data: {
+          password: this.password
+        }
+      }).then(res => {
+        if(res.code == 200) {
+          if(res.datas.state == 1) {
+            wx.showToast({
+              title: res.datas.msg,
+            })
+            var timer = setTimeout(() => {
+              that.$redirect(`settledinfive`);
+              clearTimeout(timer)
+            }, 1000)
+          } else if (res.datas.state == -4) {
+            wx.showModal({
+              title: "提醒",
+              content: "余额不足，是否前往充值？",
+              success(res) {
+                if(res.confirm) {
+                  that.$redirect(`vip`);
+                }
+              }
+            })
+          } else {
+            wx.showToast({
+              title: res.datas.msg,
+              icon: 'none',
+            })
+          }
+        }
+      })
+    },    
   };
+
+  setList(idx, val) {
+    var allArr = this.entryArr[0];
+    if (idx == 0) {
+      this.entryArr[1] = allArr[val].two;
+      this.entryArr[2] = allArr[val].two[0].three;
+    } else if (idx == 1) {
+      this.entryArr[2] = this.entryArr[1][val].three;
+    } else if (idx == 3) {
+      return false;
+    }
+  }
 
   events = {};
 
-  onLoad() {}
+  onLoad(options) {
+    this.options = options
+    // 防止重复提交第三方插件函数
+    this.debounce = _.debounce(this.submit, 1000, { immediate: true });
+
+    if(options.state == 20) {
+      ajax({
+        url: api.getJoinInfo,
+      }).then(res => {
+        if(res.code == 200 && res.datas.state == 1) {
+          this.join_info = res.datas.join_info
+          this.$apply()
+        }
+      })
+      // 用户个人中心数据接口
+      ajax({
+        url: api.memberInfo,
+        icon: 'none'
+      }).then(res => {
+        if(res.code == 200) {
+          this.member_data = res.datas.member_data
+          this.$apply()
+        }
+      })
+      return false
+    }
+
+    // 店铺等级
+    ajax({
+      url: api.getStoreGrade,
+      icon: 'none'
+    }).then(res => {
+      this.storeGrade = res.datas.data;
+      this.$apply();
+    });
+    // 店铺行业(一)
+    ajax({
+      url: api.getStoreClass,
+      icon: 'none'
+    }).then(res => {
+      this.storeClass = res.datas.data || [];
+      this.$apply();
+    });
+    // 店铺类目3级分类(二)
+    ajax({
+      url: api.oneGoodsClass,
+      icon: 'none'
+    }).then(res => {
+      var oneList = res.datas;
+      var twoList = oneList[0].two;
+      var threeList = twoList[0].three;
+      var arr = [];
+      arr.push(oneList);
+      arr.push(twoList);
+      arr.push(threeList);
+      this.entryArr = arr;
+      this.entryName = `${oneList[0].gc_name},${twoList[0].gc_name},${
+        threeList[0].gc_name
+      }`;
+      this.entryId = `${oneList[0].gc_id},${twoList[0].gc_id},${
+        threeList[0].gc_id
+      }`;
+      this.$apply();
+    });
+  }
+  submit(e) {
+    if (!this.entryName) {
+      wx.showToast({
+        title: '请选择店铺条目',
+        icon: 'none'
+      });
+      return false;
+    }
+    ajax({
+      url: api.joinStep3,
+      data: {
+        sc_id: this.storeClass[this.storeClassIndex].sc_id, //'店铺分类编号',
+        sc_name: this.storeClass[this.storeClassIndex].sc_name, //'店铺分类名称',
+        sc_bail: this.storeClass[this.storeClassIndex].sc_bail, //'店铺分类保证金',
+        sg_id: this.storeGrade[this.storeGradeIndex].sg_id, //'店铺等级编号',
+        sg_name: this.storeGrade[this.storeGradeIndex].sg_name, //'店铺等级名称',
+        sg_info: this.storeGrade[this.storeGradeIndex].sg_price, //'店铺等级价格',
+        store_class_ids: this.entryId,
+        store_class_names: this.entryName,
+        joinin_year: this.timeArr[this.timeIndex].num //'入驻时长',
+      }
+    }).then(res => {
+      if (res.code == 200) {
+        wx.showToast({
+          title: res.datas.msg,
+          icon: 'none'
+        });
+        if (res.datas.state == 1) {
+          var timer = setTimeout(() => {
+            this.$redirect('settledinfour');
+            clearTimeout(timer);
+          }, 1000);
+        }
+      }
+    });
+  }
 }
 </script>
 
@@ -332,6 +575,77 @@ export default class Settledinfour extends wepy.page {
     background: #f2292d;
     border-radius: 10rpx;
     margin: 30rpx auto 0;
+  }
+}
+.examine {
+  position: relative;
+  .title {
+    font-weight: bold;
+    font-size: 32rpx;
+    color:#000;
+    padding: 30rpx;
+  }
+  .examine-img {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 330rpx;
+    height: 256rpx;
+    top: 200rpx;
+  }
+  .success-img {
+    height: 170rpx;
+    width: 426rpx;
+  }
+  .again-info {
+    position: absolute;
+    text-align: center;
+    font-weight: bold;
+    font-size: 30rpx;
+    width: 690rpx;
+    height: 88rpx;
+    line-height: 88rpx;
+    color: #fff;
+    background: #ff2228;
+    bottom: 80rpx;
+    border-radius: 10rpx;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+.error-wrap {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  background: #00000099;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  .error-box {
+    position: absolute;
+    background: #fff;
+    height: 252rpx;
+    width: 544rpx;
+    border-radius: 10rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .error-title {
+      font-weight: bold;
+      font-size: 32rpx;
+      color: #333;
+      padding-top: 30rpx;
+    }
+    navigator {
+      font-weight: bold;
+      font-size: 32rpx;
+      color: #FF2228;
+      padding: 20rpx 0;
+    }
   }
 }
 </style>
