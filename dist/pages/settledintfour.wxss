@@ -1,0 +1,2 @@
+@import "./../components/step.wxss";
+.agreement-wrap{padding:0 30rpx}.agreement-wrap .agreement-title{font-weight:bold;font-size:32rpx;color:#333;text-align:center;padding:30rpx 0 20rpx}.nav-wrap{display:flex;padding:60rpx 140rpx 60rpx 140rpx;justify-content:space-between}.nav-wrap .item{width:170rpx;height:70rpx;line-height:70rpx;border-radius:10rpx;font-size:28rpx;color:#333;text-align:center;border:1px solid #bcbcbc}.nav-wrap .nav{color:#fff;background:#ff2228;border:none}

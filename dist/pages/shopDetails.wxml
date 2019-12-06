@@ -94,7 +94,8 @@
                   <view class="last">
                     <view class="other">
                       <view>还差{{item.number}}人拼成</view>
-                      <view>剩余{{wxTimerList['timer' + index].wxTimer}}</view>
+                      <view wx:if="{{wxTimerList['timer' + index].wxTimerSecond > 0}}">剩余{{wxTimerList['timer' + index].wxTimer}}</view>
+                      <view wx:else>已结束</view>
                     </view>
                     <view class="btn">去拼单</view>
                   </view>
@@ -305,7 +306,8 @@
                       <text>{{item.number}}</text>人拼成
                     </view>
                   </view>
-                  <view>剩余{{wxTimerList['timer' + index].wxTimer}}</view>
+                  <view wx:if="{{wxTimerList['timer' + index].wxTimerSecond > 0}}">剩余{{wxTimerList['timer' + index].wxTimer}}</view>
+                  <view wx:else>已结束</view>
                 </view>
                 <view class="btn">去拼单</view>
               </view>

@@ -1,0 +1,97 @@
+<template>
+  <view class="wrap">
+        <import src="../utils/wxParse/wxParse.wxml" />
+    <!-- <view class="step-wrap">
+      <repeat for="{{step}}" item="item">
+        <view class="step-item {{index < 3 ? 'step-item-active' : '' }}">
+          <view class="circular"></view>
+          <view class="title">{{item.title}}</view>
+        </view>
+      </repeat>
+    </view>-->
+    <step :state.sync="state"></step>
+    <view class="agreement-wrap">
+      <view class="agreement-title">商家入驻协议</view>
+      <view>
+        <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+      </view>
+    </view>
+    <view class="nav-wrap">
+      <view class="item">不同意</view>
+      <navigator  class="item nav" open-type="redirect"  url="/pages/settledintwo">同意</navigator>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import step from '../components/step';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
+var WxParse = require('../utils/wxParse/wxParse.js');
+
+export default class Settledinone extends wepy.page {
+  config = {
+    navigationBarTitleText: '入驻审核'
+  };
+  components = { step };
+
+  mixins = [];
+
+  data = {
+    state: 1
+  };
+
+  computed = {};
+  onShow() {}
+  methods = {};
+
+  events = {};
+
+  onLoad() {
+    var that = this
+    ajax({
+      url: api.join_step0
+    }).then(res => {
+      if(res.code == 200 && res.datas.state == 1) {
+        var article = res.datas.content
+        WxParse.wxParse('article', 'html', article, that, 5);
+      }
+    })
+
+  }
+}
+</script>
+
+<style lang="less">
+.agreement-wrap {
+  padding: 0 30rpx;
+  .agreement-title {
+    font-weight: bold;
+    font-size: 30rpx;
+    color: #333;
+    text-align: center;
+    padding: 30rpx 0 26rpx;
+  }
+}
+.nav-wrap {
+  display: flex;
+  padding: 200rpx 140rpx 60rpx 140rpx;
+  justify-content: space-between;
+  .item {
+    width: 170rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+    border-radius: 10rpx;
+    font-size: 28rpx;
+    color: #333;
+    text-align: center;
+    border: 1px solid #BCBCBC;
+  }
+  .nav {
+    color: #fff;
+    background: #FF2228;
+    border: none;
+  }
+}
+</style>

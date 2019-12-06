@@ -1,0 +1,74 @@
+<template>
+  <view class="wrap">
+    <step :state.sync="state"></step>
+    <view class="agreement-wrap">
+      <view class="agreement-title">店铺资料提交</view>
+      <view></view>
+    </view>
+    <view class="nav-wrap">
+      <navigator url="/pages/merchantIndex" class="item">去店铺</navigator>
+      <navigator url="/pages/index" class="item nav">去首页</navigator>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import step from '../components/step';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
+
+export default class Settledinfive extends wepy.page {
+  config = {
+    navigationBarTitleText: '入驻审核'
+  };
+  components = { step };
+
+  mixins = [];
+
+  data = {
+    state: 5
+  };
+
+  computed = {};
+  onShow() {}
+  methods = {};
+
+  events = {};
+
+  onLoad() {}
+}
+</script>
+
+<style lang="less">
+.agreement-wrap {
+  padding: 0 30rpx;
+  .agreement-title {
+    font-weight: bold;
+    font-size: 30rpx;
+    color: #333;
+    text-align: center;
+    padding: 30rpx 0 26rpx;
+  }
+}
+.nav-wrap {
+  display: flex;
+  padding: 60rpx 140rpx 60rpx 140rpx;
+  justify-content: space-between;
+  .item {
+    width: 170rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+    border-radius: 10rpx;
+    font-size: 28rpx;
+    color: #333;
+    text-align: center;
+    border: 1px solid #bcbcbc;
+  }
+  .nav {
+    color: #fff;
+    background: #ff2228;
+    border: none;
+  }
+}
+</style>

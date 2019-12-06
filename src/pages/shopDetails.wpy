@@ -102,7 +102,8 @@
                   <view class="last">
                     <view class="other">
                       <view>还差{{item.number}}人拼成</view>
-                      <view>剩余{{wxTimerList['timer' + index].wxTimer}}</view>
+                      <view wx:if="{{wxTimerList['timer' + index].wxTimerSecond > 0}}">剩余{{wxTimerList['timer' + index].wxTimer}}</view>
+                      <view wx:else>已结束</view>
                     </view>
                     <view class="btn">去拼单</view>
                   </view>
@@ -295,7 +296,8 @@
                       <text>{{item.number}}</text>人拼成
                     </view>
                   </view>
-                  <view>剩余{{wxTimerList['timer' + index].wxTimer}}</view>
+                  <view wx:if="{{wxTimerList['timer' + index].wxTimerSecond > 0}}">剩余{{wxTimerList['timer' + index].wxTimer}}</view>
+                  <view wx:else>已结束</view>
                 </view>
                 <view class="btn">去拼单</view>
               </view>
@@ -508,6 +510,14 @@ export default class Index extends wepy.page {
     },
     // 选择去拼单
     showParticipateMask(idx) {
+      var time = this.wxTimerList['timer' + idx].wxTimerSecond
+      if(time <= 0) {
+        wx.showToast({
+          title:'拼团已结束',
+          icon: 'none'
+        })
+        return false
+      }
       this.currentAssembleIdx = idx;
       this.participateFlag = true;
       this.asslistFlag = false;
@@ -535,8 +545,8 @@ export default class Index extends wepy.page {
           address_id: '',
           pingou: this.sale_type == 'group' ? 1 : 0,
           fx_id: this.userid ? 1 : 0,
-          log_id: this.currentAssembleData ? this.currentAssembleData.log_id : null,
-          buyer_id: this.currentAssembleData ? this.currentAssembleData.buyer_id : null,
+          log_id: this.currentAssembleData ? this.currentAssembleData.log_id : '',
+          buyer_id: this.currentAssembleData ? this.currentAssembleData.buyer_id : '',
           is_book: this.goods_content.is_book
       }
       ajax({
@@ -577,6 +587,11 @@ export default class Index extends wepy.page {
     // }
   }
   async onLoad(t) {
+    if(this.timer) {
+      this.timer.forEach(item => {
+        item.stop()
+      })
+    }
     var that = this
     this.userid = t.userid
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
@@ -604,13 +619,14 @@ export default class Index extends wepy.page {
         goods_id: t.goods_id
       }
     }).then(res => {
+      this.timer = []
       var list = res.datas || []
       list.forEach((item, idx) => {
-        item.timer = new timer({
+        this.timer[idx] = new timer({
           beginTime: item.over_time,
           name: `timer${idx}`
         });
-        item.timer.start(that)
+        this.timer[idx].start(that)
       })
       this.waitForArr = list
       this.$apply()
@@ -663,6 +679,9 @@ export default class Index extends wepy.page {
         WxParse.wxParse('article', 'html', article, that, 5);
       }
     });
+  }
+  getpingoulist() {
+
   }
   onHide() {
     this.attrFlag = false
@@ -1340,8 +1359,8 @@ export default class Index extends wepy.page {
   }
 }
 .asslist-box {
-  width: 630rpx;
-  height: 622rpx;
+  width: 632rpx;
+  height: 620rpx;
   z-index: 999;
   border-radius: 20rpx;
   background: #fff;
@@ -1412,6 +1431,9 @@ export default class Index extends wepy.page {
   }
 }
 .participate-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 630rpx;
   height: 528rpx;
   z-index: 999;
@@ -1421,7 +1443,7 @@ export default class Index extends wepy.page {
   left: 50%;
   top: 50%;
   transform: translate3d(-50%, -50%, 0);
-  padding: 0 30rpx;
+  padding: 30rpx 30rpx;
   box-sizing: border-box;
   .close {
     width: 48rpx;
@@ -1433,7 +1455,6 @@ export default class Index extends wepy.page {
   .head {
     font-size: 32rpx;
     text-align: center;
-    padding: 60rpx 0;
     font-weight: bold;
   }
   .time-out {
@@ -1444,10 +1465,9 @@ export default class Index extends wepy.page {
   }
   .head-img-wrap {
     display: flex;
-    justify-content: center;
-    padding: 30rpx 0 60rpx 0;
+    flex-wrap: wrap;
     .head-img-item {
-      margin: 0 10rpx;
+      margin: 0 10rpx 20rpx 10rpx;
       width: 92rpx;
       height: 92rpx;
       border-radius: 50%;

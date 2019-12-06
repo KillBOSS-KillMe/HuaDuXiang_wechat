@@ -1,0 +1,21 @@
+
+  <view class="wrap">
+    
+  <view class="step-wrap">
+    <block wx:for="{{$step$step}}" wx:for-index="$step$index" wx:for-item="$step$item" wx:key="$step$key">
+      <view class="step-item {{$step$index < $step$state ? 'step-item-active' : '' }}">
+        <view class="circular"/>
+        <view class="title">{{$step$item.title}}</view>
+      </view>
+    </block>
+  </view>
+
+    <view class="agreement-wrap">
+      <view class="agreement-title">店铺资料提交</view>
+      <view/>
+    </view>
+    <view class="nav-wrap">
+      <navigator url="/pages/settledinone" class="item">上一步</navigator>
+      <view class="item nav">下一步</view>
+    </view>
+  </view>

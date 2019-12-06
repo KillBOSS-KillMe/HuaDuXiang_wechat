@@ -156,5 +156,18 @@ module.exports = {
   // 退货记录列表
   getReturnList: URL + "/api/mobile/index.php?w=member_return&t=get_return_list",
   // 退款记录列表
-  getRefundList: URL + "/api/mobile/index.php?w=member_refund&t=get_refund_list"
+  getRefundList: URL + "/api/mobile/index.php?w=member_refund&t=get_refund_list",
+  // 获取店铺入驻协议接口
+  join_step0: URL + "/api/mobile/index.php?w=store_joinin&t=join_step0",
+  // 获取店铺入驻第一步信息回显接口
+  getJoinStep1: URL + "/api/mobile/index.php?w=store_joinin&t=getJoinStep1",
+  // 新商家入驻第一步接口
+  joinStep1: URL + "/api/mobile/index.php?w=store_joinin&t=joinStep1",
+  // 检查店铺名称是否存在
+  checkname: URL + "/api/mobile/index.php?w=store_joinin&t=checkname",
+  // 获取店铺第二步信息回显接口
+  getJoinStep2: URL + "/api/mobile/index.php?w=store_joinin&t=getJoinStep2",
+  // 新商家入驻第二步接口
+  joinStep2: URL + "/api/mobile/index.php?w=store_joinin&t=joinStep2"
+
 }

@@ -146,14 +146,14 @@ export default class Settlement extends wepy.page {
     payFlag: false,
     priceArr: [{title: '微信支付',icon: 'image57.png', flag: 1},{title: '余额支付',icon: 'image58.png',flag: 0}],
     requestImgUrl: '',
-    address: null, //地址信息
+    address: '', //地址信息
     goods_list: [], //下单商品信息
     store_cart_list: [], //下单店铺列表
     allPrice: 0, //订单总价格
     goodsAllNum: 0, //总共件数
-    address_api: null, // 地址信息hash
-    vat_hash: null, //发票信息hash
-    cart_id: null, //商品id数量
+    address_api: '', // 地址信息hash
+    vat_hash: '', //发票信息hash
+    cart_id: '', //商品id数量
     payment_list: [], // 支付方式
     goods_freight: 0, //运费
     payment_type: 0 , //付款类型 0微信 1余额
@@ -167,6 +167,8 @@ export default class Settlement extends wepy.page {
     pingou: '', // 拼购信息状态
     is_book: '', // 订单类型
     book_down_payment: 0 , //预购金额
+    log_id: '' , // 参团id
+    buyer_id: '', // 团长id
   };
 
   computed = {
@@ -229,9 +231,10 @@ export default class Settlement extends wepy.page {
           offpay_hash_batch: this.address_api.offpay_hash_batch,   //店铺是否支持货到付款hash
           pay_name: 'online',
           invoice_id: 0,   // 发票
-          voucher: null,  // 优惠券
-          pingou: this.pingou  // 拼购
-
+          voucher: '',  // 优惠券
+          pingou: this.pingou,  // 拼购
+          log_id: this.log_id,
+          buyer_id: this.buyer_id
         }
       }).then(res => {
         if(res.code == 200) {
@@ -384,6 +387,10 @@ export default class Settlement extends wepy.page {
     this.available_predeposit = Number(orderInfo.available_predeposit)
     // 订单类型
     this.is_book = orderInfo.submitData.is_book
+    // 拼团
+    this.log_id = orderInfo.submitData.log_id
+    // 团长id
+    this.buyer_id = orderInfo.submitData.buyer_id
 
   }
 }

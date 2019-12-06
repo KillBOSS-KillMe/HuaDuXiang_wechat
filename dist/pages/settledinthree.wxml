@@ -1,0 +1,60 @@
+
+  <view class="wrap">
+    
+  <view class="step-wrap">
+    <block wx:for="{{$step$step}}" wx:for-index="$step$index" wx:for-item="$step$item" wx:key="$step$key">
+      <view class="step-item {{$step$index < $step$state ? 'step-item-active' : '' }}">
+        <view class="circular"/>
+        <view class="title">{{$step$item.title}}</view>
+      </view>
+    </block>
+  </view>
+
+    <form bindsubmit="submit">
+      <view class="agreement-wrap">
+        <view class="agreement-title">用户证件上传</view>
+        <view>
+          <view class="upload">
+            <view class="upload-h">
+              <text>上传营业执照</text>(2MB以内)
+            </view>
+            <view class="img-wrap" bindtap="uploadBusiness">
+              <image src="{{business || '/assets/img/image69.png'}}"/>
+            </view>
+          </view>
+          <view class="upload-title">上传法人身份证资料</view>
+          <view class="upload">
+            <view class="upload-h">
+              <text>上传身份证正面</text>(2MB以内)
+            </view>
+            <view class="img-wrap" bindtap="uploadCardFront">
+              <image src="{{card_front ||'/assets/img/image70.png'}}"/>
+            </view>
+          </view>
+          <view class="upload">
+            <view class="upload-h">
+              <text>上传身份证反面</text>(2MB以内)
+            </view>
+            <view class="img-wrap" bindtap="uploadCardBack">
+              <image src="{{card_back ||'/assets/img/image71.png'}}"/>
+            </view>
+          </view>
+          <view class="upload-title">法人联系方式</view>
+          <view>
+            <view class="com-item">
+              <view class="title">法人姓名</view>
+              <input type="text" name="name" value="{{name}}" placeholder="请输入法人姓名"/>
+            </view>
+            <view class="com-item">
+              <view class="title">法人电话</view>
+              <input type="number" name="mobile" value="{{mobile}}" maxlength="11" placeholder="请输入法人电话"/>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="nav-wrap">
+        <navigator open-type="redirect" url="/pages/settledintwo" class="item">上一步</navigator>
+        <button form-type="submit" class="item nav">下一步</button>
+      </view>
+    </form>
+  </view>

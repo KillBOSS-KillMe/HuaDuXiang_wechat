@@ -3,7 +3,6 @@ import wepy from 'wepy';
 import 'wepy-async-function';
 var api = require('./api.js');
 import { ajax } from './ajax.js';
-
 export default class extends wepy.app {
   constructor() {
     super();
@@ -67,6 +66,11 @@ export default class extends wepy.app {
       'pages/coupon-list', //优惠券列表
       'pages/wallet-input', //钱包提现输入
       'pages/bargain-list', //我的砍价列表
+      'pages/settledinone', //入驻审核1
+      'pages/settledintwo', //入驻审核2
+      'pages/settledinthree', //入驻审核3
+      'pages/settledinfour', //入驻审核4
+      'pages/settledinfive', //入驻审核5
     ],
     window: {
       backgroundTextStyle: 'light',

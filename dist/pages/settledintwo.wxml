@@ -1,0 +1,50 @@
+
+  <view class="wrap">
+    
+  <view class="step-wrap">
+    <block wx:for="{{$step$step}}" wx:for-index="$step$index" wx:for-item="$step$item" wx:key="$step$key">
+      <view class="step-item {{$step$index < $step$state ? 'step-item-active' : '' }}">
+        <view class="circular"/>
+        <view class="title">{{$step$item.title}}</view>
+      </view>
+    </block>
+  </view>
+
+    <form bindsubmit="submit">
+      <view class="agreement-wrap">
+        <view class="agreement-title">店铺资料提交</view>
+        <view>
+          <view class="settle-list">
+            <view class="com-item">
+              <view class="title">商铺账号</view>
+              <input type="text" name="admin" value="{{admin}}" placeholder="商铺账号(6-20位字母数字组合)"/>
+            </view>
+            <view class="com-item">
+              <view class="title">商铺名称</view>
+              <input type="text" name="name" value="{{name}}" placeholder="请输入商铺名称"/>
+            </view>
+            <view class="com-item">
+              <view class="title">登录密码</view>
+              <input type="text" name="password" placeholder="商铺密码(6-20位字母数字组合)"/>
+            </view>
+            <view class="com-item">
+              <view class="title">联系人</view>
+              <input type="text" name="contacts" value="{{contacts}}" placeholder="请输入联系人姓名"/>
+            </view>
+            <view class="com-item">
+              <view class="title">联系电话</view>
+              <input type="number" maxlength="11" value="{{phone}}" name="phone" placeholder="请输入联系电话"/>
+            </view>
+            <view class="com-item">
+              <view class="title">商铺地址</view>
+              <input type="text" name="address" value="{{address}}" placeholder="请输入商铺地址"/>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="nav-wrap">
+        <navigator open-type="redirect" url="/pages/settledinone" class="item">上一步</navigator>
+        <button form-type="submit" class="item nav">下一步</button>
+      </view>
+    </form>
+  </view>

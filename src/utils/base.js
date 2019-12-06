@@ -15,5 +15,12 @@ module.exports = {
      var second = t.getSeconds()
      if(second < 10){second = '0' + second}
      return year+'-'+month+'-'+date+' '+hour+':'+minute+':'+second
+  },
+  format: function (type, data) {
+    if(type == 'phone') {
+      return /^1[3456789]\d{9}$/.test(data)
+    } else if(type == 'password') {
+      return /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]{6,20})$/.test(data)
+    }
   }
 }

@@ -1,0 +1,32 @@
+
+  <view class="wrap">
+        <import src="../utils/wxParse/wxParse.wxml"/>
+    <!-- <view class="step-wrap">
+      <repeat for="{{step}}" item="item">
+        <view class="step-item {{index < 3 ? 'step-item-active' : '' }}">
+          <view class="circular"></view>
+          <view class="title">{{item.title}}</view>
+        </view>
+      </repeat>
+    </view>-->
+    
+  <view class="step-wrap">
+    <block wx:for="{{$step$step}}" wx:for-index="$step$index" wx:for-item="$step$item" wx:key="$step$key">
+      <view class="step-item {{$step$index < $step$state ? 'step-item-active' : '' }}">
+        <view class="circular"/>
+        <view class="title">{{$step$item.title}}</view>
+      </view>
+    </block>
+  </view>
+
+    <view class="agreement-wrap">
+      <view class="agreement-title">商家入驻协议</view>
+      <view>
+        <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+      </view>
+    </view>
+    <view class="nav-wrap">
+      <view class="item">不同意</view>
+      <navigator class="item nav" open-type="redirect" url="/pages/settledintwo">同意</navigator>
+    </view>
+  </view>

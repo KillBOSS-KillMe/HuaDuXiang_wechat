@@ -1,0 +1,253 @@
+<template>
+  <view class="wrap">
+    <step :state.sync="state"></step>
+    <form @submit="submit">
+      <view class="agreement-wrap">
+        <view class="agreement-title">店铺资料提交</view>
+        <view>
+          <view class="settle-list">
+            <view class="com-item">
+              <view class="title">商铺账号</view>
+              <input type="text" name="admin" value="{{admin}}" placeholder="商铺账号(6-20位字母数字组合)">
+            </view>
+            <view class="com-item">
+              <view class="title">商铺名称</view>
+              <input type="text" name="name"  value="{{name}}" placeholder="请输入商铺名称">
+            </view>
+            <view class="com-item">
+              <view class="title">登录密码</view>
+              <input type="text" name="password"   placeholder="商铺密码(6-20位字母数字组合)">
+            </view>
+            <view class="com-item">
+              <view class="title">联系人</view>
+              <input type="text" name="contacts"  value="{{contacts}}" placeholder="请输入联系人姓名">
+            </view>
+            <view class="com-item">
+              <view class="title">联系电话</view>
+              <input type="number" maxlength="11"  value="{{phone}}" name="phone" placeholder="请输入联系电话">
+            </view>
+            <view class="com-item">
+              <view class="title">商铺地址</view>
+              <input type="text" name="address"  value="{{address}}" placeholder="请输入商铺地址">
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="nav-wrap">
+        <navigator open-type="redirect" url="/pages/settledinone" class="item">上一步</navigator>
+        <button form-type="submit" class="item nav">下一步</button>
+      </view>
+    </form>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import step from '../components/step';
+var api = require('../api.js');
+import { ajax } from '../ajax.js';
+import { format } from '../utils/base.js';
+var _ = require('../utils/underscore.js');
+
+export default class Settledintwo extends wepy.page {
+  config = {
+    navigationBarTitleText: '入驻审核'
+  };
+  components = { step };
+
+  mixins = [];
+
+  data = {
+    state: 2,
+    admin: '',
+    name: '',
+    password: '',
+    contacts: '',
+    phone: '',
+    address: ''
+  };
+
+  computed = {};
+  onShow() {}
+  methods = {
+    submit(e) {
+      this.debounce(e);
+    }
+  };
+
+  events = {};
+
+  onLoad() {
+    // 防止重复提交第三方插件函数
+    this.debounce = _.debounce(this.submit, 1000, { immediate: true });
+
+    ajax({
+      url: api.getJoinStep1,
+      icon: 'none'
+    }).then(res => {
+      if (res.code == 200) {
+        if (res.datas.state == 1) {
+          var {
+            seller_name,
+            store_name,
+            seller_psw,
+            contacts_name,
+            contacts_phone,
+            company_address_detail
+          } = res.datas.data;
+          this.admin = seller_name;
+          this.name = store_name;
+          this.password = seller_psw;
+          this.contacts = contacts_name;
+          this.phone = contacts_phone;
+          this.address = company_address_detail;
+          this.$apply();
+        }
+      }
+    });
+  }
+  submit(e) {
+    var {
+      admin: seller_name,
+      name: store_name,
+      password: seller_psw,
+      contacts: contacts_name,
+      phone: contacts_phone,
+      address: company_address_detail
+    } = e.detail.value;
+    if (!format('password', seller_name)) {
+      wx.showToast({
+        title: '请按正确格式输入账号',
+        icon: 'none'
+      });
+      return false;
+    }
+    if (!store_name) {
+      wx.showToast({
+        title: '请输入商铺名称',
+        icon: 'none'
+      });
+      return false;
+    }
+    if (!format('password', seller_psw)) {
+      wx.showToast({
+        title: '请按正确格式输入密码',
+        icon: 'none'
+      });
+      return false;
+    }
+    if (!contacts_name) {
+      wx.showToast({
+        title: '请输入联系人姓名',
+        icon: 'none'
+      });
+      return false;
+    }
+    if (!format('phone', contacts_phone)) {
+      wx.showToast({
+        title: '请输入正确格式联系电话',
+        icon: 'none'
+      });
+      return false;
+    }
+    if (!company_address_detail) {
+      wx.showToast({
+        title: '请输入商铺地址',
+        icon: 'none'
+      });
+      return false;
+    }
+    ajax({
+      url: api.joinStep1,
+      data: {
+        seller_name,
+        store_name,
+        seller_psw,
+        contacts_name,
+        contacts_phone,
+        company_address_detail
+      }
+    }).then(res => {
+      if (res.code == 200) {
+        if (res.datas.state == 1) {
+          wx.showToast({
+            title: res.datas.msg,
+            icon: 'none'
+          });
+          var timer = setTimeout(() => {
+            this.$redirect('settledinthree');
+            clearTimeout(timer);
+          }, 1000);
+        }
+      }
+    });
+  }
+}
+</script>
+
+<style lang="less">
+.agreement-wrap {
+  padding: 0 30rpx;
+  .agreement-title {
+    font-weight: bold;
+    font-size: 30rpx;
+    color: #333;
+    text-align: center;
+    padding: 30rpx 0 26rpx;
+  }
+}
+.nav-wrap {
+  display: flex;
+  padding: 60rpx 140rpx 60rpx 140rpx;
+  justify-content: space-between;
+  .item {
+    width: 170rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+    border-radius: 10rpx;
+    font-size: 28rpx;
+    color: #333;
+    text-align: center;
+    border: 1px solid #bcbcbc;
+  }
+  .nav {
+    color: #fff;
+    background: #ff2228;
+    border: none;
+  }
+}
+
+.com-item {
+  margin-top: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &:nth-of-type(1) {
+    margin-top: 0rpx;
+  }
+  .title {
+    font-weight: bold;
+    font-size: 30rpx;
+    width: 150rpx;
+    white-space: nowrap;
+  }
+  input {
+    height: 100rpx;
+    flex: 1;
+    color: #333;
+    font-size: 28rpx;
+    border: 1px solid #bcbcbc;
+    border-radius: 10rpx;
+    padding-left: 10rpx;
+    box-sizing: border-box;
+    height: 70rpx;
+  }
+  > text {
+    font-weight: bold;
+    font-size: 30rpx;
+  }
+  picker {
+    flex: 1;
+  }
+}
+</style>

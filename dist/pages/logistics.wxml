@@ -1,8 +1,8 @@
 
   <view>
     <view class="record-info-head">
-      <view>快递名称：{{express_name || ''}}</view>
-      <view>快递单号：{{shipping_code || ''}}</view>
+      <view>快递名称：{{express_name || '等待生成'}}</view>
+      <view>快递单号：{{shipping_code || '等待生成'}}</view>
     </view>
     <!-- <view class="address-wrap">
        <image class="add-img" src="/assets/img/image33.png">

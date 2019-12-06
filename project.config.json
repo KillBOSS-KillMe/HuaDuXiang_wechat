@@ -117,6 +117,40 @@
 					"pathName": "pages/orderInfo",
 					"query": "order_id=273&pay_sn=700628457719128007",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "入驻审核1",
+					"pathName": "pages/settledinone",
+					"query": "order_id=273&pay_sn=700628457719128007",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "入驻审核2",
+					"pathName": "pages/settledintwo",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "入驻审核3",
+					"pathName": "pages/settledinthree",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "入驻审核4",
+					"pathName": "pages/settledinfour",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "入驻审核5",
+					"pathName": "pages/settledinfive",
+					"scene": null
 				}
 			]
 		}
