@@ -11,7 +11,7 @@ class AJAX {
       title: "加载中"
     })
     var res = await wepy.request({
-      url: e.url + '&key=' + key,
+      url: e.url,
       data: Object.assign({
         key: key
       }, e.data),
@@ -32,9 +32,9 @@ class AJAX {
     var e = await wepy.login();
     var res = await this.ajax({
       url: api.getToken,
+      icon: 'none',
       data: {
         code: e.code,
-        icon: 'none'
       }
     })
     if (res.code == 200 && res.datas.state == 1) {

@@ -104,14 +104,15 @@ export default class Settledinthree extends wepy.page {
       success (res) {
         const tempFilePaths = res.tempFilePaths
         wx.uploadFile({
-          url: 'https://api.reindata.net/v1/goods/upload_file',
+          url: api.upload_image,
           filePath: tempFilePaths[0],
-          name: 'photo',
+          name: 'file',
           formData: {
             'file': 'test'
           },
           success (res){
-            if(res.code == 1) {
+            res = JSON.parse(res.data)
+            if(res.code == 200) {
               if(res.datas.state == 1) {
                 that[name] = res.datas
                 that.$apply()

@@ -1,16 +1,16 @@
 <template>
   <view class="wrap">
     <step :state.sync="state"></step>
-    <view class="examine" wx:if="{{options.state == 11}}">
+    <view class="examine" wx:if="{{isJoin == 11}}">
       <view class="title">付款成功待后台开通:</view>
       <image class="examine-img" src="/assets/img/image43.png" />
     </view>
-    <view wx:if="{{options.state == 40}}">
+    <view wx:if="{{isJoin == 40}}">
       <image class="success-img" src="/assets/img/image56.png" />
       <view class="jump">
         <view class="title">提示</view>
         <view class="txt">恭喜您，店铺已经开通，请去电脑端完善基本信息。</view>
-        <view class="url"> 访问地址：<text @tap="setClipboardData">https://www.baidu.com/log/asdasdasd</text> </view>
+        <view class="url"> 访问地址：<text @tap="setClipboardData">{{url}}</text> </view>
       </view>
       <view class="nav-wrap">
         <navigator url="/pages/index" class="item">去首页</navigator>
@@ -36,7 +36,8 @@ export default class Settledinfive extends wepy.page {
 
   data = {
     state: 5,
-    options: {}
+    isJoin: '',
+    url: ''
   };
 
   computed = {};
@@ -44,23 +45,21 @@ export default class Settledinfive extends wepy.page {
   methods = {
     setClipboardData() {
       wx.setClipboardData({
-        data: 'sadfasfaf'
+        data: this.url
       })
     }
   };
 
   events = {};
 
-  onLoad(options) {
-    this.options = options
-
-    ajax({
+  async onLoad(options) {
+    this.url = api.URL + '/index.php?w=seller_login&t=show_login'
+    var isJoinData = await ajax({
       url: api.isJoin,
       icon: 'none'
-    }).then(res => {
-      this.options.state = res.datas.state && 40
-      this.$apply()
     })
+    this.isJoin = isJoinData.datas.state
+    this.$apply()
   }
 }
 </script>
@@ -132,7 +131,7 @@ export default class Settledinfive extends wepy.page {
 .success-img {
   height: 170rpx;
   width: 426rpx;
-  margin: 200rpx auto;
+  margin: 160rpx auto;
   display: block;
 }
 .jump {

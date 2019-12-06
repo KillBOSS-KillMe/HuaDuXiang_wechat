@@ -11,7 +11,7 @@
   </view>
 
     <!-- state -10没入驻 10填完信息待审核 11交完钱审核中 20填完信息审核成功 30填完信息审核失败 31交钱审核失败 40入驻成功 -->
-    <form bindsubmit="submit"  wx:if="{{options.state == ''}}">
+    <form bindsubmit="submit"  wx:if="{{!isJoin}}">
       <view class="agreement-wrap">
         <view class="agreement-title">店铺信息注册</view>
         <view>
@@ -53,18 +53,18 @@
         <button form-type="submit" class="item nav">提交审核</button>
       </view>
     </form>
-    <view class="examine"  wx:if="{{options.state == 10}}">
+    <view class="examine"  wx:if="{{isJoin == 10}}">
       <view class="title">信息提交审核:</view>
       <image class="examine-img" src="/assets/img/image43.png"/>
       <!-- <view class="again-info" bindtap="againInfo">重新填写信息</view> -->
     </view>
-    <view class="error-wrap" wx:if="{{options.state == 30}}">
+    <view class="error-wrap" wx:if="{{isJoin == 30}}">
         <view class="error-box">
           <view class="error-title">审核失败</view>
           <navigator hover-class="none" open-type="redirect" url="/pages/settledinone">去重新申请</navigator>
         </view>
     </view>
-    <view wx:if="{{options.state == 20}}">
+    <view wx:if="{{isJoin == 20}}">
       <view class="agreement-wrap">
         <view class="agreement-title">审核通过确认信息</view>
         <view class="settle-list">
@@ -113,7 +113,7 @@
         </view>
       </view>
       <view class="nav-wrap">
-        <navigator url="/pages/settledinone" class="item">重新申请</navigator>
+        <navigator class="item" open-type="redirect" url="/pages/settledinone">重新申请</navigator>
         <button form-type="submit" class="item nav" bindtap="showPriceType">去支付</button>
       </view>
     </view>

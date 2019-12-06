@@ -4,11 +4,14 @@
 // L
 var URL = "http://www.hdx.cc"  
 // 线上
-// var URL = "https://www.hdxsy.cn"
+var URL = "https://www.hdxsy.cn"
 
 module.exports = {
+  URL: URL,
   // 小程序授权微信-返回用户 user_id—接口，用户信息接口。
   getToken: URL +  '/api/mobile/index.php?w=connect&t=wechat',
+  // 入驻信息图片上传接口
+  upload_image: URL + "/api/mobile/index.php?w=store_joinin&t=upload_image",
   // 登录
   login: URL + "/api/mobile/index.php?w=logout&t=index",
   // 首页—商品列表接口
