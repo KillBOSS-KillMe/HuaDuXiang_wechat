@@ -14,7 +14,7 @@
       </view>
       <view class="nav-wrap">
         <navigator url="/pages/index" class="item">去首页</navigator>
-        <navigator url="/pages/merchantIndex" class="item nav">去店铺</navigator>
+        <navigator url="/pages/merchantIndex?store_id={{store_id}}" class="item nav">去店铺</navigator>
       </view>
     </view>
   </view>
@@ -37,7 +37,8 @@ export default class Settledinfive extends wepy.page {
   data = {
     state: 5,
     isJoin: '',
-    url: ''
+    url: '',
+    store_id: ''
   };
 
   computed = {};
@@ -59,6 +60,7 @@ export default class Settledinfive extends wepy.page {
       icon: 'none'
     })
     this.isJoin = isJoinData.datas.state
+    this.store_id = isJoinData.datas.store_id
     this.$apply()
   }
 }

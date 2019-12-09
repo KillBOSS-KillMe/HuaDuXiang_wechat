@@ -1,8 +1,8 @@
 <template>
   <view class="wrap">
     <step :state.sync="state"></step>
-    <!-- state -10没入驻 10填完信息待审核 11交完钱审核中 20填完信息审核成功 30填完信息审核失败 31交钱审核失败 40入驻成功 -->
-    <form @submit="submit" wx:if="{{!isJoin}}">
+    <!-- state 0 -10没入驻 10填完信息待审核 11交完钱审核中 20填完信息审核成功 30填完信息审核失败 31交钱审核失败 40入驻成功 -->
+    <form @submit="submit" wx:if="{{isJoin == 0}}">
       <view class="agreement-wrap">
         <view class="agreement-title">店铺信息注册</view>
         <view>

@@ -114,6 +114,7 @@ export default class Settledinthree extends wepy.page {
             res = JSON.parse(res.data)
             if(res.code == 200) {
               if(res.datas.state == 1) {
+                console.log(res.datas)
                 that[name] = res.datas
                 that.$apply()
               } else {

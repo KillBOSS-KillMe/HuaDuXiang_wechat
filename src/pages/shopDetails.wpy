@@ -381,7 +381,9 @@ export default class Index extends wepy.page {
     asslistFlag: false, // 全部拼团列表锁
     participateFlag: false, // 参与拼团列表锁
     currentAssembleIdx: null, //当前选择参团的索引
-    currentAssembleData: null // 当前选择参团的数据
+    currentAssembleData: null, // 当前选择参团的数据
+    share_fx_id: '', //自己分享fx_id
+    fx_id: '', // 链接点进来fx_id
   };
 
   computed = {};
@@ -390,10 +392,11 @@ export default class Index extends wepy.page {
       this.currentAssembleData = this.waitForArr.filter(
         (item, index) => index == newValue
       )[0];
-      console.log(this.currentAssembleData)
     }
   };
   onShow() {
+    console.log(this.goods_id, '商品id', 'onshow')
+    var that = this
     // 用户收货地址列表
     ajax({
       url: api.addressList
@@ -401,6 +404,26 @@ export default class Index extends wepy.page {
       this.address_list = res.datas.address_list || []
       this.$apply()
     })
+
+    ajax({
+      url: api.getpingoulist,
+      data: {
+        goods_id: this.goods_id
+      }
+    }).then(res => {
+      this.timer = []
+      var list = res.datas || []
+      list.forEach((item, idx) => {
+        this.timer[idx] = new timer({
+          beginTime: item.over_time,
+          name: `timer${idx}`
+        });
+        this.timer[idx].start(that)
+      })
+      this.waitForArr = list
+      this.$apply()
+    })
+
   }
   methods = {
     // 切换顶部导航
@@ -457,7 +480,6 @@ export default class Index extends wepy.page {
       })
     },
     navGoodsDetails(goods_id, sale_type) {
-      // navigate
       if(sale_type == 'rushsales') {
         this.$redirect(`/pages/seckillShopDetails?goods_id=${goods_id}`);
       } else {
@@ -544,7 +566,7 @@ export default class Index extends wepy.page {
           cart_id,
           address_id: '',
           pingou: this.sale_type == 'group' ? 1 : 0,
-          fx_id: this.userid ? 1 : 0,
+          fx_id: this.fx_id,
           log_id: this.currentAssembleData ? this.currentAssembleData.log_id : '',
           buyer_id: this.currentAssembleData ? this.currentAssembleData.buyer_id : '',
           is_book: this.goods_content.is_book
@@ -586,24 +608,24 @@ export default class Index extends wepy.page {
   }
   events = {};
   onShareAppMessage(e) {
-    // if(this.distState == 2) {
-      var user = wx.getStorageSync('user')
-      return {
-        path: `/pages/shopDetails?goods_id=${this.goods_id}&userid=${user.userid}`
-      }
-    // }
+    console.log(`/pages/shopDetails?goods_id=${this.goods_id}&share_fx_id=${this.share_fx_id}`)
+    return {
+      path: `/pages/shopDetails?goods_id=${this.goods_id}&share_fx_id=${this.share_fx_id}`
+    }
   }
   async onLoad(t) {
+    console.log(t)
     if(this.timer) {
       this.timer.forEach(item => {
         item.stop()
       })
     }
     var that = this
-    this.userid = t.userid
+    this.fx_id = t.share_fx_id || ''
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     this.goods_id = t.goods_id;
     this.$apply()
+
     await this.getShopDetails()
     ajax({
       url: api.voucherTplList,
@@ -620,24 +642,7 @@ export default class Index extends wepy.page {
       this.$apply()
     })
 
-    ajax({
-      url: api.getpingoulist,
-      data: {
-        goods_id: t.goods_id
-      }
-    }).then(res => {
-      this.timer = []
-      var list = res.datas || []
-      list.forEach((item, idx) => {
-        this.timer[idx] = new timer({
-          beginTime: item.over_time,
-          name: `timer${idx}`
-        });
-        this.timer[idx].start(that)
-      })
-      this.waitForArr = list
-      this.$apply()
-    })
+
     // 用户是否分销员
     // ajax({
     //   url: api.fxMemberApply
@@ -645,7 +650,6 @@ export default class Index extends wepy.page {
     //   this.distState = res.datas.state
     //   this.$apply()
     // });
-
   }
 
   async getShopDetails() {
@@ -680,6 +684,24 @@ export default class Index extends wepy.page {
         this.goods_spec = Object.values(res.datas.goods_content.goods_spec  || {})
         this.activeAttr = Object.keys(res.datas.goods_content.goods_spec  || {})
         this.spec_list = res.datas.spec_list
+
+        if(this.goods_content.is_fx == 1) {
+          ajax({
+            url: api.fx_add,
+            data: {
+              goods_common_id: this.goods_content.goods_commonid
+            }
+          }).then(res => {
+            if(res.code == 200 && res.datas.state == 1) {
+              this.share_fx_id = res.datas.fx_id
+              this.$apply()
+            }
+          })
+        } else {
+          this.share_fx_id = ''
+          this.$apply()
+        }
+
         this.$apply()
         var article = res.datas.goods_content.goods_body
         // article = article.replace(/src="/g, `src="${that.requestImgUrl}`);

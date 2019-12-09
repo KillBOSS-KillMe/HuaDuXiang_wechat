@@ -109,7 +109,8 @@
           <image class="goods-img" src="{{requestImgUrl + item.goods_images}}" />
           <view class="right">
             <view class="bargin-title overflow-one">{{item.goods_name}}</view>
-            <view class="price">已砍<text>{{item.priceed}}</text>元，还差<text>{{item.misprice}}</text>元</view>
+            <view class="price" wx:if="{{item.is_success != 1}}">已砍<text>{{item.priceed}}</text>元，还差<text>{{item.misprice}}</text>元</view>
+            <view class="price" wx:else>点击进入订单列表查看详情</view>
             <view  class="time-status">到期时间：{{item.end_time_ed}}</view>
 
             <!-- <view class="time-status"  wx:if="{{wxTimerList['timer' + index].wxTimerSecond > 0}}">
@@ -175,7 +176,7 @@ export default class BargainList extends wepy.page {
   methods = {
    navBarginInfo(goods_id,is_success) {
      if(is_success == 1) {
-       this.$navigate(`orderlist`)
+       this.$navigate(`orderlist?idx=2`)
      } else if ( is_success == -1) {
        return false  
      } else {

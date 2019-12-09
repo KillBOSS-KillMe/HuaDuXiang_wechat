@@ -27,10 +27,13 @@
 
             <!-- 砍价进度条 -->
             <view class="barginProgess">
-              <view class="progessTittle">
+              <view class="progessTittle" wx:if="{{!success_flag}}">
                 已砍
                 <text>{{already}}</text>元, 还差
                 <text>{{saleprice}}</text>元
+              </view>
+              <view class="progessTittle" wx:else>
+                恭喜，商品砍价已成功
               </view>
               <view class="countwrap">
                 <progress
@@ -58,7 +61,7 @@
                     <view class="swiper_item">
                       <image src="{{item.member_avatar}}" />
                       <view class="cent">
-                        <text class="item-name">{{item.member_truename}}</text>
+                        <text class="item-name">{{item.member_truename || '暂未授权用户'}}</text>
                         <text class="item-num">来一起砍价0元拿</text>
                       </view>
                       <view class="right">
@@ -82,7 +85,7 @@
           <view class="saleShop">
             <repeat for="{{hot_sales}}" item="item">
               <view @tap="navGoodsDetails({{item.goods_id}}, {{item.sale_type}})" class="shopview">
-                <image src="{{requestImgUrl + item.goods_image}}" />
+                <image src="{{item.goods_image}}" />
                 <view class="saleTag">
                   <text class="overflow-one">{{item.goods_name}}</text>
                 </view>
@@ -141,6 +144,7 @@ export default class Index extends wepy.page {
     end_time: 0, // 倒计时
     goods_nums: 0,
     goods_que: 0,
+    success_flag: false, //是否成功
   };
 
   computed = {};
@@ -148,22 +152,28 @@ export default class Index extends wepy.page {
     this.newUser = options
     var user = wx.getStorageSync('user')
     this.sharFlag = options.userid && user.userid != options.userid
+    this.goods_id = options.goods_id
 
+    this.goodsKanjiaDetail()
+
+  }
+  goodsKanjiaDetail() {
     ajax({
       url: api.goodsKanjiaDetail,
       data: {
         goods_id: this.newUser.goods_id,
-        user_id: options.userid
+        user_id: this.newUser.userid
       }
     }).then(res => {
       this.kanjiaLists = res.datas.user_list || []
       this.hot_sales = res.datas.hot_sales || []
       this.goods_content = res.datas.goods_content
       this.saleprice = Number(res.datas.saleprice).toFixed(2) || 0
+      this.success_flag = this.saleprice == '0.00'
       this.already =  (Number(res.datas.price) - Number(res.datas.saleprice)).toFixed(2) || 0
       this.per = res.datas.per
-      this.goods_nums = res.datas.goods_nums
-      this.goods_que = res.datas.goods_que
+      this.goods_nums = res.datas.goods_nums || 0
+      this.goods_que = res.datas.goods_que || 0
       this.end_time = res.datas.end_time || 0
       // this.wxTimer = new timer({
       //   beginTime: this.end_time,
@@ -173,7 +183,6 @@ export default class Index extends wepy.page {
       // this.wxTimer.start(this);
       this.$apply()
     })
-
   }
   onShareAppMessage(e) {
     // if(e.from == "button") {
@@ -202,11 +211,16 @@ export default class Index extends wepy.page {
           user_id: this.newUser.userid
         }
       }).then(res => {
+        console.log(res, '看家 ')
         if(res.code == 200) {
           wx.showToast({
             title: res.datas.msg,
             icon: 'none'
           })
+          var timer = setTimeout(() => {
+            this.goodsKanjiaDetail()
+            clearTimeout(timer)
+          }, 1000)
         }
       })
     },
@@ -304,7 +318,7 @@ page {
             }
           }
           .countwrap {
-            width: 65%;
+            width: 55%;
             height: 25rpx;
             position: relative;
             top: 0;

@@ -7,7 +7,8 @@
           <image class="goods-img" src="{{requestImgUrl + item.goods_images}}"/>
           <view class="right">
             <view class="bargin-title overflow-one">{{item.goods_name}}</view>
-            <view class="price">已砍<text>{{item.priceed}}</text>元，还差<text>{{item.misprice}}</text>元</view>
+            <view class="price"  wx:if="{{item.is_success != 1}}">已砍<text>{{item.priceed}}</text>元，还差<text>{{item.misprice}}</text>元</view>
+            <view class="price"  wx:else>点击进入订单列表查看详情</view>
             <view class="time-status">到期时间：{{item.end_time_ed}}</view>
 
             <!-- <view class="time-status"  wx:if="{{wxTimerList['timer' + index].wxTimerSecond > 0}}">
@@ -30,7 +31,7 @@
     </view>
 
 
-    <view class="none-content"  wx:if="{{barginData.length == 0}}">
+    <view class="none-content" wx:if="{{barginData.length == 0}}">
       <image src="/assets/img/image48.png"/>
       <navigator url="/pages/index" hover-class="none" open-type="reLaunch" class="go">去选购</navigator>
     </view>

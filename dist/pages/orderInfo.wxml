@@ -38,7 +38,7 @@
             </view>
             <view class="goods-price"> ￥
               <text>{{item.goods_price}}</text> </view>
-            <view class="tui-btn" bindtap="showInputFlag" wx:if="{{item.refund !== 1}}" data-wpyshowinputflag-a="{{item.rec_id}}">申请退款</view>
+            <view class="tui-btn" bindtap="showInputFlag" wx:if="{{item.refund == 1}}" data-wpyshowinputflag-a="{{item.rec_id}}">申请退款</view>
           </view>
         </view>
       </block>

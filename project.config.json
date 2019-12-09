@@ -52,7 +52,7 @@
 					"id": 0,
 					"name": "砍价分享进入小程序",
 					"pathName": "pages/barginInfo",
-					"query": "goods_id=13&userid=9",
+					"query": "goods_id=50&userid=13",
 					"scene": null
 				},
 				{
@@ -80,7 +80,7 @@
 					"id": 4,
 					"name": "普通商品详情",
 					"pathName": "pages/shopDetails",
-					"query": "goods_id=55&userid=7",
+					"query": "goods_id=36&share_fx_id=3",
 					"scene": 1007
 				},
 				{
@@ -151,6 +151,13 @@
 					"name": "入驻审核5",
 					"pathName": "pages/settledinfive",
 					"query": "state=40",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/bargain-list",
+					"pathName": "pages/bargain-list",
+					"query": "goods_id=50&userid=13",
 					"scene": null
 				}
 			]

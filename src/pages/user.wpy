@@ -157,37 +157,23 @@ export default class ShopCart extends wepy.page {
 
   onLoad() {
     this.userInfo = this.$parent.globalData.userInfo;
-    console.log(this.userInfo);
-    
   }
   onShow() {
-
     // 用户个人中心数据接口
     ajax({
       url: api.memberInfo,
     }).then(res => {
-      console.log(res)
       if(res.code == 200) {
         this.member_info = res.datas.member_info
-        this.funList[0].num = res.datas.member_info.order_nopay_count || 0
+        this.funList[0].num = res.datas.member_info.order_nopay_count  || 0
         this.funList[1].num = res.datas.member_info.order_noreceipt_count || 0
-        this.funList[2].num = res.datas.member_info.order_noreceipt_count || 0
-        this.funList[3].num = res.datas.member_info.return || 0
+        this.funList[2].num = res.datas.member_info.order_notakes_count  || 0
+        this.funList[3].num = res.datas.member_info.order_noeval_count  || 0
         this.member_serves_tel = res.datas.member_serves_tel
         this.$apply()
       }
     })
   }
-  /**
-   * 状态跳转
-   */
-  //   goStatusList: function(e) {
-  //     let state = e.currentTarget.dataset.state
-  //     // console.log(state)
-  //     wx.navigateTo({
-  //       url: "/pages/myOrder/myOrder?state=" + state
-  //     })
-  //   },
 }
 </script>
 

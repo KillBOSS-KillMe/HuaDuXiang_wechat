@@ -11,7 +11,9 @@
       <swiper indicator-dots="true" autoplay="true" interval="2000" duration="500" circular="true">
         <block wx:for="{{bannerArr}}" wx:for-index="index" wx:for-item="item" wx:key="key">
           <swiper-item>
-            <image src="{{requestImgUrl + item.imgsrc}}" class="slide-image"/>
+            <navigator class="nav" hover-class="none" url="/{{item.pages}}">
+              <image src="{{requestImgUrl + item.imgsrc}}" class="slide-image"/>
+            </navigator>
           </swiper-item>
         </block>
       </swiper>

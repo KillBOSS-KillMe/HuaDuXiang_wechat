@@ -2,7 +2,7 @@
 // D
 // var URL = "http://www.shopdate.me"
 // L
-var URL = "http://www.hdx.cc"  
+// var URL = "http://www.hdx.cc"  
 // 线上
 var URL = "https://www.hdxsy.cn"
 
@@ -177,6 +177,8 @@ module.exports = {
   // 获取店铺入驻申请进度接口
   getStep: URL + "/api/mobile/index.php?w=store_joinin&t=getStep",
   // 查询店铺入驻总信息接口
-  getJoinInfo: URL + "/api/mobile/index.php?w=store_joinin&t=getJoinInfo"
+  getJoinInfo: URL + "/api/mobile/index.php?w=store_joinin&t=getJoinInfo",
+  // 分销员领取分销商品
+  fx_add: URL + "/api/mobile/index.php?w=member_fx&t=fx_add"
 
 }

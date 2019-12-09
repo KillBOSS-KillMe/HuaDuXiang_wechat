@@ -245,6 +245,8 @@ export default class Index extends wepy.page {
     address_list: [],
     distState: 0, // 2分销员  其他不是
     userid: null, // 点击链接进来的userid
+    share_fx_id: '', //自己分享fx_id
+    fx_id: '', // 链接点进来fx_id
   };
 
   computed = {};
@@ -284,7 +286,7 @@ export default class Index extends wepy.page {
           cart_id,
           address_id: '',
           pingou: this.sale_type == 'group' ? 1 : 0,
-          fx_id: this.userid ? 1 : 0
+          fx_id: this.fx_id
       }
       ajax({
         url: api.memberBuyOne,
@@ -394,7 +396,8 @@ export default class Index extends wepy.page {
 
   async onLoad(t) {
     this.wxTimer && this.wxTimer.stop()
-    this.userid = t.userid
+
+    this.fx_id = t.share_fx_id || ''
     this.goods_id = t.goods_id;
     this.requestImgUrl = this.$parent.globalData.requestImgUrl;
     this.$apply()
@@ -459,6 +462,24 @@ export default class Index extends wepy.page {
           complete() {}
         });
         this.wxTimer.start(this);
+
+        if(this.goods_content.is_fx == 1) {
+          ajax({
+            url: api.fx_add,
+            data: {
+              goods_common_id: this.goods_content.goods_commonid
+            }
+          }).then(res => {
+            if(res.code == 200 && res.datas.state == 1) {
+              this.share_fx_id = res.datas.fx_id
+              this.$apply()
+            }
+          })
+        } else {
+          this.share_fx_id = ''
+          this.$apply()
+        }
+
         this.$apply()
         var article = res.datas.goods_content.goods_body
         // article = article.replace(/src="/g, `src="${that.requestImgUrl}`);
@@ -471,12 +492,10 @@ export default class Index extends wepy.page {
     this.wxTimer.stop()
   }
   onShareAppMessage(e) {
-    // if(this.distState == 2) {
-      var user = wx.getStorageSync('user')
-      return {
-        path: `/pages/seckillShopDetails?goods_id=${this.goods_id}&userid=${user.userid}`
-      }
-    // }
+    console.log(`/pages/seckillShopDetails?goods_id=${this.goods_id}&share_fx_id=${this.share_fx_id}`)
+    return {
+      path: `/pages/seckillShopDetails?goods_id=${this.goods_id}&share_fx_id=${this.share_fx_id}`
+    }
   }
 }
 </script>

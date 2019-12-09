@@ -17,7 +17,7 @@
       </view>
     </view>
     <view class="nav-wrap">
-      <view class="item">不同意</view>
+      <navigator  class="item" open-type="redirect"  url="/pages/index">不同意</navigator>
       <navigator  class="item nav" open-type="redirect"  url="/pages/settledintwo">同意</navigator>
     </view>
   </view>

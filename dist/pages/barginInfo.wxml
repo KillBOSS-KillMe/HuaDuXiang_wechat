@@ -21,18 +21,21 @@
 
             <!-- 砍价进度条 -->
             <view class="barginProgess">
-              <view class="progessTittle">
+              <view class="progessTittle"  wx:if="{{!success_flag}}">
                 已砍
                 <text>{{already}}</text>元, 还差
                 <text>{{saleprice}}</text>元
+              </view>
+              <view class="progessTittle"  wx:else>
+                恭喜，商品砍价已成功
               </view>
               <view class="countwrap">
                 <progress percent="{{per*100}}" border-radius="10" stroke-width="11" activeColor="#FF2228" backgroundColor="#FFDADB"/>
               </view>
             </view>
             <!-- 分享按钮 -->
-            <button open-type="share" class="sharbtn"  wx:if="{{sharFlag == false}}">分享给朋友, 多砍一刀</button>
-            <view class="sharbtn"  wx:if="{{sharFlag == true}}" bindtap="helpClick">帮助好友砍一刀</view>
+            <button open-type="share" class="sharbtn" wx:if="{{sharFlag == false}}">分享给朋友, 多砍一刀</button>
+            <view class="sharbtn" wx:if="{{sharFlag == true}}" bindtap="helpClick">帮助好友砍一刀</view>
             <!-- 过期时间 -->
             <!-- <view class="goodsTime" wx:if="{{wxTimerList.firstTimer.wxTimerSecond !== 0}}">还剩{{wxTimerList.firstTimer.wxTimer}}过期, 快来砍价吧~</view>
             <view class="goodsTime">砍价已经结束，请选择其它商品</view> -->
@@ -46,7 +49,7 @@
                     <view class="swiper_item">
                       <image src="{{item.member_avatar}}"/>
                       <view class="cent">
-                        <text class="item-name">{{item.member_truename}}</text>
+                        <text class="item-name">{{item.member_truename || '暂未授权用户'}}</text>
                         <text class="item-num">来一起砍价0元拿</text>
                       </view>
                       <view class="right">
@@ -70,7 +73,7 @@
           <view class="saleShop">
             <block wx:for="{{hot_sales}}" wx:for-index="index" wx:for-item="item" wx:key="key">
               <view bindtap="navGoodsDetails" class="shopview" data-wpynavgoodsdetails-a="{{item.goods_id}}" data-wpynavgoodsdetails-b="{{item.sale_type}}">
-                <image src="{{requestImgUrl + item.goods_image}}"/>
+                <image src="{{item.goods_image}}"/>
                 <view class="saleTag">
                   <text class="overflow-one">{{item.goods_name}}</text>
                 </view>
