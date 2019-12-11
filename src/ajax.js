@@ -39,7 +39,7 @@ class AJAX {
     })
     if (res.code == 200 && res.datas.state == 1) {
       wx.setStorageSync('user', res.datas)
-      return await this.ajax(data)
+      return await this.ajax(Object.assign(data, {icon: 'none'}))
     }
   }
 }
