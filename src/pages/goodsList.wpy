@@ -6,7 +6,7 @@
     <view class="goods-list">
       <repeat for="{{goods_list}}" item="item">
         <view @tap="navShopDetails({{item.goods_id}}, {{item.sale_type}})" class="goods-item">
-          <image class="goods-img" src="{{requestImgUrl + item.goods_image_url}}" />
+          <image class="goods-img" src="{{item.goods_image_url}}" />
           <view class="goods-fot">
             <view class="title overflow-one">{{item.goods_name}}</view>
             <view class="price">

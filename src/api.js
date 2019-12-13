@@ -1,10 +1,10 @@
 
 // D
-var URL = "http://www.shopdate.me"
+// var URL = "http://www.shopdate.me"
 // L
 // var URL = "http://www.hdx.cc"  
 // 线上
-// var URL = "https://www.hdxsy.cn"
+var URL = "https://www.hdxsy.cn"
 
 module.exports = {
   URL: URL,

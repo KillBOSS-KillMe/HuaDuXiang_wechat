@@ -10,7 +10,7 @@
       <view class="brand-list">
         <block wx:for="{{recommendList}}" wx:for-index="index" wx:for-item="item" wx:key="key">
           <navigator url="/pages/goodsList?b_id={{item.brand_id}}" hover-class="none" class="brand-item">
-            <image class="img" src="{{item.brand_pic}}"/>
+            <image class="img" src="{{item.brand_pic}}" mode="aspectFit"/>
             <text>{{item.brand_name}}</text>
           </navigator>
         </block>

@@ -367,7 +367,7 @@
             <view class="goods-h">{{item.title}}</view>
             <view class="prop">
               <repeat for="{{item.prop}}" item="ele" index="idx">
-                <view class="prop-i {{goods_spec[index] == ele ? 'prop-active' : ''}}" @tap="changeAttr({{index}}, {{idx}}, {{ele}})">{{ele}}</view>
+                <view class="prop-i {{item.active == idx ? 'prop-active' : ''}}" @tap="changeAttr({{index}}, {{idx}}, {{ele}})">{{ele}}</view>
               </repeat>
             </view>
           </repeat>
@@ -516,10 +516,8 @@ export default class Index extends wepy.page {
     },
     hideMask() {},
     changeAttr(index, idx, ele){
-      this.activeAttr[index] = idx
-      this.goods_spec[index] = ele
-      var goods_id = this.spec_list[this.activeAttr.join('|')]
-      this.goods_id = goods_id;
+      this.attr[index].active = idx
+      this.goods_id = this.spec_list[this.attr.map(item => item.active).sort().join('|')] 
       this.$apply()
       this.getShopDetails()
     },
@@ -541,6 +539,9 @@ export default class Index extends wepy.page {
         // 商品属性
         var spec_name = Object.values(res.datas.goods_content.spec_name  || {})
         var spec_value = Object.values(res.datas.goods_content.spec_value  || {})
+        var activeAttr = Object.keys(res.datas.goods_content.goods_spec  || {})
+        this.activeAttr = activeAttr
+        this.goods_spec = Object.values(res.datas.goods_content.goods_spec || {})
         var attr = []
         spec_value.forEach((item, index) => {
           if(!attr[index]) {
@@ -549,9 +550,16 @@ export default class Index extends wepy.page {
           attr[index].title = spec_name[index] 
           attr[index].prop = item
         })
+        attr.forEach(item => {
+          for(var j in item.prop) {
+            activeAttr.forEach(ele => {
+              if(ele == j) {
+                item.active = j
+              }
+            })
+          }
+        })
         this.attr = attr
-        this.goods_spec = Object.values(res.datas.goods_content.goods_spec || {})
-        this.activeAttr = Object.keys(res.datas.goods_content.goods_spec  || {})
         this.spec_list = res.datas.spec_list
         this.$apply()
       }

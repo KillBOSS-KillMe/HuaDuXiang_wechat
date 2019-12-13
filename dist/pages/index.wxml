@@ -78,7 +78,7 @@
         <view class="saleShop">
           <block wx:for="{{goods_list_yushou}}" wx:for-index="index" wx:for-item="item" wx:key="key">
             <navigator url="/pages/shopDetails?goods_id={{item.goods_id}}" hover-class="none" class="shopview">
-              <image src="{{requestImgUrl + item.goods_image_url}}"/>
+              <image src="{{item.goods_image_url}}"/>
               <view class="saleTag">
                 <text class="overflow-one">{{item.goods_name}}</text>
               </view>

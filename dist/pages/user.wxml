@@ -25,7 +25,7 @@
     <view class="my_order">
       <navigator hover-class="none" url="/pages/orderlist" class="my_all">
         <text>我的订单</text>
-        <text class="my_text" bindtap="allOrder">查看全部订单</text>
+        <text class="my_text">查看全部订单</text>
         <image class="imgright" src="/assets/img/image25.png"/>
       </navigator>
       <!-- 功能区 -->

@@ -99,7 +99,7 @@
             <view class="saleShop">
                 <repeat for="{{goods_list}}" item="item">
                     <view class="shopview" @tap="goPreDetails({{item.goods_id}})">
-                        <image src="{{requestImgUrl + item.goods_image_url}}"/>
+                        <image src="{{item.goods_image_url}}"/>
                         <view>
                             <text class="preTitle overflow-one">{{item.goods_name}}</text>
                             <text class="preTag overflow-one">{{item.goods_jingle}}</text>

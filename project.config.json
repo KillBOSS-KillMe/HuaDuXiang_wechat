@@ -80,7 +80,7 @@
 					"id": 4,
 					"name": "普通商品详情",
 					"pathName": "pages/shopDetails",
-					"query": "goods_id=36&share_fx_id=3",
+					"query": "goods_id=2&share_fx_id=3",
 					"scene": 1007
 				},
 				{
@@ -158,6 +158,20 @@
 					"name": "pages/bargain-list",
 					"pathName": "pages/bargain-list",
 					"query": "goods_id=50&userid=13",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/moreChannels",
+					"pathName": "pages/moreChannels",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/bargain",
+					"pathName": "pages/bargain",
+					"query": "",
 					"scene": null
 				}
 			]

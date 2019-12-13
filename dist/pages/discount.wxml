@@ -6,7 +6,7 @@
     <view class="goods-list">
       <block wx:for="{{goods_list}}" wx:for-index="index" wx:for-item="item" wx:key="key">
         <view bindtap="navGoodsDetails" class="goods-item" data-wpynavgoodsdetails-a="{{item.goods_id}}" data-wpynavgoodsdetails-b="{{item.sale_type}}">
-          <image class="goods-img" src="{{requestImgUrl + item.goods_image_url}}"/>
+          <image class="goods-img" src="{{item.goods_image_url}}"/>
           <view class="goods-fot">
             <view class="title overflow-one">{{item.goods_name}}</view>
             <view class="price">

@@ -25,17 +25,17 @@ export default class CartCount extends wepy.component {
   methods = {
     add() {
       var num = this.good.goods_num;
-      num++
-      this.changeNum(num)
+      num++;
+      this.changeNum(num);
     },
     decrease() {
       var num = this.good.goods_num;
       if (num === 1) {
         return false;
       }
-      num--
-      this.changeNum(num)
-    },
+      num--;
+      this.changeNum(num);
+    }
   };
   changeNum(num) {
     ajax({
@@ -59,8 +59,7 @@ export default class CartCount extends wepy.component {
       }
     });
   }
-  onLoad() {
-  }
+  onLoad() {}
 }
 </script>
 
