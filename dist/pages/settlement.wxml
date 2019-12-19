@@ -1,69 +1,70 @@
-
-  <view class="settlement-wrap">
-    <navigator url="/pages/consignee" hover-class="none" class="useraddress">
-      <image class="imgadd" src="/assets/img/image33.png"/>
-      <view class="center"  wx:if="{{address}}">
-        <view class="userinfo">收货人: {{address.true_name}} {{address.tel_phone}}</view>
-        <view class="useradd">{{address.area_info}}{{address.address}}</view>
-      </view>
-      <view class="center"  wx:elif="wx:elif">
-        <view class="add-address">添加收货地址</view>
-      </view>
-      <image class="imgright" src="/assets/img/image25.png"/>
-    </navigator>
-    <view class="usergoods-wrap">
-      <block wx:for="{{store_cart_list}}" wx:for-index="index" wx:for-item="item" wx:key="key">
-        <view class="shop-list">
-          <block wx:for="{{item.goods_list}}" wx:for-index="idx" wx:for-item="ele" wx:key="key">
-            <view class="usergoods">
-              <image class="goodsimg" src="{{ele.goods_image_url}}"/>
-              <view class="goods-right">
-                <view class="goodsname overflow-one">{{ele.goods_name}}</view>
-                <view class="goodstag">
-                  <text>{{ele.goods_spec || ''}}</text>
-                  <view class="goodnum">×{{ele.goods_num}}</view>
-                </view>
-                <view class="goodprice">
-                  ￥
-                  <text class="price">{{ele.goods_price}}</text>
-                </view>
+<view class="settlement-wrap">
+  <navigator url="/pages/consignee" hover-class="none" class="useraddress">
+    <image class="imgadd" src="/assets/img/image33.png" />
+    <view class="center" wx:if="{{address}}">
+      <view class="userinfo">收货人: {{address.true_name}} {{address.tel_phone}}</view>
+      <view class="useradd">{{address.area_info}}{{address.address}}</view>
+    </view>
+    <view class="center" wx:elif="wx:elif">
+      <view class="add-address">添加收货地址</view>
+    </view>
+    <image class="imgright" src="/assets/img/image25.png" />
+  </navigator>
+  <view class="usergoods-wrap">
+    <block wx:for="{{store_cart_list}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+      <view class="shop-list">
+        <block wx:for="{{item.goods_list}}" wx:for-index="idx" wx:for-item="ele" wx:key="key">
+          <view class="usergoods">
+            <image class="goodsimg" src="{{ele.goods_image_url}}" />
+            <view class="goods-right">
+              <view class="goodsname overflow-one">{{ele.goods_name}}</view>
+              <view class="goodstag">
+                <text>{{ele.goods_spec || ''}}</text>
+                <view class="goodnum">×{{ele.goods_num}}</view>
+              </view>
+              <view class="goodprice">
+                ￥
+                <text class="price">{{ele.goods_price}}</text>
               </view>
             </view>
-            <!-- 定金 -->
-            <view class="earnest-money" wx:if="{{is_book == '1'}}">
-              <view class="item  red-color">
-                <view class="title">定金</view>
-                <view class="price">
-                  ￥
-                  <text>{{ele.book_down_payment}}</text>
-                </view>
+          </view>
+          <!-- 定金 -->
+          <view class="earnest-money" wx:if="{{is_book == '1'}}">
+            <view class="item  red-color">
+              <view class="title">定金</view>
+              <view class="price">
+                ￥
+                <text>{{ele.book_down_payment}}</text>
               </view>
-              <view class="item  gray-color">
-                <view class="title">尾款</view>
-                <view class="price">
-                  ￥
-                  <text>{{ele.book_final_payment}}</text>
-                </view>
+            </view>
+            <view class="item  gray-color">
+              <view class="title">尾款</view>
+              <view class="price">
+                ￥
+                <text>{{ele.book_final_payment}}</text>
               </view>
-              <text>{{ele.endtime}}开始支付尾款</text>
-            </view>          
-          </block>
-          <view class="goods-service">
-            <view class="com-list" wx:if="{{item.freight == 1}}">
-              <view class="title">运费</view>
-              <view class="price red-color">￥{{postage[index]}}</view>
             </view>
-            <view class="com-list" wx:if="{{item.store_voucher_info.voucher_price}}">
-              <view class="title">优惠券</view>
-              <view class="price">-{{item.store_voucher_info.voucher_price}}</view>
-              <!-- <image class="imgright" src="/assets/img/image25.png" /> -->
-            </view>
-            <view class="merchandise-subtotal">小计：<text>￥{{is_book ==  '1' ? book_down_payment : item.store_goods_total }}</text></view>
+            <text>{{ele.endtime}}开始支付尾款</text>
+          </view>
+        </block>
+        <view class="goods-service">
+          <view class="com-list" wx:if="{{item.freight == 1}}">
+            <view class="title">运费</view>
+            <view class="price red-color">￥{{postage[index]}}</view>
+          </view>
+          <view class="com-list" wx:if="{{item.store_voucher_info.voucher_price}}">
+            <view class="title">优惠券</view>
+            <view class="price">-{{item.store_voucher_info.voucher_price}}</view>
+            <!-- <image class="imgright" src="/assets/img/image25.png" /> -->
+          </view>
+          <view class="merchandise-subtotal">小计：
+            <text>￥{{is_book ==  '1' ? book_down_payment : item.store_goods_total }}</text>
           </view>
         </view>
-      </block>
-    </view>
-    <!-- <view class="price-type" wx:if="{{available_predeposit>0}}">
+      </view>
+    </block>
+  </view>
+  <!-- <view class="price-type" wx:if="{{available_predeposit>0}}">
       <view class="type">
         <view class="left">
           <text>使用余额支付</text>
@@ -79,27 +80,29 @@
         <input type="password" bindinput="inputPassword" value="{{password}}" maxlength="6">
       </view>
     </view> -->
-    <!-- 底部 订单提交 -->
-    <view class="settlebottom">
-      <view class="num">共{{goodsAllNum}}件</view>
-      <view class="priceall">
-        共计 ￥
-        <text class="allprice">{{ allPrice }}</text>元
-      </view>
-      <button class="sub-btn" bindtap="getWXPayment">提交订单</button>
+  <!-- 底部 订单提交 -->
+  <view class="settlebottom">
+    <view class="num">共{{goodsAllNum}}件</view>
+    <view class="priceall">
+      共计 ￥
+      <text class="allprice">{{ allPrice }}</text>元
     </view>
+    <button class="sub-btn" bindtap="getWXPayment">提交订单</button>
+  </view>
 
-    
+
   <view class="list">
     <view class="{{$paymask$maskFlag ? 'block':''}} mask-wrap" catchtouchmove="$paymask$move">
-      <view class="mask" bindtap="$paymask$hideMask"/>
-      
+      <view class="mask" bindtap="$paymask$hideMask" />
+
       <view class="price-type">
-        <view class="price-all">支付金额：<text>￥{{allPrice}}</text></view>
+        <view class="price-all">支付金额：
+          <text>￥{{allPrice}}</text>
+        </view>
         <view class="type">
           <view class="left">
             <text>使用余额支付</text>
-            <switch color="#48CFAE" checked="{{payment_type == 1}}" disabled="{{disabledSwitch}}" bindchange="changePayment" bindtap="clickSwitch"/>
+            <switch color="#48CFAE" checked="{{payment_type == 1}}" disabled="{{disabledSwitch}}" bindchange="changePayment" bindtap="clickSwitch" />
           </view>
           <view class="price">
             <text>可用余额</text>
@@ -108,13 +111,13 @@
         </view>
         <view class="input-wrap" wx:if="{{payment_type == 1}}">
           <text>输入支付密码</text>
-          <input type="password" bindinput="inputpassword" value="{{password}}" maxlength="6"/>
+          <input type="password" bindinput="inputpassword" value="{{password}}" maxlength="6" />
         </view>
         <view class="price-type-title">支付方式：{{payment_type == 0 ? '微信支付':'余额支付'}}</view>
         <button class="btn" bindtap="pay">确认支付</button>
       </view>
-    
+
     </view>
   </view>
 
-  </view>
+</view>
