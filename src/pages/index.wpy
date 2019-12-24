@@ -373,7 +373,8 @@ import { ajax } from '../ajax.js';
 
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '首页',
+        enablePullDownRefresh: true
   };
   components = {
     nav: nav
@@ -453,6 +454,8 @@ export default class Index extends wepy.page {
         this.goods_list = this.goods_list.concat(list)
         this.hasmore = res.hasmore
         this.$apply();
+        wx.stopPullDownRefresh()
+
       }
     });
   }
@@ -550,7 +553,11 @@ export default class Index extends wepy.page {
     }
   }
   onPullDownRefresh(e) {
-  }
+      this.curpage = 1
+      this.goods_list = []
+      this.hasmore = false
+      this.requestIndexGoodsList()
+  } 
 
 }
 </script>

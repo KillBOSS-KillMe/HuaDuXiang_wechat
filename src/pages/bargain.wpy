@@ -424,7 +424,8 @@ import { ajax } from '../ajax.js';
 
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '砍价'
+    navigationBarTitleText: '砍价',
+        enablePullDownRefresh: true
   };
   components = {
     attrsmask: mask,
@@ -490,6 +491,8 @@ export default class Index extends wepy.page {
             this.addressFlag = false;
             this.shareFlag = true;
             this.$apply()
+            wx.stopPullDownRefresh()
+
           }
         } 
       })
@@ -596,17 +599,25 @@ export default class Index extends wepy.page {
         curpage: this.curpage
       }
     }).then(res => {
-      this.barginData = res.datas.list
+      var list = res.datas.list || []
+      this.barginData = this.barginData.concat(list)
       this.hasmore = res.datas.hasmore
       this.allpage = res.datas.allpage || 0
-      this.$apply()
+      this.$apply();
+      wx.stopPullDownRefresh()
     })
   }
   onReachBottom () {
     if(this.hasmore) {
       this.curpage ++ 
-      this.requestIndexGoodsList()
+      this.bargainGoodsList()
     }
   }  
+  onPullDownRefresh(e) {
+    this.curpage = 1
+    this.barginData = []
+    this.hasmore = false
+    this.bargainGoodsList()
+  }
 }
 </script>

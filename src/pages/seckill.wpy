@@ -334,7 +334,8 @@ import { ajax } from '../ajax.js';
 
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '秒杀'
+    navigationBarTitleText: '秒杀',
+        enablePullDownRefresh: true
   };
   components = {};
 
@@ -394,6 +395,8 @@ export default class Index extends wepy.page {
         this.goods_list = this.goods_list.concat(list)
         this.hasmore = res.datas.hasmore
         this.$apply();
+        wx.stopPullDownRefresh()
+
       }
     });
   }
@@ -426,7 +429,12 @@ export default class Index extends wepy.page {
       this.requestList()
     }
   }
-
+  onPullDownRefresh(e) {
+    this.curpage = 1
+    this.goods_list = []
+    this.hasmore = false
+    this.requestList()
+  }
   events = {};
 }
 </script>

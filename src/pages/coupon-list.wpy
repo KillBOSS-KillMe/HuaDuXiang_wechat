@@ -39,7 +39,8 @@ import {formatDate} from '../utils/base.js'
 
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '优惠券列表'
+    navigationBarTitleText: '优惠券列表',
+        enablePullDownRefresh: true
   };
   data = {
       hasmore: false, // 是否有下一页
@@ -75,6 +76,7 @@ export default class Index extends wepy.page {
         this.hasmore = res.hasmore
         this.page_total = res.page_total
         this.$apply();
+        wx.stopPullDownRefresh()
       }
     });
   }
@@ -84,6 +86,12 @@ export default class Index extends wepy.page {
       this.requestCouponList()
     }
   }
+  onPullDownRefresh(e) {
+    this.curpage = 1
+    this.voucher_list = []
+    this.hasmore = false
+    this.requestCouponList()
+} 
 }
 </script>
 

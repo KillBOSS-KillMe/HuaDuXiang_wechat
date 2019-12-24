@@ -144,7 +144,8 @@ import mask from '../components/mask';
 
 export default class ShopCart extends wepy.page {
   config = {
-    navigationBarTitleText: '订单列表'
+    navigationBarTitleText: '订单列表',
+        enablePullDownRefresh: true
   };
 
   components = {
@@ -440,6 +441,8 @@ export default class ShopCart extends wepy.page {
       this.page_total = res.page_total
       this.hasmore = res.hasmore
       this.$apply()
+      wx.stopPullDownRefresh()
+
     })
   }
   onReachBottom () {
@@ -448,7 +451,12 @@ export default class ShopCart extends wepy.page {
       this.requestList()
     }
   }
-
+  onPullDownRefresh(e) {
+      this.curpage = 1
+      this.orderList = []
+      this.hasmore = false
+      this.requestList()
+  } 
   events = {};
 }
 </script>

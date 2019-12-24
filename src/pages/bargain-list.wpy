@@ -150,7 +150,8 @@ import { formatDate } from '../utils/base.js';
 
 export default class BargainList extends wepy.page {
   config = {
-    navigationBarTitleText: '我的砍价'
+    navigationBarTitleText: '我的砍价',
+        enablePullDownRefresh: true
   };
   components = {};
 
@@ -208,7 +209,6 @@ export default class BargainList extends wepy.page {
     ajax({
       url: api.kanjiaLists,
       data: {
-        page: 10,
         curpage: this.curpage
       }
     }).then(res => {
@@ -232,5 +232,11 @@ export default class BargainList extends wepy.page {
   onUnload() {
     // this.waitForArr.forEach(item => item.timer.stop())
   }
+  onPullDownRefresh(e) {
+      this.curpage = 1
+      this.barginData = []
+      this.hasmore = false
+      this.bargainGoodsList()
+  } 
 }
 </script>

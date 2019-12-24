@@ -223,7 +223,8 @@ import { ajax } from '../ajax.js';
 
 export default class ShopCart extends wepy.page {
   config = {
-    navigationBarTitleText: '购物车'
+    navigationBarTitleText: '购物车',
+        enablePullDownRefresh: true
   };
 
   components = {
@@ -364,6 +365,7 @@ export default class ShopCart extends wepy.page {
       this.goodsList = goodsList
       this.cart_count = res.datas.cart_count
       this.$apply()
+      wx.stopPullDownRefresh()
     })
   }
   onShow() {
@@ -376,5 +378,9 @@ export default class ShopCart extends wepy.page {
       this.$apply()
     })
   }
+  onPullDownRefresh(e) {
+      this.goods_list = []
+      this.requestGoodsList()
+  } 
 }
 </script>

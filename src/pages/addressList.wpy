@@ -52,7 +52,8 @@ import { ajax } from '../ajax.js';
 
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '地址'
+    navigationBarTitleText: '地址',
+        enablePullDownRefresh: true
   };
   data = {
     emptyFlag: null,
@@ -122,6 +123,10 @@ export default class Index extends wepy.page {
   };
   onLoad() {}
   onShow() {
+    this.requestList()
+
+  }
+  requestList() {
     // 用户收货地址列表
     ajax({
       url: api.addressList
@@ -129,9 +134,13 @@ export default class Index extends wepy.page {
       this.address_list = res.datas.address_list
       this.emptyFlag = res.datas.address_list.length ? 1 : 0
       this.$apply()
+      wx.stopPullDownRefresh()
     })
-
   }
+  onPullDownRefresh(e) {
+    this.address_list = []
+    this.requestList()
+  } 
 }
 </script>
 

@@ -28,7 +28,8 @@ import { ajax } from '../ajax.js';
 
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '秒赚钱'
+    navigationBarTitleText: '秒赚钱',
+        enablePullDownRefresh: true
   };
   components = {};
 
@@ -69,6 +70,7 @@ export default class Index extends wepy.page {
         this.goods_list = this.goods_list.concat(list)
         this.hasmore = res.hasmore
         this.$apply();
+        wx.stopPullDownRefresh()
       }
     });
   }
@@ -91,6 +93,12 @@ export default class Index extends wepy.page {
   };
 
   events = {};
+  onPullDownRefresh(e) {
+      this.curpage = 1
+      this.goods_list = []
+      this.hasmore = false
+      this.requestIndexGoodsList()
+  } 
 }
 </script>
 
