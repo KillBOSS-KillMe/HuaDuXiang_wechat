@@ -82,6 +82,9 @@
         
       </view>
     </view>
+    <view class="logo-wrap" @tap="logoHanld">
+      <image class="logo-img" src="/assets/img/logo.png" />
+    </view>
     <nav class="nav" @childFn.user="goPage" />
   </view>
 </template>
@@ -179,6 +182,13 @@ export default class ShopCart extends wepy.page {
 
 
 <style lang="less">
+.logo-wrap {
+  text-align: center;
+  .logo-img {
+    width: 250rpx;
+    height: 70rpx;
+  }
+}
 page {
   background: #f3f3f3;
   height: 100%;

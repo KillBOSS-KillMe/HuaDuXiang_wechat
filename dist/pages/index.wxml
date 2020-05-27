@@ -1,5 +1,7 @@
 
-  <view class="wrap">
+
+<view>
+  <view class="wrap"  wx:if="{{datas == 'off'}}">
     <view class="search-wrap" bindtap="navSearch">
       <view class="search">
         <image class="search-img" src="/assets/img/image10.png"/>
@@ -28,7 +30,7 @@
       </block>
     </view>
     <!-- 秒杀专区 -->
-    <view class="seckill"  wx:if="{{goods_list_miaosha.length}}">
+    <view class="seckill" wx:if="{{goods_list_miaosha.length}}">
       <view class="seckilltitle">
         <view>秒杀专区</view>
         <!-- <view class="beginTime">下一场{{beginTime}}开始</view> -->
@@ -70,7 +72,7 @@
       </view>
     </view>
     <!-- 预购商品 -->
-    <view class="seckill recommend"  wx:if="{{goods_list_yushou.length}}">
+    <view class="seckill recommend" wx:if="{{goods_list_yushou.length}}">
       <view class="seckilltitle">
         <view>预购商品</view>
       </view>
@@ -139,3 +141,14 @@
   </view>
 
   </view>
+    <view class="other-wrap"  wx:if="{{datas == 'on'}}">
+        <image class="logo-img" src="/assets/img/image65.png"/>
+        <view class="top">
+            <view class="title">西安贝肯伟网络科技有限公司</view>
+            <view class="address">地址：陕西省西安市雁塔区科技三路创新信息大厦A座 </view>
+            <view class="tel">电话：029-89563377</view>
+        </view>
+        <view class="h-title">公司简介</view>
+        <view class="desc">西安贝肯伟网络科技有限公司于2017年07月26日成立。法定代表人毛伟,公司经营范围包括：网络技术的开发、咨询、服务；计算机软件、信息科技软件的开发、咨询、转让、服务；广播电视节目制作；影视制作、发行、放映；演出经纪、艺人经纪；文化艺术交流活动、公关活动、体育赛事活动的组织策划；数字作品的制作、集成及数据库管理；数字出版软硬件的技术开发、转让、咨询；广告的设计、制作、代理、发布；园林景观设计；图文制作；计算机网络工程、网站建设工程的设计、施工；网页设计制作；市场调查；纸张、印刷器材销售；货物及技术的进出口业务；计算机信息系统集成；计算机维修；市场营销策划；商务信息咨询、企业管理咨询；会议会展服务、礼仪服务、展览展示服务；票务代理；出版物的批发、零售；传统、收藏文化的研究、咨询；办公用品、字画、雕刻艺术品（不含文物）的销售；工艺品的设计、制作、销售；食品、农副产品、调味品、水果、炒货、坚果、水产品、茶叶及相关制品的加工及销售；服装鞋帽、服装辅料、针纺织品、箱包、饰品、体育用品、健身器材、五金交电、眼镜（除隐形眼镜）、钟表、化妆品、工艺品、皮革、橡塑制品的销售；游戏软件的开发等。</view>
+    </view>
+</view>

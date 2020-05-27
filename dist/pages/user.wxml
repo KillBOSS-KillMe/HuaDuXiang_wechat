@@ -81,6 +81,9 @@
         
       </view>
     </view>
+    <view class="logo-wrap" bindtap="logoHanld">
+      <image class="logo-img" src="/assets/img/logo.png"/>
+    </view>
     
   <view class="nav">
     <view style="height: 100rpx;"/>
